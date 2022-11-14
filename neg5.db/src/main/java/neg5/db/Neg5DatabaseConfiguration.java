@@ -2,18 +2,18 @@ package neg5.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.neg5.module.Configuration;
-import org.neg5.module.EnvironmentBackedConfig;
+import org.neg5.module.EnvironmentVarsPartialConfig;
 
 import javax.sql.DataSource;
+import java.util.Map;
 
 public class Neg5DatabaseConfiguration {
 
     private static final DataSource dataSource;
-    private static final Configuration CONFIG;
+    private static final EnvironmentVarsPartialConfig CONFIG;
 
     static {
-        CONFIG = new EnvironmentBackedConfig();
+        CONFIG = new EnvironmentVarsPartialConfig();
         dataSource = initializeDataSource();
     }
 
@@ -30,11 +30,12 @@ public class Neg5DatabaseConfiguration {
 
     private static DataSource initializeDataSource() {
         HikariConfig config = new HikariConfig();
-        config.setUsername(CONFIG.getString(USERNAME_PROP));
-        config.setPassword(CONFIG.getString(PASSWORD_PROP));
-        config.setJdbcUrl(CONFIG.getString(JDBC_URL_PROP));
+        Map<String, String> configs = CONFIG.getConfigMap();
+        config.setUsername(configs.get(USERNAME_PROP));
+        config.setPassword(configs.get(PASSWORD_PROP));
+        config.setJdbcUrl(configs.get(JDBC_URL_PROP));
         config.setDriverClassName(DRIVER_CLASS_NAME);
-        config.setMaximumPoolSize(CONFIG.getInt(CONNECTION_POOL_SIZE_PROP));
+        config.setMaximumPoolSize(Integer.parseInt(configs.get(CONNECTION_POOL_SIZE_PROP)));
         config.setReadOnly(false);
 
         return new HikariDataSource(config);

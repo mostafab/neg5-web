@@ -28,7 +28,7 @@ public class TournamentMapper extends AbstractObjectMapper<Tournament, Tournamen
             tournamentDTO.setDivisions(tournament.getDivisions().stream()
                     .map(tournamentPoolMapper::toDTO).collect(Collectors.toSet()));
         }
-        if (tournamentDTO.getTossupValues() != null) {
+        if (tournament.getTossupValues() != null) {
             tournamentDTO.setTossupValues(tournament.getTossupValues().stream()
                     .map(tournamentTossupValueMapper::toDTO).collect(Collectors.toSet()));
         }

@@ -1,10 +1,13 @@
 package org.neg5;
 
+import java.time.Instant;
+
 public class TournamentPhaseDTO {
 
     private String id;
     private String name;
     private String tournamentId;
+    private Instant addedAt;
 
     public String getId() {
         return id;
@@ -28,5 +31,13 @@ public class TournamentPhaseDTO {
 
     public void setTournamentId(String tournamentId) {
         this.tournamentId = tournamentId;
+    }
+
+    public Instant getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
     }
 }

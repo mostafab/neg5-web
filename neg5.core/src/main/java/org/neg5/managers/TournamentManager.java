@@ -1,5 +1,6 @@
 package org.neg5.managers;
 
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
@@ -152,8 +153,8 @@ public class TournamentManager extends AbstractDTOManager<Tournament, Tournament
     }
 
     private Set<TournamentPhaseDTO> createPhases(String tournamentId, TournamentDTO tournament) {
-        if (tournament.getPhases() == null) {
-            return new HashSet<>();
+        if (CollectionUtils.isEmpty(tournament.getPhases())) {
+            return Sets.newHashSet(phaseManager.createDefaultPhase(tournamentId));
         }
         return tournament.getPhases().stream()
                 .map(phase -> {

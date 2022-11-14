@@ -31,6 +31,14 @@ public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, 
         return super.create(tournamentPhaseDTO);
     }
 
+    @Transactional
+    public TournamentPhaseDTO createDefaultPhase(String tournamentId) {
+        TournamentPhaseDTO phaseDTO = new TournamentPhaseDTO();
+        phaseDTO.setTournamentId(tournamentId);
+        phaseDTO.setName("Prelims");
+        return create(phaseDTO);
+    }
+
     @Override
     @Transactional
     public TournamentPhaseDTO update(TournamentPhaseDTO tournamentPhaseDTO) {

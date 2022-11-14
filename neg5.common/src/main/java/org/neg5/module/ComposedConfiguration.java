@@ -1,18 +1,20 @@
 package org.neg5.module;
 
-import com.google.inject.Singleton;
-
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
-public final class EnvironmentBackedConfig implements Configuration {
+public class ComposedConfiguration implements Configuration {
 
     private final Map<String, String> properties;
 
-    public EnvironmentBackedConfig() {
-        this.properties = Collections.unmodifiableMap(new HashMap<>(System.getenv()));
+    public ComposedConfiguration(PartialConfiguration ...partialConfigurations) {
+        this.properties = new HashMap<>();
+
+        Arrays.stream(partialConfigurations).forEach(config -> {
+
+            this.properties.putAll(config.getConfigMap());
+        });
     }
 
     @Override
