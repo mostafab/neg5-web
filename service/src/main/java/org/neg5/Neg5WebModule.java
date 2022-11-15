@@ -16,7 +16,7 @@ public class Neg5WebModule extends AbstractModule {
          install(new FlywayModule());
          install(new ControllersModule());
          install(new FilterModule());
-         install(new JwtSigningModule("NEG5_JWT"));
+         install(new JwtSigningModule());
          install(new StatsCacheModule());
      }
 }

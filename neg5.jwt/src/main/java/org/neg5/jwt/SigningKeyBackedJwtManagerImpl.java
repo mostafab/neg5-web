@@ -14,7 +14,7 @@ public class SigningKeyBackedJwtManagerImpl implements JwtManager {
     private final JwtParser jwtParser;
 
     @Inject
-    protected SigningKeyBackedJwtManagerImpl(@Named(JwtSigningModule.JWT_SECRET_PROP_NAME) String signingKey) {
+    protected SigningKeyBackedJwtManagerImpl(@Named("security.jwt.secret") String signingKey) {
         this.parserProvider = new JwtParserProvider(signingKey);
         jwtParser = this.parserProvider.get();
     }
