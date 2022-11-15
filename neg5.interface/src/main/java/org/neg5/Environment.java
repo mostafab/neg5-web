@@ -2,6 +2,7 @@ package org.neg5;
 
 public enum Environment {
     DEV("dev"),
+    STAGING("staging"),
     PRODUCTION("prod");
 
     private final String label;

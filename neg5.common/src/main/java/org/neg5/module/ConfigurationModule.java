@@ -1,8 +1,6 @@
 package org.neg5.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import org.neg5.Environment;
 
@@ -14,24 +12,22 @@ import java.util.regex.Pattern;
 
 public class ConfigurationModule extends AbstractModule {
 
-    private static final Pattern ENV_VAR_REPLACE_PATTERN = Pattern.compile("\\$\\{(.*?)\\}", Pattern.CASE_INSENSITIVE);
+    private static final Pattern ENV_VAR_REPLACE_PATTERN =
+            Pattern.compile("\\$\\{(.*?)\\}", Pattern.CASE_INSENSITIVE);
 
     @Override
     protected void configure() {
         Names.bindProperties(binder(), getComposedProperties());
     }
 
-    @Provides
-    @Singleton
-    public Configuration provideConfiguration(EnvironmentVarsPartialConfig envVarsConfig) {
-        return new ComposedConfiguration(envVarsConfig);
-    }
-
     private Properties getComposedProperties() {
         try {
             Properties props = new Properties();
+            // Load generic configs first
             props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
+            // Override with environment specific configs
             props.load(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(getEnvConfigPath())));
+            // Substitute environment vars
             props.putAll(substituteEnvironmentVariables(props));
             return props;
         } catch (Exception e) {
@@ -61,6 +57,7 @@ public class ConfigurationModule extends AbstractModule {
     }
 
     private String getValueOfEnvironmentVar(String value) {
+        // Remove the leading "${" and tailing "}"
         String envVarKey = value.substring(2, value.length() - 1);
         return Objects.requireNonNull(System.getenv(envVarKey), "No environment variable with key: " + envVarKey + " found.");
     }

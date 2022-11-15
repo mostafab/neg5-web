@@ -2,15 +2,16 @@ package neg5.db.flyway.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import neg5.db.Neg5DatabaseConfiguration;
 import org.flywaydb.core.Flyway;
+
+import javax.sql.DataSource;
 
 public class FlywayModule extends AbstractModule {
 
     @Provides
-    protected Flyway provideFlyway() {
+    public Flyway provideFlyway(DataSource dataSource) {
         return Flyway.configure()
-                .dataSource(Neg5DatabaseConfiguration.getDataSource())
+                .dataSource(dataSource)
                 .baselineOnMigrate(true)
                 .locations("classpath:migrations")
                 .load();
