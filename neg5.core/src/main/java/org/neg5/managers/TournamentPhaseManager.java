@@ -62,7 +62,7 @@ public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, 
     }
 
     @Override
-    protected TournamentPhaseDAO getRwDAO() {
+    protected TournamentPhaseDAO getDao() {
         return rwTournamentPhaseDAO;
     }
 

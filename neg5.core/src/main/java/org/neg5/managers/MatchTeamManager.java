@@ -44,7 +44,7 @@ public class MatchTeamManager extends AbstractDTOManager<MatchTeam, MatchTeamDTO
     }
 
     @Override
-    protected MatchTeamDAO getRwDAO() {
+    protected MatchTeamDAO getDao() {
         return matchTeamDAO;
     }
 

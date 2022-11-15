@@ -24,15 +24,15 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     @Inject private CurrentUserContext userContext;
 
-    protected abstract AbstractDAO<T, IdType> getRwDAO();
+    protected abstract AbstractDAO<T, IdType> getDao();
 
     protected abstract AbstractObjectMapper<T, DTO> getMapper();
 
     @Transactional
     public DTO get(IdType id) {
-        T entity = getRwDAO().get(id);
+        T entity = getDao().get(id);
         if (entity == null) {
-            String clazzName = getRwDAO().getPersistentClass().getSimpleName();
+            String clazzName = getDao().getPersistentClass().getSimpleName();
             throw new NoResultException("No result found for " + clazzName + " with id " + id);
         }
         return getMapper().toDTO(entity.copyOf());
@@ -57,9 +57,9 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
             ((Auditable) entity).setAddedBy(userData.getUsername());
             ((Auditable) entity).setAddedAt(Instant.now());
         }
-        T createdEntity = getRwDAO().save(entity);
-        getRwDAO().flush();
-        return getMapper().toDTO(getRwDAO().get(createdEntity.getId()));
+        T createdEntity = getDao().save(entity);
+        getDao().flush();
+        return getMapper().toDTO(getDao().get(createdEntity.getId()));
     }
 
     @Transactional
@@ -70,7 +70,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     @Transactional
     public void delete(IdType id) {
-        getRwDAO().delete(id);
+        getDao().delete(id);
     }
 
     @Transactional
@@ -80,16 +80,16 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     @Transactional
     public List<DTO> findAllByTournamentId(String tournamentId) {
-        return getRwDAO().findAllByTournamentId(tournamentId)
+        return getDao().findAllByTournamentId(tournamentId)
                 .stream()
                 .map(entity -> getMapper().toDTO(entity))
                 .collect(Collectors.toList());
     }
 
     protected void updateInternal(DTO dto) {
-        T originalEntity = getRwDAO().get(getIdFromDTO(dto));
+        T originalEntity = getDao().get(getIdFromDTO(dto));
         T updated = getMapper().mergeToEntity(dto, originalEntity);
-        getMapper().toDTO(getRwDAO().save(updated).copyOf());
+        getMapper().toDTO(getDao().save(updated).copyOf());
     }
 
     protected IdType getIdFromDTO(DTO dto) {

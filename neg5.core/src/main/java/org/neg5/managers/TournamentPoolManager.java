@@ -43,7 +43,7 @@ public class TournamentPoolManager
     }
 
     @Override
-    protected TournamentPoolDAO getRwDAO() {
+    protected TournamentPoolDAO getDao() {
         return divisionDAO;
     }
 

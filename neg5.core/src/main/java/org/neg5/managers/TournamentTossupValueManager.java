@@ -53,7 +53,7 @@ public class TournamentTossupValueManager extends
     }
 
     @Override
-    protected TournamentTossupValueDAO getRwDAO() {
+    protected TournamentTossupValueDAO getDao() {
         return rwTournamentTossupValueDAO;
     }
 

@@ -19,7 +19,6 @@ import org.neg5.mappers.TournamentMapper;
 import org.neg5.mappers.UpdateTournamentRequestMapper;
 import org.neg5.validation.ObjectValidationException;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -76,7 +75,7 @@ public class TournamentManager extends AbstractDTOManager<Tournament, Tournament
 
     @Transactional
     public List<TournamentDTO> getTournamentsOwnedByUser(String userId) {
-        return getRwDAO().getTournamentsOwnedByUser(userId).stream()
+        return getDao().getTournamentsOwnedByUser(userId).stream()
                 .map(tournamentMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -96,7 +95,7 @@ public class TournamentManager extends AbstractDTOManager<Tournament, Tournament
     }
 
     @Override
-    protected TournamentDAO getRwDAO() {
+    protected TournamentDAO getDao() {
         return rwTournamentDAO;
     }
 

@@ -33,7 +33,7 @@ public class TournamentCollaboratorManager
     }
 
     @Override
-    protected TournamentCollaboratorDAO getRwDAO() {
+    protected TournamentCollaboratorDAO getDao() {
         return tournamentCollaboratorDAO;
     }
 
@@ -70,14 +70,14 @@ public class TournamentCollaboratorManager
 
     @Transactional
     public Set<String> getTournamentIdsThatUserCollaboratesOn(String userId) {
-        return new HashSet<>(getRwDAO().getTournamentIdsThatUserCollaboratesOn(userId));
+        return new HashSet<>(getDao().getTournamentIdsThatUserCollaboratesOn(userId));
     }
 
     public Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(String tournamentId,
                                                                           String username) {
         try {
             return Optional.of(tournamentCollaboratorMapper
-                    .toDTO(getRwDAO().getCollaboratorByUsernameAndTournament(tournamentId, username)));
+                    .toDTO(getDao().getCollaboratorByUsernameAndTournament(tournamentId, username)));
         } catch (NoResultException e) {
             return Optional.empty();
         }
