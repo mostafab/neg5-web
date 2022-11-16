@@ -7,11 +7,7 @@ import java.util.Optional;
 @Singleton
 public class CurrentUserContext {
 
-    private final ThreadLocal<Optional<UserData>> currentUser;
-
-    protected CurrentUserContext() {
-        currentUser = new ThreadLocal<>();
-    }
+    private static final ThreadLocal<Optional<UserData>> currentUser = new ThreadLocal<>();
 
     public Optional<UserData> getUserData() {
         return currentUser.get();

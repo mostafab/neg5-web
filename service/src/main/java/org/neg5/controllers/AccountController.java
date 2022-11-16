@@ -15,10 +15,21 @@ import spark.Response;
 
 public class AccountController extends AbstractJsonController {
 
-    @Inject private AccountManager accountManager;
-    @Inject private RequestHelper requestHelper;
-    @Inject private CurrentUserContext currentUserContext;
-    @Inject private LoginAuthenticator loginAuthenticator;
+    private final AccountManager accountManager;
+    private final RequestHelper requestHelper;
+    private final CurrentUserContext currentUserContext;
+    private final LoginAuthenticator loginAuthenticator;
+
+    @Inject
+    public AccountController(AccountManager accountManager,
+                             RequestHelper requestHelper,
+                             CurrentUserContext currentUserContext,
+                             LoginAuthenticator loginAuthenticator) {
+        this.accountManager = accountManager;
+        this.requestHelper = requestHelper;
+        this.currentUserContext = currentUserContext;
+        this.loginAuthenticator = loginAuthenticator;
+    }
 
     @Override
     protected String getBasePath() {
