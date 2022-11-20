@@ -7,10 +7,10 @@ import java.util.Optional;
 @Singleton
 public class CurrentUserContext {
 
-    private static final ThreadLocal<Optional<UserData>> currentUser = new ThreadLocal<>();
+    private static final ThreadLocal<Optional<UserData>> CURRENT_USER_TL = new ThreadLocal<>();
 
     public Optional<UserData> getUserData() {
-        return currentUser.get();
+        return CURRENT_USER_TL.get();
     }
 
     public UserData getUserDataOrThrow() {
@@ -18,11 +18,11 @@ public class CurrentUserContext {
     }
 
     public void clear() {
-        currentUser.remove();
+        CURRENT_USER_TL.remove();
     }
 
     public void set(UserData user) {
-        this.currentUser.set(Optional.ofNullable(user));
+        CURRENT_USER_TL.set(Optional.ofNullable(user));
     }
 
 }
