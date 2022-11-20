@@ -46,7 +46,7 @@ public class TournamentMatchPhaseManager
     }
 
     private List<TournamentMatchPhase> findByMatch(String matchId) {
-        return getRwDAO().findByMatch(matchId);
+        return getDao().findByMatch(matchId);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TournamentMatchPhaseManager
     }
 
     @Override
-    protected TournamentMatchPhaseDAO getRwDAO() {
+    protected TournamentMatchPhaseDAO getDao() {
         return dao;
     }
 }

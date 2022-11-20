@@ -1,5 +1,6 @@
 package org.neg5;
 
+import java.time.Instant;
 import java.util.Set;
 
 public class TournamentMatchDTO {
@@ -20,6 +21,8 @@ public class TournamentMatchDTO {
     private Set<MatchTeamDTO> teams;
 
     private Set<String> phases;
+
+    private Instant addedAt;
 
     public String getId() {
         return id;
@@ -107,5 +110,13 @@ public class TournamentMatchDTO {
 
     public void setPhases(Set<String> phases) {
         this.phases = phases;
+    }
+
+    public Instant getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
     }
 }

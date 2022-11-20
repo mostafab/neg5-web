@@ -21,7 +21,7 @@ public class Neg5DatabaseMigrator {
         if (Environment.getEnvironment() != Environment.DEV) {
             flyway.migrate();
         } else {
-            LOGGER.warn("Skipping automatic migrations since we are in the DEV environment. "
+            LOGGER.warn("Skipping automatic migrations since application is in the DEV environment. "
                     + "Please run migrations manually by running 'mvn flyway:migrate' in the neg5.db module");
         }
     }

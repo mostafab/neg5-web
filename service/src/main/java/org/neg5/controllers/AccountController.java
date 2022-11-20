@@ -5,6 +5,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.AccountDTO;
 import org.neg5.auth.LoginAuthenticator;
 import org.neg5.auth.LoginCreds;
+import org.neg5.core.CurrentUserContext;
 import org.neg5.login.DuplicateLoginException;
 import org.neg5.AccountCreationDTO;
 import org.neg5.managers.AccountManager;
@@ -14,9 +15,21 @@ import spark.Response;
 
 public class AccountController extends AbstractJsonController {
 
-    @Inject private AccountManager accountManager;
-    @Inject private RequestHelper requestHelper;
-    @Inject private LoginAuthenticator loginAuthenticator;
+    private final AccountManager accountManager;
+    private final RequestHelper requestHelper;
+    private final CurrentUserContext currentUserContext;
+    private final LoginAuthenticator loginAuthenticator;
+
+    @Inject
+    public AccountController(AccountManager accountManager,
+                             RequestHelper requestHelper,
+                             CurrentUserContext currentUserContext,
+                             LoginAuthenticator loginAuthenticator) {
+        this.accountManager = accountManager;
+        this.requestHelper = requestHelper;
+        this.currentUserContext = currentUserContext;
+        this.loginAuthenticator = loginAuthenticator;
+    }
 
     @Override
     protected String getBasePath() {
@@ -26,6 +39,7 @@ public class AccountController extends AbstractJsonController {
     @Override
     public void registerRoutes() {
         post("", this::createAccountAndLogin);
+        get("/me", (request, response) -> currentUserContext.getUserData().orElse(null));
     }
 
     private Object createAccountAndLogin(Request request, Response response) {

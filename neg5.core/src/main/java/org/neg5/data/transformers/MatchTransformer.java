@@ -9,6 +9,7 @@ import org.neg5.data.transformers.data.TeamInMatch;
 import org.neg5.data.transformers.data.TeamMatchPlayer;
 import org.postgresql.util.PGobject;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +37,7 @@ public class MatchTransformer implements ResultTransformer {
         match.setPacket((String) tuple[7]);
         match.setNotes((String) tuple[8]);
         match.setSerialId((String) tuple[9]);
+        match.setAddedAt((Timestamp) tuple[11]);
         return match;
     }
 

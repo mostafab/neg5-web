@@ -1,4 +1,4 @@
-package org.neg5.security;
+package org.neg5.accessManager;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

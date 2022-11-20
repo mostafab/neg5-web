@@ -51,7 +51,7 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
     }
 
     @Override
-    protected TournamentMatchDAO getRwDAO() {
+    protected TournamentMatchDAO getDao() {
         return rwTournamentMatchDAO;
     }
 
@@ -113,7 +113,7 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
 
     @Transactional
     protected List<Match> findByRawQuery(String tournamentId) {
-        return getRwDAO().findMatchesByTournamentIdWithRawQuery(tournamentId);
+        return getDao().findMatchesByTournamentIdWithRawQuery(tournamentId);
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {

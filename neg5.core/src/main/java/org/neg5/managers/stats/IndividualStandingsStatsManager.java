@@ -25,7 +25,7 @@ public class IndividualStandingsStatsManager {
 
     public IndividualStandingsStatsDTO getCachedIndividualStandings(String tournamentId, String phaseId) {
         return statsCacheManager.getCache(IndividualStandingsStatsDTO.class)
-                .getOrAdd(tournamentId, phaseId,() -> calculateIndividualStandings(tournamentId, phaseId))
+                .getOrAdd(tournamentId, phaseId, () -> calculateIndividualStandings(tournamentId, phaseId))
                 .orElseGet(() -> calculateIndividualStandings(tournamentId, phaseId));
     }
 

@@ -21,7 +21,7 @@ public class MatchPlayerAnswerManager
     }
 
     @Override
-    protected MatchPlayerAnswerDAO getRwDAO() {
+    protected MatchPlayerAnswerDAO getDao() {
         return matchPlayerAnswerDAO;
     }
 

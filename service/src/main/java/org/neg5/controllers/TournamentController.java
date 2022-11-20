@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
+import org.neg5.core.CurrentUserContext;
 import org.neg5.core.QBJGsonProvider;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.TournamentCollaboratorManager;
@@ -12,10 +13,11 @@ import org.neg5.managers.TournamentManager;
 import org.neg5.managers.TournamentMatchManager;
 import org.neg5.managers.TournamentPhaseManager;
 import org.neg5.managers.TournamentPlayerManager;
+import org.neg5.managers.TournamentRulesManager;
 import org.neg5.managers.TournamentTeamManager;
 import org.neg5.managers.TournamentTossupValueManager;
 import org.neg5.managers.stats.QBJManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class TournamentController extends AbstractJsonController {
     @Inject private TournamentPhaseManager tournamentPhaseManager;
     @Inject private TournamentTossupValueManager tournamentTossupValueManager;
     @Inject private TournamentCollaboratorManager tournamentCollaboratorManager;
+    @Inject private TournamentRulesManager tournamentRulesManager;
+
+    @Inject private CurrentUserContext currentUserContext;
     @Inject private TournamentAccessManager accessManager;
 
     @Inject private QBJManager qbjManager;
@@ -44,6 +49,11 @@ public class TournamentController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
+        get("", (request, response) -> {
+           String userId = currentUserContext.getUserDataOrThrow().getUsername();
+           return tournamentCollaboratorManager.getUserTournaments(userId);
+        });
+
         get("/:id", (request, response)
                 -> tournamentManager.get(request.params("id")));
         put("/:id", (request, response) -> {
@@ -68,6 +78,7 @@ public class TournamentController extends AbstractJsonController {
                 -> tournamentTossupValueManager.findAllByTournamentId(request.params("id")));
         get("/:id/collaborators", (request, response)
                 -> tournamentCollaboratorManager.findAllByTournamentId(request.params("id")));
+        get("/:id/rules", (request, response) -> tournamentRulesManager.get(request.params("id")));
         get("/:id/qbj", (request, response) -> {
             response.type(QBJ_CONTENT_TYPE);
             return qbjManager.getQbj(request.params("id"));

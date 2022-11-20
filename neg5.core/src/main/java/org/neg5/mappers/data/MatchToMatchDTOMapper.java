@@ -22,6 +22,9 @@ public class MatchToMatchDTOMapper extends AbstractObjectMapper<Match, Tournamen
 
     public TournamentMatchDTO toDTO(Match match, Map<Integer, TournamentTossupValueDTO> tossupValues) {
         TournamentMatchDTO dto = super.toDTO(match);
+        if (match.getAddedAt() != null) {
+            dto.setAddedAt(match.getAddedAt().toInstant());
+        }
         dto.setPhases(match.getPhases().stream().map(Phase::getId).collect(Collectors.toSet()));
         dto.setTeams(match.getTeams().stream().map(teamInMatchMapper::toDTO).collect(Collectors.toSet()));
 

@@ -1,5 +1,6 @@
 package org.neg5.data.transformers.data;
 
+import java.sql.Timestamp;
 import java.util.Set;
 
 public class Match {
@@ -17,6 +18,8 @@ public class Match {
     private String notes;
     private String packet;
     private String serialId;
+
+    private Timestamp addedAt;
 
     public String getId() {
         return id;
@@ -96,5 +99,13 @@ public class Match {
 
     public void setSerialId(String serialId) {
         this.serialId = serialId;
+    }
+
+    public Timestamp getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Timestamp addedAt) {
+        this.addedAt = addedAt;
     }
 }

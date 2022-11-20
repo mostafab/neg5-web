@@ -5,7 +5,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentPlayerDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.TournamentPlayerManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 import spark.Response;
@@ -50,7 +50,10 @@ public class PlayerController extends AbstractJsonController {
 
     private TournamentPlayerDTO createPlayer(Request request, Response response) {
         TournamentPlayerDTO playerDTO = requestHelper.readFromRequest(request, TournamentPlayerDTO.class);
-        tournamentAccessManager.requireAccessLevel(playerDTO.getTournamentId(), TournamentAccessLevel.ADMIN);
+        tournamentAccessManager.requireAccessLevel(
+                playerDTO.getTournamentId(),
+                TournamentAccessLevel.COLLABORATOR
+        );
         return tournamentPlayerManager.create(playerDTO);
     }
 }

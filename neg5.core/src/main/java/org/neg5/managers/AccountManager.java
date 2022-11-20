@@ -59,11 +59,11 @@ public class AccountManager extends AbstractDTOManager<Account, AccountDTO, Stri
         account.setEmail(accountCreationDTO.getEmail());
         account.setName(accountCreationDTO.getName());
         account.setHashedPassword(hashedPassword);
-        return getMapper().toDTO(getRwDAO().save(account));
+        return getMapper().toDTO(getDao().save(account));
     }
 
     @Override
-    protected AccountDAO getRwDAO() {
+    protected AccountDAO getDao() {
         return accountDAO;
     }
 

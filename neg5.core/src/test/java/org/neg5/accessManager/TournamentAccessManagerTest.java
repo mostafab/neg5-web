@@ -1,4 +1,4 @@
-package org.neg5.security;
+package org.neg5.accessManager;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,7 +44,7 @@ public class TournamentAccessManagerTest {
     public void testAccessExceptionIfUserNotCollaborator() {
         Optional<UserData> userData = Optional.of(new UserData("TEST"));
         when(currentUserContext.getUserData()).thenReturn(userData);
-        when(tournamentManager.get(any())).thenReturn(buildTournament());
+        when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
                 .thenReturn(Optional.empty());
 
@@ -56,7 +57,7 @@ public class TournamentAccessManagerTest {
     public void testAccessExceptionThrownIfUserCollaboratorButRequiresAdminAccess() {
         Optional<UserData> userData = Optional.of(new UserData("TEST"));
         when(currentUserContext.getUserData()).thenReturn(userData);
-        when(tournamentManager.get(any())).thenReturn(buildTournament());
+        when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
                 .thenReturn(Optional.of(buildCollaborator(false)));
 
@@ -69,7 +70,7 @@ public class TournamentAccessManagerTest {
     public void testAccessExceptionThrownIfUserAdmimButRequiresDirectorAccess() {
         Optional<UserData> userData = Optional.of(new UserData("TEST"));
         when(currentUserContext.getUserData()).thenReturn(userData);
-        when(tournamentManager.get(any())).thenReturn(buildTournament());
+        when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
                 .thenReturn(Optional.of(buildCollaborator(true)));
 
@@ -82,7 +83,7 @@ public class TournamentAccessManagerTest {
     public void testCanAccessIfHigherAccessLevelThanRequired() {
         Optional<UserData> userData = Optional.of(new UserData("TEST"));
         when(currentUserContext.getUserData()).thenReturn(userData);
-        when(tournamentManager.get(any())).thenReturn(buildTournament());
+        when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
                 .thenReturn(Optional.of(buildCollaborator(true)));
 

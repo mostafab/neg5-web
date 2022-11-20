@@ -44,11 +44,11 @@ public class TournamentTeamPoolManager
     }
 
     private void deleteExistingAssociations(String teamId) {
-        getRwDAO().findByTeamId(teamId).forEach(entity -> delete(entity.getId()));
+        getDao().findByTeamId(teamId).forEach(entity -> delete(entity.getId()));
     }
 
     @Override
-    protected TournamentTeamPoolDAO getRwDAO() {
+    protected TournamentTeamPoolDAO getDao() {
         return dao;
     }
 

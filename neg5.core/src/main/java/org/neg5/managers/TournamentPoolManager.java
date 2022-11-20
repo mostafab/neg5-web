@@ -8,8 +8,6 @@ import org.neg5.daos.TournamentPoolDAO;
 import org.neg5.data.TournamentPool;
 import org.neg5.mappers.TournamentPoolMapper;
 
-import java.util.Objects;
-
 public class TournamentPoolManager
         extends AbstractDTOManager<TournamentPool, TournamentPoolDTO, String> {
 
@@ -30,7 +28,8 @@ public class TournamentPoolManager
     @Override
     @Transactional
     public TournamentPoolDTO create(TournamentPoolDTO tournamentPoolDTO) {
-        validatePoolPhaseAndTournamentIdAlign(tournamentPoolDTO);
+        TournamentPhaseDTO phase = phaseManager.get(tournamentPoolDTO.getPhaseId());
+        tournamentPoolDTO.setTournamentId(phase.getTournamentId());
         return super.create(tournamentPoolDTO);
     }
 
@@ -44,21 +43,12 @@ public class TournamentPoolManager
     }
 
     @Override
-    protected TournamentPoolDAO getRwDAO() {
+    protected TournamentPoolDAO getDao() {
         return divisionDAO;
     }
 
     @Override
     protected TournamentPoolMapper getMapper() {
         return mapper;
-    }
-
-    private void validatePoolPhaseAndTournamentIdAlign(TournamentPoolDTO tournamentPoolDTO) {
-        String tournamentId = tournamentPoolDTO.getTournamentId();
-        TournamentPhaseDTO phase = phaseManager.get(tournamentPoolDTO.getPhaseId());
-
-        if (!Objects.equals(tournamentId, phase.getTournamentId())) {
-            throw new IllegalArgumentException("Division's tournament id does not match phase's tournament id");
-        }
     }
 }

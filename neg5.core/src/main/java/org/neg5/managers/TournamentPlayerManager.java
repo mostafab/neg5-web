@@ -43,7 +43,7 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
     }
 
     @Override
-    protected TournamentPlayerDAO getRwDAO() {
+    protected TournamentPlayerDAO getDao() {
         return rwTournamentPlayerDAO;
     }
 
