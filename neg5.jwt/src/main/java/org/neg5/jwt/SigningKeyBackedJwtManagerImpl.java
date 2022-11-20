@@ -12,10 +12,13 @@ public class SigningKeyBackedJwtManagerImpl implements JwtManager {
 
     private final JwtParserProvider parserProvider;
     private final JwtParser jwtParser;
+    private final String appName;
 
     @Inject
-    protected SigningKeyBackedJwtManagerImpl(@Named("security.jwt.secret") String signingKey) {
+    protected SigningKeyBackedJwtManagerImpl(@Named("jwt.secret") String signingKey,
+                                             @Named("appName") String appName) {
         this.parserProvider = new JwtParserProvider(signingKey);
+        this.appName = appName;
         jwtParser = this.parserProvider.get();
     }
 
@@ -24,7 +27,7 @@ public class SigningKeyBackedJwtManagerImpl implements JwtManager {
         JwtBuilder builder = Jwts
                 .builder()
                 .setIssuedAt(new Date())
-                .setIssuer("Neg5.service")
+                .setIssuer(appName)
                 .signWith(SignatureAlgorithm.HS256, parserProvider.getSigningKey());
         data.getClaims().forEach(builder::claim);
         return builder.compact();

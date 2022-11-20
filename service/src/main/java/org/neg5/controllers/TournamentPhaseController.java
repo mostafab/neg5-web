@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.TournamentPhaseManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 public class TournamentPhaseController extends AbstractJsonController {

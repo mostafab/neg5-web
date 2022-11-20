@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.TournamentTossupValueManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 public class TournamentTossupValueController extends AbstractJsonController {

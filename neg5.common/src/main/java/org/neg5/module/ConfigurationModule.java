@@ -57,7 +57,7 @@ public class ConfigurationModule extends AbstractModule {
     }
 
     private String getValueOfEnvironmentVar(String value) {
-        // Remove the leading "${" and tailing "}"
+        // Remove the leading "${" and trailing "}"
         String envVarKey = value.substring(2, value.length() - 1);
         return Objects.requireNonNull(System.getenv(envVarKey), "No environment variable with key: " + envVarKey + " found.");
     }

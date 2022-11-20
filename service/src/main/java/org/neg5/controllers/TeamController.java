@@ -5,7 +5,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.TournamentTeamManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 import spark.Response;

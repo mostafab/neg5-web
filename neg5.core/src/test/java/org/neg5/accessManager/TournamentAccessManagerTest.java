@@ -1,4 +1,4 @@
-package org.neg5.security;
+package org.neg5.accessManager;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

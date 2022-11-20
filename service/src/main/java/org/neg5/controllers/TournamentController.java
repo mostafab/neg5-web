@@ -17,7 +17,7 @@ import org.neg5.managers.TournamentRulesManager;
 import org.neg5.managers.TournamentTeamManager;
 import org.neg5.managers.TournamentTossupValueManager;
 import org.neg5.managers.stats.QBJManager;
-import org.neg5.security.TournamentAccessManager;
+import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 import java.util.List;

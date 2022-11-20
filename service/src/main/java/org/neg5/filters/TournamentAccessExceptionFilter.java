@@ -3,7 +3,7 @@ package org.neg5.filters;
 import com.google.inject.Inject;
 import org.neg5.ClientExceptionDTO;
 import org.neg5.core.GsonProvider;
-import org.neg5.security.TournamentAccessException;
+import org.neg5.accessManager.TournamentAccessException;
 
 import static spark.Spark.exception;
 

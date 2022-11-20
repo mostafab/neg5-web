@@ -1,4 +1,4 @@
-package org.neg5.security;
+package org.neg5.accessManager;
 
 /**
  * Exception thrown when someone tries to access a tournament for which they do not have sufficient privileges
