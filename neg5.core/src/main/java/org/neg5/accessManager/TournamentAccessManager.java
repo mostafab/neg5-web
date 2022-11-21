@@ -15,10 +15,19 @@ import java.util.Optional;
 @Singleton
 public class TournamentAccessManager {
 
-    @Inject private CurrentUserContext currentUserContext;
+    private final CurrentUserContext currentUserContext;
 
-    @Inject private TournamentCollaboratorManager collaboratorManager;
-    @Inject private TournamentManager tournamentManager;
+    private final TournamentCollaboratorManager collaboratorManager;
+    private final TournamentManager tournamentManager;
+
+    @Inject
+    public TournamentAccessManager(CurrentUserContext currentUserContext,
+                                   TournamentCollaboratorManager collaboratorManager,
+                                   TournamentManager tournamentManager) {
+        this.currentUserContext = currentUserContext;
+        this.collaboratorManager = collaboratorManager;
+        this.tournamentManager = tournamentManager;
+    }
 
     public void requireAccessLevel(@Nonnull String tournamentId,
                                    @Nonnull TournamentAccessLevel requiredAccessLevel) {
