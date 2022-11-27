@@ -133,9 +133,9 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
         requireNotNull(errors, dto.getRound(), "round");
         requireNotNull(errors, dto.getTossupsHeard(), "tossupsHeard");
         requireNotNull(errors, dto.getTeams(), "teams");
-        requireCondition(errors, dto.getRound() != null && dto.getRound() > 0, "round", "Round must be greater than 0");
-        requireCondition(errors, dto.getTossupsHeard() != null && dto.getTossupsHeard() > 0, "tossupsHeard", "Tossups Heard must be greater than 0");
-        // Run through all of the enhanced match validators
+        requireCondition(errors, dto.getRound() == null || dto.getRound() > 0, "round", "Round must be greater than 0");
+        requireCondition(errors, dto.getTossupsHeard() == null || dto.getTossupsHeard() > 0, "tossupsHeard", "Tossups Heard must be greater than 0");
+        // Run through all the enhanced match validators
         List<TournamentMatchDTO> allMatches = findAllByTournamentId(dto.getTournamentId());
         matchValidators.forEach(validator -> Optional.ofNullable(validator.getErrors(allMatches, dto)).ifPresent(err -> errors.getErrors().addAll(err.getErrors())));
         return Optional.of(errors);

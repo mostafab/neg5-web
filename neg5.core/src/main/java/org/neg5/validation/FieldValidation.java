@@ -15,6 +15,15 @@ public class FieldValidation {
     }
   }
 
+    public static void requireNonEmpty(
+            @Nonnull FieldValidationErrors errors,
+            @Nullable String subject,
+            @Nonnull String field) {
+        if (subject == null || subject.isEmpty()) {
+            errors.add(field, String.format("%s must not be empty.", field));
+        }
+    }
+
   public static void requireNonEmpty(
       @Nonnull FieldValidationErrors errors,
       @Nullable Collection<?> subject,
