@@ -3,6 +3,7 @@ package org.neg5.managers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
@@ -15,9 +16,14 @@ import org.neg5.mappers.data.MatchToMatchDTOMapper;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.neg5.validation.FieldValidation.requireCondition;
+import static org.neg5.validation.FieldValidation.requireNonEmpty;
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, TournamentMatchDTO, String> {
@@ -114,6 +120,20 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
     @Transactional
     protected List<Match> findByRawQuery(String tournamentId) {
         return getDao().findMatchesByTournamentIdWithRawQuery(tournamentId);
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentMatchDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        // Basic validation
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getRound(), "round");
+        requireNotNull(errors, dto.getTossupsHeard(), "tossupsHeard");
+        requireCondition(errors, dto.getRound() != null && dto.getRound() > 0, "round", "Round must be greater than 0");
+        requireCondition(errors, dto.getTossupsHeard() != null && dto.getTossupsHeard() > 0, "tossupsHeard", "Tossups Heard must be greater than 0");
+        // Run through all of the enhanced match validators
+
+        return Optional.of(errors);
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {
