@@ -14,6 +14,7 @@ import org.neg5.data.TournamentPlayer;
 import org.neg5.mappers.TournamentPlayerMapper;
 import org.neg5.validation.ObjectValidationException;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.neg5.validation.FieldValidation.requireCustomValidation;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
@@ -79,12 +81,18 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
         super.delete(id);
     }
 
+    public List<TournamentPlayerDTO> findByTeamId(@Nonnull String teamId) {
+        return getDao().findByTeamId(teamId).stream().map(tournamentPlayerMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     @Override
     protected Optional<FieldValidationErrors> validateObject(TournamentPlayerDTO dto) {
         FieldValidationErrors errors = new FieldValidationErrors();
         requireNotNull(errors, dto.getTournamentId(), "tournamentId");
         requireNotNull(errors, dto.getName(), "name");
         requireNotNull(errors, dto.getTeamId(), "teamId");
+        requireCustomValidation(errors, () -> ensureNameUniqueInTeam(dto));
         return Optional.of(errors);
     }
 
@@ -113,4 +121,20 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
         allPlayers.forEach(player -> matchesByPlayerId.putIfAbsent(player.getId(), new ArrayList<>()));
         return matchesByPlayerId;
     }
+
+    private void ensureNameUniqueInTeam(TournamentPlayerDTO subject) {
+        if (subject.getName() == null || subject.getTeamId() == null) {
+            return;
+        }
+        final String normalizedName = subject.getName().trim().toLowerCase();
+        findByTeamId(subject.getTeamId()).stream()
+                .filter(player -> !player.getId().equals(subject.getId()))
+                .filter(player -> player.getName().trim().toLowerCase().equals(normalizedName))
+                .findFirst()
+                .ifPresent(match -> {
+                    String message = String.format("A player with this name (%s) already exists on this team.", subject.getName());
+                    throw new ObjectValidationException(new FieldValidationErrors().add("name", message));
+                });
+    }
+
 }
