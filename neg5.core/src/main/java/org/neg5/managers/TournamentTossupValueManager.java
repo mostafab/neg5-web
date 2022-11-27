@@ -15,7 +15,11 @@ import org.neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+
+import static org.neg5.validation.FieldValidation.requireCustomValidation;
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentTossupValueManager extends
@@ -34,7 +38,6 @@ public class TournamentTossupValueManager extends
     @Override
     @Transactional
     public TournamentTossupValueDTO create(TournamentTossupValueDTO tournamentTossupValueDTO) {
-        validateUniqueTossupValue(tournamentTossupValueDTO);
         return super.create(tournamentTossupValueDTO);
     }
 
@@ -65,6 +68,17 @@ public class TournamentTossupValueManager extends
     @Override
     protected TournamentTossupValueId getIdFromDTO(TournamentTossupValueDTO tournamentTossupValueDTO) {
         return getMapper().mergeToEntity(tournamentTossupValueDTO).getId();
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentTossupValueDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, dto.getValue(), "value");
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getAnswerType(), "answerType");
+        requireCustomValidation(errors, () -> validateUniqueTossupValue(dto));
+
+        return Optional.of(errors);
     }
 
     private void validateUniqueTossupValue(TournamentTossupValueDTO tossupValue) {

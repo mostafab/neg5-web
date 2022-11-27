@@ -107,7 +107,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     private void validateInternal(DTO dto) {
         Optional<FieldValidationErrors> errors = validateObject(dto);
-        errors.ifPresent(error -> {
+        errors.filter(error -> !error.getErrors().isEmpty()).ifPresent(error -> {
             throw new ObjectValidationException(error);
         });
     }
