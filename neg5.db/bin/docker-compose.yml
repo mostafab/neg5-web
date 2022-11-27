@@ -1,0 +1,13 @@
+version: "3"
+services:
+  neg5_db:
+    image: "postgres:12.4"
+    container_name: "${CONTAINER_NAME}"
+    ports:
+      - "${PORT}:5432"
+    volumes:
+      - neg5_dev_dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+volumes:
+  neg5_dev_dbdata:

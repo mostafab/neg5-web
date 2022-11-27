@@ -1,11 +1,15 @@
 package org.neg5;
 
+import java.util.Objects;
+
 public enum Environment {
     DEV("dev"),
     STAGING("staging"),
     PRODUCTION("prod");
 
     private final String label;
+
+    private static Environment ENVIRONMENT = initializeEnvironment();
 
     Environment(String label) {
         this.label = label;
@@ -16,7 +20,11 @@ public enum Environment {
     }
 
     public static Environment getEnvironment() {
-        String env = System.getenv("NEG5_ENVIRONMENT");
+        return ENVIRONMENT;
+    }
+
+    private static Environment initializeEnvironment() {
+        String env = Objects.requireNonNull(System.getenv("NEG5_ENVIRONMENT"), "NEG5_ENVIRONMENT variable is not set.");
         return Environment.valueOf(env);
     }
 }

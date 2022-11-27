@@ -23,6 +23,11 @@ public class TournamentPhaseController extends AbstractJsonController {
     }
 
     @Override
+    protected String getBasePath() {
+        return "/neg5-api/phases";
+    }
+
+    @Override
     public void registerRoutes() {
         post("", (request, response) -> {
             TournamentPhaseDTO phase = requestHelper.readFromRequest(request, TournamentPhaseDTO.class);
@@ -40,10 +45,5 @@ public class TournamentPhaseController extends AbstractJsonController {
             phase.setId(request.params("id"));
             return phaseManager.update(phase);
         });
-    }
-
-    @Override
-    protected String getBasePath() {
-        return "/neg5-api/phases";
     }
 }
