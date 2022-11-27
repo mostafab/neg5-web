@@ -26,9 +26,7 @@ public class TournamentCollaboratorController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        post("", (request, response) -> {
-            return collaboratorManager.addOrUpdateCollaborator(verifyEditAccessAndParseBody(request));
-        });
+        post("", (request, response) -> collaboratorManager.addOrUpdateCollaborator(verifyEditAccessAndParseBody(request)));
         delete("", (request, response) -> {
             TournamentCollaboratorDTO collaborator = verifyEditAccessAndParseBody(request);
             collaboratorManager.delete(collaborator);

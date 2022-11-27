@@ -24,6 +24,16 @@ public class FieldValidation {
     }
   }
 
+    public static void requireCondition(
+            @Nonnull FieldValidationErrors errors,
+            @Nonnull Boolean condition,
+            @Nonnull String field,
+            @Nonnull String message) {
+        if (!condition) {
+            errors.add(field, message);
+        }
+    }
+
   public static void requireCustomValidation(
       @Nonnull FieldValidationErrors errors,
       @Nonnull Runnable validator) {

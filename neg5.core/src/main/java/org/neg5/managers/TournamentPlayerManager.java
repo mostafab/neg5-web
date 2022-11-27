@@ -18,8 +18,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer, TournamentPlayerDTO, String> {
@@ -70,10 +73,19 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
         if (!playerMatches.isEmpty()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                            .add("matches", "Cannot delete a player with existing matches.")
+                            .add("matches", "A player with existing matches cannot be removed.")
             );
         }
         super.delete(id);
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentPlayerDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getName(), "name");
+        requireNotNull(errors, dto.getTeamId(), "teamId");
+        return Optional.of(errors);
     }
 
     /**
