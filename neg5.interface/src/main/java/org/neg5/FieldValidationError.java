@@ -23,6 +23,6 @@ public class FieldValidationError {
 
     @Override
     public String toString() {
-        return String.format("field=%s | error=%s", fieldName, message);
+        return String.format("{field=%s | error=%s}", fieldName, message);
     }
 }

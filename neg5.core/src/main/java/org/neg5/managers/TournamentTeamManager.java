@@ -20,15 +20,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.neg5.validation.FieldValidation.requireCustomValidation;
+import static org.neg5.validation.FieldValidation.requireNonEmpty;
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentTeamManager extends AbstractDTOManager<TournamentTeam, TournamentTeamDTO, String> {
 
     private final TournamentTeamDAO rwTournamentTeamDAO;
     private final TournamentTeamMapper tournamentTeamMapper;
-
     private final TournamentMatchManager tournamentMatchManager;
     private final TournamentPlayerManager playerManager;
     private final TournamentTeamPoolManager teamDivisionManager;
@@ -110,10 +114,34 @@ public class TournamentTeamManager extends AbstractDTOManager<TournamentTeam, To
         if (!teamMatches.isEmpty()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                        .add("matches", "Cannot delete a team with existing matches")
+                        .add("teamMatches", "A team with existing matches cannot be removed.")
             );
         }
         super.delete(id);
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentTeamDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNonEmpty(errors, dto.getName(), "name");
+        requireCustomValidation(errors, () -> ensureUniqueTeamName(dto));
+        return Optional.of(errors);
+    }
+
+    private void ensureUniqueTeamName(TournamentTeamDTO dto) {
+        if (dto.getName() == null || dto.getTournamentId() == null) {
+            return;
+        }
+        List<TournamentTeamDTO> teams = findAllByTournamentId(dto.getTournamentId());
+        final String normalizedName = dto.getName().trim().toLowerCase();
+        teams.stream().filter(team -> !team.getId().equals(dto.getId()))
+                .filter(team -> team.getName().trim().toLowerCase().equals(normalizedName))
+                .findFirst()
+                .ifPresent(match -> {
+                    String message = String.format("A different team with this name (%s) has already been added to the tournament", dto.getName());
+                    throw new ObjectValidationException(new FieldValidationErrors().add("name", message));
+                });
     }
 
     @Override

@@ -20,8 +20,11 @@ import org.neg5.mappers.UpdateTournamentRequestMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentManager extends AbstractDTOManager<Tournament, TournamentDTO, String> {
@@ -109,6 +112,16 @@ public class TournamentManager extends AbstractDTOManager<Tournament, Tournament
         return tournamentDTO.getId();
     }
 
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentDTO tournamentDTO) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, tournamentDTO.getName(), "name");
+        requireNotNull(errors, tournamentDTO.getBonusPointValue(), "bonusPointValue");
+        requireNotNull(errors, tournamentDTO.getPartsPerBonus(), "partsPerBonus");
+
+        return Optional.of(errors);
+    }
+
     private void validateAllUniqueValues(List<TournamentTossupValueDTO> tossupValues) {
         Set<Integer> values = tossupValues.stream()
                 .map(TournamentTossupValueDTO::getValue)
@@ -131,7 +144,7 @@ public class TournamentManager extends AbstractDTOManager<Tournament, Tournament
                     new FieldValidationErrors()
                             .add(
                                     "matches",
-                                    "Cannot update tossup values for tournament that has existing matches."
+                                    "Cannot update tossup value scheme for a tournament with existing matches."
                             )
             );
         }

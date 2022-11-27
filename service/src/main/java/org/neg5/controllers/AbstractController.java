@@ -23,7 +23,7 @@ public abstract class AbstractController implements BaseController {
         } else {
             Spark.get(fullPath, enrichRoute(route), responseTransformer);
         }
-        LOGGER.info("Mapped GET route {}", fullPath);
+        LOGGER.info("Registered GET route {}", fullPath);
     }
 
     protected void post(String path, Route route) {
@@ -37,7 +37,7 @@ public abstract class AbstractController implements BaseController {
         } else {
             Spark.post(fullPath, enrichRoute(route), responseTransformer);
         }
-        LOGGER.info("Mapped POST route {}", fullPath);
+        LOGGER.info("Registered POST route {}", fullPath);
     }
 
     protected void put(String path, Route route) {
@@ -51,13 +51,13 @@ public abstract class AbstractController implements BaseController {
         } else {
             Spark.put(fullPath, enrichRoute(route), responseTransformer);
         }
-        LOGGER.info("Mapped PUT route {}", fullPath);
+        LOGGER.info("Registered PUT route {}", fullPath);
     }
 
     protected void delete(String path, Route route) {
         String fullPath = constructPath(path);
         Spark.delete(fullPath, enrichRoute(route));
-        LOGGER.info("Mapped DELETE route {}", fullPath);
+        LOGGER.info("Registered DELETE route {}", fullPath);
     }
 
     protected Route enrichRoute(Route route) {

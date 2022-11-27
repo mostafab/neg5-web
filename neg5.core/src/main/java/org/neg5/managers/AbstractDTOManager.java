@@ -2,6 +2,7 @@ package org.neg5.managers;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import org.neg5.FieldValidationErrors;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.core.UserData;
 import org.neg5.daos.AbstractDAO;
@@ -11,11 +12,13 @@ import org.neg5.data.Auditable;
 import org.neg5.data.CompositeIdObject;
 import org.neg5.data.IdDataObject;
 import org.neg5.mappers.AbstractObjectMapper;
+import org.neg5.validation.ObjectValidationException;
 
 import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,6 +47,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     @Transactional
     public DTO create(DTO dto) {
+        validateInternal(dto);
         T entity = getMapper().mergeToEntity(dto);
 
         /* Assumption is that if the entity doesn't have a composite primary key,
@@ -64,6 +68,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     @Transactional
     public DTO update(DTO dto) {
+        validateInternal(dto);
         updateInternal(dto);
         return get(getIdFromDTO(dto));
     }
@@ -86,6 +91,10 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
                 .collect(Collectors.toList());
     }
 
+    protected Optional<FieldValidationErrors> validateObject(DTO dto) {
+        return Optional.empty();
+    }
+
     protected void updateInternal(DTO dto) {
         T originalEntity = getDao().get(getIdFromDTO(dto));
         T updated = getMapper().mergeToEntity(dto, originalEntity);
@@ -94,5 +103,12 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
 
     protected IdType getIdFromDTO(DTO dto) {
         return getMapper().mergeToEntity(dto).getId();
+    }
+
+    private void validateInternal(DTO dto) {
+        Optional<FieldValidationErrors> errors = validateObject(dto);
+        errors.filter(error -> !error.getErrors().isEmpty()).ifPresent(error -> {
+            throw new ObjectValidationException(error);
+        });
     }
 }

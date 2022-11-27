@@ -3,6 +3,7 @@ package org.neg5.managers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
@@ -11,13 +12,18 @@ import org.neg5.data.TournamentMatch;
 import org.neg5.data.transformers.data.Match;
 import org.neg5.mappers.TournamentMatchMapper;
 import org.neg5.mappers.data.MatchToMatchDTOMapper;
+import org.neg5.matchValidators.EnhancedMatchValidator;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.neg5.validation.FieldValidation.requireCondition;
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, TournamentMatchDTO, String> {
@@ -25,6 +31,7 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
     private final TournamentTossupValueManager tournamentTossupValueManager;
     private final MatchTeamManager matchTeamManager;
     private final TournamentMatchPhaseManager matchPhaseManager;
+    private final Set<EnhancedMatchValidator> matchValidators;
 
     private final TournamentMatchMapper tournamentMatchMapper;
     private final MatchToMatchDTOMapper matchToMatchDTOMapper;
@@ -34,12 +41,14 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
     public TournamentMatchManager(TournamentTossupValueManager tournamentTossupValueManager,
                                   MatchTeamManager matchTeamManager,
                                   TournamentMatchPhaseManager matchPhaseManager,
+                                  Set<EnhancedMatchValidator> matchValidators,
                                   TournamentMatchMapper tournamentMatchMapper,
                                   MatchToMatchDTOMapper matchToMatchDTOMapper,
                                   TournamentMatchDAO rwTournamentMatchDAO) {
         this.tournamentTossupValueManager = tournamentTossupValueManager;
         this.matchTeamManager = matchTeamManager;
         this.matchPhaseManager = matchPhaseManager;
+        this.matchValidators = matchValidators;
         this.tournamentMatchMapper = tournamentMatchMapper;
         this.matchToMatchDTOMapper = matchToMatchDTOMapper;
         this.rwTournamentMatchDAO = rwTournamentMatchDAO;
@@ -114,6 +123,22 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
     @Transactional
     protected List<Match> findByRawQuery(String tournamentId) {
         return getDao().findMatchesByTournamentIdWithRawQuery(tournamentId);
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentMatchDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        // Basic validation
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getRound(), "round");
+        requireNotNull(errors, dto.getTossupsHeard(), "tossupsHeard");
+        requireNotNull(errors, dto.getTeams(), "teams");
+        requireCondition(errors, dto.getRound() == null || dto.getRound() > 0, "round", "Round must be greater than 0");
+        requireCondition(errors, dto.getTossupsHeard() == null || dto.getTossupsHeard() > 0, "tossupsHeard", "Tossups Heard must be greater than 0");
+        // Run through all the enhanced match validators
+        List<TournamentMatchDTO> allMatches = findAllByTournamentId(dto.getTournamentId());
+        matchValidators.forEach(validator -> Optional.ofNullable(validator.getErrors(allMatches, dto)).ifPresent(err -> errors.getErrors().addAll(err.getErrors())));
+        return Optional.of(errors);
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {

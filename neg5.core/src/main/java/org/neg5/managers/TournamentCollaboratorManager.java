@@ -3,6 +3,7 @@ package org.neg5.managers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;
 import org.neg5.daos.TournamentCollaboratorDAO;
@@ -14,6 +15,8 @@ import javax.persistence.NoResultException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentCollaboratorManager
@@ -81,5 +84,14 @@ public class TournamentCollaboratorManager
         } catch (NoResultException e) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentCollaboratorDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getUserId(), "userId");
+
+        return Optional.of(errors);
     }
 }

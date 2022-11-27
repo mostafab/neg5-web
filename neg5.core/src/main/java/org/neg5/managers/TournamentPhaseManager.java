@@ -11,6 +11,10 @@ import org.neg5.mappers.TournamentPhaseMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.neg5.validation.FieldValidation.requireCustomValidation;
+import static org.neg5.validation.FieldValidation.requireNotNull;
 
 public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, TournamentPhaseDTO, String> {
 
@@ -27,7 +31,6 @@ public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, 
     @Override
     @Transactional
     public TournamentPhaseDTO create(TournamentPhaseDTO tournamentPhaseDTO) {
-        ensureUniquePhaseName(tournamentPhaseDTO);
         return super.create(tournamentPhaseDTO);
     }
 
@@ -47,15 +50,24 @@ public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, 
         return super.update(tournamentPhaseDTO);
     }
 
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentPhaseDTO dto) {
+        FieldValidationErrors errors = new FieldValidationErrors();
+        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
+        requireNotNull(errors, dto.getName(), "name");
+        requireCustomValidation(errors, () -> ensureUniquePhaseName(dto));
+        return Optional.of(errors);
+    }
+
     private void ensureUniquePhaseName(TournamentPhaseDTO tournamentPhase) {
         List<TournamentPhaseDTO> existingPhases = findAllByTournamentId(tournamentPhase.getTournamentId());
         String name = tournamentPhase.getName().toLowerCase().trim();
         for (TournamentPhaseDTO phase : existingPhases) {
             String phaseName = phase.getName().toLowerCase().trim();
-            if (name.equals(phaseName)) {
+            if (name.equals(phaseName) && !phase.getId().equals(tournamentPhase.getId())) {
                 throw new ObjectValidationException(
                         new FieldValidationErrors()
-                            .add("name", "Phase name must be unique within the tournament")
+                            .add("name", "This tournament already has a phase with that name.")
                 );
             }
         }
