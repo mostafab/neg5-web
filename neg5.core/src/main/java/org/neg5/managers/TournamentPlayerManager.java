@@ -132,7 +132,7 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
                 .filter(player -> player.getName().trim().toLowerCase().equals(normalizedName))
                 .findFirst()
                 .ifPresent(match -> {
-                    String message = String.format("A player with this name (%s) already exists on this team.", subject.getName());
+                    String message = String.format("A player with this name (%s) already exists on the team.", subject.getName());
                     throw new ObjectValidationException(new FieldValidationErrors().add("name", message));
                 });
     }

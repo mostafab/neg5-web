@@ -114,7 +114,7 @@ public class TournamentTeamManager extends AbstractDTOManager<TournamentTeam, To
         if (!teamMatches.isEmpty()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                        .add("teamMatches", "A team with existing matches cannot be removed.")
+                        .add("matches", "A team with existing matches cannot be removed.")
             );
         }
         super.delete(id);

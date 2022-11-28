@@ -97,6 +97,7 @@ public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, 
         TournamentMatchDTO original = get(tournamentMatchDTO.getId());
         tournamentMatchDTO.setTournamentId(original.getTournamentId());
         delete(tournamentMatchDTO.getId());
+        getDao().flush();
         return create(tournamentMatchDTO);
     }
 
