@@ -1,4 +1,4 @@
-package org.neg5.managers.stats;
+package neg5.stats.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -6,7 +6,7 @@ import neg5.domain.api.TournamentPhaseApi;
 import org.neg5.BaseAggregateStatsDTO;
 import org.neg5.StatsCacheInvalidationResultDTO;
 import org.neg5.TournamentPhaseDTO;
-import org.neg5.cache.TournamentStatsCache;
+import neg5.stats.impl.cache.TournamentStatsCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

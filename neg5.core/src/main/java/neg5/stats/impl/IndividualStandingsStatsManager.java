@@ -1,4 +1,4 @@
-package org.neg5.managers.stats;
+package neg5.stats.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -9,15 +9,15 @@ import org.neg5.IndividualStandingStatDTO;
 import org.neg5.IndividualStandingsStatsDTO;
 import org.neg5.TournamentMatchDTO;
 
-import org.neg5.managers.stats.aggregators.IndividualMatchesStatAggregator;
-import org.neg5.managers.stats.aggregators.IndividualStandingStatAggregator;
+import neg5.stats.impl.aggregators.IndividualMatchesStatAggregator;
+import neg5.stats.impl.aggregators.IndividualStandingStatAggregator;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
-public class IndividualStandingsStatsManager {
+class IndividualStandingsStatsManager {
 
     @Inject private TournamentPlayerApi tournamentPlayerApi;
 

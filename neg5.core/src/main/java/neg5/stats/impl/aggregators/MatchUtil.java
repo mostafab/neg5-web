@@ -1,4 +1,4 @@
-package org.neg5.managers.stats.aggregators;
+package neg5.stats.impl.aggregators;
 
 import org.neg5.MatchPlayerDTO;
 import org.neg5.MatchTeamDTO;

@@ -1,11 +1,11 @@
-package org.neg5.managers.stats.aggregators;
+package neg5.stats.impl.aggregators;
 
 import org.neg5.AnswersDTO;
 import org.neg5.IndividualMatchStatsDTO;
 import org.neg5.MatchPlayerDTO;
 import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;
-import org.neg5.managers.stats.StatsUtilities;
+import neg5.stats.impl.StatsUtilities;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

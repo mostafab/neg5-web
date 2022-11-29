@@ -1,4 +1,4 @@
-package org.neg5.managers.stats;
+package neg5.stats.impl;
 
 import org.neg5.AnswersDTO;
 import org.neg5.MatchTeamDTO;

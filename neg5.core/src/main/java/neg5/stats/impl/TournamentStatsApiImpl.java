@@ -8,9 +8,6 @@ import org.neg5.FullTeamsMatchesStatsDTO;
 import org.neg5.IndividualStandingsStatsDTO;
 import org.neg5.RoundsReportStatsDTO;
 import org.neg5.TeamStandingsStatsDTO;
-import org.neg5.managers.stats.IndividualStandingsStatsManager;
-import org.neg5.managers.stats.RoundReportStatsManager;
-import org.neg5.managers.stats.TeamStandingsStatsManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

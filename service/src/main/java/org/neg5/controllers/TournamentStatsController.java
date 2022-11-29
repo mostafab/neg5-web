@@ -1,16 +1,12 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
-import org.neg5.managers.stats.IndividualStandingsStatsManager;
-import org.neg5.managers.stats.RoundReportStatsManager;
-import org.neg5.managers.stats.StatsCacheManager;
-import org.neg5.managers.stats.TeamStandingsStatsManager;
+import neg5.stats.api.TournamentStatsApi;
+import neg5.stats.impl.StatsCacheManager;
 
 public class TournamentStatsController extends AbstractJsonController {
 
-    @Inject private TeamStandingsStatsManager teamStandingsStatsManager;
-    @Inject private IndividualStandingsStatsManager individualStandingsStatsManager;
-    @Inject private RoundReportStatsManager roundReportStatsManager;
+    @Inject private TournamentStatsApi tournamentStatsApi;
 
     @Inject private StatsCacheManager statsCacheManager;
 
@@ -22,15 +18,15 @@ public class TournamentStatsController extends AbstractJsonController {
     @Override
     public void registerRoutes() {
         get("/team-standings", (request, response) ->
-                teamStandingsStatsManager.getCachedTeamStandings(request.params("id"), request.queryParams("phase")));
+                tournamentStatsApi.calculateTeamStandings(request.params("id"), request.queryParams("phase")));
         get("/individual-standings", (request, response) ->
-                individualStandingsStatsManager.getCachedIndividualStandings(request.params("id"), request.queryParams("phase")));
+                tournamentStatsApi.calculateIndividualStandings(request.params("id"), request.queryParams("phase")));
         get("/team-full-standings", (request, response) ->
-                teamStandingsStatsManager.getCachedFullTeamStandings(request.params("id"), request.queryParams("phase")));
+                tournamentStatsApi.calculateFullTeamStandings(request.params("id"), request.queryParams("phase")));
         get("/individual-full-standings", (request, response) ->
-                individualStandingsStatsManager.getCachedFullIndividualStats(request.params("id"), request.queryParams("phase")));
+                tournamentStatsApi.calculateFullIndividualStats(request.params("id"), request.queryParams("phase")));
         get("/round-report", (request, response) ->
-                roundReportStatsManager.getCachedStats(request.params("id"), request.queryParams("phase")));
+                tournamentStatsApi.calculateRoundReportStats(request.params("id"), request.queryParams("phase")));
 
         post("/invalidate",
                 (request, response) -> statsCacheManager.invalidateStats(request.params("id")));

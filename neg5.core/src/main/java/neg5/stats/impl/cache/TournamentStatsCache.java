@@ -1,4 +1,4 @@
-package org.neg5.cache;
+package neg5.stats.impl.cache;
 
 import org.neg5.BaseAggregateStatsDTO;
 
