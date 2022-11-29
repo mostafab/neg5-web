@@ -1,10 +1,12 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.api.TournamentPlayerApi;
+import neg5.api.TournamentPoolApi;
 import neg5.api.TournamentTeamApi;
+import neg5.api.TournamentTeamPoolApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentTeamDTO;
@@ -12,6 +14,7 @@ import org.neg5.TournamentTeamPoolDTO;
 import org.neg5.daos.TournamentTeamDAO;
 import org.neg5.data.TournamentTeam;
 
+import org.neg5.managers.TournamentTeamMatchHelper;
 import org.neg5.mappers.TournamentTeamMapper;
 import org.neg5.validation.ObjectValidationException;
 
@@ -27,23 +30,23 @@ import static org.neg5.validation.FieldValidation.requireNonEmpty;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentTeamManager extends AbstractDTOManager<TournamentTeam, TournamentTeamDTO, String>
+public class TournamentTeamApiImpl extends AbstractApiLayerImpl<TournamentTeam, TournamentTeamDTO, String>
         implements TournamentTeamApi {
 
     private final TournamentTeamDAO rwTournamentTeamDAO;
     private final TournamentTeamMapper tournamentTeamMapper;
     private final TournamentPlayerApi tournamentPlayerApi;
-    private final TournamentTeamPoolManager teamDivisionManager;
+    private final TournamentTeamPoolApi teamDivisionManager;
     private final TournamentTeamMatchHelper teamMatchHelper;
-    private final TournamentPoolManager poolManager;
+    private final TournamentPoolApi poolManager;
 
     @Inject
-    public TournamentTeamManager(TournamentTeamDAO rwTournamentTeamDAO,
+    public TournamentTeamApiImpl(TournamentTeamDAO rwTournamentTeamDAO,
                                  TournamentTeamMapper tournamentTeamMapper,
                                  TournamentPlayerApi tournamentPlayerApi,
-                                 TournamentTeamPoolManager teamDivisionManager,
+                                 TournamentTeamPoolApi teamDivisionManager,
                                  TournamentTeamMatchHelper teamMatchHelper,
-                                 TournamentPoolManager poolManager
+                                 TournamentPoolApi poolManager
     ) {
         this.rwTournamentTeamDAO = rwTournamentTeamDAO;
         this.tournamentTeamMapper = tournamentTeamMapper;

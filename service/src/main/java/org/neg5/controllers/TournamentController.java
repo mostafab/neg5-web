@@ -2,20 +2,20 @@ package org.neg5.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import neg5.api.TournamentApi;
+import neg5.api.TournamentCollaboratorApi;
+import neg5.api.TournamentMatchApi;
+import neg5.api.TournamentPhaseApi;
 import neg5.api.TournamentPlayerApi;
+import neg5.api.TournamentRulesApi;
+import neg5.api.TournamentTeamApi;
+import neg5.api.TournamentTossupValueApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.core.QBJGsonProvider;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentCollaboratorManager;
-import org.neg5.managers.TournamentManager;
-import org.neg5.managers.TournamentMatchManager;
-import org.neg5.managers.TournamentPhaseManager;
-import org.neg5.managers.TournamentRulesManager;
-import org.neg5.managers.TournamentTeamManager;
-import org.neg5.managers.TournamentTossupValueManager;
 import org.neg5.managers.stats.QBJManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
@@ -24,14 +24,14 @@ import java.util.List;
 
 public class TournamentController extends AbstractJsonController {
 
-    @Inject private TournamentManager tournamentManager;
-    @Inject private TournamentTeamManager tournamentTeamManager;
+    @Inject private TournamentApi tournamentManager;
+    @Inject private TournamentTeamApi tournamentTeamManager;
     @Inject private TournamentPlayerApi tournamentPlayerApi;
-    @Inject private TournamentMatchManager tournamentMatchManager;
-    @Inject private TournamentPhaseManager tournamentPhaseManager;
-    @Inject private TournamentTossupValueManager tournamentTossupValueManager;
-    @Inject private TournamentCollaboratorManager tournamentCollaboratorManager;
-    @Inject private TournamentRulesManager tournamentRulesManager;
+    @Inject private TournamentMatchApi tournamentMatchManager;
+    @Inject private TournamentPhaseApi tournamentPhaseManager;
+    @Inject private TournamentTossupValueApi tournamentTossupValueManager;
+    @Inject private TournamentCollaboratorApi tournamentCollaboratorManager;
+    @Inject private TournamentRulesApi tournamentRulesManager;
 
     @Inject private CurrentUserContext currentUserContext;
     @Inject private TournamentAccessManager accessManager;
@@ -78,7 +78,7 @@ public class TournamentController extends AbstractJsonController {
                 -> tournamentTossupValueManager.findAllByTournamentId(request.params("id")));
         get("/:id/collaborators", (request, response)
                 -> tournamentCollaboratorManager.findAllByTournamentId(request.params("id")));
-        get("/:id/rules", (request, response) -> tournamentRulesManager.get(request.params("id")));
+        get("/:id/rules", (request, response) -> tournamentRulesManager.getForTournament(request.params("id")));
         get("/:id/qbj", (request, response) -> {
             response.type(QBJ_CONTENT_TYPE);
             return qbjManager.getQbj(request.params("id"));

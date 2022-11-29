@@ -2,11 +2,11 @@ package org.neg5.managers.stats;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import neg5.api.TournamentPhaseApi;
 import org.neg5.BaseAggregateStatsDTO;
 import org.neg5.StatsCacheInvalidationResultDTO;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.cache.TournamentStatsCache;
-import org.neg5.managers.TournamentPhaseManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +19,7 @@ import java.util.Set;
 public class StatsCacheManager {
 
     @Inject private Set<TournamentStatsCache> statsCaches;
-    @Inject private TournamentPhaseManager phaseManager;
+    @Inject private TournamentPhaseApi phaseManager;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StatsCacheManager.class);
 

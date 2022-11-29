@@ -1,9 +1,10 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentTossupValueApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.daos.TournamentTossupValueDAO;
@@ -22,14 +23,15 @@ import static org.neg5.validation.FieldValidation.requireCustomValidation;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentTossupValueManager extends
-        AbstractDTOManager<TournamentTossupValue, TournamentTossupValueDTO, TournamentTossupValueId> {
+public class TournamentTossupValueApiImpl extends
+        AbstractApiLayerImpl<TournamentTossupValue, TournamentTossupValueDTO, TournamentTossupValueId>
+        implements TournamentTossupValueApi {
 
     private final TournamentTossupValueDAO rwTournamentTossupValueDAO;
     private final TournamentTossupValueMapper tournamentTossupValueMapper;
 
     @Inject
-    public TournamentTossupValueManager(TournamentTossupValueDAO rwTournamentTossupValueDAO,
+    public TournamentTossupValueApiImpl(TournamentTossupValueDAO rwTournamentTossupValueDAO,
                                         TournamentTossupValueMapper tournamentTossupValueMapper) {
         this.rwTournamentTossupValueDAO = rwTournamentTossupValueDAO;
         this.tournamentTossupValueMapper = tournamentTossupValueMapper;
@@ -47,6 +49,7 @@ public class TournamentTossupValueManager extends
         values.forEach(v -> delete(getIdFromDTO(v)));
     }
 
+    @Override
     public Set<TournamentTossupValueDTO> getDefaultTournamentValues() {
         return Sets.newHashSet(
                 getStub(-5, TossupAnswerType.NEG),

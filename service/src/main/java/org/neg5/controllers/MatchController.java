@@ -1,10 +1,10 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.api.TournamentMatchApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentMatchManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
@@ -12,7 +12,7 @@ import spark.Response;
 
 public class MatchController extends AbstractJsonController {
 
-    @Inject private TournamentMatchManager matchManager;
+    @Inject private TournamentMatchApi matchManager;
     @Inject private RequestHelper requestHelper;
     @Inject private TournamentAccessManager tournamentAccessManager;
 

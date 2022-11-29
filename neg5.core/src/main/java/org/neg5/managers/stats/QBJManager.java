@@ -2,13 +2,12 @@ package org.neg5.managers.stats;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import neg5.api.TournamentApi;
+import neg5.api.TournamentTeamApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.enums.TossupAnswerType;
 import org.neg5.managers.QBJUtil;
-import org.neg5.managers.TournamentManager;
-import org.neg5.managers.TournamentMatchManager;
-import org.neg5.managers.TournamentTeamManager;
 import org.neg5.qbj.AnswerTypeDTO;
 import org.neg5.qbj.RegistrationDTO;
 import org.neg5.qbj.ScoringRulesDTO;
@@ -21,14 +20,14 @@ import java.util.stream.Collectors;
 @Singleton
 public class QBJManager {
 
-    private final TournamentManager tournamentManager;
-    private final TournamentTeamManager teamManager;
+    private final TournamentApi tournamentManager;
+    private final TournamentTeamApi teamApi;
 
     @Inject
-    public QBJManager(TournamentManager tournamentManager,
-                      TournamentTeamManager teamManager) {
+    public QBJManager(TournamentApi tournamentManager,
+                      TournamentTeamApi teamApi) {
         this.tournamentManager = tournamentManager;
-        this.teamManager = teamManager;
+        this.teamApi = teamApi;
     }
 
     public TournamentQbjDTO getQbj(String tournamentId) {
@@ -79,7 +78,7 @@ public class QBJManager {
     }
 
     private List<RegistrationDTO> getRegistrations(String tournamentId) {
-        List<TournamentTeamDTO> teams = teamManager.findAllByTournamentId(tournamentId);
+        List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
         return QBJUtil.toRegistrations(teams);
     }
 }

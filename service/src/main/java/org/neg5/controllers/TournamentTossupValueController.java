@@ -1,15 +1,15 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.api.TournamentTossupValueApi;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentTossupValueManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 public class TournamentTossupValueController extends AbstractJsonController {
 
-    @Inject private TournamentTossupValueManager tournamentTossupValueManager;
+    @Inject private TournamentTossupValueApi tournamentTossupValueManager;
     @Inject private TournamentAccessManager tournamentAccessManager;
     @Inject private RequestHelper requestHelper;
 

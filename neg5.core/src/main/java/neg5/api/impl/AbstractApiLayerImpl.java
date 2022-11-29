@@ -1,4 +1,4 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
+public abstract class AbstractApiLayerImpl<T extends AbstractDataObject<T>
         & IdDataObject<IdType>, DTO, IdType extends Serializable> implements ObjectApiLayer<DTO, IdType> {
 
     @Inject private CurrentUserContext userContext;

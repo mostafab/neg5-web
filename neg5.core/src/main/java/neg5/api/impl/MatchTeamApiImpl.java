@@ -1,7 +1,9 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.api.MatchPlayerApi;
+import neg5.api.MatchTeamApi;
 import org.neg5.MatchTeamDTO;
 import org.neg5.daos.MatchTeamDAO;
 import org.neg5.data.MatchTeam;
@@ -11,16 +13,17 @@ import org.neg5.mappers.MatchTeamMapper;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class MatchTeamManager extends AbstractDTOManager<MatchTeam, MatchTeamDTO, MatchTeamId> {
+public class MatchTeamApiImpl extends AbstractApiLayerImpl<MatchTeam, MatchTeamDTO, MatchTeamId>
+        implements MatchTeamApi {
 
     private final MatchTeamDAO matchTeamDAO;
     private final MatchTeamMapper matchTeamMapper;
-    private final MatchPlayerManager matchPlayerManager;
+    private final MatchPlayerApi matchPlayerManager;
 
     @Inject
-    public MatchTeamManager(MatchTeamDAO matchTeamDAO,
+    public MatchTeamApiImpl(MatchTeamDAO matchTeamDAO,
                             MatchTeamMapper matchTeamMapper,
-                            MatchPlayerManager matchPlayerManager) {
+                            MatchPlayerApi matchPlayerManager) {
         this.matchTeamDAO = matchTeamDAO;
         this.matchTeamMapper = matchTeamMapper;
         this.matchPlayerManager = matchPlayerManager;

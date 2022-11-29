@@ -1,6 +1,7 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.api.AccountApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.AccountDTO;
 import org.neg5.auth.LoginAuthenticator;
@@ -8,20 +9,19 @@ import org.neg5.auth.LoginCreds;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.login.DuplicateLoginException;
 import org.neg5.AccountCreationDTO;
-import org.neg5.managers.AccountManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 import spark.Response;
 
 public class AccountController extends AbstractJsonController {
 
-    private final AccountManager accountManager;
+    private final AccountApi accountManager;
     private final RequestHelper requestHelper;
     private final CurrentUserContext currentUserContext;
     private final LoginAuthenticator loginAuthenticator;
 
     @Inject
-    public AccountController(AccountManager accountManager,
+    public AccountController(AccountApi accountManager,
                              RequestHelper requestHelper,
                              CurrentUserContext currentUserContext,
                              LoginAuthenticator loginAuthenticator) {

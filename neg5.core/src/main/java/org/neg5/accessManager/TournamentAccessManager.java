@@ -3,11 +3,11 @@ package org.neg5.accessManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import neg5.api.TournamentApi;
+import neg5.api.TournamentCollaboratorApi;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.core.UserData;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentCollaboratorManager;
-import org.neg5.managers.TournamentManager;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -17,13 +17,13 @@ public class TournamentAccessManager {
 
     private final CurrentUserContext currentUserContext;
 
-    private final TournamentCollaboratorManager collaboratorManager;
-    private final TournamentManager tournamentManager;
+    private final TournamentCollaboratorApi collaboratorManager;
+    private final TournamentApi tournamentManager;
 
     @Inject
     public TournamentAccessManager(CurrentUserContext currentUserContext,
-                                   TournamentCollaboratorManager collaboratorManager,
-                                   TournamentManager tournamentManager) {
+                                   TournamentCollaboratorApi collaboratorManager,
+                                   TournamentApi tournamentManager) {
         this.currentUserContext = currentUserContext;
         this.collaboratorManager = collaboratorManager;
         this.tournamentManager = tournamentManager;

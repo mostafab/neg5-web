@@ -1,7 +1,8 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentPhaseApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentPhaseDTO;
 
@@ -16,13 +17,14 @@ import java.util.Optional;
 import static org.neg5.validation.FieldValidation.requireCustomValidation;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
-public class TournamentPhaseManager extends AbstractDTOManager<TournamentPhase, TournamentPhaseDTO, String> {
+public class TournamentPhaseApiImpl extends AbstractApiLayerImpl<TournamentPhase, TournamentPhaseDTO, String>
+        implements TournamentPhaseApi {
 
     private final TournamentPhaseDAO rwTournamentPhaseDAO;
     private final TournamentPhaseMapper tournamentPhaseMapper;
 
     @Inject
-    public TournamentPhaseManager(TournamentPhaseDAO rwTournamentPhaseDAO,
+    public TournamentPhaseApiImpl(TournamentPhaseDAO rwTournamentPhaseDAO,
                                   TournamentPhaseMapper tournamentPhaseMapper) {
         this.rwTournamentPhaseDAO = rwTournamentPhaseDAO;
         this.tournamentPhaseMapper = tournamentPhaseMapper;

@@ -1,24 +1,26 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentApi;
+import neg5.api.TournamentRulesApi;
 import org.neg5.TournamentRulesDTO;
 import org.neg5.mappers.TournamentRulesMapper;
 
-public class TournamentRulesManager {
+public class TournamentRulesApiImpl implements TournamentRulesApi {
 
-    private final TournamentManager tournamentManager;
+    private final TournamentApi tournamentManager;
     private final TournamentRulesMapper tournamentRulesMapper;
 
     @Inject
-    public TournamentRulesManager(TournamentManager tournamentManager,
+    public TournamentRulesApiImpl(TournamentApi tournamentManager,
                                   TournamentRulesMapper tournamentRulesMapper) {
         this.tournamentManager = tournamentManager;
         this.tournamentRulesMapper = tournamentRulesMapper;
     }
 
     @Transactional
-    public TournamentRulesDTO get(String tournamentId) {
+    public TournamentRulesDTO getForTournament(String tournamentId) {
         return tournamentRulesMapper.toDTO(tournamentManager.get(tournamentId));
     }
 }

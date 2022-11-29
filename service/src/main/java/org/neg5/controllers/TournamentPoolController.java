@@ -1,20 +1,20 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.api.TournamentPoolApi;
 import org.neg5.TournamentPoolDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentPoolManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 public class TournamentPoolController extends AbstractJsonController {
 
-    private final TournamentPoolManager poolManager;
+    private final TournamentPoolApi poolManager;
     private final RequestHelper requestHelper;
     private final TournamentAccessManager accessManager;
 
     @Inject
-    public TournamentPoolController(TournamentPoolManager poolManager,
+    public TournamentPoolController(TournamentPoolApi poolManager,
                                     RequestHelper requestHelper,
                                     TournamentAccessManager accessManager) {
         this.poolManager = poolManager;

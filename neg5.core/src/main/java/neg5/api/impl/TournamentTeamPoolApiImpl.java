@@ -1,8 +1,9 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentTeamPoolApi;
 import org.neg5.TournamentTeamPoolDTO;
 import org.neg5.daos.TournamentTeamPoolDAO;
 import org.neg5.data.TournamentTeamPool;
@@ -14,14 +15,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Singleton
-public class TournamentTeamPoolManager
-        extends AbstractDTOManager<TournamentTeamPool, TournamentTeamPoolDTO, TournamentTeamPoolId> {
+public class TournamentTeamPoolApiImpl
+        extends AbstractApiLayerImpl<TournamentTeamPool, TournamentTeamPoolDTO, TournamentTeamPoolId>
+        implements TournamentTeamPoolApi {
 
     private final TournamentTeamPoolMapper mapper;
     private final TournamentTeamPoolDAO dao;
 
     @Inject
-    public TournamentTeamPoolManager(TournamentTeamPoolMapper mapper,
+    public TournamentTeamPoolApiImpl(TournamentTeamPoolMapper mapper,
                                      TournamentTeamPoolDAO dao) {
         this.mapper = mapper;
         this.dao = dao;

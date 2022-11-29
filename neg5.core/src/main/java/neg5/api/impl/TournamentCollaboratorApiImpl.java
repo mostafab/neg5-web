@@ -1,8 +1,10 @@
-package org.neg5.managers;
+package neg5.api.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentApi;
+import neg5.api.TournamentCollaboratorApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;
@@ -19,17 +21,18 @@ import java.util.Set;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentCollaboratorManager
-        extends AbstractDTOManager<TournamentCollaborator, TournamentCollaboratorDTO, TournamentCollaboratorId> {
+public class TournamentCollaboratorApiImpl
+        extends AbstractApiLayerImpl<TournamentCollaborator, TournamentCollaboratorDTO, TournamentCollaboratorId>
+        implements TournamentCollaboratorApi {
 
     private final TournamentCollaboratorMapper tournamentCollaboratorMapper;
     private final TournamentCollaboratorDAO tournamentCollaboratorDAO;
-    private final TournamentManager tournamentManager;
+    private final TournamentApi tournamentManager;
 
     @Inject
-    public TournamentCollaboratorManager(TournamentCollaboratorMapper tournamentCollaboratorMapper,
+    public TournamentCollaboratorApiImpl(TournamentCollaboratorMapper tournamentCollaboratorMapper,
                                          TournamentCollaboratorDAO tournamentCollaboratorDAO,
-                                         TournamentManager tournamentManager) {
+                                         TournamentApi tournamentManager) {
         this.tournamentCollaboratorMapper = tournamentCollaboratorMapper;
         this.tournamentCollaboratorDAO = tournamentCollaboratorDAO;
         this.tournamentManager = tournamentManager;
