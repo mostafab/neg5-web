@@ -2,6 +2,7 @@ package org.neg5.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
 import neg5.domain.api.TournamentMatchApi;
@@ -17,7 +18,6 @@ import neg5.userData.CurrentUserContext;
 import org.neg5.core.QBJGsonProvider;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.stats.QBJManager;
-import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 import java.util.List;

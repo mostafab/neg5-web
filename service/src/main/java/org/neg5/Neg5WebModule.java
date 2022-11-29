@@ -1,6 +1,7 @@
 package org.neg5;
 
 import com.google.inject.AbstractModule;
+import neg5.accessManager.guice.TournamentAccessGuiceModule;
 import neg5.domain.guice.ApiLayerGuiceModule;
 import neg5.db.flyway.module.FlywayModule;
 import org.neg5.jwt.module.JwtSigningModule;
@@ -17,6 +18,7 @@ public class Neg5WebModule extends AbstractModule {
          install(new DataAccessModule());
          install(new FlywayModule());
          install(new ApiLayerGuiceModule());
+         install(new TournamentAccessGuiceModule());
          install(new ControllersModule());
          install(new FilterModule());
          install(new JwtSigningModule());

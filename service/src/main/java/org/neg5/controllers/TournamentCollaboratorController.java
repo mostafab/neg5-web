@@ -1,11 +1,11 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentCollaboratorApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 

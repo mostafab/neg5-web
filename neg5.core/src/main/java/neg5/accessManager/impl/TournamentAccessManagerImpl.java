@@ -1,19 +1,21 @@
-package org.neg5.accessManager;
+package neg5.accessManager.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
+import neg5.accessManager.api.TournamentAccessException;
 import org.neg5.enums.TournamentAccessLevel;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
 @Singleton
-public class TournamentAccessManager {
+public class TournamentAccessManagerImpl implements TournamentAccessManager {
 
     private final CurrentUserContext currentUserContext;
 
@@ -21,16 +23,17 @@ public class TournamentAccessManager {
     private final TournamentApi tournamentManager;
 
     @Inject
-    public TournamentAccessManager(CurrentUserContext currentUserContext,
-                                   TournamentCollaboratorApi collaboratorManager,
-                                   TournamentApi tournamentManager) {
+    public TournamentAccessManagerImpl(CurrentUserContext currentUserContext,
+                                       TournamentCollaboratorApi collaboratorManager,
+                                       TournamentApi tournamentManager) {
         this.currentUserContext = currentUserContext;
         this.collaboratorManager = collaboratorManager;
         this.tournamentManager = tournamentManager;
     }
 
+    @Override
     public void requireAccessLevel(@Nonnull String tournamentId,
-                                   @Nonnull TournamentAccessLevel requiredAccessLevel) {
+                                   @Nonnull TournamentAccessLevel requiredAccessLevel) throws TournamentAccessException {
         TournamentAccessLevel currentLevel = getCurrentUserAccessLevel(tournamentId);
         if (currentLevel.getLevel() < requiredAccessLevel.getLevel()) {
             throw new TournamentAccessException(tournamentId,
@@ -38,8 +41,9 @@ public class TournamentAccessManager {
         }
     }
 
-    public TournamentAccessLevel getUserAccessLevelToTournament(String tournamentId,
-                                                                String userId) {
+    @Override
+    public TournamentAccessLevel getUserAccessLevelToTournament(@Nonnull String tournamentId,
+                                                                @Nonnull String userId) {
         if (userIsDirector(userId, tournamentId)) {
             return TournamentAccessLevel.OWNER;
         }

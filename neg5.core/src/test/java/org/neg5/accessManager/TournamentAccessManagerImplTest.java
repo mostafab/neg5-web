@@ -1,5 +1,7 @@
 package org.neg5.accessManager;
 
+import neg5.accessManager.api.TournamentAccessException;
+import neg5.accessManager.impl.TournamentAccessManagerImpl;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
 import org.junit.jupiter.api.Test;
@@ -22,13 +24,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TournamentAccessManagerTest {
+public class TournamentAccessManagerImplTest {
 
     @Mock private TournamentCollaboratorApi collaboratorManager;
     @Mock private TournamentApi tournamentManager;
     @Mock private CurrentUserContext currentUserContext;
 
-    @InjectMocks private TournamentAccessManager tournamentAccessManager;
+    @InjectMocks private TournamentAccessManagerImpl tournamentAccessManager;
 
     private static final String TOURNAMENT_ID = "1";
 
