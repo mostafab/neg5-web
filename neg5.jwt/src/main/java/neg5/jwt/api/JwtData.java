@@ -1,4 +1,4 @@
-package org.neg5.jwt;
+package neg5.jwt.api;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ public class JwtData {
 
     private final Map<String, Object> claimsProperties;
 
-    JwtData(Map<String, Object> claimsProperties) {
+    public JwtData(Map<String, Object> claimsProperties) {
         this.claimsProperties = claimsProperties;
     }
 
@@ -15,7 +15,7 @@ public class JwtData {
         return claimsProperties;
     }
 
-    public <T> T getClaim(String key, Class<T> claimClazz) {
+    public <T> T getClaim(String key) {
         return (T) claimsProperties.get(key);
     }
 

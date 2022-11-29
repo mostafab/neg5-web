@@ -3,8 +3,8 @@ package org.neg5.auth;
 import com.google.inject.Inject;
 import neg5.domain.api.AccountApi;
 import neg5.gson.GsonProvider;
-import org.neg5.jwt.JwtData;
-import org.neg5.jwt.JwtManager;
+import neg5.jwt.api.JwtData;
+import neg5.jwt.api.JwtApi;
 import spark.Request;
 import spark.Response;
 
@@ -14,17 +14,17 @@ public class LoginAuthenticator {
 
     private final AccountApi accountManager;
     private final GsonProvider gsonProvider;
-    private final JwtManager jwtManager;
+    private final JwtApi jwtApi;
     private final Neg5TokenCookieNameProvider cookieNameProvider;
 
     @Inject
     public LoginAuthenticator(AccountApi accountManager,
                               GsonProvider gsonProvider,
-                              JwtManager jwtManager,
+                              JwtApi jwtApi,
                               Neg5TokenCookieNameProvider cookieNameProvider) {
         this.accountManager = accountManager;
         this.gsonProvider = gsonProvider;
-        this.jwtManager = jwtManager;
+        this.jwtApi = jwtApi;
         this.cookieNameProvider = cookieNameProvider;
     }
 
@@ -35,7 +35,7 @@ public class LoginAuthenticator {
 
     public boolean loginByCredentials(LoginCreds credentials, Response response) {
         if (accountManager.verifyPassword(credentials.getUsername(), credentials.getPassword())) {
-            response.cookie(cookieNameProvider.get(), jwtManager.buildJwt(buildData(credentials)));
+            response.cookie(cookieNameProvider.get(), jwtApi.buildJwt(buildData(credentials)));
             return true;
         }
         return false;

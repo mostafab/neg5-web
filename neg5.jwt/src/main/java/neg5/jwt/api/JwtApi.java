@@ -1,6 +1,6 @@
-package org.neg5.jwt;
+package neg5.jwt.api;
 
-public interface JwtManager {
+public interface JwtApi {
 
     String buildJwt(JwtData data);
 

@@ -1,12 +1,11 @@
-package org.neg5.jwt;
+package neg5.jwt.impl;
 
-import com.google.inject.Provider;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 
 import java.util.Base64;
 
-public class JwtParserProvider implements Provider<JwtParser> {
+public class JwtParserProvider {
 
     private final String signingKey;
 
@@ -17,8 +16,7 @@ public class JwtParserProvider implements Provider<JwtParser> {
         this.signingKey = Base64.getEncoder().encodeToString(base64Secret.getBytes());
     }
 
-    @Override
-    public JwtParser get() {
+    public JwtParser getParser() {
         return Jwts.parser()
                 .setSigningKey(signingKey);
     }
