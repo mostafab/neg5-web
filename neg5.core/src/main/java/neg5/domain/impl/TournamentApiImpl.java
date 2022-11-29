@@ -17,10 +17,10 @@ import org.neg5.UpdateTournamentRequestDTO;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
 import org.neg5.daos.TournamentDAO;
-import org.neg5.data.Tournament;
+import neg5.domain.impl.entities.Tournament;
 
-import org.neg5.mappers.TournamentMapper;
-import org.neg5.mappers.UpdateTournamentRequestMapper;
+import neg5.domain.impl.mappers.TournamentMapper;
+import neg5.domain.impl.mappers.UpdateTournamentRequestMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import java.util.List;

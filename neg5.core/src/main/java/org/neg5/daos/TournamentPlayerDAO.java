@@ -1,6 +1,6 @@
 package org.neg5.daos;
 
-import org.neg5.data.TournamentPlayer;
+import neg5.domain.impl.entities.TournamentPlayer;
 
 import java.util.List;
 

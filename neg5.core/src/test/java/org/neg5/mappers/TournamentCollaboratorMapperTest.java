@@ -1,14 +1,15 @@
 package org.neg5.mappers;
 
+import neg5.domain.impl.mappers.TournamentCollaboratorMapper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.neg5.TournamentCollaboratorDTO;
-import org.neg5.data.Account;
-import org.neg5.data.Tournament;
-import org.neg5.data.TournamentCollaborator;
+import neg5.domain.impl.entities.Account;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentCollaborator;
 import org.neg5.data.embeddables.TournamentCollaboratorId;
 
 @ExtendWith(MockitoExtension.class)

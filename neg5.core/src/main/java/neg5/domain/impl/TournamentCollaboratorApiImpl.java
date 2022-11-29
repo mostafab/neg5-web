@@ -9,9 +9,9 @@ import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;
 import org.neg5.daos.TournamentCollaboratorDAO;
-import org.neg5.data.TournamentCollaborator;
+import neg5.domain.impl.entities.TournamentCollaborator;
 import org.neg5.data.embeddables.TournamentCollaboratorId;
-import org.neg5.mappers.TournamentCollaboratorMapper;
+import neg5.domain.impl.mappers.TournamentCollaboratorMapper;
 
 import javax.persistence.NoResultException;
 import java.util.HashSet;

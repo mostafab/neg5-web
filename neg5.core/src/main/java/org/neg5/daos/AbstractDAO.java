@@ -2,9 +2,9 @@ package org.neg5.daos;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import org.neg5.data.AbstractDataObject;
-import org.neg5.data.IdDataObject;
-import org.neg5.data.SpecificTournamentEntity;
+import neg5.domain.impl.entities.AbstractDataObject;
+import neg5.domain.impl.entities.IdDataObject;
+import neg5.domain.impl.entities.SpecificTournamentEntity;
 
 import javax.persistence.EntityManager;
 import java.io.Serializable;

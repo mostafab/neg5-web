@@ -8,11 +8,11 @@ import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
 import org.neg5.daos.AbstractDAO;
 
-import org.neg5.data.AbstractDataObject;
-import org.neg5.data.Auditable;
-import org.neg5.data.CompositeIdObject;
-import org.neg5.data.IdDataObject;
-import org.neg5.mappers.AbstractObjectMapper;
+import neg5.domain.impl.entities.AbstractDataObject;
+import neg5.domain.impl.entities.Auditable;
+import neg5.domain.impl.entities.CompositeIdObject;
+import neg5.domain.impl.entities.IdDataObject;
+import neg5.domain.impl.mappers.AbstractObjectMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import javax.persistence.NoResultException;

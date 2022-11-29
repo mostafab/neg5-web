@@ -1,11 +1,11 @@
 package org.neg5.daos;
 
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import neg5.domain.impl.entities.transformers.MatchTransformer;
+import neg5.domain.impl.entities.transformers.data.Match;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.type.StandardBasicTypes;
-import org.neg5.data.TournamentMatch;
-import org.neg5.data.transformers.MatchTransformer;
-import org.neg5.data.transformers.data.Match;
+import neg5.domain.impl.entities.TournamentMatch;
 
 import java.util.List;
 

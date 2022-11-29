@@ -1,6 +1,6 @@
 package org.neg5.daos;
 
-import org.neg5.data.TournamentPool;
+import neg5.domain.impl.entities.TournamentPool;
 
 public class TournamentPoolDAO extends AbstractDAO<TournamentPool, String> {
 

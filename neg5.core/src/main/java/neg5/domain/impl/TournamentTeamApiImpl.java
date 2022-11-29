@@ -12,10 +12,10 @@ import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.TournamentTeamPoolDTO;
 import org.neg5.daos.TournamentTeamDAO;
-import org.neg5.data.TournamentTeam;
+import neg5.domain.impl.entities.TournamentTeam;
 
 import org.neg5.managers.TournamentTeamMatchHelper;
-import org.neg5.mappers.TournamentTeamMapper;
+import neg5.domain.impl.mappers.TournamentTeamMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import javax.annotation.Nonnull;

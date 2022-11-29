@@ -1,6 +1,6 @@
 package org.neg5.daos;
 
-import org.neg5.data.MatchTeam;
+import neg5.domain.impl.entities.MatchTeam;
 import org.neg5.data.embeddables.MatchTeamId;
 
 public class MatchTeamDAO extends AbstractDAO<MatchTeam, MatchTeamId> {

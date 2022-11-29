@@ -8,10 +8,10 @@ import neg5.domain.api.TournamentTossupValueApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.daos.TournamentTossupValueDAO;
-import org.neg5.data.TournamentTossupValue;
+import neg5.domain.impl.entities.TournamentTossupValue;
 import org.neg5.data.embeddables.TournamentTossupValueId;
 import org.neg5.enums.TossupAnswerType;
-import org.neg5.mappers.TournamentTossupValueMapper;
+import neg5.domain.impl.mappers.TournamentTossupValueMapper;
 import org.neg5.validation.ObjectValidationException;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.neg5.daos;
 
-import org.neg5.data.Account;
+import neg5.domain.impl.entities.Account;
 
 public class AccountDAO extends AbstractDAO<Account, String> {
 

@@ -1,5 +1,7 @@
 package org.neg5.mappers;
 
+import neg5.domain.impl.mappers.MatchTeamMapper;
+import neg5.domain.impl.mappers.TournamentMatchMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -9,8 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;
-import org.neg5.data.Tournament;
-import org.neg5.data.TournamentMatch;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentMatch;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;

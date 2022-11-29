@@ -1,5 +1,8 @@
 package org.neg5.mappers;
 
+import neg5.domain.impl.mappers.TournamentPlayerMapper;
+import neg5.domain.impl.mappers.TournamentPoolMapper;
+import neg5.domain.impl.mappers.TournamentTeamMapper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,10 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.neg5.TournamentPoolDTO;
 import org.neg5.TournamentPlayerDTO;
 import org.neg5.TournamentTeamDTO;
-import org.neg5.data.Tournament;
-import org.neg5.data.TournamentPool;
-import org.neg5.data.TournamentPlayer;
-import org.neg5.data.TournamentTeam;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentPool;
+import neg5.domain.impl.entities.TournamentPlayer;
+import neg5.domain.impl.entities.TournamentTeam;
 
 import java.util.HashSet;
 

@@ -6,9 +6,9 @@ import neg5.domain.api.MatchPlayerAnswerApi;
 import neg5.domain.api.MatchPlayerApi;
 import org.neg5.MatchPlayerDTO;
 import org.neg5.daos.MatchPlayerDAO;
-import org.neg5.data.MatchPlayer;
+import neg5.domain.impl.entities.MatchPlayer;
 import org.neg5.data.embeddables.MatchPlayerId;
-import org.neg5.mappers.MatchPlayerMapper;
+import neg5.domain.impl.mappers.MatchPlayerMapper;
 
 import java.util.HashSet;
 import java.util.stream.Collectors;
