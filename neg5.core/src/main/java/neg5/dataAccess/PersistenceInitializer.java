@@ -3,12 +3,12 @@ package neg5.dataAccess;
 import com.google.inject.Inject;
 import com.google.inject.persist.PersistService;
 
-public class PersistInitializer {
+public class PersistenceInitializer {
 
     private final PersistService persistService;
 
     @Inject
-    protected PersistInitializer(PersistService persistService) {
+    protected PersistenceInitializer(PersistService persistService) {
         this.persistService = persistService;
     }
 

@@ -3,7 +3,7 @@ package org.neg5;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import neg5.db.flyway.Neg5DatabaseMigrator;
-import neg5.dataAccess.PersistInitializer;
+import neg5.dataAccess.PersistenceInitializer;
 import org.neg5.util.FilterRegistry;
 import spark.Spark;
 import spark.servlet.SparkApplication;
@@ -15,11 +15,11 @@ public class Neg5App implements SparkApplication {
     @Inject @Named("service.port") private Integer port;
     @Inject private Neg5DatabaseMigrator databaseMigrator;
 
-    @Inject private PersistInitializer persistInitializer;
+    @Inject private PersistenceInitializer persistenceInitializer;
 
     @Override
     public synchronized void init() {
-        persistInitializer.start();
+        persistenceInitializer.start();
 
         Spark.port(port);
         initRoutes();
