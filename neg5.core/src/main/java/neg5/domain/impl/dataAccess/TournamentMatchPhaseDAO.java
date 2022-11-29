@@ -1,7 +1,7 @@
 package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentMatchPhase;
-import neg5.domain.impl.entities.embeddables.MatchPhaseId;
+import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
 
 import java.util.List;
 

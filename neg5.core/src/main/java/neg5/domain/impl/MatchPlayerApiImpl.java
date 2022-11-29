@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.MatchPlayerAnswerApi;
 import neg5.domain.api.MatchPlayerApi;
-import neg5.domain.impl.entities.embeddables.MatchPlayerId;
+import neg5.domain.impl.entities.compositeIds.MatchPlayerId;
 import org.neg5.MatchPlayerDTO;
 import neg5.domain.impl.dataAccess.MatchPlayerDAO;
 import neg5.domain.impl.entities.MatchPlayer;

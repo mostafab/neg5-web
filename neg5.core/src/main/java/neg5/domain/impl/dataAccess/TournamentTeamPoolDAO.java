@@ -1,7 +1,7 @@
 package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentTeamPool;
-import neg5.domain.impl.entities.embeddables.TournamentTeamPoolId;
+import neg5.domain.impl.entities.compositeIds.TournamentTeamPoolId;
 
 import java.util.List;
 

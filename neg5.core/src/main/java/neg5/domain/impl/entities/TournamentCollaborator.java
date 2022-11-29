@@ -1,6 +1,6 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.embeddables.TournamentCollaboratorId;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;

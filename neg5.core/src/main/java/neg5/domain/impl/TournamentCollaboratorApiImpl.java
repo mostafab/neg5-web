@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
-import neg5.domain.impl.entities.embeddables.TournamentCollaboratorId;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;

@@ -1,6 +1,6 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.embeddables.TournamentTossupValueId;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import org.hibernate.annotations.DynamicUpdate;
 import org.neg5.enums.TossupAnswerType;
 

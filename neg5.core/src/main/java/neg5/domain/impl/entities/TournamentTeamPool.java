@@ -1,6 +1,6 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.embeddables.TournamentTeamPoolId;
+import neg5.domain.impl.entities.compositeIds.TournamentTeamPoolId;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.EmbeddedId;

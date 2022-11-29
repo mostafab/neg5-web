@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentTossupValueApi;
-import neg5.domain.impl.entities.embeddables.TournamentTossupValueId;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentTossupValueDTO;
 import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;

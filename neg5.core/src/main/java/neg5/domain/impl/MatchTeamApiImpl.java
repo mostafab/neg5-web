@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.MatchPlayerApi;
 import neg5.domain.api.MatchTeamApi;
-import neg5.domain.impl.entities.embeddables.MatchTeamId;
+import neg5.domain.impl.entities.compositeIds.MatchTeamId;
 import org.neg5.MatchTeamDTO;
 import neg5.domain.impl.dataAccess.MatchTeamDAO;
 import neg5.domain.impl.entities.MatchTeam;

@@ -1,7 +1,7 @@
 package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentTossupValue;
-import neg5.domain.impl.entities.embeddables.TournamentTossupValueId;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 
 public class TournamentTossupValueDAO extends AbstractDAO<TournamentTossupValue, TournamentTossupValueId> {
 

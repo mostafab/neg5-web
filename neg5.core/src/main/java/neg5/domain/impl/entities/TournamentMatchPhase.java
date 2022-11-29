@@ -1,6 +1,6 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.embeddables.MatchPhaseId;
+import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.EmbeddedId;

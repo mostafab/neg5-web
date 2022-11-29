@@ -1,6 +1,6 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.embeddables.MatchTeamId;
+import neg5.domain.impl.entities.compositeIds.MatchTeamId;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
