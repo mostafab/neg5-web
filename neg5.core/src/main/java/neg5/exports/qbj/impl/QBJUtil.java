@@ -1,4 +1,4 @@
-package org.neg5.managers;
+package neg5.exports.qbj.impl;
 
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;

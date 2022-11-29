@@ -1,4 +1,4 @@
-package org.neg5.validation;
+package neg5.validation;
 
 import org.neg5.FieldValidationErrors;
 

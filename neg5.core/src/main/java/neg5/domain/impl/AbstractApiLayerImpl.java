@@ -13,7 +13,7 @@ import neg5.domain.impl.entities.Auditable;
 import neg5.domain.impl.entities.CompositeIdObject;
 import neg5.domain.impl.entities.IdDataObject;
 import neg5.domain.impl.mappers.AbstractObjectMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import javax.persistence.NoResultException;
 import java.io.Serializable;

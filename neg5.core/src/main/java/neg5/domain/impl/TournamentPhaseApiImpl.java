@@ -9,13 +9,13 @@ import org.neg5.TournamentPhaseDTO;
 import neg5.domain.impl.dataAccess.TournamentPhaseDAO;
 import neg5.domain.impl.entities.TournamentPhase;
 import neg5.domain.impl.mappers.TournamentPhaseMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 public class TournamentPhaseApiImpl extends AbstractApiLayerImpl<TournamentPhase, TournamentPhaseDTO, String>
         implements TournamentPhaseApi {

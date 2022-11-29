@@ -26,8 +26,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireCondition;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCondition;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentMatchApiImpl

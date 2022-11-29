@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentCollaboratorApiImpl

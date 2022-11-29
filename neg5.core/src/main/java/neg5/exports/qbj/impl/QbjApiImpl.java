@@ -1,13 +1,13 @@
-package org.neg5.managers.stats;
+package neg5.exports.qbj.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentTeamApi;
+import neg5.exports.qbj.api.QbjApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.enums.TossupAnswerType;
-import org.neg5.managers.QBJUtil;
 import org.neg5.qbj.AnswerTypeDTO;
 import org.neg5.qbj.RegistrationDTO;
 import org.neg5.qbj.ScoringRulesDTO;
@@ -18,19 +18,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Singleton
-public class QBJManager {
+public class QbjApiImpl implements QbjApi {
 
     private final TournamentApi tournamentManager;
     private final TournamentTeamApi teamApi;
 
     @Inject
-    public QBJManager(TournamentApi tournamentManager,
+    public QbjApiImpl(TournamentApi tournamentManager,
                       TournamentTeamApi teamApi) {
         this.tournamentManager = tournamentManager;
         this.teamApi = teamApi;
     }
 
-    public TournamentQbjDTO getQbj(String tournamentId) {
+    public TournamentQbjDTO exportToQbjFormat(String tournamentId) {
         TournamentDTO tournament = tournamentManager.get(tournamentId);
 
         TournamentQbjDTO qbj = new TournamentQbjDTO();

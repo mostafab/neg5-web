@@ -1,4 +1,4 @@
-package org.neg5.core;
+package neg5.exports.qbj.api;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

@@ -9,7 +9,7 @@ import org.neg5.AccountCreationDTO;
 import org.neg5.AccountDTO;
 import neg5.domain.impl.dataAccess.AccountDAO;
 import neg5.domain.impl.entities.Account;
-import org.neg5.login.DuplicateLoginException;
+import neg5.userData.DuplicateLoginException;
 import neg5.domain.impl.mappers.AccountMapper;
 
 import javax.persistence.NoResultException;

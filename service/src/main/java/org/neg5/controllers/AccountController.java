@@ -7,7 +7,7 @@ import org.neg5.AccountDTO;
 import org.neg5.auth.LoginAuthenticator;
 import org.neg5.auth.LoginCreds;
 import neg5.userData.CurrentUserContext;
-import org.neg5.login.DuplicateLoginException;
+import neg5.userData.DuplicateLoginException;
 import org.neg5.AccountCreationDTO;
 import org.neg5.util.RequestHelper;
 import spark.Request;

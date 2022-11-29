@@ -13,7 +13,7 @@ import neg5.domain.impl.mappers.TournamentPoolMapper;
 
 import java.util.Optional;
 
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 public class TournamentPoolApiImpl
         extends AbstractApiLayerImpl<TournamentPool, TournamentPoolDTO, String> implements TournamentPoolApi {

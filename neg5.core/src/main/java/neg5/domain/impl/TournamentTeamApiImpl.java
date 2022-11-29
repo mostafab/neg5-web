@@ -16,7 +16,7 @@ import neg5.domain.impl.entities.TournamentTeam;
 
 import org.neg5.managers.TournamentTeamMatchHelper;
 import neg5.domain.impl.mappers.TournamentTeamMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNonEmpty;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNonEmpty;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentTeamApiImpl extends AbstractApiLayerImpl<TournamentTeam, TournamentTeamDTO, String>

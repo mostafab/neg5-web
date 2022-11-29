@@ -1,4 +1,4 @@
-package org.neg5.login;
+package neg5.userData;
 
 public class DuplicateLoginException extends Exception {
 

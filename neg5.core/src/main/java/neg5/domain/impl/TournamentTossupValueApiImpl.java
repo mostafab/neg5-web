@@ -12,15 +12,15 @@ import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
 import neg5.domain.impl.entities.TournamentTossupValue;
 import org.neg5.enums.TossupAnswerType;
 import neg5.domain.impl.mappers.TournamentTossupValueMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentTossupValueApiImpl extends

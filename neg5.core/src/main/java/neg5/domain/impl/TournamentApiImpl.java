@@ -21,14 +21,14 @@ import neg5.domain.impl.entities.Tournament;
 
 import neg5.domain.impl.mappers.TournamentMapper;
 import neg5.domain.impl.mappers.UpdateTournamentRequestMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, TournamentDTO, String>

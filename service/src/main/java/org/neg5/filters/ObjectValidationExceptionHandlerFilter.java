@@ -2,7 +2,7 @@ package org.neg5.filters;
 
 import com.google.inject.Inject;
 import neg5.gson.GsonProvider;
-import org.neg5.validation.ObjectValidationException;
+import neg5.validation.ObjectValidationException;
 
 import static spark.Spark.exception;
 

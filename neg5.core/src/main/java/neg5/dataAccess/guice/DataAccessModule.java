@@ -1,4 +1,4 @@
-package org.neg5.module;
+package neg5.dataAccess.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
