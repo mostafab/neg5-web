@@ -2,6 +2,7 @@ package org.neg5.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import neg5.api.TournamentPlayerApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
@@ -12,7 +13,6 @@ import org.neg5.managers.TournamentCollaboratorManager;
 import org.neg5.managers.TournamentManager;
 import org.neg5.managers.TournamentMatchManager;
 import org.neg5.managers.TournamentPhaseManager;
-import org.neg5.managers.TournamentPlayerManager;
 import org.neg5.managers.TournamentRulesManager;
 import org.neg5.managers.TournamentTeamManager;
 import org.neg5.managers.TournamentTossupValueManager;
@@ -26,7 +26,7 @@ public class TournamentController extends AbstractJsonController {
 
     @Inject private TournamentManager tournamentManager;
     @Inject private TournamentTeamManager tournamentTeamManager;
-    @Inject private TournamentPlayerManager tournamentPlayerManager;
+    @Inject private TournamentPlayerApi tournamentPlayerApi;
     @Inject private TournamentMatchManager tournamentMatchManager;
     @Inject private TournamentPhaseManager tournamentPhaseManager;
     @Inject private TournamentTossupValueManager tournamentTossupValueManager;
@@ -69,7 +69,7 @@ public class TournamentController extends AbstractJsonController {
         get("/:id/teams", (request, response)
                 -> tournamentTeamManager.findAllByTournamentId(request.params("id")));
         get("/:id/players", (request, response)
-                -> tournamentPlayerManager.findAllByTournamentId(request.params("id")));
+                -> tournamentPlayerApi.findAllByTournamentId(request.params("id")));
         get("/:id/matches", (request, response)
                 -> tournamentMatchManager.findAllByTournamentId(request.params("id")));
         get("/:id/phases", (request, response)
