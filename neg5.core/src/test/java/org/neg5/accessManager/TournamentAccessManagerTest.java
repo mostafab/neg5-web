@@ -9,8 +9,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.TournamentDTO;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
 
 import org.neg5.enums.TournamentAccessLevel;
 

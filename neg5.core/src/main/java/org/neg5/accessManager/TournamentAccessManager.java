@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
 import org.neg5.enums.TournamentAccessLevel;
 
 import javax.annotation.Nonnull;

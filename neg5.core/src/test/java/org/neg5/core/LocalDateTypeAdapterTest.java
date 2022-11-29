@@ -2,6 +2,7 @@ package org.neg5.core;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import neg5.gson.LocalDateTypeAdapter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

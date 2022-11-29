@@ -1,10 +1,11 @@
-package org.neg5.core;
+package neg5.gson;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import neg5.gson.IdentifiableTypeAdapterProvider;
 import org.neg5.enums.StringIdentifiable;
 
 import java.io.IOException;

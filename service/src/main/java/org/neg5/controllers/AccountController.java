@@ -6,7 +6,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.AccountDTO;
 import org.neg5.auth.LoginAuthenticator;
 import org.neg5.auth.LoginCreds;
-import org.neg5.core.CurrentUserContext;
+import neg5.userData.CurrentUserContext;
 import org.neg5.login.DuplicateLoginException;
 import org.neg5.AccountCreationDTO;
 import org.neg5.util.RequestHelper;

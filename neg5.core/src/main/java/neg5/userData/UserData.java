@@ -1,4 +1,4 @@
-package org.neg5.core;
+package neg5.userData;
 
 public class UserData {
 

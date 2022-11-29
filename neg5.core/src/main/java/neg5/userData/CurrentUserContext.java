@@ -1,4 +1,4 @@
-package org.neg5.core;
+package neg5.userData;
 
 import com.google.inject.Singleton;
 

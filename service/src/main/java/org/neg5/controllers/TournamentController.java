@@ -13,7 +13,7 @@ import neg5.domain.api.TournamentTossupValueApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
-import org.neg5.core.CurrentUserContext;
+import neg5.userData.CurrentUserContext;
 import org.neg5.core.QBJGsonProvider;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.managers.stats.QBJManager;

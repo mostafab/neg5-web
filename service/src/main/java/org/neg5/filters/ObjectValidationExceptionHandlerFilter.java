@@ -1,7 +1,7 @@
 package org.neg5.filters;
 
 import com.google.inject.Inject;
-import org.neg5.core.GsonProvider;
+import neg5.gson.GsonProvider;
 import org.neg5.validation.ObjectValidationException;
 
 import static spark.Spark.exception;

@@ -2,7 +2,7 @@ package org.neg5.data.transformers;
 
 import com.google.gson.Gson;
 import org.hibernate.transform.ResultTransformer;
-import org.neg5.core.GsonProvider;
+import neg5.gson.GsonProvider;
 import org.neg5.data.transformers.data.Match;
 import org.neg5.data.transformers.data.Phase;
 import org.neg5.data.transformers.data.TeamInMatch;

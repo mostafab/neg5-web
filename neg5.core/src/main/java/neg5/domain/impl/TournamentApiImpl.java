@@ -14,8 +14,8 @@ import org.neg5.TournamentDTO;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
 import org.neg5.daos.TournamentDAO;
 import org.neg5.data.Tournament;
 

@@ -2,7 +2,7 @@ package org.neg5.auth;
 
 import com.google.inject.Inject;
 import neg5.domain.api.AccountApi;
-import org.neg5.core.GsonProvider;
+import neg5.gson.GsonProvider;
 import org.neg5.jwt.JwtData;
 import org.neg5.jwt.JwtManager;
 import spark.Request;

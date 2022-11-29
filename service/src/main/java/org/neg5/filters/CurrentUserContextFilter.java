@@ -2,8 +2,8 @@ package org.neg5.filters;
 
 import com.google.inject.Inject;
 import org.neg5.auth.Neg5TokenCookieNameProvider;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.CurrentUserTokenUtil;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.CurrentUserTokenUtil;
 
 import static spark.Spark.afterAfter;
 import static spark.Spark.before;

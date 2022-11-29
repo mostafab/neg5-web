@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.DomainObjectApiLayer;
 import org.neg5.FieldValidationErrors;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
 import org.neg5.daos.AbstractDAO;
 
 import org.neg5.data.AbstractDataObject;
