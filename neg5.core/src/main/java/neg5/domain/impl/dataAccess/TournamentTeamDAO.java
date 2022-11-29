@@ -1,4 +1,4 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentTeam;
 

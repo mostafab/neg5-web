@@ -11,7 +11,7 @@ import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.TournamentTeamPoolDTO;
-import org.neg5.daos.TournamentTeamDAO;
+import neg5.domain.impl.dataAccess.TournamentTeamDAO;
 import neg5.domain.impl.entities.TournamentTeam;
 
 import org.neg5.managers.TournamentTeamMatchHelper;

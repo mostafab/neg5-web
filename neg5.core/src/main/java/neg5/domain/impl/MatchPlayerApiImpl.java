@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.MatchPlayerAnswerApi;
 import neg5.domain.api.MatchPlayerApi;
+import neg5.domain.impl.entities.embeddables.MatchPlayerId;
 import org.neg5.MatchPlayerDTO;
-import org.neg5.daos.MatchPlayerDAO;
+import neg5.domain.impl.dataAccess.MatchPlayerDAO;
 import neg5.domain.impl.entities.MatchPlayer;
-import org.neg5.data.embeddables.MatchPlayerId;
 import neg5.domain.impl.mappers.MatchPlayerMapper;
 
 import java.util.HashSet;

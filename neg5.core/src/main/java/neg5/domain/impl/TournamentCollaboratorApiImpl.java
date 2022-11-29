@@ -5,12 +5,12 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
+import neg5.domain.impl.entities.embeddables.TournamentCollaboratorId;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;
-import org.neg5.daos.TournamentCollaboratorDAO;
+import neg5.domain.impl.dataAccess.TournamentCollaboratorDAO;
 import neg5.domain.impl.entities.TournamentCollaborator;
-import org.neg5.data.embeddables.TournamentCollaboratorId;
 import neg5.domain.impl.mappers.TournamentCollaboratorMapper;
 
 import javax.persistence.NoResultException;

@@ -1,4 +1,4 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import neg5.domain.impl.entities.transformers.MatchTransformer;

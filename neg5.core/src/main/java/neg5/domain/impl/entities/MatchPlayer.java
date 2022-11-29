@@ -1,7 +1,7 @@
 package neg5.domain.impl.entities;
 
+import neg5.domain.impl.entities.embeddables.MatchPlayerId;
 import org.hibernate.annotations.DynamicUpdate;
-import org.neg5.data.embeddables.MatchPlayerId;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

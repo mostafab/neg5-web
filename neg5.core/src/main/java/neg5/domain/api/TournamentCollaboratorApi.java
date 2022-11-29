@@ -1,8 +1,8 @@
 package neg5.domain.api;
 
+import neg5.domain.impl.entities.embeddables.TournamentCollaboratorId;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.UserTournamentsDTO;
-import org.neg5.data.embeddables.TournamentCollaboratorId;
 
 import java.util.Optional;
 import java.util.Set;

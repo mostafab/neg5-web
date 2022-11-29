@@ -2,10 +2,10 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import neg5.domain.api.MatchPlayerAnswerApi;
+import neg5.domain.impl.entities.embeddables.MatchPlayerAnswerId;
 import org.neg5.MatchPlayerAnswerDTO;
-import org.neg5.daos.MatchPlayerAnswerDAO;
+import neg5.domain.impl.dataAccess.MatchPlayerAnswerDAO;
 import neg5.domain.impl.entities.MatchPlayerAnswer;
-import org.neg5.data.embeddables.MatchPlayerAnswerId;;
 import neg5.domain.impl.mappers.MatchPlayerAnswerMapper;
 
 public class MatchPlayerAnswerApiImpl

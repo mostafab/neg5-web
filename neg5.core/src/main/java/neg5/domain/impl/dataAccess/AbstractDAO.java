@@ -1,4 +1,4 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

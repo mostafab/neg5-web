@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentTeamPoolApi;
+import neg5.domain.impl.entities.embeddables.TournamentTeamPoolId;
 import org.neg5.TournamentTeamPoolDTO;
-import org.neg5.daos.TournamentTeamPoolDAO;
+import neg5.domain.impl.dataAccess.TournamentTeamPoolDAO;
 import neg5.domain.impl.entities.TournamentTeamPool;
-import org.neg5.data.embeddables.TournamentTeamPoolId;
 import neg5.domain.impl.mappers.TournamentTeamPoolMapper;
 
 import java.util.List;

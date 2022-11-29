@@ -7,7 +7,7 @@ import neg5.domain.api.TournamentPoolApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.TournamentPoolDTO;
-import org.neg5.daos.TournamentPoolDAO;
+import neg5.domain.impl.dataAccess.TournamentPoolDAO;
 import neg5.domain.impl.entities.TournamentPool;
 import neg5.domain.impl.mappers.TournamentPoolMapper;
 

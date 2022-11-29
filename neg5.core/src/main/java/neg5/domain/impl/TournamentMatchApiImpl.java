@@ -12,7 +12,7 @@ import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
-import org.neg5.daos.TournamentMatchDAO;
+import neg5.domain.impl.dataAccess.TournamentMatchDAO;
 import neg5.domain.impl.entities.TournamentMatch;
 import neg5.domain.impl.mappers.TournamentMatchMapper;
 import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;

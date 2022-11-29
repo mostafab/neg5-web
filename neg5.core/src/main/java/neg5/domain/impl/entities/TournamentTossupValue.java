@@ -1,7 +1,7 @@
 package neg5.domain.impl.entities;
 
+import neg5.domain.impl.entities.embeddables.TournamentTossupValueId;
 import org.hibernate.annotations.DynamicUpdate;
-import org.neg5.data.embeddables.TournamentTossupValueId;
 import org.neg5.enums.TossupAnswerType;
 
 import javax.persistence.Column;

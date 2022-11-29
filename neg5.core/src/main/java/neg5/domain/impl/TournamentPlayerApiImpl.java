@@ -11,7 +11,7 @@ import org.neg5.MatchPlayerDTO;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentPlayerDTO;
 
-import org.neg5.daos.TournamentPlayerDAO;
+import neg5.domain.impl.dataAccess.TournamentPlayerDAO;
 import neg5.domain.impl.entities.TournamentPlayer;
 import neg5.domain.impl.mappers.TournamentPlayerMapper;
 import org.neg5.validation.ObjectValidationException;

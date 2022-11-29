@@ -6,7 +6,7 @@ import neg5.domain.api.TournamentPhaseApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentPhaseDTO;
 
-import org.neg5.daos.TournamentPhaseDAO;
+import neg5.domain.impl.dataAccess.TournamentPhaseDAO;
 import neg5.domain.impl.entities.TournamentPhase;
 import neg5.domain.impl.mappers.TournamentPhaseMapper;
 import org.neg5.validation.ObjectValidationException;

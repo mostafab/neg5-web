@@ -1,7 +1,7 @@
 package neg5.domain.api;
 
+import neg5.domain.impl.entities.embeddables.TournamentTossupValueId;
 import org.neg5.TournamentTossupValueDTO;
-import org.neg5.data.embeddables.TournamentTossupValueId;
 
 import java.util.Set;
 

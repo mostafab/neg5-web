@@ -1,7 +1,7 @@
 package neg5.domain.api;
 
+import neg5.domain.impl.entities.embeddables.MatchTeamId;
 import org.neg5.MatchTeamDTO;
-import org.neg5.data.embeddables.MatchTeamId;
 
 public interface MatchTeamApi extends DomainObjectApiLayer<MatchTeamDTO, MatchTeamId> {
 }

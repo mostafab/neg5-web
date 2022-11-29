@@ -1,4 +1,4 @@
-package org.neg5.data.embeddables;
+package neg5.domain.impl.entities.embeddables;
 
 import neg5.domain.impl.entities.CompositeId;
 import neg5.domain.impl.entities.Tournament;

@@ -1,7 +1,7 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentTeamPool;
-import org.neg5.data.embeddables.TournamentTeamPoolId;
+import neg5.domain.impl.entities.embeddables.TournamentTeamPoolId;
 
 import java.util.List;
 

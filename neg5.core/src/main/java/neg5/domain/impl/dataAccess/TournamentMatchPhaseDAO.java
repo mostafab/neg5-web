@@ -1,7 +1,7 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.TournamentMatchPhase;
-import org.neg5.data.embeddables.MatchPhaseId;
+import neg5.domain.impl.entities.embeddables.MatchPhaseId;
 
 import java.util.List;
 

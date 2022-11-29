@@ -1,4 +1,4 @@
-package org.neg5.data.embeddables;
+package neg5.domain.impl.entities.embeddables;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import neg5.domain.impl.entities.CompositeId;

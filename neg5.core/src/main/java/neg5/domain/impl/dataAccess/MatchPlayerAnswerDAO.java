@@ -1,7 +1,7 @@
-package org.neg5.daos;
+package neg5.domain.impl.dataAccess;
 
 import neg5.domain.impl.entities.MatchPlayerAnswer;
-import org.neg5.data.embeddables.MatchPlayerAnswerId;
+import neg5.domain.impl.entities.embeddables.MatchPlayerAnswerId;
 
 public class MatchPlayerAnswerDAO extends AbstractDAO<MatchPlayerAnswer, MatchPlayerAnswerId> {
 

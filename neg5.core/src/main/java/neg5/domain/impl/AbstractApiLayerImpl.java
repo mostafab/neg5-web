@@ -6,7 +6,7 @@ import neg5.domain.api.DomainObjectApiLayer;
 import org.neg5.FieldValidationErrors;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
-import org.neg5.daos.AbstractDAO;
+import neg5.domain.impl.dataAccess.AbstractDAO;
 
 import neg5.domain.impl.entities.AbstractDataObject;
 import neg5.domain.impl.entities.Auditable;
