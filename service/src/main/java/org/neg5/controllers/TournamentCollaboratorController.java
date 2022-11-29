@@ -1,22 +1,22 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.domain.api.TournamentCollaboratorApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentCollaboratorManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 
 public class TournamentCollaboratorController extends AbstractJsonController {
 
-    private final TournamentCollaboratorManager collaboratorManager;
+    private final TournamentCollaboratorApi collaboratorManager;
     private final TournamentAccessManager accessManager;
     private final RequestHelper requestHelper;
 
     @Inject
-    public TournamentCollaboratorController(TournamentCollaboratorManager collaboratorManager,
+    public TournamentCollaboratorController(TournamentCollaboratorApi collaboratorManager,
                                             TournamentAccessManager accessManager,
                                             RequestHelper requestHelper) {
         this.collaboratorManager = collaboratorManager;

@@ -1,7 +1,7 @@
 package org.neg5;
 
 import com.google.inject.AbstractModule;
-import neg5.api.guice.ApiLayerGuiceModule;
+import neg5.domain.guice.ApiLayerGuiceModule;
 import neg5.db.flyway.module.FlywayModule;
 import org.neg5.jwt.module.JwtSigningModule;
 import org.neg5.matchValidators.MatchValidatorsModule;

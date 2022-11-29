@@ -2,13 +2,13 @@ package org.neg5.managers.stats;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import neg5.domain.api.TournamentPlayerApi;
 import org.neg5.FullIndividualMatchesStatsDTO;
 import org.neg5.IndividualMatchesStatsDTO;
 import org.neg5.IndividualStandingStatDTO;
 import org.neg5.IndividualStandingsStatsDTO;
 import org.neg5.TournamentMatchDTO;
 
-import org.neg5.managers.TournamentPlayerManager;
 import org.neg5.managers.stats.aggregators.IndividualMatchesStatAggregator;
 import org.neg5.managers.stats.aggregators.IndividualStandingStatAggregator;
 
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class IndividualStandingsStatsManager {
 
-    @Inject private TournamentPlayerManager tournamentPlayerManager;
+    @Inject private TournamentPlayerApi tournamentPlayerApi;
 
     @Inject private StatsCacheManager statsCacheManager;
 
@@ -35,7 +35,7 @@ public class IndividualStandingsStatsManager {
         stats.setTournamentId(tournamentId);
         stats.setPhaseId(phaseId);
 
-        Map<String, List<TournamentMatchDTO>> matchesByPlayers = tournamentPlayerManager
+        Map<String, List<TournamentMatchDTO>> matchesByPlayers = tournamentPlayerApi
                 .groupMatchesByPlayers(tournamentId, phaseId);
 
         stats.setPlayerStandings(
@@ -59,7 +59,7 @@ public class IndividualStandingsStatsManager {
         stats.setTournamentId(tournamentId);
         stats.setPhaseId(phaseId);
 
-        Map<String, List<TournamentMatchDTO>> matchesByPlayers = tournamentPlayerManager
+        Map<String, List<TournamentMatchDTO>> matchesByPlayers = tournamentPlayerApi
                 .groupMatchesByPlayers(tournamentId, phaseId);
 
         stats.setPlayers(matchesByPlayers.entrySet().stream()

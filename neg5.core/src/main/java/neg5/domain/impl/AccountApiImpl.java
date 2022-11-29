@@ -1,7 +1,8 @@
-package org.neg5.managers;
+package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.domain.api.AccountApi;
 import org.mindrot.jbcrypt.BCrypt;
 
 import org.neg5.AccountCreationDTO;
@@ -13,7 +14,8 @@ import org.neg5.mappers.AccountMapper;
 
 import javax.persistence.NoResultException;
 
-public class AccountManager extends AbstractDTOManager<Account, AccountDTO, String> {
+public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, String>
+        implements AccountApi {
 
     private final AccountDAO accountDAO;
     private final AccountMapper accountMapper;
@@ -21,7 +23,7 @@ public class AccountManager extends AbstractDTOManager<Account, AccountDTO, Stri
     private static final Integer SALT_ROUNDS = 10;
 
     @Inject
-    public AccountManager(AccountDAO accountDAO,
+    public AccountApiImpl(AccountDAO accountDAO,
                           AccountMapper accountMapper) {
         this.accountDAO = accountDAO;
         this.accountMapper = accountMapper;

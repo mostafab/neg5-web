@@ -1,9 +1,12 @@
-package org.neg5.managers;
+package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import neg5.api.TournamentMatchApi;
+import neg5.domain.api.MatchTeamApi;
+import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentMatchPhaseApi;
+import neg5.domain.api.TournamentTossupValueApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
@@ -27,12 +30,12 @@ import static org.neg5.validation.FieldValidation.requireCondition;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentMatchManager
-        extends AbstractDTOManager<TournamentMatch, TournamentMatchDTO, String> implements TournamentMatchApi {
+public class TournamentMatchApiImpl
+        extends AbstractApiLayerImpl<TournamentMatch, TournamentMatchDTO, String> implements TournamentMatchApi {
 
-    private final TournamentTossupValueManager tournamentTossupValueManager;
-    private final MatchTeamManager matchTeamManager;
-    private final TournamentMatchPhaseManager matchPhaseManager;
+    private final TournamentTossupValueApi tournamentTossupValueManager;
+    private final MatchTeamApi matchTeamManager;
+    private final TournamentMatchPhaseApi matchPhaseManager;
     private final Set<EnhancedMatchValidator> matchValidators;
 
     private final TournamentMatchMapper tournamentMatchMapper;
@@ -40,9 +43,9 @@ public class TournamentMatchManager
     private final TournamentMatchDAO rwTournamentMatchDAO;
 
     @Inject
-    public TournamentMatchManager(TournamentTossupValueManager tournamentTossupValueManager,
-                                  MatchTeamManager matchTeamManager,
-                                  TournamentMatchPhaseManager matchPhaseManager,
+    public TournamentMatchApiImpl(TournamentTossupValueApi tournamentTossupValueManager,
+                                  MatchTeamApi matchTeamManager,
+                                  TournamentMatchPhaseApi matchPhaseManager,
                                   Set<EnhancedMatchValidator> matchValidators,
                                   TournamentMatchMapper tournamentMatchMapper,
                                   MatchToMatchDTOMapper matchToMatchDTOMapper,

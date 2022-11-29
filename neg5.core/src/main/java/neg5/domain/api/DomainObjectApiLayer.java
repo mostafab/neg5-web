@@ -1,10 +1,10 @@
-package neg5.api;
+package neg5.domain.api;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public interface ObjectApiLayer<ApiObject, IdType extends Serializable> {
+public interface DomainObjectApiLayer<ApiObject, IdType extends Serializable> {
 
     ApiObject get(IdType id);
 

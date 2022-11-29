@@ -1,5 +1,7 @@
 package org.neg5.accessManager;
 
+import neg5.domain.api.TournamentApi;
+import neg5.domain.api.TournamentCollaboratorApi;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,8 +13,6 @@ import org.neg5.core.CurrentUserContext;
 import org.neg5.core.UserData;
 
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentCollaboratorManager;
-import org.neg5.managers.TournamentManager;
 
 import java.util.Optional;
 
@@ -24,8 +24,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class TournamentAccessManagerTest {
 
-    @Mock private TournamentCollaboratorManager collaboratorManager;
-    @Mock private TournamentManager tournamentManager;
+    @Mock private TournamentCollaboratorApi collaboratorManager;
+    @Mock private TournamentApi tournamentManager;
     @Mock private CurrentUserContext currentUserContext;
 
     @InjectMocks private TournamentAccessManager tournamentAccessManager;

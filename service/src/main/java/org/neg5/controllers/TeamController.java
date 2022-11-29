@@ -1,10 +1,10 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.domain.api.TournamentTeamApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentTeamManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class TeamController extends AbstractJsonController {
 
-    @Inject private TournamentTeamManager teamManager;
+    @Inject private TournamentTeamApi teamManager;
     @Inject private TournamentAccessManager tournamentAccessManager;
     @Inject private RequestHelper requestHelper;
 

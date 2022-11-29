@@ -1,8 +1,8 @@
-package org.neg5.managers;
+package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import neg5.api.ObjectApiLayer;
+import neg5.domain.api.DomainObjectApiLayer;
 import org.neg5.FieldValidationErrors;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.core.UserData;
@@ -23,8 +23,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
-        & IdDataObject<IdType>, DTO, IdType extends Serializable> implements ObjectApiLayer<DTO, IdType> {
+public abstract class AbstractApiLayerImpl<T extends AbstractDataObject<T>
+        & IdDataObject<IdType>, DTO, IdType extends Serializable> implements DomainObjectApiLayer<DTO, IdType> {
 
     @Inject private CurrentUserContext userContext;
 

@@ -1,9 +1,13 @@
-package org.neg5.managers;
+package neg5.domain.impl;
 
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.domain.api.TournamentApi;
+import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentPhaseApi;
+import neg5.domain.api.TournamentTossupValueApi;
 import org.apache.commons.collections.CollectionUtils;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentDTO;
@@ -27,24 +31,25 @@ import java.util.stream.Collectors;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentManager extends AbstractDTOManager<Tournament, TournamentDTO, String> {
+public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, TournamentDTO, String>
+        implements TournamentApi {
 
     private final TournamentDAO rwTournamentDAO;
     private final TournamentMapper tournamentMapper;
     private final CurrentUserContext currentUserContext;
 
-    private final TournamentPhaseManager phaseManager;
-    private final TournamentTossupValueManager tossupValueManager;
-    private final TournamentMatchManager matchManager;
+    private final TournamentPhaseApi phaseManager;
+    private final TournamentTossupValueApi tossupValueManager;
+    private final TournamentMatchApi matchManager;
     private final UpdateTournamentRequestMapper updateTournamentRequestMapper;
 
     @Inject
-    public TournamentManager(TournamentDAO rwTournamentDAO,
+    public TournamentApiImpl(TournamentDAO rwTournamentDAO,
                              TournamentMapper tournamentMapper,
                              CurrentUserContext currentUserContext,
-                             TournamentPhaseManager phaseManager,
-                             TournamentTossupValueManager tossupValueManager,
-                             TournamentMatchManager matchManager,
+                             TournamentPhaseApi phaseManager,
+                             TournamentTossupValueApi tossupValueManager,
+                             TournamentMatchApi matchManager,
                              UpdateTournamentRequestMapper updateTournamentRequestMapper) {
         this.rwTournamentDAO = rwTournamentDAO;
         this.tournamentMapper = tournamentMapper;

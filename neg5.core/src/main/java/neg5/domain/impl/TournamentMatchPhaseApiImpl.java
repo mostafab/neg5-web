@@ -1,7 +1,8 @@
-package org.neg5.managers;
+package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.domain.api.TournamentMatchPhaseApi;
 import org.neg5.TournamentMatchPhaseDTO;
 import org.neg5.daos.TournamentMatchPhaseDAO;
 import org.neg5.data.TournamentMatchPhase;
@@ -12,14 +13,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TournamentMatchPhaseManager
-        extends AbstractDTOManager<TournamentMatchPhase, TournamentMatchPhaseDTO, MatchPhaseId> {
+public class TournamentMatchPhaseApiImpl
+        extends AbstractApiLayerImpl<TournamentMatchPhase, TournamentMatchPhaseDTO, MatchPhaseId>
+        implements TournamentMatchPhaseApi {
 
     private final TournamentMatchPhaseMapper matchPhaseMapper;
     private final TournamentMatchPhaseDAO dao;
 
     @Inject
-    public TournamentMatchPhaseManager(TournamentMatchPhaseMapper matchPhaseMapper,
+    public TournamentMatchPhaseApiImpl(TournamentMatchPhaseMapper matchPhaseMapper,
                                        TournamentMatchPhaseDAO dao) {
         this.matchPhaseMapper = matchPhaseMapper;
         this.dao = dao;
