@@ -1,7 +1,6 @@
-package org.neg5.accessManager;
+package neg5.accessManager.impl;
 
 import neg5.accessManager.api.TournamentAccessException;
-import neg5.accessManager.impl.TournamentAccessManagerImpl;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
 import org.junit.jupiter.api.Test;
