@@ -1,6 +1,7 @@
 package org.neg5;
 
 import com.google.inject.AbstractModule;
+import neg5.api.guice.ApiLayerGuiceModule;
 import neg5.db.flyway.module.FlywayModule;
 import org.neg5.jwt.module.JwtSigningModule;
 import org.neg5.matchValidators.MatchValidatorsModule;
@@ -15,6 +16,7 @@ public class Neg5WebModule extends AbstractModule {
          install(new ConfigurationModule());
          install(new DataAccessModule());
          install(new FlywayModule());
+         install(new ApiLayerGuiceModule());
          install(new ControllersModule());
          install(new FilterModule());
          install(new JwtSigningModule());

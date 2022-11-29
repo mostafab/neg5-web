@@ -10,6 +10,7 @@ public class MatchValidatorsModule extends AbstractModule {
     protected void configure() {
         Multibinder<EnhancedMatchValidator> multibinder = Multibinder.newSetBinder(binder(), EnhancedMatchValidator.class);
         addBinding(multibinder, TotalTossupsValidator.class);
+        addBinding(multibinder, SingleMatchPerRoundValidator.class);
     }
 
     private void addBinding(Multibinder<EnhancedMatchValidator> multibinder, Class<? extends EnhancedMatchValidator> clazz) {

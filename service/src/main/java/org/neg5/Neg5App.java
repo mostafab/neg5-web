@@ -5,9 +5,8 @@ import com.google.inject.name.Named;
 import neg5.db.flyway.Neg5DatabaseMigrator;
 import org.neg5.core.PersistInitializer;
 import org.neg5.util.FilterRegistry;
+import spark.Spark;
 import spark.servlet.SparkApplication;
-
-import static spark.Spark.port;
 
 public class Neg5App implements SparkApplication {
 
@@ -22,7 +21,7 @@ public class Neg5App implements SparkApplication {
     public synchronized void init() {
         persistInitializer.start();
 
-        port(port);
+        Spark.port(port);
         initRoutes();
         initFilters();
 

@@ -8,7 +8,7 @@ import org.neg5.TeamMatchesStatsDTO;
 import org.neg5.TeamStandingStatsDTO;
 import org.neg5.TeamStandingsStatsDTO;
 import org.neg5.TournamentMatchDTO;
-import org.neg5.managers.TournamentTeamManager;
+import org.neg5.managers.TournamentTeamMatchHelper;
 import org.neg5.managers.stats.aggregators.TeamMatchesStatsAggregator;
 import org.neg5.managers.stats.aggregators.TeamStandingStatAggregator;
 
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @Singleton
 public class TeamStandingsStatsManager {
 
-    private final TournamentTeamManager tournamentTeamManager;
+    private final TournamentTeamMatchHelper tournamentTeamManager;
     private final StatsCacheManager statsCacheManager;
 
     @Inject
-    public TeamStandingsStatsManager(TournamentTeamManager tournamentTeamManager,
+    public TeamStandingsStatsManager(TournamentTeamMatchHelper tournamentTeamManager,
                                      StatsCacheManager statsCacheManager) {
         this.tournamentTeamManager = tournamentTeamManager;
         this.statsCacheManager = statsCacheManager;

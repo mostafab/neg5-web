@@ -1,18 +1,20 @@
 package org.neg5.matchValidators;
 
+import com.google.inject.Singleton;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Singleton
 public class TotalTossupsValidator implements EnhancedMatchValidator {
 
   @Override
   public FieldValidationErrors getErrors(
       @Nonnull List<TournamentMatchDTO> allMatches, @Nonnull TournamentMatchDTO subject) {
-    Integer tossupsHeard = subject.getTossupsHeard();
     FieldValidationErrors errors = new FieldValidationErrors();
+    Integer tossupsHeard = subject.getTossupsHeard();
     if (tossupsHeard == null || subject.getTeams() == null) {
       return errors;
     }
