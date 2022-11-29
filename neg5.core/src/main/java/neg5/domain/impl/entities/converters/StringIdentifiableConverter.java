@@ -1,4 +1,4 @@
-package org.neg5.data.converters;
+package neg5.domain.impl.entities.converters;
 
 import neg5.domain.api.enums.StringIdentifiable;
 
