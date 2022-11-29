@@ -1,4 +1,4 @@
-package org.neg5.module;
+package neg5.configuration;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;

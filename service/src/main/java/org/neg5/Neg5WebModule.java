@@ -8,7 +8,7 @@ import neg5.exports.qbj.guice.QbjGuiceModule;
 import neg5.stats.guice.TournamentStatsModule;
 import org.neg5.jwt.module.JwtSigningModule;
 import neg5.dataAccess.guice.DataAccessModule;
-import org.neg5.module.ConfigurationModule;
+import neg5.configuration.ConfigurationModule;
 
 public class Neg5WebModule extends AbstractModule {
 
