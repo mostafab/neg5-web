@@ -2,10 +2,12 @@ package neg5.service.transformers;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import neg5.gson.GsonProvider;
 import spark.ResponseTransformer;
 
-public class JsonTransformer implements ResponseTransformer {
+@Singleton
+public class GsonResponseTransformer implements ResponseTransformer {
 
     @Inject private GsonProvider gsonProvider;
 
@@ -14,7 +16,7 @@ public class JsonTransformer implements ResponseTransformer {
         return getGson().toJson(o);
     }
 
-    protected Gson getGson() {
+    private Gson getGson() {
         return gsonProvider.get();
     }
 }
