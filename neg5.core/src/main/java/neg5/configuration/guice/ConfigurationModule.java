@@ -17,16 +17,18 @@ public class ConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        Names.bindProperties(binder(), getComposedProperties());
+        final Environment environment = Environment.getEnvironment();
+        Names.bindProperties(binder(), getComposedProperties(environment));
+        bind(Environment.class).toInstance(environment);
     }
 
-    private Properties getComposedProperties() {
+    private Properties getComposedProperties(Environment environment) {
         try {
-            Properties props = new Properties();
+            final Properties props = new Properties();
             // Load generic configs first
             props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
             // Override with environment specific configs
-            props.load(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(getEnvConfigPath())));
+            props.load(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(getEnvConfigPath(environment))));
             // Substitute environment vars
             props.putAll(substituteEnvironmentVariables(props));
             return props;
@@ -35,8 +37,8 @@ public class ConfigurationModule extends AbstractModule {
         }
     }
 
-    private String getEnvConfigPath() {
-        return String.format("config.%s.properties", Environment.getEnvironment().getLabel());
+    private String getEnvConfigPath(Environment environment) {
+        return String.format("config.%s.properties", environment.getLabel());
     }
 
     private Map<?, ?> substituteEnvironmentVariables(Properties properties) {

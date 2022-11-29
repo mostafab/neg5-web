@@ -2,7 +2,7 @@ package org.neg5;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import neg5.db.flyway.Neg5DatabaseMigrator;
+import neg5.db.migrations.api.DatabaseMigrator;
 import neg5.dataAccess.PersistenceInitializer;
 import org.neg5.util.FilterRegistry;
 import spark.Spark;
@@ -13,7 +13,7 @@ public class Neg5App implements SparkApplication {
     @Inject private ControllerRegistry controllerRegistry;
     @Inject private FilterRegistry filterRegistry;
     @Inject @Named("service.port") private Integer port;
-    @Inject private Neg5DatabaseMigrator databaseMigrator;
+    @Inject private DatabaseMigrator databaseMigrator;
 
     @Inject private PersistenceInitializer persistenceInitializer;
 
