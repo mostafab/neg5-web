@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Singleton
 public class GsonProvider implements Provider<Gson> {
 
-    private static final Gson gson = new GsonBuilder()
+    private static final Gson GSON = new GsonBuilder()
             .registerTypeAdapterFactory(new IdentifiableTypeAdapterFactory())
             .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
             .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
@@ -19,6 +19,6 @@ public class GsonProvider implements Provider<Gson> {
 
     @Override
     public Gson get() {
-        return gson;
+        return GSON;
     }
 }

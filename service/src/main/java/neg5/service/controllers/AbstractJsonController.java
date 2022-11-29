@@ -1,8 +1,7 @@
 package neg5.service.controllers;
 
 import com.google.inject.Inject;
-import neg5.service.transformers.JsonTransformer;
-import neg5.service.transformers.JsonTransformerProvider;
+import neg5.service.transformers.GsonResponseTransformer;
 
 import spark.Route;
 
@@ -12,11 +11,11 @@ import spark.Route;
 public abstract class AbstractJsonController extends AbstractController {
 
     @Inject
-    private JsonTransformerProvider jsonTransformerProvider;
+    private GsonResponseTransformer gsonResponseTransformer;
 
     @Override
-    protected JsonTransformer getResponseTransformer() {
-        return jsonTransformerProvider.get();
+    protected GsonResponseTransformer getResponseTransformer() {
+        return gsonResponseTransformer;
     }
 
     @Override
