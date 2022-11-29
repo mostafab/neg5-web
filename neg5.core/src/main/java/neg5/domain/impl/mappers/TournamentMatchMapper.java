@@ -3,7 +3,7 @@ package neg5.domain.impl.mappers;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.impl.entities.TournamentMatch;
 
 import java.util.HashSet;

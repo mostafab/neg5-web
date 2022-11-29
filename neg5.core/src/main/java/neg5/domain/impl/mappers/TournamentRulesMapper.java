@@ -1,7 +1,7 @@
 package neg5.domain.impl.mappers;
 
-import org.neg5.TournamentDTO;
-import org.neg5.TournamentRulesDTO;
+import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentRulesDTO;
 
 public class TournamentRulesMapper extends AbstractObjectMapper<TournamentDTO, TournamentRulesDTO> {
 

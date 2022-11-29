@@ -1,6 +1,6 @@
 package neg5.accessManager.api;
 
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.enums.TournamentAccessLevel;
 
 import javax.annotation.Nonnull;
 

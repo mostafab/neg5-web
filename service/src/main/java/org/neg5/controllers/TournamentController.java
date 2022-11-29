@@ -12,12 +12,12 @@ import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.exports.qbj.api.QbjApi;
-import org.neg5.TournamentDTO;
-import org.neg5.TournamentTossupValueDTO;
-import org.neg5.UpdateTournamentRequestDTO;
+import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.UpdateTournamentRequestDTO;
 import neg5.userData.CurrentUserContext;
 import neg5.exports.qbj.api.QBJGsonProvider;
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.enums.TournamentAccessLevel;
 import org.neg5.util.RequestHelper;
 
 import java.util.List;

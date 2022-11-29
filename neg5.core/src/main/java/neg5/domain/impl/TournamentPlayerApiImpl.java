@@ -6,10 +6,10 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPlayerApi;
-import org.neg5.FieldValidationErrors;
-import org.neg5.MatchPlayerDTO;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.TournamentPlayerDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentPlayerDTO;
 
 import neg5.domain.impl.dataAccess.TournamentPlayerDAO;
 import neg5.domain.impl.entities.TournamentPlayer;

@@ -4,11 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import neg5.domain.api.TournamentMatchApi;
-import org.neg5.FullTeamsMatchesStatsDTO;
-import org.neg5.TeamMatchesStatsDTO;
-import org.neg5.TeamStandingStatsDTO;
-import org.neg5.TeamStandingsStatsDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.stats.api.FullTeamsMatchesStatsDTO;
+import neg5.domain.api.TeamMatchesStatsDTO;
+import neg5.stats.api.TeamStandingStatsDTO;
+import neg5.stats.api.TeamStandingsStatsDTO;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.stats.impl.aggregators.TeamMatchesStatsAggregator;
 import neg5.stats.impl.aggregators.TeamStandingStatAggregator;
 

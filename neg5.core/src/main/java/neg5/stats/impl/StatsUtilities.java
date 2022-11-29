@@ -1,9 +1,9 @@
 package neg5.stats.impl;
 
-import org.neg5.AnswersDTO;
-import org.neg5.MatchTeamDTO;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.enums.TossupAnswerType;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.TossupAnswerType;
 
 public class TossupAnswerTypeConverterTest {
 

@@ -2,7 +2,7 @@ package neg5.configuration.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import org.neg5.Environment;
+import neg5.domain.api.Environment;
 
 import java.util.HashMap;
 import java.util.Map;

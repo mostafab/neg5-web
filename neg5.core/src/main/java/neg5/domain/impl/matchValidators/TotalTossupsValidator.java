@@ -1,8 +1,8 @@
 package neg5.domain.impl.matchValidators;
 
 import com.google.inject.Singleton;
-import org.neg5.FieldValidationErrors;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentMatchDTO;
 
 import javax.annotation.Nonnull;
 import java.util.List;

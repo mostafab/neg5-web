@@ -3,10 +3,10 @@ package neg5.domain.impl.matchValidators;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import neg5.domain.api.TournamentTeamApi;
-import org.neg5.FieldValidationErrors;
-import org.neg5.MatchTeamDTO;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.TournamentTeamDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentTeamDTO;
 
 import javax.annotation.Nonnull;
 import java.util.List;

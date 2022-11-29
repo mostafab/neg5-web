@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.TournamentCollaboratorDTO;
+import neg5.domain.api.TournamentCollaboratorDTO;
 import neg5.domain.impl.entities.Account;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentCollaborator;

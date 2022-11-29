@@ -2,7 +2,7 @@ package neg5.gson;
 
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
-import org.neg5.enums.Identifiable;
+import neg5.domain.api.enums.Identifiable;
 
 /**
  * Interface for providers of a type adapter

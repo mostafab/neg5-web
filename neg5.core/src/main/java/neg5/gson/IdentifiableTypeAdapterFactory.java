@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
-import org.neg5.enums.StringIdentifiable;
+import neg5.domain.api.enums.StringIdentifiable;
+import neg5.domain.api.enums.Identifiable;
 
 /**
- * Type adapter factory for enums that implement {@link org.neg5.enums.Identifiable}
+ * Type adapter factory for enums that implement {@link Identifiable}
  */
 public class IdentifiableTypeAdapterFactory implements TypeAdapterFactory {
 

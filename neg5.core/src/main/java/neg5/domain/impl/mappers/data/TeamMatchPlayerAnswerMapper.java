@@ -3,7 +3,7 @@ package neg5.domain.impl.mappers.data;
 import com.google.inject.Singleton;
 import neg5.domain.impl.entities.transformers.data.TeamMatchPlayerAnswer;
 import neg5.domain.impl.mappers.AbstractObjectMapper;
-import org.neg5.MatchPlayerAnswerDTO;
+import neg5.domain.api.MatchPlayerAnswerDTO;
 
 @Singleton
 public class TeamMatchPlayerAnswerMapper extends AbstractObjectMapper<TeamMatchPlayerAnswer, MatchPlayerAnswerDTO> {

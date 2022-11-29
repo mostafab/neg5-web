@@ -3,7 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import neg5.domain.api.MatchPlayerAnswerApi;
 import neg5.domain.impl.entities.compositeIds.MatchPlayerAnswerId;
-import org.neg5.MatchPlayerAnswerDTO;
+import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.impl.dataAccess.MatchPlayerAnswerDAO;
 import neg5.domain.impl.entities.MatchPlayerAnswer;
 import neg5.domain.impl.mappers.MatchPlayerAnswerMapper;

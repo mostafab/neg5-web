@@ -7,8 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.MatchTeamDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentMatch;
 

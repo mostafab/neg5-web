@@ -1,6 +1,6 @@
 package neg5.stats.impl.aggregators;
 
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.TournamentMatchDTO;
 
 /**
  * Interface used to stream matches into an aggregator and calculate a total stats result

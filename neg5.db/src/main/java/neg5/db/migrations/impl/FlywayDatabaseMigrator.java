@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import neg5.db.migrations.api.DatabaseMigrator;
 import org.flywaydb.core.Flyway;
-import org.neg5.Environment;
+import neg5.domain.api.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

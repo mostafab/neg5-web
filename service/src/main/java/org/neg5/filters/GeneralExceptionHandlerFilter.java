@@ -1,7 +1,7 @@
 package org.neg5.filters;
 
 import com.google.inject.Inject;
-import org.neg5.ClientExceptionDTO;
+import neg5.domain.api.ClientExceptionDTO;
 import neg5.gson.GsonProvider;
 
 import static spark.Spark.exception;

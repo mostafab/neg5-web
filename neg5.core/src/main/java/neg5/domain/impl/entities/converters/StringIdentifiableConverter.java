@@ -1,6 +1,6 @@
 package org.neg5.data.converters;
 
-import org.neg5.enums.StringIdentifiable;
+import neg5.domain.api.enums.StringIdentifiable;
 
 /**
  * Converter used to convert {@link StringIdentifiable} enums to a db column and string columns to an enum

@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import neg5.domain.impl.entities.transformers.data.Match;
 import neg5.domain.impl.entities.transformers.data.Phase;
 import neg5.domain.impl.mappers.AbstractObjectMapper;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.TournamentTossupValueDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
 
 import java.util.Map;
 import java.util.stream.Collectors;

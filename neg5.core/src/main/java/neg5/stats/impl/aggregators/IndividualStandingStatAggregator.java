@@ -1,9 +1,9 @@
 package neg5.stats.impl.aggregators;
 
-import org.neg5.AnswersDTO;
-import org.neg5.IndividualStandingStatDTO;
-import org.neg5.MatchPlayerDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.AnswersDTO;
+import neg5.stats.api.IndividualStandingStatDTO;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.stats.impl.StatsUtilities;
 
 import java.math.BigDecimal;

@@ -1,7 +1,6 @@
 package neg5.domain.api;
 
 import neg5.domain.impl.entities.compositeIds.TournamentTeamPoolId;
-import org.neg5.TournamentTeamPoolDTO;
 
 import java.util.List;
 import java.util.Set;
