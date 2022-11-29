@@ -9,7 +9,7 @@ public enum Environment {
 
     private final String label;
 
-    private static Environment ENVIRONMENT = initializeEnvironment();
+    private static final Environment ENVIRONMENT = initializeEnvironment();
 
     Environment(String label) {
         this.label = label;

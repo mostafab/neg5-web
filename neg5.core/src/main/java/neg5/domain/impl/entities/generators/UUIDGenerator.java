@@ -1,4 +1,4 @@
-package org.neg5.data.generators;
+package neg5.domain.impl.entities.generators;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

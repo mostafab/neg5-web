@@ -1,4 +1,4 @@
-package org.neg5.matchValidators;
+package neg5.domain.impl.matchValidators;
 
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;

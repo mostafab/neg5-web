@@ -3,6 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentTeamApi;
@@ -14,7 +15,6 @@ import org.neg5.TournamentTeamPoolDTO;
 import neg5.domain.impl.dataAccess.TournamentTeamDAO;
 import neg5.domain.impl.entities.TournamentTeam;
 
-import org.neg5.managers.TournamentTeamMatchHelper;
 import neg5.domain.impl.mappers.TournamentTeamMapper;
 import neg5.validation.ObjectValidationException;
 
@@ -37,7 +37,7 @@ public class TournamentTeamApiImpl extends AbstractApiLayerImpl<TournamentTeam, 
     private final TournamentTeamMapper tournamentTeamMapper;
     private final TournamentPlayerApi tournamentPlayerApi;
     private final TournamentTeamPoolApi teamDivisionManager;
-    private final TournamentTeamMatchHelper teamMatchHelper;
+    private final TournamentMatchApi tournamentMatchApi;
     private final TournamentPoolApi poolManager;
 
     @Inject
@@ -45,14 +45,14 @@ public class TournamentTeamApiImpl extends AbstractApiLayerImpl<TournamentTeam, 
                                  TournamentTeamMapper tournamentTeamMapper,
                                  TournamentPlayerApi tournamentPlayerApi,
                                  TournamentTeamPoolApi teamDivisionManager,
-                                 TournamentTeamMatchHelper teamMatchHelper,
+                                 TournamentMatchApi tournamentMatchApi,
                                  TournamentPoolApi poolManager
     ) {
         this.rwTournamentTeamDAO = rwTournamentTeamDAO;
         this.tournamentTeamMapper = tournamentTeamMapper;
         this.tournamentPlayerApi = tournamentPlayerApi;
         this.teamDivisionManager = teamDivisionManager;
-        this.teamMatchHelper = teamMatchHelper;
+        this.tournamentMatchApi = tournamentMatchApi;
         this.poolManager = poolManager;
     }
 
@@ -111,7 +111,7 @@ public class TournamentTeamApiImpl extends AbstractApiLayerImpl<TournamentTeam, 
     @Transactional
     public void delete(String id) {
         TournamentTeamDTO team = get(id);
-        List<TournamentMatchDTO> teamMatches = teamMatchHelper.groupMatchesByTeams(team.getTournamentId(), null)
+        List<TournamentMatchDTO> teamMatches = tournamentMatchApi.groupMatchesByTeams(team.getTournamentId(), null)
                 .getOrDefault(id, new ArrayList<>());
         if (!teamMatches.isEmpty()) {
             throw new ObjectValidationException(

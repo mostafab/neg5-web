@@ -3,12 +3,12 @@ package neg5.stats.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import neg5.domain.api.TournamentMatchApi;
 import org.neg5.FullTeamsMatchesStatsDTO;
 import org.neg5.TeamMatchesStatsDTO;
 import org.neg5.TeamStandingStatsDTO;
 import org.neg5.TeamStandingsStatsDTO;
 import org.neg5.TournamentMatchDTO;
-import org.neg5.managers.TournamentTeamMatchHelper;
 import neg5.stats.impl.aggregators.TeamMatchesStatsAggregator;
 import neg5.stats.impl.aggregators.TeamStandingStatAggregator;
 
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 @Singleton
 class TeamStandingsStatsManager {
 
-    private final TournamentTeamMatchHelper tournamentTeamManager;
+    private final TournamentMatchApi tournamentMatchApi;
     private final StatsCacheManager statsCacheManager;
 
     @Inject
-    public TeamStandingsStatsManager(TournamentTeamMatchHelper tournamentTeamManager,
+    public TeamStandingsStatsManager(TournamentMatchApi tournamentMatchApi,
                                      StatsCacheManager statsCacheManager) {
-        this.tournamentTeamManager = tournamentTeamManager;
+        this.tournamentMatchApi = tournamentMatchApi;
         this.statsCacheManager = statsCacheManager;
     }
 
@@ -39,7 +39,7 @@ class TeamStandingsStatsManager {
         stats.setTournamentId(tournamentId);
         stats.setPhaseId(phaseId);
 
-        Map<String, List<TournamentMatchDTO>> teamsByMatches = tournamentTeamManager
+        Map<String, List<TournamentMatchDTO>> teamsByMatches = tournamentMatchApi
                 .groupMatchesByTeams(tournamentId, phaseId);
         stats.setTeamStandings(
             teamsByMatches.entrySet().stream()
@@ -60,7 +60,7 @@ class TeamStandingsStatsManager {
         stats.setTournamentId(tournamentId);
         stats.setPhaseId(phaseId);
 
-        Map<String, List<TournamentMatchDTO>> teamsByMatches = tournamentTeamManager
+        Map<String, List<TournamentMatchDTO>> teamsByMatches = tournamentMatchApi
                 .groupMatchesByTeams(tournamentId, phaseId);
         stats.setTeams(
                 teamsByMatches.entrySet().stream()

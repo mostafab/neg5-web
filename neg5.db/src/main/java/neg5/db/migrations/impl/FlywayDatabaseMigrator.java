@@ -1,24 +1,29 @@
-package neg5.db.flyway;
+package neg5.db.migrations.impl;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import neg5.db.migrations.api.DatabaseMigrator;
 import org.flywaydb.core.Flyway;
 import org.neg5.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Neg5DatabaseMigrator {
+@Singleton
+public class FlywayDatabaseMigrator implements DatabaseMigrator {
 
     private final Flyway flyway;
+    private final Environment environment;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Neg5DatabaseMigrator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlywayDatabaseMigrator.class);
 
     @Inject
-    protected Neg5DatabaseMigrator(Flyway flyway) {
+    protected FlywayDatabaseMigrator(Flyway flyway, Environment environment) {
         this.flyway = flyway;
+        this.environment = environment;
     }
 
     public void migrateDatabase() {
-        if (Environment.getEnvironment() != Environment.DEV) {
+        if (environment != Environment.DEV) {
             flyway.migrate();
         } else {
             LOGGER.warn("Skipping automatic migrations since application is in the DEV environment. "
