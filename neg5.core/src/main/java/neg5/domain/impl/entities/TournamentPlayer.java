@@ -30,7 +30,7 @@ public class TournamentPlayer extends AbstractDataObject<TournamentPlayer>
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
-    @GenericGenerator(name = "uuid_generator", strategy = "org.neg5.data.generators.UUIDGenerator")
+    @GenericGenerator(name = "uuid_generator", strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
     public String getId() {
         return id;
     }
