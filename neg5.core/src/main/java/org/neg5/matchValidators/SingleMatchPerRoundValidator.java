@@ -2,7 +2,7 @@ package org.neg5.matchValidators;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import neg5.api.TournamentTeamApi;
+import neg5.domain.api.TournamentTeamApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;

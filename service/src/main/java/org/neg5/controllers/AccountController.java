@@ -1,7 +1,7 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
-import neg5.api.AccountApi;
+import neg5.domain.api.AccountApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.AccountDTO;
 import org.neg5.auth.LoginAuthenticator;

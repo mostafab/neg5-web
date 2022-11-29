@@ -1,7 +1,7 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
-import neg5.api.TournamentPoolApi;
+import neg5.domain.api.TournamentPoolApi;
 import org.neg5.TournamentPoolDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.accessManager.TournamentAccessManager;

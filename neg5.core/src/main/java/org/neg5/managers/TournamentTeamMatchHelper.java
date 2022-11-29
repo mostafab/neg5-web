@@ -2,8 +2,8 @@ package org.neg5.managers;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
-import neg5.api.TournamentMatchApi;
-import neg5.api.TournamentTeamApi;
+import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentTeamApi;
 import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentTeamDTO;

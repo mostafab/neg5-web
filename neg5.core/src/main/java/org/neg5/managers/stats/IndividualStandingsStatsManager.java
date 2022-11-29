@@ -2,7 +2,7 @@ package org.neg5.managers.stats;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import neg5.api.TournamentPlayerApi;
+import neg5.domain.api.TournamentPlayerApi;
 import org.neg5.FullIndividualMatchesStatsDTO;
 import org.neg5.IndividualMatchesStatsDTO;
 import org.neg5.IndividualStandingStatDTO;

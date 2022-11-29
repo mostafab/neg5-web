@@ -1,7 +1,7 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
-import neg5.api.TournamentCollaboratorApi;
+import neg5.domain.api.TournamentCollaboratorApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentCollaboratorDTO;
 import org.neg5.enums.TournamentAccessLevel;

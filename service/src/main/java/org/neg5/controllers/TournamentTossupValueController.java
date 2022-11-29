@@ -1,7 +1,7 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
-import neg5.api.TournamentTossupValueApi;
+import neg5.domain.api.TournamentTossupValueApi;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.enums.TournamentAccessLevel;
 import org.neg5.accessManager.TournamentAccessManager;

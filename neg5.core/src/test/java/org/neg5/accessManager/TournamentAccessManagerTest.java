@@ -1,7 +1,7 @@
 package org.neg5.accessManager;
 
-import neg5.api.TournamentApi;
-import neg5.api.TournamentCollaboratorApi;
+import neg5.domain.api.TournamentApi;
+import neg5.domain.api.TournamentCollaboratorApi;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

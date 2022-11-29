@@ -2,8 +2,8 @@ package org.neg5.managers.stats;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import neg5.api.TournamentApi;
-import neg5.api.TournamentTeamApi;
+import neg5.domain.api.TournamentApi;
+import neg5.domain.api.TournamentTeamApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTeamDTO;
 import org.neg5.enums.TossupAnswerType;
