@@ -7,13 +7,13 @@ import neg5.domain.api.TournamentPoolApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.TournamentPoolDTO;
-import org.neg5.daos.TournamentPoolDAO;
-import org.neg5.data.TournamentPool;
-import org.neg5.mappers.TournamentPoolMapper;
+import neg5.domain.impl.dataAccess.TournamentPoolDAO;
+import neg5.domain.impl.entities.TournamentPool;
+import neg5.domain.impl.mappers.TournamentPoolMapper;
 
 import java.util.Optional;
 
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 public class TournamentPoolApiImpl
         extends AbstractApiLayerImpl<TournamentPool, TournamentPoolDTO, String> implements TournamentPoolApi {

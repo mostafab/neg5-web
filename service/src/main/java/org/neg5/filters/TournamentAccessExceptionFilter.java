@@ -2,8 +2,8 @@ package org.neg5.filters;
 
 import com.google.inject.Inject;
 import org.neg5.ClientExceptionDTO;
-import org.neg5.core.GsonProvider;
-import org.neg5.accessManager.TournamentAccessException;
+import neg5.gson.GsonProvider;
+import neg5.accessManager.api.TournamentAccessException;
 
 import static spark.Spark.exception;
 

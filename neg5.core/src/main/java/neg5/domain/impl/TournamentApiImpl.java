@@ -14,21 +14,21 @@ import org.neg5.TournamentDTO;
 import org.neg5.TournamentPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
-import org.neg5.daos.TournamentDAO;
-import org.neg5.data.Tournament;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
+import neg5.domain.impl.dataAccess.TournamentDAO;
+import neg5.domain.impl.entities.Tournament;
 
-import org.neg5.mappers.TournamentMapper;
-import org.neg5.mappers.UpdateTournamentRequestMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.domain.impl.mappers.TournamentMapper;
+import neg5.domain.impl.mappers.UpdateTournamentRequestMapper;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, TournamentDTO, String>

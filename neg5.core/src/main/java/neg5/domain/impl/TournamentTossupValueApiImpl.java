@@ -5,22 +5,22 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentTossupValueApi;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentTossupValueDTO;
-import org.neg5.daos.TournamentTossupValueDAO;
-import org.neg5.data.TournamentTossupValue;
-import org.neg5.data.embeddables.TournamentTossupValueId;
+import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
+import neg5.domain.impl.entities.TournamentTossupValue;
 import org.neg5.enums.TossupAnswerType;
-import org.neg5.mappers.TournamentTossupValueMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.domain.impl.mappers.TournamentTossupValueMapper;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentTossupValueApiImpl extends

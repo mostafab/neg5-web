@@ -2,7 +2,7 @@ package org.neg5.transformers;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import org.neg5.core.GsonProvider;
+import neg5.gson.GsonProvider;
 import spark.ResponseTransformer;
 
 public class JsonTransformer implements ResponseTransformer {

@@ -7,10 +7,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import org.neg5.AccountCreationDTO;
 import org.neg5.AccountDTO;
-import org.neg5.daos.AccountDAO;
-import org.neg5.data.Account;
-import org.neg5.login.DuplicateLoginException;
-import org.neg5.mappers.AccountMapper;
+import neg5.domain.impl.dataAccess.AccountDAO;
+import neg5.domain.impl.entities.Account;
+import neg5.userData.DuplicateLoginException;
+import neg5.domain.impl.mappers.AccountMapper;
 
 import javax.persistence.NoResultException;
 

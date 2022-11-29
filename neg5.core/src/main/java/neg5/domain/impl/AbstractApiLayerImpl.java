@@ -4,16 +4,16 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.DomainObjectApiLayer;
 import org.neg5.FieldValidationErrors;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.UserData;
-import org.neg5.daos.AbstractDAO;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
+import neg5.domain.impl.dataAccess.AbstractDAO;
 
-import org.neg5.data.AbstractDataObject;
-import org.neg5.data.Auditable;
-import org.neg5.data.CompositeIdObject;
-import org.neg5.data.IdDataObject;
-import org.neg5.mappers.AbstractObjectMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.domain.impl.entities.AbstractDataObject;
+import neg5.domain.impl.entities.Auditable;
+import neg5.domain.impl.entities.CompositeIdObject;
+import neg5.domain.impl.entities.IdDataObject;
+import neg5.domain.impl.mappers.AbstractObjectMapper;
+import neg5.validation.ObjectValidationException;
 
 import javax.persistence.NoResultException;
 import java.io.Serializable;

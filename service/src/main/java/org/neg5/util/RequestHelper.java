@@ -2,7 +2,7 @@ package org.neg5.util;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.neg5.core.GsonProvider;
+import neg5.gson.GsonProvider;
 import spark.Request;
 
 import java.lang.reflect.Type;

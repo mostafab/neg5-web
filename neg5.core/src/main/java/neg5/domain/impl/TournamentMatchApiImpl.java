@@ -7,15 +7,15 @@ import neg5.domain.api.MatchTeamApi;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchPhaseApi;
 import neg5.domain.api.TournamentTossupValueApi;
+import neg5.domain.impl.entities.transformers.data.Match;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
 import org.neg5.TournamentTossupValueDTO;
-import org.neg5.daos.TournamentMatchDAO;
-import org.neg5.data.TournamentMatch;
-import org.neg5.data.transformers.data.Match;
-import org.neg5.mappers.TournamentMatchMapper;
-import org.neg5.mappers.data.MatchToMatchDTOMapper;
+import neg5.domain.impl.dataAccess.TournamentMatchDAO;
+import neg5.domain.impl.entities.TournamentMatch;
+import neg5.domain.impl.mappers.TournamentMatchMapper;
+import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
 import org.neg5.matchValidators.EnhancedMatchValidator;
 
 import java.util.HashSet;
@@ -26,8 +26,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireCondition;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCondition;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentMatchApiImpl

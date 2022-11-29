@@ -11,10 +11,10 @@ import org.neg5.MatchPlayerDTO;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentPlayerDTO;
 
-import org.neg5.daos.TournamentPlayerDAO;
-import org.neg5.data.TournamentPlayer;
-import org.neg5.mappers.TournamentPlayerMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.domain.impl.dataAccess.TournamentPlayerDAO;
+import neg5.domain.impl.entities.TournamentPlayer;
+import neg5.domain.impl.mappers.TournamentPlayerMapper;
+import neg5.validation.ObjectValidationException;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentPlayerApiImpl extends AbstractApiLayerImpl<TournamentPlayer, TournamentPlayerDTO, String>

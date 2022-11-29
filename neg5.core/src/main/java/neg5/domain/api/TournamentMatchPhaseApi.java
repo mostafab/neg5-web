@@ -1,7 +1,7 @@
 package neg5.domain.api;
 
+import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
 import org.neg5.TournamentMatchPhaseDTO;
-import org.neg5.data.embeddables.MatchPhaseId;
 
 import java.util.List;
 import java.util.Set;

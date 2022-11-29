@@ -3,11 +3,11 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentMatchPhaseApi;
+import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
 import org.neg5.TournamentMatchPhaseDTO;
-import org.neg5.daos.TournamentMatchPhaseDAO;
-import org.neg5.data.TournamentMatchPhase;
-import org.neg5.data.embeddables.MatchPhaseId;
-import org.neg5.mappers.TournamentMatchPhaseMapper;
+import neg5.domain.impl.dataAccess.TournamentMatchPhaseDAO;
+import neg5.domain.impl.entities.TournamentMatchPhase;
+import neg5.domain.impl.mappers.TournamentMatchPhaseMapper;
 
 import java.util.List;
 import java.util.Set;

@@ -6,16 +6,16 @@ import neg5.domain.api.TournamentPhaseApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentPhaseDTO;
 
-import org.neg5.daos.TournamentPhaseDAO;
-import org.neg5.data.TournamentPhase;
-import org.neg5.mappers.TournamentPhaseMapper;
-import org.neg5.validation.ObjectValidationException;
+import neg5.domain.impl.dataAccess.TournamentPhaseDAO;
+import neg5.domain.impl.entities.TournamentPhase;
+import neg5.domain.impl.mappers.TournamentPhaseMapper;
+import neg5.validation.ObjectValidationException;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.neg5.validation.FieldValidation.requireCustomValidation;
-import static org.neg5.validation.FieldValidation.requireNotNull;
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
 
 public class TournamentPhaseApiImpl extends AbstractApiLayerImpl<TournamentPhase, TournamentPhaseDTO, String>
         implements TournamentPhaseApi {

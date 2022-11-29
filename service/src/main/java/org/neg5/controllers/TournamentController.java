@@ -2,6 +2,7 @@ package org.neg5.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
 import neg5.domain.api.TournamentMatchApi;
@@ -10,14 +11,13 @@ import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
+import neg5.exports.qbj.api.QbjApi;
 import org.neg5.TournamentDTO;
 import org.neg5.TournamentTossupValueDTO;
 import org.neg5.UpdateTournamentRequestDTO;
-import org.neg5.core.CurrentUserContext;
-import org.neg5.core.QBJGsonProvider;
+import neg5.userData.CurrentUserContext;
+import neg5.exports.qbj.api.QBJGsonProvider;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.stats.QBJManager;
-import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class TournamentController extends AbstractJsonController {
     @Inject private CurrentUserContext currentUserContext;
     @Inject private TournamentAccessManager accessManager;
 
-    @Inject private QBJManager qbjManager;
+    @Inject private QbjApi qbjManager;
     @Inject private RequestHelper requestHelper;
     @Inject private QBJGsonProvider qbjGsonProvider;
 
@@ -81,7 +81,7 @@ public class TournamentController extends AbstractJsonController {
         get("/:id/rules", (request, response) -> tournamentRulesManager.getForTournament(request.params("id")));
         get("/:id/qbj", (request, response) -> {
             response.type(QBJ_CONTENT_TYPE);
-            return qbjManager.getQbj(request.params("id"));
+            return qbjManager.exportToQbjFormat(request.params("id"));
             }, obj -> qbjGsonProvider.get().toJson(obj)
         );
 
