@@ -1,4 +1,4 @@
-package org.neg5.matchValidators;
+package neg5.domain.impl.matchValidators;
 
 import com.google.inject.Singleton;
 import org.neg5.FieldValidationErrors;

@@ -16,7 +16,7 @@ import neg5.domain.impl.dataAccess.TournamentMatchDAO;
 import neg5.domain.impl.entities.TournamentMatch;
 import neg5.domain.impl.mappers.TournamentMatchMapper;
 import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
-import org.neg5.matchValidators.EnhancedMatchValidator;
+import neg5.domain.impl.matchValidators.EnhancedMatchValidator;
 
 import java.util.HashSet;
 import java.util.List;

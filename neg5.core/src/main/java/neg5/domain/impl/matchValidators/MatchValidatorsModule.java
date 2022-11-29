@@ -1,4 +1,4 @@
-package org.neg5.matchValidators;
+package neg5.domain.impl.matchValidators;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
