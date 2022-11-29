@@ -6,7 +6,7 @@ import org.neg5.data.embeddables.TournamentTeamPoolId;
 import java.util.List;
 import java.util.Set;
 
-public interface TournamentTeamPoolApi extends ObjectApiLayer<TournamentTeamPoolDTO, TournamentTeamPoolId> {
+public interface TournamentTeamPoolApi extends DomainObjectApiLayer<TournamentTeamPoolDTO, TournamentTeamPoolId> {
 
     List<TournamentTeamPoolDTO> associateTeamWithPools(Set<String> divisionIds,
                                                        String teamId,

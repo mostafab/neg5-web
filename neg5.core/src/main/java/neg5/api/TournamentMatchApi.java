@@ -5,7 +5,7 @@ import org.neg5.TournamentMatchDTO;
 import java.util.List;
 import java.util.Set;
 
-public interface TournamentMatchApi extends ObjectApiLayer<TournamentMatchDTO, String> {
+public interface TournamentMatchApi extends DomainObjectApiLayer<TournamentMatchDTO, String> {
 
     Set<String> getMatchIdsByTournament(String tournamentId);
 

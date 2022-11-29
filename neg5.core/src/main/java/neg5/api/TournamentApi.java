@@ -6,7 +6,7 @@ import org.neg5.UpdateTournamentRequestDTO;
 
 import java.util.List;
 
-public interface TournamentApi extends ObjectApiLayer<TournamentDTO, String> {
+public interface TournamentApi extends DomainObjectApiLayer<TournamentDTO, String> {
 
     TournamentDTO update(String tournamentId,
            UpdateTournamentRequestDTO updateTournamentRequest);

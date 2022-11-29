@@ -7,7 +7,7 @@ import org.neg5.data.embeddables.TournamentCollaboratorId;
 import java.util.Optional;
 import java.util.Set;
 
-public interface TournamentCollaboratorApi extends ObjectApiLayer<TournamentCollaboratorDTO, TournamentCollaboratorId> {
+public interface TournamentCollaboratorApi extends DomainObjectApiLayer<TournamentCollaboratorDTO, TournamentCollaboratorId> {
 
     TournamentCollaboratorDTO addOrUpdateCollaborator(TournamentCollaboratorDTO collaborator);
 
