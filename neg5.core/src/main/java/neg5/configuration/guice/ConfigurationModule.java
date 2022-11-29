@@ -1,4 +1,4 @@
-package neg5.configuration;
+package neg5.configuration.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
