@@ -1,6 +1,5 @@
-package org.neg5.mappers;
+package neg5.domain.impl.mappers;
 
-import neg5.domain.impl.mappers.TournamentPlayerMapper;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,5 @@
-package org.neg5.mappers;
+package neg5.domain.impl.mappers;
 
-import neg5.domain.impl.mappers.TournamentRulesMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.neg5.TournamentDTO;

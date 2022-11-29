@@ -1,5 +1,6 @@
 package neg5.domain.impl.mappers.data;
 
+import neg5.domain.impl.entities.transformers.data.TeamInMatch;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.neg5.MatchTeamDTO;
-import org.neg5.data.transformers.data.TeamInMatch;
 
 import java.util.HashSet;
 

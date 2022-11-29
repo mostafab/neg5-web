@@ -1,6 +1,6 @@
-package org.neg5.mappers;
+package neg5.domain.impl.mappers;
 
-import neg5.domain.impl.mappers.TournamentCollaboratorMapper;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +10,6 @@ import org.neg5.TournamentCollaboratorDTO;
 import neg5.domain.impl.entities.Account;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentCollaborator;
-import org.neg5.data.embeddables.TournamentCollaboratorId;
 
 @ExtendWith(MockitoExtension.class)
 public class TournamentCollaboratorMapperTest {

@@ -1,4 +1,4 @@
-package org.neg5.core;
+package neg5.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
