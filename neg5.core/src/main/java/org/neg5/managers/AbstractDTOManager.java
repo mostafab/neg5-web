@@ -2,6 +2,7 @@ package org.neg5.managers;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import neg5.api.ObjectApiLayer;
 import org.neg5.FieldValidationErrors;
 import org.neg5.core.CurrentUserContext;
 import org.neg5.core.UserData;
@@ -23,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
-        & IdDataObject<IdType>, DTO, IdType extends Serializable> {
+        & IdDataObject<IdType>, DTO, IdType extends Serializable> implements ObjectApiLayer<DTO, IdType> {
 
     @Inject private CurrentUserContext userContext;
 
@@ -32,6 +33,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
     protected abstract AbstractObjectMapper<T, DTO> getMapper();
 
     @Transactional
+    @Override
     public DTO get(IdType id) {
         T entity = getDao().get(id);
         if (entity == null) {
@@ -46,6 +48,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
     }
 
     @Transactional
+    @Override
     public DTO create(DTO dto) {
         validateInternal(dto);
         T entity = getMapper().mergeToEntity(dto);
@@ -67,6 +70,7 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
     }
 
     @Transactional
+    @Override
     public DTO update(DTO dto) {
         validateInternal(dto);
         updateInternal(dto);
@@ -74,16 +78,19 @@ public abstract class AbstractDTOManager<T extends AbstractDataObject<T>
     }
 
     @Transactional
+    @Override
     public void delete(IdType id) {
         getDao().delete(id);
     }
 
     @Transactional
+    @Override
     public void delete(DTO collaborator) {
         delete(getIdFromDTO(collaborator));
     }
 
     @Transactional
+    @Override
     public List<DTO> findAllByTournamentId(String tournamentId) {
         return getDao().findAllByTournamentId(tournamentId)
                 .stream()

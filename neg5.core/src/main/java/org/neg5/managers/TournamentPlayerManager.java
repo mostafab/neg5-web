@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentMatchApi;
+import neg5.api.TournamentPlayerApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.MatchPlayerDTO;
 import org.neg5.TournamentMatchDTO;
@@ -27,19 +29,20 @@ import static org.neg5.validation.FieldValidation.requireCustomValidation;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer, TournamentPlayerDTO, String> {
+public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer, TournamentPlayerDTO, String>
+        implements TournamentPlayerApi {
 
     private final TournamentPlayerMapper tournamentPlayerMapper;
     private final TournamentPlayerDAO rwTournamentPlayerDAO;
-    private final TournamentMatchManager tournamentMatchManager;
+    private final TournamentMatchApi tournamentMatchApi;
 
     @Inject
     public TournamentPlayerManager(TournamentPlayerMapper tournamentPlayerMapper,
                                    TournamentPlayerDAO rwTournamentPlayerDAO,
-                                   TournamentMatchManager tournamentMatchManager) {
+                                   TournamentMatchApi tournamentMatchApi) {
         this.tournamentPlayerMapper = tournamentPlayerMapper;
         this.rwTournamentPlayerDAO = rwTournamentPlayerDAO;
-        this.tournamentMatchManager = tournamentMatchManager;
+        this.tournamentMatchApi = tournamentMatchApi;
     }
 
     @Override
@@ -103,7 +106,7 @@ public class TournamentPlayerManager extends AbstractDTOManager<TournamentPlayer
      * @return mapping between player -> matches
      */
     public Map<String, List<TournamentMatchDTO>> groupMatchesByPlayers(String tournamentId, String phaseId) {
-        List<TournamentMatchDTO> matches = tournamentMatchManager.findAllByTournamentAndPhase(tournamentId, phaseId);
+        List<TournamentMatchDTO> matches = tournamentMatchApi.findAllByTournamentAndPhase(tournamentId, phaseId);
         Map<String, List<TournamentMatchDTO>> matchesByPlayerId = new HashMap<>();
         matches.forEach(match -> {
             Set<MatchPlayerDTO> players = match.getTeams().stream()

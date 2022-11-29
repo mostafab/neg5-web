@@ -1,10 +1,10 @@
 package org.neg5.controllers;
 
 import com.google.inject.Inject;
+import neg5.api.TournamentPlayerApi;
 import org.eclipse.jetty.http.HttpStatus;
 import org.neg5.TournamentPlayerDTO;
 import org.neg5.enums.TournamentAccessLevel;
-import org.neg5.managers.TournamentPlayerManager;
 import org.neg5.accessManager.TournamentAccessManager;
 import org.neg5.util.RequestHelper;
 import spark.Request;
@@ -12,7 +12,7 @@ import spark.Response;
 
 public class PlayerController extends AbstractJsonController {
 
-    @Inject private TournamentPlayerManager tournamentPlayerManager;
+    @Inject private TournamentPlayerApi tournamentPlayerApi;
     @Inject private TournamentAccessManager tournamentAccessManager;
     @Inject private RequestHelper requestHelper;
 
@@ -23,16 +23,16 @@ public class PlayerController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        get("/:id", (req, res) -> tournamentPlayerManager.get(req.params("id")));
+        get("/:id", (req, res) -> tournamentPlayerApi.get(req.params("id")));
         put("/:id", (request, response) -> {
             validatePlayerEditPermissions(request);
             TournamentPlayerDTO player = requestHelper.readFromRequest(request, TournamentPlayerDTO.class);
             player.setId(request.params("id"));
-            return tournamentPlayerManager.update(player);
+            return tournamentPlayerApi.update(player);
         });
         delete("/:id", (request, response) -> {
             validatePlayerEditPermissions(request);
-            tournamentPlayerManager.delete(request.params("id"));
+            tournamentPlayerApi.delete(request.params("id"));
             response.status(HttpStatus.NO_CONTENT_204);
             return "";
         });
@@ -41,7 +41,7 @@ public class PlayerController extends AbstractJsonController {
     }
 
     private void validatePlayerEditPermissions(Request request) {
-        TournamentPlayerDTO original = tournamentPlayerManager.get(request.params("id"));
+        TournamentPlayerDTO original = tournamentPlayerApi.get(request.params("id"));
         tournamentAccessManager.requireAccessLevel(
                 original.getTournamentId(),
                 TournamentAccessLevel.ADMIN
@@ -54,6 +54,6 @@ public class PlayerController extends AbstractJsonController {
                 playerDTO.getTournamentId(),
                 TournamentAccessLevel.COLLABORATOR
         );
-        return tournamentPlayerManager.create(playerDTO);
+        return tournamentPlayerApi.create(playerDTO);
     }
 }

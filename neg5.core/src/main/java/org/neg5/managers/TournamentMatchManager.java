@@ -3,6 +3,7 @@ package org.neg5.managers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import neg5.api.TournamentMatchApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
@@ -26,7 +27,8 @@ import static org.neg5.validation.FieldValidation.requireCondition;
 import static org.neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
-public class TournamentMatchManager extends AbstractDTOManager<TournamentMatch, TournamentMatchDTO, String> {
+public class TournamentMatchManager
+        extends AbstractDTOManager<TournamentMatch, TournamentMatchDTO, String> implements TournamentMatchApi {
 
     private final TournamentTossupValueManager tournamentTossupValueManager;
     private final MatchTeamManager matchTeamManager;

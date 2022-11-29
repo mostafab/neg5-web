@@ -2,11 +2,11 @@ package org.neg5.matchValidators;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import neg5.api.TournamentTeamApi;
 import org.neg5.FieldValidationErrors;
 import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentTeamDTO;
-import org.neg5.managers.TournamentTeamManager;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Singleton
 public class SingleMatchPerRoundValidator implements EnhancedMatchValidator {
 
-    private final TournamentTeamManager teamManager;
+    private final TournamentTeamApi teamApi;
 
     @Inject
-    public SingleMatchPerRoundValidator(TournamentTeamManager teamManager) {
-        this.teamManager = teamManager;
+    public SingleMatchPerRoundValidator(TournamentTeamApi teamApi) {
+        this.teamApi = teamApi;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class SingleMatchPerRoundValidator implements EnhancedMatchValidator {
         if (subject.getRound() == null || subject.getTeams() == null || subject.getTournamentId() == null) {
             return errors;
         }
-        Map<String, String> teamNamesById = teamManager.findAllByTournamentId(subject.getTournamentId())
+        Map<String, String> teamNamesById = teamApi.findAllByTournamentId(subject.getTournamentId())
                 .stream()
                 .collect(Collectors.toMap(TournamentTeamDTO::getId, TournamentTeamDTO::getName));
         List<TournamentMatchDTO> otherMatchesInSameRound = allMatches.stream()
