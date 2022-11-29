@@ -1,7 +1,5 @@
 package neg5.domain.api;
 
-import org.neg5.TournamentTeamDTO;
-
 import javax.annotation.Nonnull;
 import java.util.Set;
 

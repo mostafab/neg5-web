@@ -2,8 +2,8 @@ package org.neg5.controllers;
 
 import com.google.inject.Inject;
 import org.neg5.core.EnumSerializer;
-import org.neg5.enums.MatchResult;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.MatchResult;
+import neg5.domain.api.enums.TossupAnswerType;
 
 public class Neg5EnumController extends AbstractJsonController {
 

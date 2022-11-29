@@ -1,6 +1,6 @@
 package org.neg5.data.converters;
 
-import org.neg5.enums.Identifiable;
+import neg5.domain.api.enums.Identifiable;
 
 import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;

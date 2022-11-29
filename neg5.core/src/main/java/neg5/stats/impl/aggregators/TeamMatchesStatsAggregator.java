@@ -1,11 +1,11 @@
 package neg5.stats.impl.aggregators;
 
-import org.neg5.AnswersDTO;
-import org.neg5.MatchTeamDTO;
-import org.neg5.TeamMatchStatsDTO;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.enums.MatchResult;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TeamMatchStatsDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.enums.MatchResult;
+import neg5.domain.api.enums.TossupAnswerType;
 import neg5.stats.impl.StatsUtilities;
 
 import java.math.BigDecimal;

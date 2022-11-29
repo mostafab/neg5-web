@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentCollaboratorApi;
 import org.eclipse.jetty.http.HttpStatus;
-import org.neg5.TournamentCollaboratorDTO;
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.TournamentCollaboratorDTO;
+import neg5.domain.api.enums.TournamentAccessLevel;
 import org.neg5.util.RequestHelper;
 import spark.Request;
 

@@ -1,6 +1,6 @@
 package org.neg5.core;
 
-import org.neg5.enums.Identifiable;
+import neg5.domain.api.enums.Identifiable;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

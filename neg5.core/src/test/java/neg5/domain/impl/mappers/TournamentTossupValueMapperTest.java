@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.TournamentTossupValueDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentTossupValue;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.TossupAnswerType;
 
 @ExtendWith(MockitoExtension.class)
 public class TournamentTossupValueMapperTest {

@@ -7,12 +7,12 @@ import neg5.stats.api.TournamentStatsApi;
 import neg5.stats.impl.TournamentStatsApiImpl;
 import neg5.stats.impl.cache.TournamentStatsCache;
 import neg5.stats.impl.cache.TournamentStatsCacheImpl;
-import org.neg5.BaseAggregateStatsDTO;
-import org.neg5.FullIndividualMatchesStatsDTO;
-import org.neg5.FullTeamsMatchesStatsDTO;
-import org.neg5.IndividualStandingsStatsDTO;
-import org.neg5.RoundsReportStatsDTO;
-import org.neg5.TeamStandingsStatsDTO;
+import neg5.stats.api.BaseAggregateStatsDTO;
+import neg5.stats.api.FullIndividualMatchesStatsDTO;
+import neg5.stats.api.FullTeamsMatchesStatsDTO;
+import neg5.stats.api.IndividualStandingsStatsDTO;
+import neg5.domain.api.RoundsReportStatsDTO;
+import neg5.stats.api.TeamStandingsStatsDTO;
 
 public class TournamentStatsModule extends AbstractModule {
 

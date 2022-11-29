@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import neg5.domain.impl.entities.transformers.data.TeamInMatch;
 import neg5.domain.impl.mappers.AbstractObjectMapper;
-import org.neg5.MatchTeamDTO;
+import neg5.domain.api.MatchTeamDTO;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

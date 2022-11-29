@@ -1,6 +1,6 @@
 package neg5.stats.impl.cache;
 
-import org.neg5.BaseAggregateStatsDTO;
+import neg5.stats.api.BaseAggregateStatsDTO;
 
 import java.util.Optional;
 import java.util.function.Supplier;

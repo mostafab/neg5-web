@@ -1,8 +1,8 @@
 package neg5.stats.impl.aggregators;
 
-import org.neg5.MatchPlayerDTO;
-import org.neg5.MatchTeamDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TournamentMatchDTO;
 
 /**
  * Utility class for matches

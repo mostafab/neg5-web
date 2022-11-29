@@ -6,11 +6,11 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
-import org.neg5.FieldValidationErrors;
-import org.neg5.TournamentTossupValueDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
 import neg5.domain.impl.entities.TournamentTossupValue;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.TossupAnswerType;
 import neg5.domain.impl.mappers.TournamentTossupValueMapper;
 import neg5.validation.ObjectValidationException;
 

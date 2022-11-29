@@ -2,8 +2,8 @@ package neg5.domain.impl.mappers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.neg5.MatchPlayerDTO;
-import org.neg5.MatchTeamDTO;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.impl.entities.MatchPlayer;
 import neg5.domain.impl.entities.MatchTeam;
 import neg5.domain.impl.entities.TournamentMatch;

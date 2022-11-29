@@ -1,6 +1,6 @@
 package org.neg5.data.converters;
 
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.TossupAnswerType;
 
 import javax.persistence.Converter;
 

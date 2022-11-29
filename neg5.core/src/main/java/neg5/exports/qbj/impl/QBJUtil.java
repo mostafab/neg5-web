@@ -2,10 +2,10 @@ package neg5.exports.qbj.impl;
 
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.apache.commons.text.similarity.LongestCommonSubsequence;
-import org.neg5.TournamentTeamDTO;
-import org.neg5.qbj.QbjPlayerDTO;
-import org.neg5.qbj.QbjTeamDTO;
-import org.neg5.qbj.RegistrationDTO;
+import neg5.domain.api.TournamentTeamDTO;
+import neg5.exports.qbj.api.QbjPlayerDTO;
+import neg5.exports.qbj.api.QbjTeamDTO;
+import neg5.exports.qbj.api.RegistrationDTO;
 
 import java.util.HashMap;
 import java.util.HashSet;

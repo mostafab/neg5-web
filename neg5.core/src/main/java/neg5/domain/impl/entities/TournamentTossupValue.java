@@ -2,7 +2,7 @@ package neg5.domain.impl.entities;
 
 import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import org.hibernate.annotations.DynamicUpdate;
-import org.neg5.enums.TossupAnswerType;
+import neg5.domain.api.enums.TossupAnswerType;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;

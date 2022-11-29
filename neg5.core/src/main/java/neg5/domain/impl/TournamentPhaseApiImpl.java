@@ -3,8 +3,8 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentPhaseApi;
-import org.neg5.FieldValidationErrors;
-import org.neg5.TournamentPhaseDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentPhaseDTO;
 
 import neg5.domain.impl.dataAccess.TournamentPhaseDAO;
 import neg5.domain.impl.entities.TournamentPhase;

@@ -1,9 +1,5 @@
 package neg5.domain.api;
 
-import org.neg5.TournamentDTO;
-import org.neg5.TournamentTossupValueDTO;
-import org.neg5.UpdateTournamentRequestDTO;
-
 import java.util.List;
 
 public interface TournamentApi extends DomainObjectApiLayer<TournamentDTO, String> {

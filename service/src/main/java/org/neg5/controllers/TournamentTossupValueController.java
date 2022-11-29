@@ -3,8 +3,8 @@ package org.neg5.controllers;
 import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentTossupValueApi;
-import org.neg5.TournamentTossupValueDTO;
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.enums.TournamentAccessLevel;
 import org.neg5.util.RequestHelper;
 
 public class TournamentTossupValueController extends AbstractJsonController {

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.MatchPlayerAnswerDTO;
-import org.neg5.MatchPlayerDTO;
+import neg5.domain.api.MatchPlayerAnswerDTO;
+import neg5.domain.api.MatchPlayerDTO;
 
 import java.util.HashSet;
 

@@ -8,10 +8,10 @@ import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamPoolApi;
-import org.neg5.FieldValidationErrors;
-import org.neg5.TournamentMatchDTO;
-import org.neg5.TournamentTeamDTO;
-import org.neg5.TournamentTeamPoolDTO;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTeamPoolDTO;
 import neg5.domain.impl.dataAccess.TournamentTeamDAO;
 import neg5.domain.impl.entities.TournamentTeam;
 

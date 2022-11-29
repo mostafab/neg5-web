@@ -1,7 +1,7 @@
 package neg5.domain.impl.mappers;
 
 import com.google.inject.Singleton;
-import org.neg5.TournamentTossupValueDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.impl.entities.TournamentTossupValue;
 
 @Singleton

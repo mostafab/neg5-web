@@ -9,7 +9,7 @@ import neg5.domain.api.TournamentCollaboratorApi;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
 import neg5.accessManager.api.TournamentAccessException;
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.enums.TournamentAccessLevel;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;

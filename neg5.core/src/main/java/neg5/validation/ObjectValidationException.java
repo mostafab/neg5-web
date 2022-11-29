@@ -1,6 +1,6 @@
 package neg5.validation;
 
-import org.neg5.FieldValidationErrors;
+import neg5.domain.api.FieldValidationErrors;
 
 public class ObjectValidationException extends RuntimeException {
 

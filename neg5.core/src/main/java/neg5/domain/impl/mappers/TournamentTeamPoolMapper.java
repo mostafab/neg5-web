@@ -1,7 +1,7 @@
 package neg5.domain.impl.mappers;
 
 import com.google.inject.Singleton;
-import org.neg5.TournamentTeamPoolDTO;
+import neg5.domain.api.TournamentTeamPoolDTO;
 import neg5.domain.impl.entities.TournamentTeamPool;
 
 @Singleton

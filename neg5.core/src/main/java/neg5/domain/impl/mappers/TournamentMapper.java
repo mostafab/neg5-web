@@ -2,7 +2,7 @@ package neg5.domain.impl.mappers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.neg5.TournamentDTO;
+import neg5.domain.api.TournamentDTO;
 import neg5.domain.impl.entities.Tournament;
 
 import java.util.stream.Collectors;

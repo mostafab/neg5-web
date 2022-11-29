@@ -1,10 +1,10 @@
 package neg5.stats.impl.aggregators;
 
-import org.neg5.AnswersDTO;
-import org.neg5.MatchPlayerAnswerDTO;
-import org.neg5.TeamRecordDTO;
-import org.neg5.TeamStandingStatsDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.MatchPlayerAnswerDTO;
+import neg5.domain.api.TeamRecordDTO;
+import neg5.stats.api.TeamStandingStatsDTO;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.stats.impl.StatsUtilities;
 
 import java.math.BigDecimal;

@@ -3,8 +3,8 @@ package org.neg5.controllers;
 import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentPhaseApi;
-import org.neg5.TournamentPhaseDTO;
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.TournamentPhaseDTO;
+import neg5.domain.api.enums.TournamentAccessLevel;
 import org.neg5.util.RequestHelper;
 
 public class TournamentPhaseController extends AbstractJsonController {

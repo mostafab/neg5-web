@@ -1,10 +1,6 @@
 package neg5.stats.api;
 
-import org.neg5.FullIndividualMatchesStatsDTO;
-import org.neg5.FullTeamsMatchesStatsDTO;
-import org.neg5.IndividualStandingsStatsDTO;
-import org.neg5.RoundsReportStatsDTO;
-import org.neg5.TeamStandingsStatsDTO;
+import neg5.domain.api.RoundsReportStatsDTO;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

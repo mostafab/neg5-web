@@ -3,11 +3,11 @@ package neg5.stats.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import neg5.domain.api.TournamentPlayerApi;
-import org.neg5.FullIndividualMatchesStatsDTO;
-import org.neg5.IndividualMatchesStatsDTO;
-import org.neg5.IndividualStandingStatDTO;
-import org.neg5.IndividualStandingsStatsDTO;
-import org.neg5.TournamentMatchDTO;
+import neg5.stats.api.FullIndividualMatchesStatsDTO;
+import neg5.stats.api.IndividualMatchesStatsDTO;
+import neg5.stats.api.IndividualStandingStatDTO;
+import neg5.stats.api.IndividualStandingsStatsDTO;
+import neg5.domain.api.TournamentMatchDTO;
 
 import neg5.stats.impl.aggregators.IndividualMatchesStatAggregator;
 import neg5.stats.impl.aggregators.IndividualStandingStatAggregator;

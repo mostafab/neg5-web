@@ -2,8 +2,8 @@ package neg5.domain.impl.mappers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.neg5.TournamentDTO;
-import org.neg5.TournamentRulesDTO;
+import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentRulesDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

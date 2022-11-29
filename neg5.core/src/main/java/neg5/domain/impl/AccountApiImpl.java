@@ -5,8 +5,8 @@ import com.google.inject.persist.Transactional;
 import neg5.domain.api.AccountApi;
 import org.mindrot.jbcrypt.BCrypt;
 
-import org.neg5.AccountCreationDTO;
-import org.neg5.AccountDTO;
+import neg5.domain.api.AccountCreationDTO;
+import neg5.domain.api.AccountDTO;
 import neg5.domain.impl.dataAccess.AccountDAO;
 import neg5.domain.impl.entities.Account;
 import neg5.userData.DuplicateLoginException;

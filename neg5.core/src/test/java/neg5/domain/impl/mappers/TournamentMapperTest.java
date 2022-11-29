@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.TournamentDTO;
+import neg5.domain.api.TournamentDTO;
 import neg5.domain.impl.entities.Account;
 import neg5.domain.impl.entities.Tournament;
 

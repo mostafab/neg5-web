@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentTeamPoolApi;
 import neg5.domain.impl.entities.compositeIds.TournamentTeamPoolId;
-import org.neg5.TournamentTeamPoolDTO;
+import neg5.domain.api.TournamentTeamPoolDTO;
 import neg5.domain.impl.dataAccess.TournamentTeamPoolDAO;
 import neg5.domain.impl.entities.TournamentTeamPool;
 import neg5.domain.impl.mappers.TournamentTeamPoolMapper;

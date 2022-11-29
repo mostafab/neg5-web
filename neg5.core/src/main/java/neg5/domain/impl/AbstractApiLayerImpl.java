@@ -3,7 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.DomainObjectApiLayer;
-import org.neg5.FieldValidationErrors;
+import neg5.domain.api.FieldValidationErrors;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
 import neg5.domain.impl.dataAccess.AbstractDAO;

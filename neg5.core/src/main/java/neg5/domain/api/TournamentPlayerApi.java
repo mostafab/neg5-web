@@ -1,8 +1,5 @@
 package neg5.domain.api;
 
-import org.neg5.TournamentMatchDTO;
-import org.neg5.TournamentPlayerDTO;
-
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;

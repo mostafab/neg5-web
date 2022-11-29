@@ -8,12 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.neg5.TournamentCollaboratorDTO;
-import org.neg5.TournamentDTO;
+import neg5.domain.api.TournamentCollaboratorDTO;
+import neg5.domain.api.TournamentDTO;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
 
-import org.neg5.enums.TournamentAccessLevel;
+import neg5.domain.api.enums.TournamentAccessLevel;
 
 import java.util.Optional;
 

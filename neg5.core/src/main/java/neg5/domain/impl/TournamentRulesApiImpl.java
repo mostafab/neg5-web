@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentRulesApi;
-import org.neg5.TournamentRulesDTO;
+import neg5.domain.api.TournamentRulesDTO;
 import neg5.domain.impl.mappers.TournamentRulesMapper;
 
 public class TournamentRulesApiImpl implements TournamentRulesApi {
