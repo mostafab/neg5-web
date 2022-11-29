@@ -3,7 +3,7 @@ package org.neg5;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import neg5.db.flyway.Neg5DatabaseMigrator;
-import org.neg5.core.PersistInitializer;
+import neg5.dataAccess.PersistInitializer;
 import org.neg5.util.FilterRegistry;
 import spark.Spark;
 import spark.servlet.SparkApplication;

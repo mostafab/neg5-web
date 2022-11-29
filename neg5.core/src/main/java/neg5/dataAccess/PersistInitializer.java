@@ -1,4 +1,4 @@
-package org.neg5.core;
+package neg5.dataAccess;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.PersistService;

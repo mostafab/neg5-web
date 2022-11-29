@@ -1,16 +1,20 @@
 package neg5.domain.impl;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import neg5.domain.api.MatchTeamApi;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchPhaseApi;
+import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.impl.entities.transformers.data.Match;
 import org.neg5.FieldValidationErrors;
+import org.neg5.MatchTeamDTO;
 import org.neg5.TournamentMatchDTO;
 import org.neg5.TournamentMatchPhaseDTO;
+import org.neg5.TournamentTeamDTO;
 import org.neg5.TournamentTossupValueDTO;
 import neg5.domain.impl.dataAccess.TournamentMatchDAO;
 import neg5.domain.impl.entities.TournamentMatch;
@@ -18,6 +22,8 @@ import neg5.domain.impl.mappers.TournamentMatchMapper;
 import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
 import neg5.domain.impl.matchValidators.EnhancedMatchValidator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +41,7 @@ public class TournamentMatchApiImpl
 
     private final TournamentTossupValueApi tournamentTossupValueManager;
     private final MatchTeamApi matchTeamManager;
+    private final TournamentTeamApi tournamentTeamApi;
     private final TournamentMatchPhaseApi matchPhaseManager;
     private final Set<EnhancedMatchValidator> matchValidators;
 
@@ -45,6 +52,7 @@ public class TournamentMatchApiImpl
     @Inject
     public TournamentMatchApiImpl(TournamentTossupValueApi tournamentTossupValueManager,
                                   MatchTeamApi matchTeamManager,
+                                  TournamentTeamApi tournamentTeamApi,
                                   TournamentMatchPhaseApi matchPhaseManager,
                                   Set<EnhancedMatchValidator> matchValidators,
                                   TournamentMatchMapper tournamentMatchMapper,
@@ -52,6 +60,7 @@ public class TournamentMatchApiImpl
                                   TournamentMatchDAO rwTournamentMatchDAO) {
         this.tournamentTossupValueManager = tournamentTossupValueManager;
         this.matchTeamManager = matchTeamManager;
+        this.tournamentTeamApi = tournamentTeamApi;
         this.matchPhaseManager = matchPhaseManager;
         this.matchValidators = matchValidators;
         this.tournamentMatchMapper = tournamentMatchMapper;
@@ -124,6 +133,25 @@ public class TournamentMatchApiImpl
         return findAllByTournamentId(tournamentId).stream()
                 .filter(match -> phaseId == null || match.getPhases().contains(phaseId))
                 .collect(Collectors.toList());
+    }
+
+    public Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(String tournamentId,
+                                                                     String phaseId) {
+        List<TournamentMatchDTO> matches = findAllByTournamentAndPhase(tournamentId, phaseId);
+        Map<String, List<TournamentMatchDTO>> matchesByTeamId = new HashMap<>();
+        matches.forEach(match -> {
+            Set<MatchTeamDTO> teams = match.getTeams();
+            teams.forEach(team -> {
+                matchesByTeamId.computeIfPresent(team.getTeamId(), (id, list) -> {
+                    list.add(match);
+                    return list;
+                });
+                matchesByTeamId.computeIfAbsent(team.getTeamId(), teamId -> Lists.newArrayList(match));
+            });
+        });
+        List<TournamentTeamDTO> allTeams = tournamentTeamApi.findAllByTournamentId(tournamentId);
+        allTeams.forEach(team -> matchesByTeamId.putIfAbsent(team.getId(), new ArrayList<>()));
+        return matchesByTeamId;
     }
 
     @Transactional
