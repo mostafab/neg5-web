@@ -4,24 +4,34 @@ import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
 
-/**
- * Utility class for matches
- */
+/** Utility class for matches */
 final class MatchUtil {
 
     private MatchUtil() {}
 
     static TeamsWrapper getTeams(String teamId, TournamentMatchDTO match) {
-        MatchTeamDTO thisTeam = match.getTeams().stream()
-                .filter(team -> teamId.equals(team.getTeamId()))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Cannot find team " + teamId + " in match " + match.getId()));
-        MatchTeamDTO otherTeam = match.getTeams().stream()
-                .filter(team -> !teamId.equals(team.getTeamId()))
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Cannot find non-team " + teamId + " in match " + match.getId()));
+        MatchTeamDTO thisTeam =
+                match.getTeams().stream()
+                        .filter(team -> teamId.equals(team.getTeamId()))
+                        .findFirst()
+                        .orElseThrow(
+                                () ->
+                                        new IllegalArgumentException(
+                                                "Cannot find team "
+                                                        + teamId
+                                                        + " in match "
+                                                        + match.getId()));
+        MatchTeamDTO otherTeam =
+                match.getTeams().stream()
+                        .filter(team -> !teamId.equals(team.getTeamId()))
+                        .findFirst()
+                        .orElseThrow(
+                                () ->
+                                        new IllegalArgumentException(
+                                                "Cannot find non-team "
+                                                        + teamId
+                                                        + " in match "
+                                                        + match.getId()));
 
         return new TeamsWrapper(thisTeam, otherTeam);
     }
@@ -31,11 +41,16 @@ final class MatchUtil {
                 .flatMap(t -> t.getPlayers().stream())
                 .filter(player -> playerId.equals(player.getPlayerId()))
                 .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Cannot find player " + playerId + " in match " + match.getId()));
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException(
+                                        "Cannot find player "
+                                                + playerId
+                                                + " in match "
+                                                + match.getId()));
     }
 
-    final static class TeamsWrapper {
+    static final class TeamsWrapper {
 
         private final MatchTeamDTO thisTeam;
         private final MatchTeamDTO otherTeam;

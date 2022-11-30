@@ -1,8 +1,7 @@
 package neg5.domain.impl.dataAccess;
 
-import neg5.domain.impl.entities.TournamentPlayer;
-
 import java.util.List;
+import neg5.domain.impl.entities.TournamentPlayer;
 
 public class TournamentPlayerDAO extends AbstractDAO<TournamentPlayer, String> {
 
@@ -11,7 +10,10 @@ public class TournamentPlayerDAO extends AbstractDAO<TournamentPlayer, String> {
     }
 
     public List<TournamentPlayer> findByTeamId(String teamId) {
-        return getEntityManager().createQuery("SELECT tp from TournamentPlayer tp WHERE tp.team.id = :teamId", TournamentPlayer.class)
+        return getEntityManager()
+                .createQuery(
+                        "SELECT tp from TournamentPlayer tp WHERE tp.team.id = :teamId",
+                        TournamentPlayer.class)
                 .setParameter("teamId", teamId)
                 .getResultList();
     }

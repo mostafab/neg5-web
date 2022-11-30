@@ -1,12 +1,11 @@
 package neg5.domain.impl.entities;
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
+import javax.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tournament_match")
@@ -38,7 +37,9 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
-    @GenericGenerator(name = "uuid_generator", strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
+    @GenericGenerator(
+            name = "uuid_generator",
+            strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
     public String getId() {
         return id;
     }
@@ -142,8 +143,16 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "match_id", referencedColumnName = "id", updatable = false, insertable = false),
-            @JoinColumn(name = "tournament_id", referencedColumnName = "tournament_id", updatable = false, insertable = false),
+        @JoinColumn(
+                name = "match_id",
+                referencedColumnName = "id",
+                updatable = false,
+                insertable = false),
+        @JoinColumn(
+                name = "tournament_id",
+                referencedColumnName = "tournament_id",
+                updatable = false,
+                insertable = false),
     })
     public Set<TournamentMatchPhase> getPhases() {
         return phases;

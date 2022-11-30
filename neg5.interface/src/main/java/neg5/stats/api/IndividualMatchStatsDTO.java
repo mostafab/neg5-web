@@ -1,9 +1,8 @@
 package neg5.stats.api;
 
-import neg5.domain.api.AnswersDTO;
-
 import java.math.BigDecimal;
 import java.util.Set;
+import neg5.domain.api.AnswersDTO;
 
 public class IndividualMatchStatsDTO {
 

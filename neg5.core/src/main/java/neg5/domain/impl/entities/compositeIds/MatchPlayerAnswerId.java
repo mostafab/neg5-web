@@ -1,18 +1,16 @@
 package neg5.domain.impl.entities.compositeIds;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import neg5.domain.impl.entities.CompositeId;
-import neg5.domain.impl.entities.Tournament;
-import neg5.domain.impl.entities.TournamentMatch;
-import neg5.domain.impl.entities.TournamentPlayer;
-
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import java.io.Serializable;
+import neg5.domain.impl.entities.CompositeId;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentMatch;
+import neg5.domain.impl.entities.TournamentPlayer;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Embeddable
 public class MatchPlayerAnswerId implements Serializable, CompositeId {
@@ -73,7 +71,7 @@ public class MatchPlayerAnswerId implements Serializable, CompositeId {
         MatchPlayerAnswerId that = (MatchPlayerAnswerId) obj;
         return that.getPlayer().getId().equals(player.getId())
                 && that.getTournament().getId().equals(tournament.getId())
-                && that.getMatch().getId() .equals(match.getId())
+                && that.getMatch().getId().equals(match.getId())
                 && that.getTossupValue().equals(tossupValue);
     }
 

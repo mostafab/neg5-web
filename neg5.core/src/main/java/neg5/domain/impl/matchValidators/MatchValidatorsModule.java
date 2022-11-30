@@ -8,12 +8,16 @@ public class MatchValidatorsModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        Multibinder<EnhancedMatchValidator> multibinder = Multibinder.newSetBinder(binder(), EnhancedMatchValidator.class);
+        Multibinder<TournamentMatchValidator> multibinder =
+                Multibinder.newSetBinder(binder(), TournamentMatchValidator.class);
+        addBinding(multibinder, BasicMatchValidator.class);
         addBinding(multibinder, TotalTossupsValidator.class);
         addBinding(multibinder, SingleMatchPerRoundValidator.class);
     }
 
-    private void addBinding(Multibinder<EnhancedMatchValidator> multibinder, Class<? extends EnhancedMatchValidator> clazz) {
+    private void addBinding(
+            Multibinder<TournamentMatchValidator> multibinder,
+            Class<? extends TournamentMatchValidator> clazz) {
         multibinder.addBinding().to(clazz).in(Scopes.SINGLETON);
     }
 }

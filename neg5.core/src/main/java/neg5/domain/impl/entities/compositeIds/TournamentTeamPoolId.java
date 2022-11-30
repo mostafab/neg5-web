@@ -1,15 +1,14 @@
 package neg5.domain.impl.entities.compositeIds;
 
-import neg5.domain.impl.entities.CompositeId;
-import neg5.domain.impl.entities.Tournament;
-import neg5.domain.impl.entities.TournamentPool;
-import neg5.domain.impl.entities.TournamentTeam;
-
+import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
+import neg5.domain.impl.entities.CompositeId;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentPool;
+import neg5.domain.impl.entities.TournamentTeam;
 
 @Embeddable
 public class TournamentTeamPoolId implements Serializable, CompositeId {

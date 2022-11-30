@@ -2,20 +2,20 @@ package neg5.domain.impl.dataAccess;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
 import neg5.domain.impl.entities.AbstractDataObject;
 import neg5.domain.impl.entities.IdDataObject;
 import neg5.domain.impl.entities.SpecificTournamentEntity;
 
-import javax.persistence.EntityManager;
-import java.io.Serializable;
-import java.util.List;
-
-public abstract class AbstractDAO<T extends AbstractDataObject<T> & IdDataObject<IdType>, IdType extends Serializable> {
+public abstract class AbstractDAO<
+        T extends AbstractDataObject<T> & IdDataObject<IdType>, IdType extends Serializable> {
 
     private Class<T> persistentClass;
 
-    private static final String FIND_ALL_BY_TOURNAMENT_ID_QUERY
-            = "SELECT ent from %s ent where ent.%s = :tournamentId";
+    private static final String FIND_ALL_BY_TOURNAMENT_ID_QUERY =
+            "SELECT ent from %s ent where ent.%s = :tournamentId";
 
     private static final String DEFAULT_TOURNAMENT_ATTRIBUTE_PATH = "tournament.id";
 
@@ -45,9 +45,13 @@ public abstract class AbstractDAO<T extends AbstractDataObject<T> & IdDataObject
 
     public List<T> findAllByTournamentId(String tournamentId) {
         validateFindByTournamentId();
-        String query = String.format(FIND_ALL_BY_TOURNAMENT_ID_QUERY, persistentClass.getSimpleName(),
-                getTournamentIdAttributePath());
-        return getEntityManager().createQuery(query, persistentClass)
+        String query =
+                String.format(
+                        FIND_ALL_BY_TOURNAMENT_ID_QUERY,
+                        persistentClass.getSimpleName(),
+                        getTournamentIdAttributePath());
+        return getEntityManager()
+                .createQuery(query, persistentClass)
                 .setParameter(TOURNAMENT_ID_PARAM, tournamentId)
                 .getResultList();
     }
@@ -66,8 +70,11 @@ public abstract class AbstractDAO<T extends AbstractDataObject<T> & IdDataObject
 
     private void validateFindByTournamentId() {
         if (!SpecificTournamentEntity.class.isAssignableFrom(persistentClass)) {
-            throw new IllegalArgumentException("Class "
-                    + persistentClass.getName() + " does not implement " + SpecificTournamentEntity.class);
+            throw new IllegalArgumentException(
+                    "Class "
+                            + persistentClass.getName()
+                            + " does not implement "
+                            + SpecificTournamentEntity.class);
         }
     }
 }

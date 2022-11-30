@@ -1,8 +1,7 @@
 package neg5.domain.impl.entities;
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.time.Instant;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.Instant;
-import java.util.Set;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tournament_team")
@@ -36,7 +35,9 @@ public class TournamentTeam extends AbstractDataObject<TournamentTeam>
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
-    @GenericGenerator(name = "uuid_generator", strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
+    @GenericGenerator(
+            name = "uuid_generator",
+            strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
     public String getId() {
         return id;
     }
@@ -70,8 +71,7 @@ public class TournamentTeam extends AbstractDataObject<TournamentTeam>
     @JoinTable(
             name = "tournament_team_in_division",
             joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "division_id")
-    )
+            inverseJoinColumns = @JoinColumn(name = "division_id"))
     public Set<TournamentPool> getDivisions() {
         return divisions;
     }

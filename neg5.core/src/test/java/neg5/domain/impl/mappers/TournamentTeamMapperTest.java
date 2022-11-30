@@ -1,5 +1,16 @@
 package neg5.domain.impl.mappers;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import neg5.domain.api.TournamentPlayerDTO;
+import neg5.domain.api.TournamentPoolDTO;
+import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentPlayer;
+import neg5.domain.impl.entities.TournamentPool;
+import neg5.domain.impl.entities.TournamentTeam;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,18 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import neg5.domain.api.TournamentPoolDTO;
-import neg5.domain.api.TournamentPlayerDTO;
-import neg5.domain.api.TournamentTeamDTO;
-import neg5.domain.impl.entities.Tournament;
-import neg5.domain.impl.entities.TournamentPool;
-import neg5.domain.impl.entities.TournamentPlayer;
-import neg5.domain.impl.entities.TournamentTeam;
-
-import java.util.HashSet;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TournamentTeamMapperTest {
@@ -60,10 +59,8 @@ public class TournamentTeamMapperTest {
         entity.setDivisions(new HashSet<>());
         entity.getDivisions().add(new TournamentPool());
 
-        when(divisionMapper.toDTO(any()))
-                .thenReturn(new TournamentPoolDTO());
-        when(playerMapper.toDTO(any()))
-                .thenReturn(new TournamentPlayerDTO());
+        when(divisionMapper.toDTO(any())).thenReturn(new TournamentPoolDTO());
+        when(playerMapper.toDTO(any())).thenReturn(new TournamentPlayerDTO());
 
         TournamentTeamDTO dto = teamMapper.toDTO(entity);
 

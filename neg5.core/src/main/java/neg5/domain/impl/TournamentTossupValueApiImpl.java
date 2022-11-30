@@ -1,38 +1,39 @@
 package neg5.domain.impl;
 
+import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNotNull;
+
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import neg5.domain.api.TournamentTossupValueApi;
-import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
-import neg5.domain.api.FieldValidationErrors;
-import neg5.domain.api.TournamentTossupValueDTO;
-import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
-import neg5.domain.impl.entities.TournamentTossupValue;
-import neg5.domain.api.enums.TossupAnswerType;
-import neg5.domain.impl.mappers.TournamentTossupValueMapper;
-import neg5.validation.ObjectValidationException;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
-import static neg5.validation.FieldValidation.requireCustomValidation;
-import static neg5.validation.FieldValidation.requireNotNull;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentTossupValueApi;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.enums.TossupAnswerType;
+import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
+import neg5.domain.impl.entities.TournamentTossupValue;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
+import neg5.domain.impl.mappers.TournamentTossupValueMapper;
+import neg5.validation.ObjectValidationException;
 
 @Singleton
-public class TournamentTossupValueApiImpl extends
-        AbstractApiLayerImpl<TournamentTossupValue, TournamentTossupValueDTO, TournamentTossupValueId>
+public class TournamentTossupValueApiImpl
+        extends AbstractApiLayerImpl<
+                TournamentTossupValue, TournamentTossupValueDTO, TournamentTossupValueId>
         implements TournamentTossupValueApi {
 
     private final TournamentTossupValueDAO rwTournamentTossupValueDAO;
     private final TournamentTossupValueMapper tournamentTossupValueMapper;
 
     @Inject
-    public TournamentTossupValueApiImpl(TournamentTossupValueDAO rwTournamentTossupValueDAO,
-                                        TournamentTossupValueMapper tournamentTossupValueMapper) {
+    public TournamentTossupValueApiImpl(
+            TournamentTossupValueDAO rwTournamentTossupValueDAO,
+            TournamentTossupValueMapper tournamentTossupValueMapper) {
         this.rwTournamentTossupValueDAO = rwTournamentTossupValueDAO;
         this.tournamentTossupValueMapper = tournamentTossupValueMapper;
     }
@@ -54,8 +55,7 @@ public class TournamentTossupValueApiImpl extends
         return Sets.newHashSet(
                 getStub(-5, TossupAnswerType.NEG),
                 getStub(10, TossupAnswerType.BASE),
-                getStub(15, TossupAnswerType.POWER)
-        );
+                getStub(15, TossupAnswerType.POWER));
     }
 
     @Override
@@ -69,7 +69,8 @@ public class TournamentTossupValueApiImpl extends
     }
 
     @Override
-    protected TournamentTossupValueId getIdFromDTO(TournamentTossupValueDTO tournamentTossupValueDTO) {
+    protected TournamentTossupValueId getIdFromDTO(
+            TournamentTossupValueDTO tournamentTossupValueDTO) {
         return getMapper().mergeToEntity(tournamentTossupValueDTO).getId();
     }
 
@@ -91,11 +92,11 @@ public class TournamentTossupValueApiImpl extends
         for (TournamentTossupValueDTO tv : tossupValues) {
             if (Objects.equals(tv.getValue(), tossupValue.getValue())) {
                 throw new ObjectValidationException(
-                  new FieldValidationErrors()
-                    .add(
-                            "value",
-                            "There is already a tossup rule with value " + tossupValue.getValue())
-                );
+                        new FieldValidationErrors()
+                                .add(
+                                        "value",
+                                        "There is already a tossup rule with value "
+                                                + tossupValue.getValue()));
             }
         }
     }

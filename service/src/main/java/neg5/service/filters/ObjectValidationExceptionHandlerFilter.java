@@ -1,10 +1,10 @@
 package neg5.service.filters;
 
+import static spark.Spark.exception;
+
 import com.google.inject.Inject;
 import neg5.gson.GsonProvider;
 import neg5.validation.ObjectValidationException;
-
-import static spark.Spark.exception;
 
 public class ObjectValidationExceptionHandlerFilter implements RequestFilter {
 
@@ -17,9 +17,11 @@ public class ObjectValidationExceptionHandlerFilter implements RequestFilter {
 
     @Override
     public void registerFilter() {
-        exception(ObjectValidationException.class, (exception, request, response) -> {
-            response.status(400);
-            response.body(gsonProvider.get().toJson(exception.getErrors()));
-        });
+        exception(
+                ObjectValidationException.class,
+                (exception, request, response) -> {
+                    response.status(400);
+                    response.body(gsonProvider.get().toJson(exception.getErrors()));
+                });
     }
 }

@@ -1,18 +1,18 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.compositeIds.MatchTeamId;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import neg5.domain.impl.entities.compositeIds.MatchTeamId;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "team_plays_in_tournament_match")
 @DynamicUpdate
-public class MatchTeam extends AbstractDataObject<MatchTeam> implements CompositeIdObject<MatchTeamId> {
+public class MatchTeam extends AbstractDataObject<MatchTeam>
+        implements CompositeIdObject<MatchTeamId> {
 
     private MatchTeamId id;
 

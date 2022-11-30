@@ -1,28 +1,28 @@
 package neg5.domain.impl;
 
+import static neg5.validation.FieldValidation.requireNotNull;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import javax.persistence.NoResultException;
+import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
-import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
-import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentCollaboratorDTO;
 import neg5.domain.api.UserTournamentsDTO;
 import neg5.domain.impl.dataAccess.TournamentCollaboratorDAO;
 import neg5.domain.impl.entities.TournamentCollaborator;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
 import neg5.domain.impl.mappers.TournamentCollaboratorMapper;
-
-import javax.persistence.NoResultException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import static neg5.validation.FieldValidation.requireNotNull;
 
 @Singleton
 public class TournamentCollaboratorApiImpl
-        extends AbstractApiLayerImpl<TournamentCollaborator, TournamentCollaboratorDTO, TournamentCollaboratorId>
+        extends AbstractApiLayerImpl<
+                TournamentCollaborator, TournamentCollaboratorDTO, TournamentCollaboratorId>
         implements TournamentCollaboratorApi {
 
     private final TournamentCollaboratorMapper tournamentCollaboratorMapper;
@@ -30,9 +30,10 @@ public class TournamentCollaboratorApiImpl
     private final TournamentApi tournamentManager;
 
     @Inject
-    public TournamentCollaboratorApiImpl(TournamentCollaboratorMapper tournamentCollaboratorMapper,
-                                         TournamentCollaboratorDAO tournamentCollaboratorDAO,
-                                         TournamentApi tournamentManager) {
+    public TournamentCollaboratorApiImpl(
+            TournamentCollaboratorMapper tournamentCollaboratorMapper,
+            TournamentCollaboratorDAO tournamentCollaboratorDAO,
+            TournamentApi tournamentManager) {
         this.tournamentCollaboratorMapper = tournamentCollaboratorMapper;
         this.tournamentCollaboratorDAO = tournamentCollaboratorDAO;
         this.tournamentManager = tournamentManager;
@@ -48,15 +49,19 @@ public class TournamentCollaboratorApiImpl
         return tournamentCollaboratorMapper;
     }
 
-    public TournamentCollaboratorDTO addOrUpdateCollaborator(TournamentCollaboratorDTO collaborator) {
-        if (tournamentManager.get(collaborator.getTournamentId()).getDirectorId()
+    public TournamentCollaboratorDTO addOrUpdateCollaborator(
+            TournamentCollaboratorDTO collaborator) {
+        if (tournamentManager
+                .get(collaborator.getTournamentId())
+                .getDirectorId()
                 .equals(collaborator.getUserId())) {
             throw new IllegalArgumentException(
-                    "Attempting to add tournament director as collaborator to " + collaborator.getTournamentId()
-            );
+                    "Attempting to add tournament director as collaborator to "
+                            + collaborator.getTournamentId());
         }
         Optional<TournamentCollaboratorDTO> existing =
-                getByTournamentAndUsername(collaborator.getTournamentId(), collaborator.getUserId());
+                getByTournamentAndUsername(
+                        collaborator.getTournamentId(), collaborator.getUserId());
         if (existing.isPresent()) {
             return update(collaborator);
         }
@@ -66,7 +71,8 @@ public class TournamentCollaboratorApiImpl
     @Transactional
     public UserTournamentsDTO getUserTournaments(String userId) {
         UserTournamentsDTO userTournaments = new UserTournamentsDTO();
-        userTournaments.setUserOwnedTournaments(tournamentManager.getTournamentsOwnedByUser(userId));
+        userTournaments.setUserOwnedTournaments(
+                tournamentManager.getTournamentsOwnedByUser(userId));
 
         Set<String> tournamentIds = getTournamentIdsThatUserCollaboratesOn(userId);
         userTournaments.setCollaboratingTournaments(tournamentManager.get(tournamentIds));
@@ -79,11 +85,13 @@ public class TournamentCollaboratorApiImpl
         return new HashSet<>(getDao().getTournamentIdsThatUserCollaboratesOn(userId));
     }
 
-    public Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(String tournamentId,
-                                                                          String username) {
+    public Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(
+            String tournamentId, String username) {
         try {
-            return Optional.of(tournamentCollaboratorMapper
-                    .toDTO(getDao().getCollaboratorByUsernameAndTournament(tournamentId, username)));
+            return Optional.of(
+                    tournamentCollaboratorMapper.toDTO(
+                            getDao().getCollaboratorByUsernameAndTournament(
+                                            tournamentId, username)));
         } catch (NoResultException e) {
             return Optional.empty();
         }

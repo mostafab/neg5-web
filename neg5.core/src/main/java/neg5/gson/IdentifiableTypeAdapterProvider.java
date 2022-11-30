@@ -6,6 +6,7 @@ import neg5.domain.api.enums.Identifiable;
 
 /**
  * Interface for providers of a type adapter
+ *
  * @param <T>
  */
 public interface IdentifiableTypeAdapterProvider<T extends Identifiable> {

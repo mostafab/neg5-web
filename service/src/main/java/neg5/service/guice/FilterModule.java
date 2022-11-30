@@ -12,7 +12,8 @@ public class FilterModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        final Multibinder<RequestFilter> multibinder = Multibinder.newSetBinder(binder(), RequestFilter.class);
+        final Multibinder<RequestFilter> multibinder =
+                Multibinder.newSetBinder(binder(), RequestFilter.class);
 
         multibinder.addBinding().to(NoResultHandlerFilter.class);
         multibinder.addBinding().to(CurrentUserContextFilter.class);

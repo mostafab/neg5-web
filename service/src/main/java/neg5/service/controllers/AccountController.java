@@ -2,14 +2,14 @@ package neg5.service.controllers;
 
 import com.google.inject.Inject;
 import neg5.domain.api.AccountApi;
-import org.eclipse.jetty.http.HttpStatus;
+import neg5.domain.api.AccountCreationDTO;
 import neg5.domain.api.AccountDTO;
 import neg5.service.auth.LoginAuthenticator;
 import neg5.service.auth.LoginCreds;
+import neg5.service.util.RequestHelper;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.DuplicateLoginException;
-import neg5.domain.api.AccountCreationDTO;
-import neg5.service.util.RequestHelper;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
@@ -21,10 +21,11 @@ public class AccountController extends AbstractJsonController {
     private final LoginAuthenticator loginAuthenticator;
 
     @Inject
-    public AccountController(AccountApi accountManager,
-                             RequestHelper requestHelper,
-                             CurrentUserContext currentUserContext,
-                             LoginAuthenticator loginAuthenticator) {
+    public AccountController(
+            AccountApi accountManager,
+            RequestHelper requestHelper,
+            CurrentUserContext currentUserContext,
+            LoginAuthenticator loginAuthenticator) {
         this.accountManager = accountManager;
         this.requestHelper = requestHelper;
         this.currentUserContext = currentUserContext;
@@ -44,7 +45,8 @@ public class AccountController extends AbstractJsonController {
 
     private Object createAccountAndLogin(Request request, Response response) {
         try {
-            AccountCreationDTO account = requestHelper.readFromRequest(request, AccountCreationDTO.class);
+            AccountCreationDTO account =
+                    requestHelper.readFromRequest(request, AccountCreationDTO.class);
             AccountDTO createdAccount = accountManager.createAccount(account);
             loginAuthenticator.loginByCredentials(buildLoginCreds(account), response);
             return createdAccount;

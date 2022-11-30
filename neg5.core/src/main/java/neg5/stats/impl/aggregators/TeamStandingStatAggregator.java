@@ -1,12 +1,5 @@
 package neg5.stats.impl.aggregators;
 
-import neg5.domain.api.AnswersDTO;
-import neg5.domain.api.MatchPlayerAnswerDTO;
-import neg5.domain.api.TeamRecordDTO;
-import neg5.stats.api.TeamStandingStatsDTO;
-import neg5.domain.api.TournamentMatchDTO;
-import neg5.stats.impl.StatsUtilities;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
@@ -15,10 +8,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.MatchPlayerAnswerDTO;
+import neg5.domain.api.TeamRecordDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.stats.api.TeamStandingStatsDTO;
+import neg5.stats.impl.StatsUtilities;
 
-/**
- * Aggregator for a {@link TeamStandingStatsDTO}
- */
+/** Aggregator for a {@link TeamStandingStatsDTO} */
 public class TeamStandingStatAggregator implements StatAggregator<TeamStandingStatsDTO> {
 
     private final String teamId;
@@ -87,9 +84,11 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
         stats.setPointsPerGame(new BigDecimal(ppg).setScale(ROUNDING_SCALE, RoundingMode.HALF_UP));
 
         double papg = pointsAgainstPerGameBuilder.build().average().orElse(0);
-        stats.setPointsAgainstPerGame(new BigDecimal(papg).setScale(ROUNDING_SCALE, RoundingMode.HALF_UP));
+        stats.setPointsAgainstPerGame(
+                new BigDecimal(papg).setScale(ROUNDING_SCALE, RoundingMode.HALF_UP));
 
-        stats.setMarginOfVictory(stats.getPointsPerGame().subtract(stats.getPointsAgainstPerGame()));
+        stats.setMarginOfVictory(
+                stats.getPointsPerGame().subtract(stats.getPointsAgainstPerGame()));
         stats.setPointsPerBonus(calculatePointsPerBonus(stats.getPointsPerGame()));
         stats.setPointsPerTossupHeard(calculatePointsPerTossupHeard(stats.getPointsPerGame()));
         stats.setTossupAnswerCounts(StatsUtilities.convertAnswersCounts(tossupTotalCounts));
@@ -113,15 +112,19 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
     }
 
     private void updateTossupTotalCounts(MatchUtil.TeamsWrapper wrapper) {
-        Set<MatchPlayerAnswerDTO> answers = wrapper.getThisTeam().getPlayers().stream()
-                .flatMap(player -> player.getAnswers().stream())
-                .collect(Collectors.toSet());
+        Set<MatchPlayerAnswerDTO> answers =
+                wrapper.getThisTeam().getPlayers().stream()
+                        .flatMap(player -> player.getAnswers().stream())
+                        .collect(Collectors.toSet());
 
-        answers.forEach(answer -> {
-            tossupTotalCounts.computeIfPresent(answer.getTossupValue(),
-                    (tossupValue, count) -> count + answer.getNumberGotten());
-            tossupTotalCounts.putIfAbsent(answer.getTossupValue(), answer.getNumberGotten());
-        });
+        answers.forEach(
+                answer -> {
+                    tossupTotalCounts.computeIfPresent(
+                            answer.getTossupValue(),
+                            (tossupValue, count) -> count + answer.getNumberGotten());
+                    tossupTotalCounts.putIfAbsent(
+                            answer.getTossupValue(), answer.getNumberGotten());
+                });
 
         if (wrapper.getThisTeam().getBouncebackPoints() != null) {
             bouncebackPoints += wrapper.getThisTeam().getBouncebackPoints();
@@ -132,16 +135,18 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
     }
 
     private void updateAnswers(MatchUtil.TeamsWrapper wrapper) {
-        Set<AnswersDTO> matchAnswers = wrapper.getThisTeam().getPlayers().stream()
-                .flatMap(player -> player.getAnswers().stream())
-                .map(playerAnswer -> {
-                    AnswersDTO answers = new AnswersDTO();
-                    answers.setValue(playerAnswer.getTossupValue());
-                    answers.setTotal(playerAnswer.getNumberGotten());
-                    answers.setAnswerType(playerAnswer.getAnswerType());
-                    return answers;
-                })
-                .collect(Collectors.toSet());
+        Set<AnswersDTO> matchAnswers =
+                wrapper.getThisTeam().getPlayers().stream()
+                        .flatMap(player -> player.getAnswers().stream())
+                        .map(
+                                playerAnswer -> {
+                                    AnswersDTO answers = new AnswersDTO();
+                                    answers.setValue(playerAnswer.getTossupValue());
+                                    answers.setTotal(playerAnswer.getNumberGotten());
+                                    answers.setAnswerType(playerAnswer.getAnswerType());
+                                    return answers;
+                                })
+                        .collect(Collectors.toSet());
         answers.addAll(matchAnswers);
     }
 
@@ -150,8 +155,9 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
             teamRecord.setWinPercentage(new BigDecimal(0));
         } else {
             double wins = teamRecord.getWins();
-            teamRecord.setWinPercentage(new BigDecimal(wins / numMatches).setScale(WIN_RECORD_ROUNDING_SCALE,
-                    RoundingMode.HALF_EVEN));
+            teamRecord.setWinPercentage(
+                    new BigDecimal(wins / numMatches)
+                            .setScale(WIN_RECORD_ROUNDING_SCALE, RoundingMode.HALF_EVEN));
         }
     }
 
@@ -160,11 +166,12 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
     }
 
     private BigDecimal calculatePointsPerTossupHeard(BigDecimal pointsPerGame) {
-        return StatsUtilities.calculatePointsPerTossupsHeard(tossupsHeard, numMatches, pointsPerGame);
+        return StatsUtilities.calculatePointsPerTossupsHeard(
+                tossupsHeard, numMatches, pointsPerGame);
     }
 
     private BigDecimal calculatePointsPerBonus(BigDecimal pointsPerGame) {
-        return StatsUtilities.calculatePointsPerBonus(answers, pointsPerGame,
-                bouncebackPoints, overtimeTossupsGotten, numMatches);
+        return StatsUtilities.calculatePointsPerBonus(
+                answers, pointsPerGame, bouncebackPoints, overtimeTossupsGotten, numMatches);
     }
 }

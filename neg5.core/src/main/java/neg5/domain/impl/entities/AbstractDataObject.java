@@ -1,8 +1,7 @@
 package neg5.domain.impl.entities;
 
-import org.apache.commons.beanutils.BeanUtilsBean;
-
 import java.lang.reflect.InvocationTargetException;
+import org.apache.commons.beanutils.BeanUtilsBean;
 
 public abstract class AbstractDataObject<T> {
 
@@ -11,8 +10,12 @@ public abstract class AbstractDataObject<T> {
             T that = (T) this.getClass().newInstance();
             BeanUtilsBean.getInstance().getPropertyUtils().copyProperties(that, this);
             return that;
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | InstantiationException e) {
-            throw new RuntimeException("Unable to make a copy of " + this.getClass().toString() + ".", e);
+        } catch (IllegalAccessException
+                | InvocationTargetException
+                | NoSuchMethodException
+                | InstantiationException e) {
+            throw new RuntimeException(
+                    "Unable to make a copy of " + this.getClass().toString() + ".", e);
         }
     }
 }

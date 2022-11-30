@@ -1,11 +1,11 @@
 package neg5.domain.api;
 
-import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
-
 import java.util.Optional;
 import java.util.Set;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
 
-public interface TournamentCollaboratorApi extends DomainObjectApiLayer<TournamentCollaboratorDTO, TournamentCollaboratorId> {
+public interface TournamentCollaboratorApi
+        extends DomainObjectApiLayer<TournamentCollaboratorDTO, TournamentCollaboratorId> {
 
     TournamentCollaboratorDTO addOrUpdateCollaborator(TournamentCollaboratorDTO collaborator);
 
@@ -13,6 +13,6 @@ public interface TournamentCollaboratorApi extends DomainObjectApiLayer<Tourname
 
     Set<String> getTournamentIdsThatUserCollaboratesOn(String userId);
 
-    Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(String tournamentId,
-                                                                   String username);
+    Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(
+            String tournamentId, String username);
 }

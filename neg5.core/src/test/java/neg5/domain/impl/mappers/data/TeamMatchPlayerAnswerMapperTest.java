@@ -1,12 +1,12 @@
 package neg5.domain.impl.mappers.data;
 
+import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.impl.entities.transformers.data.TeamMatchPlayerAnswer;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import neg5.domain.api.MatchPlayerAnswerDTO;
 
 @ExtendWith(MockitoExtension.class)
 public class TeamMatchPlayerAnswerMapperTest {

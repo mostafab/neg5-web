@@ -1,8 +1,7 @@
 package neg5.stats.api;
 
-import neg5.domain.api.TeamMatchesStatsDTO;
-
 import java.util.List;
+import neg5.domain.api.TeamMatchesStatsDTO;
 
 public class FullTeamsMatchesStatsDTO extends BaseAggregateStatsDTO {
 

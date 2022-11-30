@@ -2,17 +2,15 @@ package neg5.accessManager.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import neg5.accessManager.api.TournamentAccessException;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
+import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
-import neg5.accessManager.api.TournamentAccessException;
-import neg5.domain.api.enums.TournamentAccessLevel;
-
-import javax.annotation.Nonnull;
-import java.util.Optional;
 
 @Singleton
 public class TournamentAccessManagerImpl implements TournamentAccessManager {
@@ -23,36 +21,43 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
     private final TournamentApi tournamentManager;
 
     @Inject
-    public TournamentAccessManagerImpl(CurrentUserContext currentUserContext,
-                                       TournamentCollaboratorApi collaboratorManager,
-                                       TournamentApi tournamentManager) {
+    public TournamentAccessManagerImpl(
+            CurrentUserContext currentUserContext,
+            TournamentCollaboratorApi collaboratorManager,
+            TournamentApi tournamentManager) {
         this.currentUserContext = currentUserContext;
         this.collaboratorManager = collaboratorManager;
         this.tournamentManager = tournamentManager;
     }
 
     @Override
-    public void requireAccessLevel(@Nonnull String tournamentId,
-                                   @Nonnull TournamentAccessLevel requiredAccessLevel) throws TournamentAccessException {
+    public void requireAccessLevel(
+            @Nonnull String tournamentId, @Nonnull TournamentAccessLevel requiredAccessLevel)
+            throws TournamentAccessException {
         TournamentAccessLevel currentLevel = getCurrentUserAccessLevel(tournamentId);
         if (currentLevel.getLevel() < requiredAccessLevel.getLevel()) {
-            throw new TournamentAccessException(tournamentId,
-                    "User must have at least " + requiredAccessLevel + " access to tournament " + tournamentId);
+            throw new TournamentAccessException(
+                    tournamentId,
+                    "User must have at least "
+                            + requiredAccessLevel
+                            + " access to tournament "
+                            + tournamentId);
         }
     }
 
     @Override
-    public TournamentAccessLevel getUserAccessLevelToTournament(@Nonnull String tournamentId,
-                                                                @Nonnull String userId) {
+    public TournamentAccessLevel getUserAccessLevelToTournament(
+            @Nonnull String tournamentId, @Nonnull String userId) {
         if (userIsDirector(userId, tournamentId)) {
             return TournamentAccessLevel.OWNER;
         }
-        return collaboratorManager.getByTournamentAndUsername(tournamentId, userId)
-                .map(collaborator ->
-                        Boolean.TRUE.equals(collaborator.getIsAdmin())
-                                ? TournamentAccessLevel.ADMIN
-                                : TournamentAccessLevel.COLLABORATOR
-                )
+        return collaboratorManager
+                .getByTournamentAndUsername(tournamentId, userId)
+                .map(
+                        collaborator ->
+                                Boolean.TRUE.equals(collaborator.getIsAdmin())
+                                        ? TournamentAccessLevel.ADMIN
+                                        : TournamentAccessLevel.COLLABORATOR)
                 .orElse(TournamentAccessLevel.NONE);
     }
 

@@ -14,9 +14,10 @@ public class TournamentPoolController extends AbstractJsonController {
     private final TournamentAccessManager accessManager;
 
     @Inject
-    public TournamentPoolController(TournamentPoolApi poolManager,
-                                    RequestHelper requestHelper,
-                                    TournamentAccessManager accessManager) {
+    public TournamentPoolController(
+            TournamentPoolApi poolManager,
+            RequestHelper requestHelper,
+            TournamentAccessManager accessManager) {
         this.poolManager = poolManager;
         this.requestHelper = requestHelper;
         this.accessManager = accessManager;
@@ -24,22 +25,27 @@ public class TournamentPoolController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        post("", (request, response) -> {
-            TournamentPoolDTO pool = requestHelper.readFromRequest(request, TournamentPoolDTO.class);
-            accessManager.requireAccessLevel(pool.getTournamentId(), TournamentAccessLevel.OWNER);
-            return poolManager.create(pool);
-        });
+        post(
+                "",
+                (request, response) -> {
+                    TournamentPoolDTO pool =
+                            requestHelper.readFromRequest(request, TournamentPoolDTO.class);
+                    accessManager.requireAccessLevel(
+                            pool.getTournamentId(), TournamentAccessLevel.OWNER);
+                    return poolManager.create(pool);
+                });
 
-        put("/:id", (request, response) -> {
-            TournamentPoolDTO original = poolManager.get(request.params("id"));
-            accessManager.requireAccessLevel(
-                    original.getTournamentId(),
-                    TournamentAccessLevel.OWNER
-            );
-            TournamentPoolDTO pool = requestHelper.readFromRequest(request, TournamentPoolDTO.class);
-            pool.setId(request.params("id"));
-            return poolManager.update(pool);
-        });
+        put(
+                "/:id",
+                (request, response) -> {
+                    TournamentPoolDTO original = poolManager.get(request.params("id"));
+                    accessManager.requireAccessLevel(
+                            original.getTournamentId(), TournamentAccessLevel.OWNER);
+                    TournamentPoolDTO pool =
+                            requestHelper.readFromRequest(request, TournamentPoolDTO.class);
+                    pool.setId(request.params("id"));
+                    return poolManager.update(pool);
+                });
     }
 
     @Override

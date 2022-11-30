@@ -5,7 +5,8 @@ import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.impl.entities.TournamentTossupValue;
 
 @Singleton
-public class TournamentTossupValueMapper extends AbstractObjectMapper<TournamentTossupValue, TournamentTossupValueDTO> {
+public class TournamentTossupValueMapper
+        extends AbstractObjectMapper<TournamentTossupValue, TournamentTossupValueDTO> {
 
     protected TournamentTossupValueMapper() {
         super(TournamentTossupValue.class, TournamentTossupValueDTO.class);
@@ -20,11 +21,13 @@ public class TournamentTossupValueMapper extends AbstractObjectMapper<Tournament
 
     @Override
     protected void addMappings() {
-        getEntityToDTOTypeMap().addMappings(mapper -> {
-            mapper.map(
-                    tournamentTossupValue -> tournamentTossupValue.getId().getValue(),
-                    TournamentTossupValueDTO::setValue
-            );
-        });
+        getEntityToDTOTypeMap()
+                .addMappings(
+                        mapper -> {
+                            mapper.map(
+                                    tournamentTossupValue ->
+                                            tournamentTossupValue.getId().getValue(),
+                                    TournamentTossupValueDTO::setValue);
+                        });
     }
 }

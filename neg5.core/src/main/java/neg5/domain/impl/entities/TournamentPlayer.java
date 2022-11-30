@@ -1,8 +1,6 @@
 package neg5.domain.impl.entities;
 
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.Instant;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tournament_player")
@@ -30,7 +29,9 @@ public class TournamentPlayer extends AbstractDataObject<TournamentPlayer>
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
-    @GenericGenerator(name = "uuid_generator", strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
+    @GenericGenerator(
+            name = "uuid_generator",
+            strategy = "neg5.domain.impl.entities.generators.UUIDGenerator")
     public String getId() {
         return id;
     }

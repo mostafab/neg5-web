@@ -2,10 +2,9 @@ package neg5.service.filters;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Set;
 
 @Singleton
 public class FilterRegistry {
@@ -20,9 +19,10 @@ public class FilterRegistry {
     }
 
     public void initFilters() {
-        filters.forEach(filter -> {
-            LOGGER.info("Registering Spark Filter: {}", filter.getClass());
-            filter.registerFilter();
-        });
+        filters.forEach(
+                filter -> {
+                    LOGGER.info("Registering Spark Filter: {}", filter.getClass());
+                    filter.registerFilter();
+                });
     }
 }

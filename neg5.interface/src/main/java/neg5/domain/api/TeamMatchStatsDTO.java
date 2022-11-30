@@ -1,9 +1,8 @@
 package neg5.domain.api;
 
-import neg5.domain.api.enums.MatchResult;
-
 import java.math.BigDecimal;
 import java.util.Set;
+import neg5.domain.api.enums.MatchResult;
 
 public class TeamMatchStatsDTO {
 

@@ -1,20 +1,18 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
-import org.hibernate.annotations.DynamicUpdate;
-import neg5.domain.api.enums.TossupAnswerType;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import neg5.domain.api.enums.TossupAnswerType;
+import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "tournament_tossup_values")
 @DynamicUpdate
-public class TournamentTossupValue
-        extends AbstractDataObject<TournamentTossupValue>
+public class TournamentTossupValue extends AbstractDataObject<TournamentTossupValue>
         implements SpecificTournamentEntity, CompositeIdObject<TournamentTossupValueId> {
 
     private TournamentTossupValueId id;

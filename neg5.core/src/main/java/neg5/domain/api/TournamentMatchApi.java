@@ -10,6 +10,5 @@ public interface TournamentMatchApi extends DomainObjectApiLayer<TournamentMatch
 
     List<TournamentMatchDTO> findAllByTournamentAndPhase(String tournamentId, String phaseId);
 
-    Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(String tournamentId,
-                                                              String phaseId);
+    Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(String tournamentId, String phaseId);
 }

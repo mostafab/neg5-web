@@ -1,17 +1,16 @@
 package neg5.stats.impl.aggregators;
 
-import neg5.domain.api.AnswersDTO;
-import neg5.stats.api.IndividualStandingStatDTO;
-import neg5.domain.api.MatchPlayerDTO;
-import neg5.domain.api.TournamentMatchDTO;
-import neg5.stats.impl.StatsUtilities;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.stats.api.IndividualStandingStatDTO;
+import neg5.stats.impl.StatsUtilities;
 
 public class IndividualStandingStatAggregator implements StatAggregator<IndividualStandingStatDTO> {
 
@@ -51,10 +50,12 @@ public class IndividualStandingStatAggregator implements StatAggregator<Individu
         standing.setTossupAnswerCounts(StatsUtilities.convertAnswersCounts(tossupTotalCounts));
         standing.setTotalPoints(StatsUtilities.getTotalPoints(answers));
 
-        standing.setPointsPerGame(StatsUtilities.getPointsPerGame(standing.getTotalPoints(),
-                gamesPlayed.doubleValue()));
-        standing.setPointsPerTossupHeard(StatsUtilities.calculatePointsPerTossupsHeard(tossupsHeard,
-                gamesPlayed.doubleValue(), standing.getPointsPerGame()));
+        standing.setPointsPerGame(
+                StatsUtilities.getPointsPerGame(
+                        standing.getTotalPoints(), gamesPlayed.doubleValue()));
+        standing.setPointsPerTossupHeard(
+                StatsUtilities.calculatePointsPerTossupsHeard(
+                        tossupsHeard, gamesPlayed.doubleValue(), standing.getPointsPerGame()));
 
         standing.setPowersToNegRatio(StatsUtilities.calculatePowerToNegRatio(answers));
         standing.setGetsToNegRatio(StatsUtilities.calculateGetsToNegRatio(answers));
@@ -63,21 +64,24 @@ public class IndividualStandingStatAggregator implements StatAggregator<Individu
     }
 
     private void updateAnswers(MatchPlayerDTO player) {
-        Set<AnswersDTO> matchAnswers = player.getAnswers().stream()
-                .map(playerAnswer -> {
-                    AnswersDTO answers = new AnswersDTO();
-                    answers.setValue(playerAnswer.getTossupValue());
-                    answers.setTotal(playerAnswer.getNumberGotten());
-                    answers.setAnswerType(playerAnswer.getAnswerType());
-                    return answers;
-                })
-                .collect(Collectors.toSet());
+        Set<AnswersDTO> matchAnswers =
+                player.getAnswers().stream()
+                        .map(
+                                playerAnswer -> {
+                                    AnswersDTO answers = new AnswersDTO();
+                                    answers.setValue(playerAnswer.getTossupValue());
+                                    answers.setTotal(playerAnswer.getNumberGotten());
+                                    answers.setAnswerType(playerAnswer.getAnswerType());
+                                    return answers;
+                                })
+                        .collect(Collectors.toSet());
         answers.addAll(matchAnswers);
-        matchAnswers.forEach(answer -> {
-            tossupTotalCounts.computeIfPresent(answer.getValue(),
-                    (tossupValue, count) -> count + answer.getTotal());
-            tossupTotalCounts.putIfAbsent(answer.getValue(), answer.getTotal());
-        });
+        matchAnswers.forEach(
+                answer -> {
+                    tossupTotalCounts.computeIfPresent(
+                            answer.getValue(), (tossupValue, count) -> count + answer.getTotal());
+                    tossupTotalCounts.putIfAbsent(answer.getValue(), answer.getTotal());
+                });
     }
 
     private void updateGamesPlayed(TournamentMatchDTO match, MatchPlayerDTO player) {

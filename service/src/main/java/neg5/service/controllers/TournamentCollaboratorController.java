@@ -3,10 +3,10 @@ package neg5.service.controllers;
 import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentCollaboratorApi;
-import org.eclipse.jetty.http.HttpStatus;
 import neg5.domain.api.TournamentCollaboratorDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.service.util.RequestHelper;
+import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 
 public class TournamentCollaboratorController extends AbstractJsonController {
@@ -16,9 +16,10 @@ public class TournamentCollaboratorController extends AbstractJsonController {
     private final RequestHelper requestHelper;
 
     @Inject
-    public TournamentCollaboratorController(TournamentCollaboratorApi collaboratorManager,
-                                            TournamentAccessManager accessManager,
-                                            RequestHelper requestHelper) {
+    public TournamentCollaboratorController(
+            TournamentCollaboratorApi collaboratorManager,
+            TournamentAccessManager accessManager,
+            RequestHelper requestHelper) {
         this.collaboratorManager = collaboratorManager;
         this.accessManager = accessManager;
         this.requestHelper = requestHelper;
@@ -26,13 +27,19 @@ public class TournamentCollaboratorController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        post("", (request, response) -> collaboratorManager.addOrUpdateCollaborator(verifyEditAccessAndParseBody(request)));
-        delete("", (request, response) -> {
-            TournamentCollaboratorDTO collaborator = verifyEditAccessAndParseBody(request);
-            collaboratorManager.delete(collaborator);
-            response.status(HttpStatus.NO_CONTENT_204);
-            return "";
-        });
+        post(
+                "",
+                (request, response) ->
+                        collaboratorManager.addOrUpdateCollaborator(
+                                verifyEditAccessAndParseBody(request)));
+        delete(
+                "",
+                (request, response) -> {
+                    TournamentCollaboratorDTO collaborator = verifyEditAccessAndParseBody(request);
+                    collaboratorManager.delete(collaborator);
+                    response.status(HttpStatus.NO_CONTENT_204);
+                    return "";
+                });
     }
 
     @Override
@@ -41,12 +48,10 @@ public class TournamentCollaboratorController extends AbstractJsonController {
     }
 
     private TournamentCollaboratorDTO verifyEditAccessAndParseBody(Request request) {
-        TournamentCollaboratorDTO collaborator = requestHelper
-                .readFromRequest(request, TournamentCollaboratorDTO.class);
+        TournamentCollaboratorDTO collaborator =
+                requestHelper.readFromRequest(request, TournamentCollaboratorDTO.class);
         accessManager.requireAccessLevel(
-                collaborator.getTournamentId(),
-                TournamentAccessLevel.OWNER
-        );
+                collaborator.getTournamentId(), TournamentAccessLevel.OWNER);
         return collaborator;
     }
 }

@@ -19,7 +19,8 @@ public class ControllersModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        final Multibinder<BaseController> multibinder = Multibinder.newSetBinder(binder(), BaseController.class);
+        final Multibinder<BaseController> multibinder =
+                Multibinder.newSetBinder(binder(), BaseController.class);
 
         multibinder.addBinding().to(AccountController.class);
         multibinder.addBinding().to(LoginController.class);

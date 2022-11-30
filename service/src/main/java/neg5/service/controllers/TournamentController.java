@@ -2,25 +2,24 @@ package neg5.service.controllers;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import java.util.List;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
+import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
-import neg5.exports.qbj.api.QbjApi;
-import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.api.UpdateTournamentRequestDTO;
-import neg5.userData.CurrentUserContext;
-import neg5.exports.qbj.api.QBJGsonProvider;
 import neg5.domain.api.enums.TournamentAccessLevel;
+import neg5.exports.qbj.api.QBJGsonProvider;
+import neg5.exports.qbj.api.QbjApi;
 import neg5.service.util.RequestHelper;
-
-import java.util.List;
+import neg5.userData.CurrentUserContext;
 
 public class TournamentController extends AbstractJsonController {
 
@@ -49,60 +48,80 @@ public class TournamentController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        get("", (request, response) -> {
-           String userId = currentUserContext.getUserDataOrThrow().getUsername();
-           return tournamentCollaboratorManager.getUserTournaments(userId);
-        });
+        get(
+                "",
+                (request, response) -> {
+                    String userId = currentUserContext.getUserDataOrThrow().getUsername();
+                    return tournamentCollaboratorManager.getUserTournaments(userId);
+                });
 
-        get("/:id", (request, response)
-                -> tournamentManager.get(request.params("id")));
-        put("/:id", (request, response) -> {
-            accessManager.requireAccessLevel(
-                    request.params("id"),
-                    TournamentAccessLevel.OWNER
-            );
-            UpdateTournamentRequestDTO updateRequest = requestHelper
-                    .readFromRequest(request, UpdateTournamentRequestDTO.class);
-            return tournamentManager.update(request.params("id"), updateRequest);
-        });
+        get("/:id", (request, response) -> tournamentManager.get(request.params("id")));
+        put(
+                "/:id",
+                (request, response) -> {
+                    accessManager.requireAccessLevel(
+                            request.params("id"), TournamentAccessLevel.OWNER);
+                    UpdateTournamentRequestDTO updateRequest =
+                            requestHelper.readFromRequest(
+                                    request, UpdateTournamentRequestDTO.class);
+                    return tournamentManager.update(request.params("id"), updateRequest);
+                });
 
-        get("/:id/teams", (request, response)
-                -> tournamentTeamManager.findAllByTournamentId(request.params("id")));
-        get("/:id/players", (request, response)
-                -> tournamentPlayerApi.findAllByTournamentId(request.params("id")));
-        get("/:id/matches", (request, response)
-                -> tournamentMatchManager.findAllByTournamentId(request.params("id")));
-        get("/:id/phases", (request, response)
-                -> tournamentPhaseManager.findAllByTournamentId(request.params("id")));
-        get("/:id/tossupValues", (request, response)
-                -> tournamentTossupValueManager.findAllByTournamentId(request.params("id")));
-        get("/:id/collaborators", (request, response)
-                -> tournamentCollaboratorManager.findAllByTournamentId(request.params("id")));
-        get("/:id/rules", (request, response) -> tournamentRulesManager.getForTournament(request.params("id")));
-        get("/:id/qbj", (request, response) -> {
-            response.type(QBJ_CONTENT_TYPE);
-            return qbjManager.exportToQbjFormat(request.params("id"));
-            }, obj -> qbjGsonProvider.get().toJson(obj)
-        );
+        get(
+                "/:id/teams",
+                (request, response) ->
+                        tournamentTeamManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/players",
+                (request, response) ->
+                        tournamentPlayerApi.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/matches",
+                (request, response) ->
+                        tournamentMatchManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/phases",
+                (request, response) ->
+                        tournamentPhaseManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/tossupValues",
+                (request, response) ->
+                        tournamentTossupValueManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/collaborators",
+                (request, response) ->
+                        tournamentCollaboratorManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/rules",
+                (request, response) ->
+                        tournamentRulesManager.getForTournament(request.params("id")));
+        get(
+                "/:id/qbj",
+                (request, response) -> {
+                    response.type(QBJ_CONTENT_TYPE);
+                    return qbjManager.exportToQbjFormat(request.params("id"));
+                },
+                obj -> qbjGsonProvider.get().toJson(obj));
 
-        post("", (request, response) -> {
-            TournamentDTO tournament = requestHelper.readFromRequest(request, TournamentDTO.class);
-            return tournamentManager.create(tournament);
-        });
+        post(
+                "",
+                (request, response) -> {
+                    TournamentDTO tournament =
+                            requestHelper.readFromRequest(request, TournamentDTO.class);
+                    return tournamentManager.create(tournament);
+                });
 
-        post("/:id/tossupValues", (request, response) -> {
-            accessManager.requireAccessLevel(
-                    request.params("id"),
-                    TournamentAccessLevel.OWNER
-            );
-            List<TournamentTossupValueDTO> values = requestHelper.readFromRequest(
-                    request,
-                    new TypeToken<List<TournamentTossupValueDTO>>(){}.getType()
-            );
-            return tournamentManager.updateTournamentTossupValues(
-                    request.params("id"),
-                    values
-            );
-        });
+        post(
+                "/:id/tossupValues",
+                (request, response) -> {
+                    accessManager.requireAccessLevel(
+                            request.params("id"), TournamentAccessLevel.OWNER);
+                    List<TournamentTossupValueDTO> values =
+                            requestHelper.readFromRequest(
+                                    request,
+                                    new TypeToken<List<TournamentTossupValueDTO>>() {}.getType());
+                    return tournamentManager.updateTournamentTossupValues(
+                            request.params("id"), values);
+                });
     }
 }

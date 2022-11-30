@@ -24,7 +24,9 @@ public enum Environment {
     }
 
     private static Environment initializeEnvironment() {
-        String env = Objects.requireNonNull(System.getenv("NEG5_ENVIRONMENT"), "NEG5_ENVIRONMENT variable is not set.");
+        String env =
+                Objects.requireNonNull(
+                        System.getenv("NEG5_ENVIRONMENT"), "NEG5_ENVIRONMENT variable is not set.");
         return Environment.valueOf(env);
     }
 }

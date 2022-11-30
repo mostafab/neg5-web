@@ -2,11 +2,10 @@ package neg5.domain.impl.mappers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import neg5.domain.api.MatchPlayerDTO;
-import neg5.domain.impl.entities.MatchPlayer;
-
 import java.util.HashSet;
 import java.util.stream.Collectors;
+import neg5.domain.api.MatchPlayerDTO;
+import neg5.domain.impl.entities.MatchPlayer;
 
 @Singleton
 public class MatchPlayerMapper extends AbstractObjectMapper<MatchPlayer, MatchPlayerDTO> {
@@ -19,8 +18,11 @@ public class MatchPlayerMapper extends AbstractObjectMapper<MatchPlayer, MatchPl
 
     @Override
     protected void enrichDTO(MatchPlayerDTO matchPlayerDTO, MatchPlayer matchPlayer) {
-        matchPlayerDTO.setAnswers(matchPlayer.getAnswers() == null ? new HashSet<>() : matchPlayer.getAnswers().stream()
-                .map(answer -> matchPlayerAnswerMapper.toDTO(answer)).collect(Collectors.toSet())
-        );
+        matchPlayerDTO.setAnswers(
+                matchPlayer.getAnswers() == null
+                        ? new HashSet<>()
+                        : matchPlayer.getAnswers().stream()
+                                .map(answer -> matchPlayerAnswerMapper.toDTO(answer))
+                                .collect(Collectors.toSet()));
     }
 }

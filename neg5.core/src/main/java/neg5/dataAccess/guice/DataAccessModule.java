@@ -7,11 +7,10 @@ import com.google.inject.name.Named;
 import com.google.inject.persist.jpa.JpaPersistModule;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.hibernate.cfg.AvailableSettings;
-
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import javax.sql.DataSource;
+import org.hibernate.cfg.AvailableSettings;
 
 public class DataAccessModule extends AbstractModule {
 
@@ -29,12 +28,13 @@ public class DataAccessModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public DataSource provideDataSource(@Named("database.username") String username,
-                                        @Named("database.password") String password,
-                                        @Named("database.jdbcUrl") String jdbcUrl,
-                                        @Named("database.pool.size") Integer poolSize,
-                                        @Named("database.pool.name") String poolName,
-                                        @Named("database.driver") String driverClass) {
+    public DataSource provideDataSource(
+            @Named("database.username") String username,
+            @Named("database.password") String password,
+            @Named("database.jdbcUrl") String jdbcUrl,
+            @Named("database.pool.size") Integer poolSize,
+            @Named("database.pool.name") String poolName,
+            @Named("database.driver") String driverClass) {
         HikariConfig config = new HikariConfig();
         config.setUsername(username);
         config.setPassword(password);
@@ -45,7 +45,8 @@ public class DataAccessModule extends AbstractModule {
         config.setReadOnly(false);
 
         DataSource dataSource = new HikariDataSource(config);
-        // This is kind of ugly, but we need to set the data source on the properties attached to the JpaPersistModule
+        // This is kind of ugly, but we need to set the data source on the properties attached to
+        // the JpaPersistModule
         properties.put(AvailableSettings.DATASOURCE, dataSource);
 
         return dataSource;

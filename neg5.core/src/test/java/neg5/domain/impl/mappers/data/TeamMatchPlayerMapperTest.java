@@ -1,6 +1,14 @@
 package neg5.domain.impl.mappers.data;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.google.common.collect.Sets;
+import java.util.HashSet;
+import neg5.domain.api.MatchPlayerAnswerDTO;
+import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.impl.entities.transformers.data.TeamMatchPlayer;
 import neg5.domain.impl.entities.transformers.data.TeamMatchPlayerAnswer;
 import org.junit.Assert;
@@ -9,15 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import neg5.domain.api.MatchPlayerAnswerDTO;
-import neg5.domain.api.MatchPlayerDTO;
-
-import java.util.HashSet;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TeamMatchPlayerMapperTest {
@@ -39,17 +38,20 @@ public class TeamMatchPlayerMapperTest {
 
     @Test
     public void testMapsToDtoCorrectlyAndCallsSubmapper() {
-        when(teamMatchPlayerAnswerMapper.toDTO(any())).thenAnswer(inv -> new MatchPlayerAnswerDTO());
+        when(teamMatchPlayerAnswerMapper.toDTO(any()))
+                .thenAnswer(inv -> new MatchPlayerAnswerDTO());
 
         TeamMatchPlayer teamMatchPlayer = buildTeamMatchPlayer();
-        teamMatchPlayer.setTossupValues(Sets.newHashSet(new TeamMatchPlayerAnswer(), new TeamMatchPlayerAnswer()));
+        teamMatchPlayer.setTossupValues(
+                Sets.newHashSet(new TeamMatchPlayerAnswer(), new TeamMatchPlayerAnswer()));
 
         MatchPlayerDTO dto = teamMatchPlayerMapper.toDTO(teamMatchPlayer);
 
         Assert.assertNotNull(dto.getAnswers());
         Assert.assertEquals(teamMatchPlayer.getTossupValues().size(), dto.getAnswers().size());
 
-        verify(teamMatchPlayerAnswerMapper, times(teamMatchPlayer.getTossupValues().size())).toDTO(any());
+        verify(teamMatchPlayerAnswerMapper, times(teamMatchPlayer.getTossupValues().size()))
+                .toDTO(any());
     }
 
     @Test

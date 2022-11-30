@@ -2,10 +2,9 @@ package neg5.service.util;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.lang.reflect.Type;
 import neg5.gson.GsonProvider;
 import spark.Request;
-
-import java.lang.reflect.Type;
 
 @Singleton
 public class RequestHelper {

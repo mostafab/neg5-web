@@ -4,24 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import neg5.domain.api.MatchTeamApi;
-import neg5.domain.api.TournamentMatchApi;
-import neg5.domain.api.TournamentMatchPhaseApi;
-import neg5.domain.api.TournamentTeamApi;
-import neg5.domain.api.TournamentTossupValueApi;
-import neg5.domain.impl.entities.transformers.data.Match;
-import neg5.domain.api.FieldValidationErrors;
-import neg5.domain.api.MatchTeamDTO;
-import neg5.domain.api.TournamentMatchDTO;
-import neg5.domain.api.TournamentMatchPhaseDTO;
-import neg5.domain.api.TournamentTeamDTO;
-import neg5.domain.api.TournamentTossupValueDTO;
-import neg5.domain.impl.dataAccess.TournamentMatchDAO;
-import neg5.domain.impl.entities.TournamentMatch;
-import neg5.domain.impl.mappers.TournamentMatchMapper;
-import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
-import neg5.domain.impl.matchValidators.EnhancedMatchValidator;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,33 +13,49 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import static neg5.validation.FieldValidation.requireCondition;
-import static neg5.validation.FieldValidation.requireNotNull;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.MatchTeamApi;
+import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentMatchPhaseApi;
+import neg5.domain.api.TournamentMatchPhaseDTO;
+import neg5.domain.api.TournamentTeamApi;
+import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTossupValueApi;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.impl.dataAccess.TournamentMatchDAO;
+import neg5.domain.impl.entities.TournamentMatch;
+import neg5.domain.impl.entities.transformers.data.Match;
+import neg5.domain.impl.mappers.TournamentMatchMapper;
+import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
+import neg5.domain.impl.matchValidators.TournamentMatchValidator;
 
 @Singleton
 public class TournamentMatchApiImpl
-        extends AbstractApiLayerImpl<TournamentMatch, TournamentMatchDTO, String> implements TournamentMatchApi {
+        extends AbstractApiLayerImpl<TournamentMatch, TournamentMatchDTO, String>
+        implements TournamentMatchApi {
 
     private final TournamentTossupValueApi tournamentTossupValueManager;
     private final MatchTeamApi matchTeamManager;
     private final TournamentTeamApi tournamentTeamApi;
     private final TournamentMatchPhaseApi matchPhaseManager;
-    private final Set<EnhancedMatchValidator> matchValidators;
+    private final Set<TournamentMatchValidator> matchValidators;
 
     private final TournamentMatchMapper tournamentMatchMapper;
     private final MatchToMatchDTOMapper matchToMatchDTOMapper;
     private final TournamentMatchDAO rwTournamentMatchDAO;
 
     @Inject
-    public TournamentMatchApiImpl(TournamentTossupValueApi tournamentTossupValueManager,
-                                  MatchTeamApi matchTeamManager,
-                                  TournamentTeamApi tournamentTeamApi,
-                                  TournamentMatchPhaseApi matchPhaseManager,
-                                  Set<EnhancedMatchValidator> matchValidators,
-                                  TournamentMatchMapper tournamentMatchMapper,
-                                  MatchToMatchDTOMapper matchToMatchDTOMapper,
-                                  TournamentMatchDAO rwTournamentMatchDAO) {
+    public TournamentMatchApiImpl(
+            TournamentTossupValueApi tournamentTossupValueManager,
+            MatchTeamApi matchTeamManager,
+            TournamentTeamApi tournamentTeamApi,
+            TournamentMatchPhaseApi matchPhaseManager,
+            Set<TournamentMatchValidator> matchValidators,
+            TournamentMatchMapper tournamentMatchMapper,
+            MatchToMatchDTOMapper matchToMatchDTOMapper,
+            TournamentMatchDAO rwTournamentMatchDAO) {
         this.tournamentTossupValueManager = tournamentTossupValueManager;
         this.matchTeamManager = matchTeamManager;
         this.tournamentTeamApi = tournamentTeamApi;
@@ -89,17 +87,17 @@ public class TournamentMatchApiImpl
         Set<String> phases = match.getPhases();
         match.setPhases(null);
         TournamentMatchDTO createdMatch = super.create(match);
-        createdMatch.setTeams(match.getTeams().stream()
-                .map(matchTeam -> {
-                    matchTeam.setTournamentId(match.getTournamentId());
-                    matchTeam.setMatchId(createdMatch.getId());
-                    return matchTeamManager.create(matchTeam);
-                })
-                .collect(Collectors.toSet()));
-        createdMatch.setPhases(phases == null
-            ? new HashSet<>()
-            : associateMatchWithPhases(createdMatch, phases)
-        );
+        createdMatch.setTeams(
+                match.getTeams().stream()
+                        .map(
+                                matchTeam -> {
+                                    matchTeam.setTournamentId(match.getTournamentId());
+                                    matchTeam.setMatchId(createdMatch.getId());
+                                    return matchTeamManager.create(matchTeam);
+                                })
+                        .collect(Collectors.toSet()));
+        createdMatch.setPhases(
+                phases == null ? new HashSet<>() : associateMatchWithPhases(createdMatch, phases));
 
         return createdMatch;
     }
@@ -129,26 +127,32 @@ public class TournamentMatchApiImpl
     }
 
     @Transactional
-    public List<TournamentMatchDTO> findAllByTournamentAndPhase(String tournamentId, String phaseId) {
+    public List<TournamentMatchDTO> findAllByTournamentAndPhase(
+            String tournamentId, String phaseId) {
         return findAllByTournamentId(tournamentId).stream()
                 .filter(match -> phaseId == null || match.getPhases().contains(phaseId))
                 .collect(Collectors.toList());
     }
 
-    public Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(String tournamentId,
-                                                                     String phaseId) {
+    public Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(
+            String tournamentId, String phaseId) {
         List<TournamentMatchDTO> matches = findAllByTournamentAndPhase(tournamentId, phaseId);
         Map<String, List<TournamentMatchDTO>> matchesByTeamId = new HashMap<>();
-        matches.forEach(match -> {
-            Set<MatchTeamDTO> teams = match.getTeams();
-            teams.forEach(team -> {
-                matchesByTeamId.computeIfPresent(team.getTeamId(), (id, list) -> {
-                    list.add(match);
-                    return list;
+        matches.forEach(
+                match -> {
+                    Set<MatchTeamDTO> teams = match.getTeams();
+                    teams.forEach(
+                            team -> {
+                                matchesByTeamId.computeIfPresent(
+                                        team.getTeamId(),
+                                        (id, list) -> {
+                                            list.add(match);
+                                            return list;
+                                        });
+                                matchesByTeamId.computeIfAbsent(
+                                        team.getTeamId(), teamId -> Lists.newArrayList(match));
+                            });
                 });
-                matchesByTeamId.computeIfAbsent(team.getTeamId(), teamId -> Lists.newArrayList(match));
-            });
-        });
         List<TournamentTeamDTO> allTeams = tournamentTeamApi.findAllByTournamentId(tournamentId);
         allTeams.forEach(team -> matchesByTeamId.putIfAbsent(team.getId(), new ArrayList<>()));
         return matchesByTeamId;
@@ -162,22 +166,17 @@ public class TournamentMatchApiImpl
     @Override
     protected Optional<FieldValidationErrors> validateObject(TournamentMatchDTO dto) {
         FieldValidationErrors errors = new FieldValidationErrors();
-        // Basic validation
-        requireNotNull(errors, dto.getTournamentId(), "tournamentId");
-        requireNotNull(errors, dto.getRound(), "round");
-        requireNotNull(errors, dto.getTossupsHeard(), "tossupsHeard");
-        requireNotNull(errors, dto.getTeams(), "teams");
-        requireCondition(errors, dto.getRound() == null || dto.getRound() > 0, "round", "Round must be greater than 0");
-        requireCondition(errors, dto.getTossupsHeard() == null || dto.getTossupsHeard() > 0, "tossupsHeard", "Tossups Heard must be greater than 0");
-        // Run through all the enhanced match validators
         List<TournamentMatchDTO> allMatches = findAllByTournamentId(dto.getTournamentId());
-        matchValidators.forEach(validator -> Optional.ofNullable(validator.getErrors(allMatches, dto)).ifPresent(err -> errors.getErrors().addAll(err.getErrors())));
+        matchValidators.forEach(
+                validator ->
+                        Optional.ofNullable(validator.getErrors(allMatches, dto))
+                                .ifPresent(err -> errors.getErrors().addAll(err.getErrors())));
         return Optional.of(errors);
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {
-        return matchPhaseManager.associateMatchWithPhases(phases, match.getId(), match.getTournamentId())
-                .stream()
+        return matchPhaseManager
+                .associateMatchWithPhases(phases, match.getId(), match.getTournamentId()).stream()
                 .map(TournamentMatchPhaseDTO::getPhaseId)
                 .collect(Collectors.toSet());
     }

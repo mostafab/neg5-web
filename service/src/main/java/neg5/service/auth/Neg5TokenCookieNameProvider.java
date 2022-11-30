@@ -1,7 +1,6 @@
 package neg5.service.auth;
 
 import com.google.inject.Singleton;
-
 import java.util.function.Supplier;
 
 @Singleton

@@ -2,20 +2,19 @@ package neg5.exports.qbj.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.List;
+import java.util.stream.Collectors;
 import neg5.domain.api.TournamentApi;
-import neg5.domain.api.TournamentTeamApi;
-import neg5.exports.qbj.api.QbjApi;
 import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
+import neg5.exports.qbj.api.QbjApi;
 import neg5.exports.qbj.api.RegistrationDTO;
 import neg5.exports.qbj.api.ScoringRulesDTO;
 import neg5.exports.qbj.api.TournamentQbjDTO;
 import neg5.exports.qbj.api.TournamentSiteDTO;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Singleton
 public class QbjApiImpl implements QbjApi {
@@ -24,8 +23,7 @@ public class QbjApiImpl implements QbjApi {
     private final TournamentTeamApi teamApi;
 
     @Inject
-    public QbjApiImpl(TournamentApi tournamentManager,
-                      TournamentTeamApi teamApi) {
+    public QbjApiImpl(TournamentApi tournamentManager, TournamentTeamApi teamApi) {
         this.tournamentManager = tournamentManager;
         this.teamApi = teamApi;
     }
@@ -57,22 +55,23 @@ public class QbjApiImpl implements QbjApi {
         rules.setMinimumPartsPerBonus(tournament.getPartsPerBonus());
         rules.setPointsPerBonusPart(tournament.getBonusPointValue());
 
-        if (tournament.getPartsPerBonus() != null
-                && tournament.getBonusPointValue() != null) {
-            rules.setMaximumBonusScore(tournament.getPartsPerBonus() * tournament.getBonusPointValue());
+        if (tournament.getPartsPerBonus() != null && tournament.getBonusPointValue() != null) {
+            rules.setMaximumBonusScore(
+                    tournament.getPartsPerBonus() * tournament.getBonusPointValue());
         }
 
         rules.setAnswerTypes(
                 tournament.getTossupValues().stream()
-                        .map(tv -> {
-                            AnswerTypeDTO answerType = new AnswerTypeDTO();
-                            answerType.setValue(tv.getValue());
-                            answerType.setAwardsBonus(TossupAnswerType.NEG != tv.getAnswerType()
-                                    && tv.getAnswerType() != null);
-                            return answerType;
-                        })
-                        .collect(Collectors.toList())
-        );
+                        .map(
+                                tv -> {
+                                    AnswerTypeDTO answerType = new AnswerTypeDTO();
+                                    answerType.setValue(tv.getValue());
+                                    answerType.setAwardsBonus(
+                                            TossupAnswerType.NEG != tv.getAnswerType()
+                                                    && tv.getAnswerType() != null);
+                                    return answerType;
+                                })
+                        .collect(Collectors.toList()));
 
         return rules;
     }

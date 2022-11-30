@@ -2,13 +2,12 @@ package neg5.configuration.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import neg5.domain.api.Environment;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.regex.Pattern;
+import neg5.domain.api.Environment;
 
 public class ConfigurationModule extends AbstractModule {
 
@@ -28,7 +27,11 @@ public class ConfigurationModule extends AbstractModule {
             // Load generic configs first
             props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
             // Override with environment specific configs
-            props.load(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(getEnvConfigPath(environment))));
+            props.load(
+                    Objects.requireNonNull(
+                            getClass()
+                                    .getClassLoader()
+                                    .getResourceAsStream(getEnvConfigPath(environment))));
             // Substitute environment vars
             props.putAll(substituteEnvironmentVariables(props));
             return props;
@@ -43,14 +46,12 @@ public class ConfigurationModule extends AbstractModule {
 
     private Map<?, ?> substituteEnvironmentVariables(Properties properties) {
         Map<String, String> overrides = new HashMap<>();
-        properties.forEach((key, value) -> {
-            if (shouldSubstituteWithEnvironmentVariable((String) value)) {
-                overrides.put(
-                        (String) key,
-                        getValueOfEnvironmentVar((String) value)
-                );
-            }
-        });
+        properties.forEach(
+                (key, value) -> {
+                    if (shouldSubstituteWithEnvironmentVariable((String) value)) {
+                        overrides.put((String) key, getValueOfEnvironmentVar((String) value));
+                    }
+                });
         return overrides;
     }
 
@@ -61,7 +62,8 @@ public class ConfigurationModule extends AbstractModule {
     private String getValueOfEnvironmentVar(String value) {
         // Remove the leading "${" and trailing "}"
         String envVarKey = value.substring(2, value.length() - 1);
-        return Objects.requireNonNull(System.getenv(envVarKey), "No environment variable with key: " + envVarKey + " found.");
+        return Objects.requireNonNull(
+                System.getenv(envVarKey),
+                "No environment variable with key: " + envVarKey + " found.");
     }
-
 }

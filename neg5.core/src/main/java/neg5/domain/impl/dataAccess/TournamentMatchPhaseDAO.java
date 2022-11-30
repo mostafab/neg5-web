@@ -1,9 +1,8 @@
 package neg5.domain.impl.dataAccess;
 
+import java.util.List;
 import neg5.domain.impl.entities.TournamentMatchPhase;
 import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
-
-import java.util.List;
 
 public class TournamentMatchPhaseDAO extends AbstractDAO<TournamentMatchPhase, MatchPhaseId> {
 
@@ -12,8 +11,10 @@ public class TournamentMatchPhaseDAO extends AbstractDAO<TournamentMatchPhase, M
     }
 
     public List<TournamentMatchPhase> findByMatch(String matchId) {
-        return getEntityManager().createQuery(
-                "SELECT mp from TournamentMatchPhase mp where mp.id.match.id = :matchId", TournamentMatchPhase.class)
+        return getEntityManager()
+                .createQuery(
+                        "SELECT mp from TournamentMatchPhase mp where mp.id.match.id = :matchId",
+                        TournamentMatchPhase.class)
                 .setParameter("matchId", matchId)
                 .getResultList();
     }

@@ -5,7 +5,8 @@ import neg5.domain.api.TournamentMatchPhaseDTO;
 import neg5.domain.impl.entities.TournamentMatchPhase;
 
 @Singleton
-public class TournamentMatchPhaseMapper extends AbstractObjectMapper<TournamentMatchPhase, TournamentMatchPhaseDTO> {
+public class TournamentMatchPhaseMapper
+        extends AbstractObjectMapper<TournamentMatchPhase, TournamentMatchPhaseDTO> {
 
     public TournamentMatchPhaseMapper() {
         super(TournamentMatchPhase.class, TournamentMatchPhaseDTO.class);
