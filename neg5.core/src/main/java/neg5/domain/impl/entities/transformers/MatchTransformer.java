@@ -49,8 +49,11 @@ public class MatchTransformer implements ResultTransformer {
         return Arrays.stream((Object[]) tuple[0])
                 .map(
                         object -> {
-                            PGobject phaseObj = (PGobject) object;
-                            return gson.fromJson(phaseObj.getValue(), Phase.class);
+                            String json =
+                                    object instanceof PGobject
+                                            ? ((PGobject) object).getValue()
+                                            : (String) object;
+                            return gson.fromJson(json, Phase.class);
                         })
                 .collect(Collectors.toSet());
     }
@@ -60,9 +63,11 @@ public class MatchTransformer implements ResultTransformer {
         return Arrays.stream((Object[]) tuple[5])
                 .map(
                         object -> {
-                            PGobject phaseObj = (PGobject) object;
-                            TeamInMatch team =
-                                    gson.fromJson(phaseObj.getValue(), TeamInMatch.class);
+                            String json =
+                                    object instanceof PGobject
+                                            ? ((PGobject) object).getValue()
+                                            : (String) object;
+                            TeamInMatch team = gson.fromJson(json, TeamInMatch.class);
                             team.setPlayers(
                                     players.stream()
                                             .filter(p -> p.getTeamId().equals(team.getTeamId()))
@@ -76,8 +81,11 @@ public class MatchTransformer implements ResultTransformer {
         return Arrays.stream((Object[]) tuple[10])
                 .map(
                         object -> {
-                            PGobject phaseObj = (PGobject) object;
-                            return gson.fromJson(phaseObj.getValue(), TeamMatchPlayer.class);
+                            String json =
+                                    object instanceof PGobject
+                                            ? ((PGobject) object).getValue()
+                                            : (String) object;
+                            return gson.fromJson(json, TeamMatchPlayer.class);
                         })
                 .collect(Collectors.toSet());
     }
