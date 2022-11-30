@@ -9,8 +9,6 @@ do
   esac
 done
 
-echo $release
-
 cd $(dirname "$0")
 cd ../..
 mvn clean
