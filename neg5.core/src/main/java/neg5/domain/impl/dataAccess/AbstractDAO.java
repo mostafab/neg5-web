@@ -10,9 +10,10 @@ import neg5.domain.impl.entities.IdDataObject;
 import neg5.domain.impl.entities.SpecificTournamentEntity;
 
 public abstract class AbstractDAO<
-        T extends AbstractDataObject<T> & IdDataObject<IdType>, IdType extends Serializable> {
+        EntityType extends AbstractDataObject<EntityType> & IdDataObject<IdType>,
+        IdType extends Serializable> {
 
-    private Class<T> persistentClass;
+    private Class<EntityType> persistentClass;
 
     private static final String FIND_ALL_BY_TOURNAMENT_ID_QUERY =
             "SELECT ent from %s ent where ent.%s = :tournamentId";
@@ -23,15 +24,15 @@ public abstract class AbstractDAO<
 
     @Inject private Provider<EntityManager> entityManagerProvider;
 
-    AbstractDAO(Class<T> persistentClass) {
+    AbstractDAO(Class<EntityType> persistentClass) {
         this.persistentClass = persistentClass;
     }
 
-    public T get(IdType id) {
+    public EntityType get(IdType id) {
         return getEntityManager().find(getPersistentClass(), id);
     }
 
-    public T save(T entity) {
+    public EntityType save(EntityType entity) {
         return getEntityManager().merge(entity);
     }
 
@@ -43,7 +44,7 @@ public abstract class AbstractDAO<
         getEntityManager().flush();
     }
 
-    public List<T> findAllByTournamentId(String tournamentId) {
+    public List<EntityType> findAllByTournamentId(String tournamentId) {
         validateFindByTournamentId();
         String query =
                 String.format(
@@ -56,7 +57,7 @@ public abstract class AbstractDAO<
                 .getResultList();
     }
 
-    public Class<T> getPersistentClass() {
+    public Class<EntityType> getPersistentClass() {
         return persistentClass;
     }
 

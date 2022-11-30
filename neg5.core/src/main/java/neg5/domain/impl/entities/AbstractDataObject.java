@@ -3,11 +3,11 @@ package neg5.domain.impl.entities;
 import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.beanutils.BeanUtilsBean;
 
-public abstract class AbstractDataObject<T> {
+public abstract class AbstractDataObject<EntityType> {
 
-    public T copyOf() {
+    public EntityType copyOf() {
         try {
-            T that = (T) this.getClass().newInstance();
+            EntityType that = (EntityType) this.getClass().newInstance();
             BeanUtilsBean.getInstance().getPropertyUtils().copyProperties(that, this);
             return that;
         } catch (IllegalAccessException
