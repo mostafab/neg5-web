@@ -20,6 +20,7 @@ import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentMatchPhaseApi;
 import neg5.domain.api.TournamentMatchPhaseDTO;
+import neg5.domain.api.TournamentPlayerDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTossupValueApi;
@@ -29,7 +30,8 @@ import neg5.domain.impl.entities.TournamentMatch;
 import neg5.domain.impl.entities.transformers.data.Match;
 import neg5.domain.impl.mappers.TournamentMatchMapper;
 import neg5.domain.impl.mappers.data.MatchToMatchDTOMapper;
-import neg5.domain.impl.matchValidators.TournamentMatchValidator;
+import neg5.domain.impl.matchValidators.MatchValidationContext;
+import neg5.domain.impl.matchValidators.MatchValidatorsChain;
 
 @Singleton
 public class TournamentMatchApiImpl
@@ -40,7 +42,7 @@ public class TournamentMatchApiImpl
     private final MatchTeamApi matchTeamManager;
     private final TournamentTeamApi tournamentTeamApi;
     private final TournamentMatchPhaseApi matchPhaseManager;
-    private final Set<TournamentMatchValidator> matchValidators;
+    private final MatchValidatorsChain matchValidatorsChain;
 
     private final TournamentMatchMapper tournamentMatchMapper;
     private final MatchToMatchDTOMapper matchToMatchDTOMapper;
@@ -52,7 +54,7 @@ public class TournamentMatchApiImpl
             MatchTeamApi matchTeamManager,
             TournamentTeamApi tournamentTeamApi,
             TournamentMatchPhaseApi matchPhaseManager,
-            Set<TournamentMatchValidator> matchValidators,
+            MatchValidatorsChain matchValidatorsChain,
             TournamentMatchMapper tournamentMatchMapper,
             MatchToMatchDTOMapper matchToMatchDTOMapper,
             TournamentMatchDAO rwTournamentMatchDAO) {
@@ -60,7 +62,7 @@ public class TournamentMatchApiImpl
         this.matchTeamManager = matchTeamManager;
         this.tournamentTeamApi = tournamentTeamApi;
         this.matchPhaseManager = matchPhaseManager;
-        this.matchValidators = matchValidators;
+        this.matchValidatorsChain = matchValidatorsChain;
         this.tournamentMatchMapper = tournamentMatchMapper;
         this.matchToMatchDTOMapper = matchToMatchDTOMapper;
         this.rwTournamentMatchDAO = rwTournamentMatchDAO;
@@ -134,6 +136,7 @@ public class TournamentMatchApiImpl
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(
             String tournamentId, String phaseId) {
         List<TournamentMatchDTO> matches = findAllByTournamentAndPhase(tournamentId, phaseId);
@@ -165,13 +168,8 @@ public class TournamentMatchApiImpl
 
     @Override
     protected Optional<FieldValidationErrors> validateObject(TournamentMatchDTO dto) {
-        FieldValidationErrors errors = new FieldValidationErrors();
-        List<TournamentMatchDTO> allMatches = findAllByTournamentId(dto.getTournamentId());
-        matchValidators.forEach(
-                validator ->
-                        Optional.ofNullable(validator.getErrors(allMatches, dto))
-                                .ifPresent(err -> errors.getErrors().addAll(err.getErrors())));
-        return Optional.of(errors);
+        MatchValidationContext validationContext = getValidationContext(dto);
+        return Optional.of(matchValidatorsChain.getErrorsInSequence(validationContext));
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {
@@ -184,5 +182,22 @@ public class TournamentMatchApiImpl
     private Map<Integer, TournamentTossupValueDTO> getTossupValueMap(String tournamentId) {
         return tournamentTossupValueManager.findAllByTournamentId(tournamentId).stream()
                 .collect(Collectors.toMap(TournamentTossupValueDTO::getValue, Function.identity()));
+    }
+
+    private MatchValidationContext getValidationContext(TournamentMatchDTO subject) {
+        List<TournamentMatchDTO> allMatches = findAllByTournamentId(subject.getTournamentId());
+        if (subject.getTournamentId() == null) {
+            return new MatchValidationContext(allMatches, subject, null, null);
+        }
+        List<TournamentTeamDTO> teams =
+                tournamentTeamApi.findAllByTournamentId(subject.getTournamentId());
+        Map<String, TournamentTeamDTO> teamsById =
+                teams.stream().collect(Collectors.toMap(TournamentTeamDTO::getId, team -> team));
+        Map<String, TournamentPlayerDTO> playersById =
+                teams.stream()
+                        .filter(team -> team.getPlayers() != null)
+                        .flatMap(team -> team.getPlayers().stream())
+                        .collect(Collectors.toMap(TournamentPlayerDTO::getId, player -> player));
+        return new MatchValidationContext(allMatches, subject, teamsById, playersById);
     }
 }

@@ -32,7 +32,6 @@ import neg5.domain.impl.TournamentRulesApiImpl;
 import neg5.domain.impl.TournamentTeamApiImpl;
 import neg5.domain.impl.TournamentTeamPoolApiImpl;
 import neg5.domain.impl.TournamentTossupValueApiImpl;
-import neg5.domain.impl.matchValidators.MatchValidatorsModule;
 
 public class ApiLayerGuiceModule extends AbstractModule {
 
@@ -54,8 +53,6 @@ public class ApiLayerGuiceModule extends AbstractModule {
         bind(TournamentApi.class, TournamentApiImpl.class);
 
         bind(TournamentRulesApi.class, TournamentRulesApiImpl.class);
-
-        install(new MatchValidatorsModule());
     }
 
     private <T, X extends T> void bind(Class<T> api, Class<X> impl) {

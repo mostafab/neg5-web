@@ -1,7 +1,6 @@
 package neg5.domain.impl.matchValidators;
 
 import com.google.inject.Singleton;
-import java.util.List;
 import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentMatchDTO;
@@ -10,9 +9,10 @@ import neg5.domain.api.TournamentMatchDTO;
 public class TotalTossupsValidator implements TournamentMatchValidator {
 
     @Override
-    public FieldValidationErrors getErrors(
-            @Nonnull List<TournamentMatchDTO> allMatches, @Nonnull TournamentMatchDTO subject) {
+    @Nonnull
+    public FieldValidationErrors getErrors(@Nonnull MatchValidationContext validationContext) {
         FieldValidationErrors errors = new FieldValidationErrors();
+        TournamentMatchDTO subject = validationContext.getSubject();
         Integer tossupsHeard = subject.getTossupsHeard();
         if (tossupsHeard == null || subject.getTeams() == null) {
             return errors;
