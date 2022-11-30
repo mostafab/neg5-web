@@ -1,12 +1,8 @@
 package neg5.service.controllers;
 
-/**
- * An interface whose implementing classes should map request uris to handlers
- */
+/** An interface whose implementing classes should map request uris to handlers */
 public interface BaseController {
 
-    /**
-     * Register routes.
-     */
+    /** Register routes. */
     void registerRoutes();
 }

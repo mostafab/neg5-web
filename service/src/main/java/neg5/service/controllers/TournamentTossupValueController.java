@@ -20,10 +20,14 @@ public class TournamentTossupValueController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        post("", (req, res) -> {
-            TournamentTossupValueDTO dto = requestHelper.readFromRequest(req, TournamentTossupValueDTO.class);
-            tournamentAccessManager.requireAccessLevel(dto.getTournamentId(), TournamentAccessLevel.OWNER);
-            return tournamentTossupValueManager.create(dto);
-        });
+        post(
+                "",
+                (req, res) -> {
+                    TournamentTossupValueDTO dto =
+                            requestHelper.readFromRequest(req, TournamentTossupValueDTO.class);
+                    tournamentAccessManager.requireAccessLevel(
+                            dto.getTournamentId(), TournamentAccessLevel.OWNER);
+                    return tournamentTossupValueManager.create(dto);
+                });
     }
 }

@@ -1,13 +1,12 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import neg5.domain.impl.entities.compositeIds.TournamentCollaboratorId;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "user_collaborates_on_tournament")

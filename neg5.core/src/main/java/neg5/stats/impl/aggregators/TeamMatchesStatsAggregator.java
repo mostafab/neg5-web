@@ -1,5 +1,9 @@
 package neg5.stats.impl.aggregators;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import neg5.domain.api.AnswersDTO;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TeamMatchStatsDTO;
@@ -7,11 +11,6 @@ import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.enums.MatchResult;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.stats.impl.StatsUtilities;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatchStatsDTO>> {
 
@@ -47,20 +46,25 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
         MatchTeamDTO thisTeam = teams.getThisTeam();
         stats.setPoints(thisTeam.getScore().doubleValue());
 
-        Set<AnswersDTO> answers = StatsUtilities.aggregateAnswers(StatsUtilities.getAnswers(thisTeam));
+        Set<AnswersDTO> answers =
+                StatsUtilities.aggregateAnswers(StatsUtilities.getAnswers(thisTeam));
         stats.setTossupAnswerCounts(answers);
         stats.setPowersToNegRatio(StatsUtilities.calculatePowerToNegRatio(answers));
         stats.setGetsToNegRatio(StatsUtilities.calculateGetsToNegRatio(answers));
 
-        stats.setTossupsHeard(match.getTossupsHeard() == null ? 0 : match.getTossupsHeard().doubleValue());
-        stats.setPointsPerTossupHeard(StatsUtilities.calculatePointsPerTossupsHeard(stats.getTossupsHeard().intValue(),
-                1, new BigDecimal(stats.getPoints())));
+        stats.setTossupsHeard(
+                match.getTossupsHeard() == null ? 0 : match.getTossupsHeard().doubleValue());
+        stats.setPointsPerTossupHeard(
+                StatsUtilities.calculatePointsPerTossupsHeard(
+                        stats.getTossupsHeard().intValue(), 1, new BigDecimal(stats.getPoints())));
 
-        stats.setBouncebackPoints(thisTeam.getBouncebackPoints() == null
-                ? null
-                : thisTeam.getBouncebackPoints().doubleValue()
-        );
-        stats.setBonusPoints(StatsUtilities.getBonusPoints(stats.getPoints(), stats.getBouncebackPoints(), answers));
+        stats.setBouncebackPoints(
+                thisTeam.getBouncebackPoints() == null
+                        ? null
+                        : thisTeam.getBouncebackPoints().doubleValue());
+        stats.setBonusPoints(
+                StatsUtilities.getBonusPoints(
+                        stats.getPoints(), stats.getBouncebackPoints(), answers));
         stats.setBonusesHeard(getBonusesHeard(answers, thisTeam.getOvertimeTossupsGotten()));
         stats.setPointsPerBonus(getPointsPerBonus(thisTeam, stats.getPoints(), answers));
 
@@ -69,21 +73,22 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
 
     private Integer getBonusesHeard(Set<AnswersDTO> answers, Integer overtimeTossups) {
         return answers.stream()
-                .filter(answer -> TossupAnswerType.NEG != answer.getAnswerType())
-                .mapToInt(AnswersDTO::getTotal)
-                .sum() - (overtimeTossups == null ? 0 : overtimeTossups);
+                        .filter(answer -> TossupAnswerType.NEG != answer.getAnswerType())
+                        .mapToInt(AnswersDTO::getTotal)
+                        .sum()
+                - (overtimeTossups == null ? 0 : overtimeTossups);
     }
 
-    private BigDecimal getPointsPerBonus(MatchTeamDTO thisTeam,
-                                         Double points,
-                                         Set<AnswersDTO> answers) {
+    private BigDecimal getPointsPerBonus(
+            MatchTeamDTO thisTeam, Double points, Set<AnswersDTO> answers) {
         return StatsUtilities.calculatePointsPerBonus(
                 answers,
                 new BigDecimal(points),
                 thisTeam.getBouncebackPoints() == null ? 0 : thisTeam.getBouncebackPoints(),
-                thisTeam.getOvertimeTossupsGotten() == null ? 0 : thisTeam.getOvertimeTossupsGotten(),
-                1
-        );
+                thisTeam.getOvertimeTossupsGotten() == null
+                        ? 0
+                        : thisTeam.getOvertimeTossupsGotten(),
+                1);
     }
 
     private MatchResult getResult(MatchUtil.TeamsWrapper teams) {

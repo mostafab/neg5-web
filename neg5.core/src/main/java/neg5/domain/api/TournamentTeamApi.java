@@ -1,7 +1,7 @@
 package neg5.domain.api;
 
-import javax.annotation.Nonnull;
 import java.util.Set;
+import javax.annotation.Nonnull;
 
 public interface TournamentTeamApi extends DomainObjectApiLayer<TournamentTeamDTO, String> {
 

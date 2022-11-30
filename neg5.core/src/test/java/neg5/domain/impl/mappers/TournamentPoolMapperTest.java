@@ -1,14 +1,14 @@
 package neg5.domain.impl.mappers;
 
+import neg5.domain.api.TournamentPoolDTO;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentPhase;
+import neg5.domain.impl.entities.TournamentPool;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import neg5.domain.api.TournamentPoolDTO;
-import neg5.domain.impl.entities.Tournament;
-import neg5.domain.impl.entities.TournamentPool;
-import neg5.domain.impl.entities.TournamentPhase;
 
 @ExtendWith(MockitoExtension.class)
 public class TournamentPoolMapperTest {

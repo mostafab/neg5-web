@@ -1,22 +1,22 @@
 package neg5.domain.impl;
 
+import static neg5.validation.FieldValidation.requireNotNull;
+
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import neg5.domain.api.TournamentPhaseApi;
-import neg5.domain.api.TournamentPoolApi;
+import java.util.Optional;
 import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPhaseDTO;
+import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.impl.dataAccess.TournamentPoolDAO;
 import neg5.domain.impl.entities.TournamentPool;
 import neg5.domain.impl.mappers.TournamentPoolMapper;
 
-import java.util.Optional;
-
-import static neg5.validation.FieldValidation.requireNotNull;
-
 public class TournamentPoolApiImpl
-        extends AbstractApiLayerImpl<TournamentPool, TournamentPoolDTO, String> implements TournamentPoolApi {
+        extends AbstractApiLayerImpl<TournamentPool, TournamentPoolDTO, String>
+        implements TournamentPoolApi {
 
     private final TournamentPoolMapper mapper;
     private final TournamentPoolDAO divisionDAO;
@@ -24,9 +24,10 @@ public class TournamentPoolApiImpl
     private final TournamentPhaseApi phaseManager;
 
     @Inject
-    public TournamentPoolApiImpl(TournamentPoolMapper mapper,
-                                 TournamentPoolDAO divisionDAO,
-                                 TournamentPhaseApi phaseManager) {
+    public TournamentPoolApiImpl(
+            TournamentPoolMapper mapper,
+            TournamentPoolDAO divisionDAO,
+            TournamentPhaseApi phaseManager) {
         this.mapper = mapper;
         this.divisionDAO = divisionDAO;
         this.phaseManager = phaseManager;

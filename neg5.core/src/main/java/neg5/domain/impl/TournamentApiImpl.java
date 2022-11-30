@@ -1,34 +1,32 @@
 package neg5.domain.impl;
 
+import static neg5.validation.FieldValidation.requireNotNull;
+
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import neg5.domain.api.TournamentApi;
-import neg5.domain.api.TournamentMatchApi;
-import neg5.domain.api.TournamentPhaseApi;
-import neg5.domain.api.TournamentTossupValueApi;
-import org.apache.commons.collections.CollectionUtils;
-import neg5.domain.api.FieldValidationErrors;
-import neg5.domain.api.TournamentDTO;
-import neg5.domain.api.TournamentPhaseDTO;
-import neg5.domain.api.TournamentTossupValueDTO;
-import neg5.domain.api.UpdateTournamentRequestDTO;
-import neg5.userData.CurrentUserContext;
-import neg5.userData.UserData;
-import neg5.domain.impl.dataAccess.TournamentDAO;
-import neg5.domain.impl.entities.Tournament;
-
-import neg5.domain.impl.mappers.TournamentMapper;
-import neg5.domain.impl.mappers.UpdateTournamentRequestMapper;
-import neg5.validation.ObjectValidationException;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static neg5.validation.FieldValidation.requireNotNull;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.api.TournamentApi;
+import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentPhaseApi;
+import neg5.domain.api.TournamentPhaseDTO;
+import neg5.domain.api.TournamentTossupValueApi;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.UpdateTournamentRequestDTO;
+import neg5.domain.impl.dataAccess.TournamentDAO;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.mappers.TournamentMapper;
+import neg5.domain.impl.mappers.UpdateTournamentRequestMapper;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
+import neg5.validation.ObjectValidationException;
+import org.apache.commons.collections.CollectionUtils;
 
 @Singleton
 public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, TournamentDTO, String>
@@ -44,13 +42,14 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
     private final UpdateTournamentRequestMapper updateTournamentRequestMapper;
 
     @Inject
-    public TournamentApiImpl(TournamentDAO rwTournamentDAO,
-                             TournamentMapper tournamentMapper,
-                             CurrentUserContext currentUserContext,
-                             TournamentPhaseApi phaseManager,
-                             TournamentTossupValueApi tossupValueManager,
-                             TournamentMatchApi matchManager,
-                             UpdateTournamentRequestMapper updateTournamentRequestMapper) {
+    public TournamentApiImpl(
+            TournamentDAO rwTournamentDAO,
+            TournamentMapper tournamentMapper,
+            CurrentUserContext currentUserContext,
+            TournamentPhaseApi phaseManager,
+            TournamentTossupValueApi tossupValueManager,
+            TournamentMatchApi matchManager,
+            UpdateTournamentRequestMapper updateTournamentRequestMapper) {
         this.rwTournamentDAO = rwTournamentDAO;
         this.tournamentMapper = tournamentMapper;
         this.currentUserContext = currentUserContext;
@@ -68,16 +67,18 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
 
         TournamentDTO createdTournament = super.create(tournament);
         createdTournament.setPhases(createPhases(createdTournament.getId(), tournament));
-        createdTournament.setTossupValues(createTossupValues(createdTournament.getId(), tournament));
+        createdTournament.setTossupValues(
+                createTossupValues(createdTournament.getId(), tournament));
 
         return createdTournament;
     }
 
     @Transactional
-    public TournamentDTO update(String tournamentId,
-                                UpdateTournamentRequestDTO updateTournamentRequest) {
-        TournamentDTO dto = updateTournamentRequestMapper
-                .mergeToEntity(updateTournamentRequest, get(tournamentId));
+    public TournamentDTO update(
+            String tournamentId, UpdateTournamentRequestDTO updateTournamentRequest) {
+        TournamentDTO dto =
+                updateTournamentRequestMapper.mergeToEntity(
+                        updateTournamentRequest, get(tournamentId));
         return update(dto);
     }
 
@@ -89,16 +90,17 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
     }
 
     @Transactional
-    public List<TournamentTossupValueDTO> updateTournamentTossupValues(String tournamentId,
-                                                                       List<TournamentTossupValueDTO> tossupValues) {
+    public List<TournamentTossupValueDTO> updateTournamentTossupValues(
+            String tournamentId, List<TournamentTossupValueDTO> tossupValues) {
         throwIfAnyMatchesExist(tournamentId);
         validateAllUniqueValues(tossupValues);
         tossupValueManager.deleteAllFromTournament(tournamentId);
         return tossupValues.stream()
-                .map(tv -> {
-                    tv.setTournamentId(tournamentId);
-                    return tossupValueManager.create(tv);
-                })
+                .map(
+                        tv -> {
+                            tv.setTournamentId(tournamentId);
+                            return tossupValueManager.create(tv);
+                        })
                 .collect(Collectors.toList());
     }
 
@@ -128,17 +130,15 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
     }
 
     private void validateAllUniqueValues(List<TournamentTossupValueDTO> tossupValues) {
-        Set<Integer> values = tossupValues.stream()
-                .map(TournamentTossupValueDTO::getValue)
-                .collect(Collectors.toSet());
+        Set<Integer> values =
+                tossupValues.stream()
+                        .map(TournamentTossupValueDTO::getValue)
+                        .collect(Collectors.toSet());
 
         if (values.size() < tossupValues.size()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                            .add(
-                                    "value",
-                                    "All unique tossup values required. ")
-            );
+                            .add("value", "All unique tossup values required. "));
         }
     }
 
@@ -149,23 +149,23 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
                     new FieldValidationErrors()
                             .add(
                                     "matches",
-                                    "Cannot update tossup value scheme for a tournament with existing matches."
-                            )
-            );
+                                    "Cannot update tossup value scheme for a tournament with existing matches."));
         }
     }
 
-    private Set<TournamentTossupValueDTO> createTossupValues(String tournamentId,
-                                                             TournamentDTO tournament) {
-        Set<TournamentTossupValueDTO> tossupValues = CollectionUtils.isEmpty(tournament.getTossupValues())
-                ? tossupValueManager.getDefaultTournamentValues()
-                : tournament.getTossupValues();
+    private Set<TournamentTossupValueDTO> createTossupValues(
+            String tournamentId, TournamentDTO tournament) {
+        Set<TournamentTossupValueDTO> tossupValues =
+                CollectionUtils.isEmpty(tournament.getTossupValues())
+                        ? tossupValueManager.getDefaultTournamentValues()
+                        : tournament.getTossupValues();
 
         return tossupValues.stream()
-                .map(tv -> {
-                    tv.setTournamentId(tournamentId);
-                    return tossupValueManager.create(tv);
-                })
+                .map(
+                        tv -> {
+                            tv.setTournamentId(tournamentId);
+                            return tossupValueManager.create(tv);
+                        })
                 .collect(Collectors.toSet());
     }
 
@@ -174,10 +174,11 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
             return Sets.newHashSet(phaseManager.createDefaultPhase(tournamentId));
         }
         return tournament.getPhases().stream()
-                .map(phase -> {
-                    phase.setTournamentId(tournamentId);
-                    return phaseManager.create(phase);
-                })
+                .map(
+                        phase -> {
+                            phase.setTournamentId(tournamentId);
+                            return phaseManager.create(phase);
+                        })
                 .collect(Collectors.toSet());
     }
 }

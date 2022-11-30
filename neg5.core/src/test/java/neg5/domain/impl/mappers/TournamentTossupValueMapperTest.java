@@ -1,15 +1,15 @@
 package neg5.domain.impl.mappers;
 
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.enums.TossupAnswerType;
+import neg5.domain.impl.entities.Tournament;
+import neg5.domain.impl.entities.TournamentTossupValue;
 import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import neg5.domain.api.TournamentTossupValueDTO;
-import neg5.domain.impl.entities.Tournament;
-import neg5.domain.impl.entities.TournamentTossupValue;
-import neg5.domain.api.enums.TossupAnswerType;
 
 @ExtendWith(MockitoExtension.class)
 public class TournamentTossupValueMapperTest {

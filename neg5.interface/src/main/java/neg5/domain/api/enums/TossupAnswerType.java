@@ -1,7 +1,6 @@
 package neg5.domain.api.enums;
 
 public enum TossupAnswerType implements StringIdentifiable {
-
     BASE("Base"),
     POWER("Power"),
     NEG("Neg");

@@ -5,7 +5,8 @@ import neg5.domain.api.TournamentPlayerDTO;
 import neg5.domain.impl.entities.TournamentPlayer;
 
 @Singleton
-public class TournamentPlayerMapper extends AbstractObjectMapper<TournamentPlayer, TournamentPlayerDTO> {
+public class TournamentPlayerMapper
+        extends AbstractObjectMapper<TournamentPlayer, TournamentPlayerDTO> {
 
     protected TournamentPlayerMapper() {
         super(TournamentPlayer.class, TournamentPlayerDTO.class);

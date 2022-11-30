@@ -1,11 +1,10 @@
 package neg5.domain.impl.entities;
 
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "account")

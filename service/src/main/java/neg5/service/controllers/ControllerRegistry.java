@@ -2,7 +2,6 @@ package neg5.service.controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
 import java.util.Set;
 
 @Singleton

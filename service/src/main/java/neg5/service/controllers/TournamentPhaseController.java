@@ -14,9 +14,10 @@ public class TournamentPhaseController extends AbstractJsonController {
     private final TournamentAccessManager accessManager;
 
     @Inject
-    public TournamentPhaseController(TournamentPhaseApi phaseManager,
-                                     RequestHelper requestHelper,
-                                     TournamentAccessManager accessManager) {
+    public TournamentPhaseController(
+            TournamentPhaseApi phaseManager,
+            RequestHelper requestHelper,
+            TournamentAccessManager accessManager) {
         this.phaseManager = phaseManager;
         this.requestHelper = requestHelper;
         this.accessManager = accessManager;
@@ -29,21 +30,26 @@ public class TournamentPhaseController extends AbstractJsonController {
 
     @Override
     public void registerRoutes() {
-        post("", (request, response) -> {
-            TournamentPhaseDTO phase = requestHelper.readFromRequest(request, TournamentPhaseDTO.class);
-            accessManager.requireAccessLevel(phase.getTournamentId(), TournamentAccessLevel.OWNER);
-            return phaseManager.create(phase);
-        });
+        post(
+                "",
+                (request, response) -> {
+                    TournamentPhaseDTO phase =
+                            requestHelper.readFromRequest(request, TournamentPhaseDTO.class);
+                    accessManager.requireAccessLevel(
+                            phase.getTournamentId(), TournamentAccessLevel.OWNER);
+                    return phaseManager.create(phase);
+                });
 
-        put("/:id", (request, response) -> {
-            TournamentPhaseDTO original = phaseManager.get(request.params("id"));
-            accessManager.requireAccessLevel(
-                    original.getTournamentId(),
-                    TournamentAccessLevel.OWNER
-            );
-            TournamentPhaseDTO phase = requestHelper.readFromRequest(request, TournamentPhaseDTO.class);
-            phase.setId(request.params("id"));
-            return phaseManager.update(phase);
-        });
+        put(
+                "/:id",
+                (request, response) -> {
+                    TournamentPhaseDTO original = phaseManager.get(request.params("id"));
+                    accessManager.requireAccessLevel(
+                            original.getTournamentId(), TournamentAccessLevel.OWNER);
+                    TournamentPhaseDTO phase =
+                            requestHelper.readFromRequest(request, TournamentPhaseDTO.class);
+                    phase.setId(request.params("id"));
+                    return phaseManager.update(phase);
+                });
     }
 }

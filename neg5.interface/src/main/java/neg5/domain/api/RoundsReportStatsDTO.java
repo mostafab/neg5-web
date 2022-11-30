@@ -1,8 +1,7 @@
 package neg5.domain.api;
 
-import neg5.stats.api.BaseAggregateStatsDTO;
-
 import java.util.List;
+import neg5.stats.api.BaseAggregateStatsDTO;
 
 public class RoundsReportStatsDTO extends BaseAggregateStatsDTO {
 

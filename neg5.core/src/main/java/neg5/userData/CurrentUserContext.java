@@ -1,7 +1,6 @@
 package neg5.userData;
 
 import com.google.inject.Singleton;
-
 import java.util.Optional;
 
 @Singleton
@@ -14,7 +13,8 @@ public class CurrentUserContext {
     }
 
     public UserData getUserDataOrThrow() {
-        return getUserData().orElseThrow(() -> new IllegalStateException("No user for the current thread"));
+        return getUserData()
+                .orElseThrow(() -> new IllegalStateException("No user for the current thread"));
     }
 
     public void clear() {
@@ -24,5 +24,4 @@ public class CurrentUserContext {
     public void set(UserData user) {
         CURRENT_USER_TL.set(Optional.ofNullable(user));
     }
-
 }

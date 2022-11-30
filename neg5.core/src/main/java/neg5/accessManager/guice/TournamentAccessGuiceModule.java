@@ -8,7 +8,8 @@ import neg5.accessManager.impl.TournamentAccessManagerImpl;
 public class TournamentAccessGuiceModule extends AbstractModule {
 
     protected void configure() {
-        bind(TournamentAccessManager.class).to(TournamentAccessManagerImpl.class)
+        bind(TournamentAccessManager.class)
+                .to(TournamentAccessManagerImpl.class)
                 .in(Scopes.SINGLETON);
     }
 }

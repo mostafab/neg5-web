@@ -2,29 +2,30 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import neg5.domain.api.DomainObjectApiLayer;
-import neg5.domain.api.FieldValidationErrors;
-import neg5.userData.CurrentUserContext;
-import neg5.userData.UserData;
-import neg5.domain.impl.dataAccess.AbstractDAO;
-
-import neg5.domain.impl.entities.AbstractDataObject;
-import neg5.domain.impl.entities.Auditable;
-import neg5.domain.impl.entities.CompositeIdObject;
-import neg5.domain.impl.entities.IdDataObject;
-import neg5.domain.impl.mappers.AbstractObjectMapper;
-import neg5.validation.ObjectValidationException;
-
-import javax.persistence.NoResultException;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.NoResultException;
+import neg5.domain.api.DomainObjectApiLayer;
+import neg5.domain.api.FieldValidationErrors;
+import neg5.domain.impl.dataAccess.AbstractDAO;
+import neg5.domain.impl.entities.AbstractDataObject;
+import neg5.domain.impl.entities.Auditable;
+import neg5.domain.impl.entities.CompositeIdObject;
+import neg5.domain.impl.entities.IdDataObject;
+import neg5.domain.impl.mappers.AbstractObjectMapper;
+import neg5.userData.CurrentUserContext;
+import neg5.userData.UserData;
+import neg5.validation.ObjectValidationException;
 
-public abstract class AbstractApiLayerImpl<T extends AbstractDataObject<T>
-        & IdDataObject<IdType>, DTO, IdType extends Serializable> implements DomainObjectApiLayer<DTO, IdType> {
+public abstract class AbstractApiLayerImpl<
+                T extends AbstractDataObject<T> & IdDataObject<IdType>,
+                DTO,
+                IdType extends Serializable>
+        implements DomainObjectApiLayer<DTO, IdType> {
 
     @Inject private CurrentUserContext userContext;
 
@@ -92,8 +93,7 @@ public abstract class AbstractApiLayerImpl<T extends AbstractDataObject<T>
     @Transactional
     @Override
     public List<DTO> findAllByTournamentId(String tournamentId) {
-        return getDao().findAllByTournamentId(tournamentId)
-                .stream()
+        return getDao().findAllByTournamentId(tournamentId).stream()
                 .map(entity -> getMapper().toDTO(entity))
                 .collect(Collectors.toList());
     }
@@ -114,8 +114,10 @@ public abstract class AbstractApiLayerImpl<T extends AbstractDataObject<T>
 
     private void validateInternal(DTO dto) {
         Optional<FieldValidationErrors> errors = validateObject(dto);
-        errors.filter(error -> !error.getErrors().isEmpty()).ifPresent(error -> {
-            throw new ObjectValidationException(error);
-        });
+        errors.filter(error -> !error.getErrors().isEmpty())
+                .ifPresent(
+                        error -> {
+                            throw new ObjectValidationException(error);
+                        });
     }
 }

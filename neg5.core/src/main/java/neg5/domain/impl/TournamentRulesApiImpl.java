@@ -13,8 +13,8 @@ public class TournamentRulesApiImpl implements TournamentRulesApi {
     private final TournamentRulesMapper tournamentRulesMapper;
 
     @Inject
-    public TournamentRulesApiImpl(TournamentApi tournamentManager,
-                                  TournamentRulesMapper tournamentRulesMapper) {
+    public TournamentRulesApiImpl(
+            TournamentApi tournamentManager, TournamentRulesMapper tournamentRulesMapper) {
         this.tournamentManager = tournamentManager;
         this.tournamentRulesMapper = tournamentRulesMapper;
     }

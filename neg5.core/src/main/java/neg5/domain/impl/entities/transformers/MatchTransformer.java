@@ -1,20 +1,19 @@
 package neg5.domain.impl.entities.transformers;
 
 import com.google.gson.Gson;
-import neg5.domain.impl.entities.transformers.data.Match;
-import neg5.domain.impl.entities.transformers.data.Phase;
-import neg5.domain.impl.entities.transformers.data.TeamInMatch;
-import neg5.domain.impl.entities.transformers.data.TeamMatchPlayer;
-import org.hibernate.transform.ResultTransformer;
-import neg5.gson.GsonProvider;
-import org.postgresql.util.PGobject;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import neg5.domain.impl.entities.transformers.data.Match;
+import neg5.domain.impl.entities.transformers.data.Phase;
+import neg5.domain.impl.entities.transformers.data.TeamInMatch;
+import neg5.domain.impl.entities.transformers.data.TeamMatchPlayer;
+import neg5.gson.GsonProvider;
+import org.hibernate.transform.ResultTransformer;
+import org.postgresql.util.PGobject;
 
 public class MatchTransformer implements ResultTransformer {
 
@@ -48,34 +47,38 @@ public class MatchTransformer implements ResultTransformer {
 
     private Set<Phase> getPhases(Object[] tuple) {
         return Arrays.stream((Object[]) tuple[0])
-                .map(object -> {
-                    PGobject phaseObj = (PGobject) object;
-                    return gson.fromJson(phaseObj.getValue(), Phase.class);
-                })
+                .map(
+                        object -> {
+                            PGobject phaseObj = (PGobject) object;
+                            return gson.fromJson(phaseObj.getValue(), Phase.class);
+                        })
                 .collect(Collectors.toSet());
     }
 
     private Set<TeamInMatch> getTeams(Object[] tuple) {
         Set<TeamMatchPlayer> players = getPlayers(tuple);
         return Arrays.stream((Object[]) tuple[5])
-                .map(object -> {
-                    PGobject phaseObj = (PGobject) object;
-                    TeamInMatch team = gson.fromJson(phaseObj.getValue(), TeamInMatch.class);
-                    team.setPlayers(players.stream()
-                        .filter(p -> p.getTeamId().equals(team.getTeamId()))
-                        .collect(Collectors.toSet())
-                    );
-                    return team;
-                })
+                .map(
+                        object -> {
+                            PGobject phaseObj = (PGobject) object;
+                            TeamInMatch team =
+                                    gson.fromJson(phaseObj.getValue(), TeamInMatch.class);
+                            team.setPlayers(
+                                    players.stream()
+                                            .filter(p -> p.getTeamId().equals(team.getTeamId()))
+                                            .collect(Collectors.toSet()));
+                            return team;
+                        })
                 .collect(Collectors.toSet());
     }
 
     private Set<TeamMatchPlayer> getPlayers(Object[] tuple) {
         return Arrays.stream((Object[]) tuple[10])
-                .map(object -> {
-                    PGobject phaseObj = (PGobject) object;
-                    return gson.fromJson(phaseObj.getValue(), TeamMatchPlayer.class);
-                })
+                .map(
+                        object -> {
+                            PGobject phaseObj = (PGobject) object;
+                            return gson.fromJson(phaseObj.getValue(), TeamMatchPlayer.class);
+                        })
                 .collect(Collectors.toSet());
     }
 }

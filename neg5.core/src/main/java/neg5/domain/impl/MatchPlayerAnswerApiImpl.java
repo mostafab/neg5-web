@@ -2,10 +2,10 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import neg5.domain.api.MatchPlayerAnswerApi;
-import neg5.domain.impl.entities.compositeIds.MatchPlayerAnswerId;
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.impl.dataAccess.MatchPlayerAnswerDAO;
 import neg5.domain.impl.entities.MatchPlayerAnswer;
+import neg5.domain.impl.entities.compositeIds.MatchPlayerAnswerId;
 import neg5.domain.impl.mappers.MatchPlayerAnswerMapper;
 
 public class MatchPlayerAnswerApiImpl
@@ -16,8 +16,8 @@ public class MatchPlayerAnswerApiImpl
     private final MatchPlayerAnswerDAO matchPlayerAnswerDAO;
 
     @Inject
-    public MatchPlayerAnswerApiImpl(MatchPlayerAnswerMapper playerAnswerMapper,
-                                    MatchPlayerAnswerDAO matchPlayerAnswerDAO) {
+    public MatchPlayerAnswerApiImpl(
+            MatchPlayerAnswerMapper playerAnswerMapper, MatchPlayerAnswerDAO matchPlayerAnswerDAO) {
         this.playerAnswerMapper = playerAnswerMapper;
         this.matchPlayerAnswerDAO = matchPlayerAnswerDAO;
     }

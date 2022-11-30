@@ -1,8 +1,5 @@
 package neg5.domain.impl.entities;
 
-import neg5.domain.impl.entities.compositeIds.MatchPlayerAnswerId;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -11,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import neg5.domain.impl.entities.compositeIds.MatchPlayerAnswerId;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "player_match_tossup")
@@ -45,8 +44,8 @@ public class MatchPlayerAnswer extends AbstractDataObject<MatchPlayerAnswer>
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "tournament_id", insertable = false, updatable = false),
-            @JoinColumn(name = "tossup_value", insertable = false, updatable = false)
+        @JoinColumn(name = "tournament_id", insertable = false, updatable = false),
+        @JoinColumn(name = "tossup_value", insertable = false, updatable = false)
     })
     public TournamentTossupValue getTournamentTossupValue() {
         return tournamentTossupValue;

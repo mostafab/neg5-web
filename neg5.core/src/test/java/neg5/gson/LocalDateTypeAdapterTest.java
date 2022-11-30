@@ -1,15 +1,13 @@
 package neg5.gson;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import neg5.gson.LocalDateTypeAdapter;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.time.LocalDate;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LocalDateTypeAdapterTest {
 
@@ -18,9 +16,10 @@ public class LocalDateTypeAdapterTest {
 
     @BeforeEach
     public void setup() {
-        gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-                .create();
+        gson =
+                new GsonBuilder()
+                        .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                        .create();
         testObj = new TestClass();
     }
 
@@ -48,10 +47,7 @@ public class LocalDateTypeAdapterTest {
     @Test
     public void testFromJsonLocalDate() {
         String input = "{\"a\":\"2020-05-30\"}";
-        assertEquals(
-                LocalDate.of(2020, 5, 30),
-                gson.fromJson(input, TestClass.class).a
-        );
+        assertEquals(LocalDate.of(2020, 5, 30), gson.fromJson(input, TestClass.class).a);
     }
 
     static class TestClass {

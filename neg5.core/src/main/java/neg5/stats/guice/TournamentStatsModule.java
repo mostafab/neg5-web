@@ -3,16 +3,16 @@ package neg5.stats.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.google.inject.multibindings.Multibinder;
-import neg5.stats.api.TournamentStatsApi;
-import neg5.stats.impl.TournamentStatsApiImpl;
-import neg5.stats.impl.cache.TournamentStatsCache;
-import neg5.stats.impl.cache.TournamentStatsCacheImpl;
+import neg5.domain.api.RoundsReportStatsDTO;
 import neg5.stats.api.BaseAggregateStatsDTO;
 import neg5.stats.api.FullIndividualMatchesStatsDTO;
 import neg5.stats.api.FullTeamsMatchesStatsDTO;
 import neg5.stats.api.IndividualStandingsStatsDTO;
-import neg5.domain.api.RoundsReportStatsDTO;
 import neg5.stats.api.TeamStandingsStatsDTO;
+import neg5.stats.api.TournamentStatsApi;
+import neg5.stats.impl.TournamentStatsApiImpl;
+import neg5.stats.impl.cache.TournamentStatsCache;
+import neg5.stats.impl.cache.TournamentStatsCacheImpl;
 
 public class TournamentStatsModule extends AbstractModule {
 
@@ -21,13 +21,13 @@ public class TournamentStatsModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(TournamentStatsApi.class).to(TournamentStatsApiImpl.class)
-                .in(Scopes.SINGLETON);
+        bind(TournamentStatsApi.class).to(TournamentStatsApiImpl.class).in(Scopes.SINGLETON);
         bindCaches();
     }
 
     private void bindCaches() {
-        Multibinder<TournamentStatsCache> statsBinder = Multibinder.newSetBinder(binder(), TournamentStatsCache.class);
+        Multibinder<TournamentStatsCache> statsBinder =
+                Multibinder.newSetBinder(binder(), TournamentStatsCache.class);
         statsBinder.addBinding().toInstance(getCache(TeamStandingsStatsDTO.class));
         statsBinder.addBinding().toInstance(getCache(FullTeamsMatchesStatsDTO.class));
         statsBinder.addBinding().toInstance(getCache(IndividualStandingsStatsDTO.class));
@@ -35,7 +35,8 @@ public class TournamentStatsModule extends AbstractModule {
         statsBinder.addBinding().toInstance(getCache(RoundsReportStatsDTO.class));
     }
 
-    private <T extends BaseAggregateStatsDTO> TournamentStatsCache<T> getCache(Class<T> statsClazz) {
+    private <T extends BaseAggregateStatsDTO> TournamentStatsCache<T> getCache(
+            Class<T> statsClazz) {
         return new TournamentStatsCacheImpl<>(MAX_SIZE, MINUTES_TO_KEEP, statsClazz);
     }
 }

@@ -1,14 +1,13 @@
 package neg5.service.auth;
 
 import com.google.inject.Inject;
+import java.time.Instant;
 import neg5.domain.api.AccountApi;
 import neg5.gson.GsonProvider;
-import neg5.jwt.api.JwtData;
 import neg5.jwt.api.JwtApi;
+import neg5.jwt.api.JwtData;
 import spark.Request;
 import spark.Response;
-
-import java.time.Instant;
 
 public class LoginAuthenticator {
 
@@ -18,10 +17,11 @@ public class LoginAuthenticator {
     private final Neg5TokenCookieNameProvider cookieNameProvider;
 
     @Inject
-    public LoginAuthenticator(AccountApi accountManager,
-                              GsonProvider gsonProvider,
-                              JwtApi jwtApi,
-                              Neg5TokenCookieNameProvider cookieNameProvider) {
+    public LoginAuthenticator(
+            AccountApi accountManager,
+            GsonProvider gsonProvider,
+            JwtApi jwtApi,
+            Neg5TokenCookieNameProvider cookieNameProvider) {
         this.accountManager = accountManager;
         this.gsonProvider = gsonProvider;
         this.jwtApi = jwtApi;
@@ -43,7 +43,7 @@ public class LoginAuthenticator {
 
     private JwtData buildData(LoginCreds loginCreds) {
         return JwtData.newData()
-            .put("username", loginCreds.getUsername())
-            .put("issuedAt", Instant.now().toEpochMilli());
+                .put("username", loginCreds.getUsername())
+                .put("issuedAt", Instant.now().toEpochMilli());
     }
 }

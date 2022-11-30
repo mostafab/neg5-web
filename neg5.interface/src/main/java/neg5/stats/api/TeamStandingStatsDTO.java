@@ -1,10 +1,9 @@
 package neg5.stats.api;
 
-import neg5.domain.api.AnswersDTO;
-import neg5.domain.api.TeamRecordDTO;
-
 import java.math.BigDecimal;
 import java.util.Set;
+import neg5.domain.api.AnswersDTO;
+import neg5.domain.api.TeamRecordDTO;
 
 public class TeamStandingStatsDTO {
 

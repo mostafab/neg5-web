@@ -1,11 +1,11 @@
 package neg5.domain.impl.mappers;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentRulesDTO;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TournamentRulesMapperTest {
 

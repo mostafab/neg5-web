@@ -1,10 +1,7 @@
 package neg5.domain.api.enums;
 
-/**
- * Represents the levels of access a person can have for a tournament
- */
+/** Represents the levels of access a person can have for a tournament */
 public enum TournamentAccessLevel {
-
     NONE(Integer.MIN_VALUE),
     COLLABORATOR(1),
     ADMIN(2),

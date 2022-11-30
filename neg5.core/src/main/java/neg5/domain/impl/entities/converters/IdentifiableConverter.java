@@ -1,33 +1,37 @@
 package neg5.domain.impl.entities.converters;
 
-import neg5.domain.api.enums.Identifiable;
-
-import javax.persistence.AttributeConverter;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.persistence.AttributeConverter;
+import neg5.domain.api.enums.Identifiable;
 
 /**
  * Converter used to convert a DB column to an enum that implements {@link Identifiable}
+ *
  * @param <EnumType> the enum type
  * @param <ColumnType> the type serialized to the database.
  */
-public abstract class IdentifiableConverter<EnumType extends Enum<EnumType> & Identifiable<ColumnType>, ColumnType>
+public abstract class IdentifiableConverter<
+                EnumType extends Enum<EnumType> & Identifiable<ColumnType>, ColumnType>
         implements AttributeConverter<EnumType, ColumnType> {
 
     private final Class<EnumType> enumTypeClass;
     private final Map<ColumnType, EnumType> enumValuesById;
 
     IdentifiableConverter() {
-        enumTypeClass = (Class<EnumType>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
-        enumValuesById = Arrays.stream(enumTypeClass.getEnumConstants()).collect(Collectors.toMap(
-                enumValue -> enumValue.getId(),
-                Function.identity()
-        ));
+        enumTypeClass =
+                (Class<EnumType>)
+                        ((ParameterizedType) getClass().getGenericSuperclass())
+                                .getActualTypeArguments()[0];
+        enumValuesById =
+                Arrays.stream(enumTypeClass.getEnumConstants())
+                        .collect(
+                                Collectors.toMap(
+                                        enumValue -> enumValue.getId(), Function.identity()));
     }
 
     @Override
@@ -36,7 +40,10 @@ public abstract class IdentifiableConverter<EnumType extends Enum<EnumType> & Id
             return null;
         }
         return Optional.ofNullable(enumValuesById.get(s))
-                .orElseThrow(() -> new RuntimeException("Unknown enum value " + s + " for enum " + enumTypeClass));
+                .orElseThrow(
+                        () ->
+                                new RuntimeException(
+                                        "Unknown enum value " + s + " for enum " + enumTypeClass));
     }
 
     @Override
