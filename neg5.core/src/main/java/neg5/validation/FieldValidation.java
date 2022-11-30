@@ -3,7 +3,6 @@ package neg5.validation;
 import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import neg5.domain.api.FieldValidationErrors;
 
 public class FieldValidation {
