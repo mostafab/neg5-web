@@ -26,9 +26,6 @@ public class MatchValidatorsChain {
         for (TournamentMatchValidator validator : validators) {
             FieldValidationErrors localErrors = validator.getErrors(validationContext);
             localErrors.getErrors().forEach(errors::add);
-            if (!localErrors.isEmpty()) {
-                return errors;
-            }
         }
         return errors;
     }
