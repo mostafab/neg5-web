@@ -19,4 +19,5 @@ psql -h ${HOST} -p ${PORT} -U postgres -c "create user \"${USER_APP}\" WITH LOGI
 psql -h ${HOST} -p ${PORT} -U postgres -c "grant create on database ${DB} to \"${USER_APP}\";" >/dev/null
 
 cd ../
+mvn compile
 mvn flyway:migrate
