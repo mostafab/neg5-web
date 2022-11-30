@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -e
+set -e
 
 VERSION=""
 
@@ -24,8 +24,8 @@ echo "Current Version: $CURRENT_VERSION"
 #replace . with space so can split into an array
 CURRENT_VERSION_PARTS=(${CURRENT_VERSION//./ })
 
-#get number parts
-VNUM1=${CURRENT_VERSION_PARTS[0]}
+# Tags are formatted like v1.0.0.
+VNUM1=${CURRENT_VERSION_PARTS[0]:1}
 VNUM2=${CURRENT_VERSION_PARTS[1]}
 VNUM3=${CURRENT_VERSION_PARTS[2]}
 
