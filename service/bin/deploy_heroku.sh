@@ -2,6 +2,15 @@
 
 set -e
 
+while getopts r: flag
+do
+  case "${flag}" in
+    r) release=${OPTARG};;
+  esac
+done
+
+echo $release
+
 cd $(dirname "$0")
 cd ../..
 mvn clean
@@ -14,5 +23,4 @@ mvn heroku:deploy
 # Create a new Git tag to capture changes
 cd bin/
 echo "Deploy to Heroku succeeded. Creating a new Git tag:"
-read -p "Was this a major, minor, or patch release? (major/minor/patch): " release && [[ $release == "major" || $release == "minor" || $release == "patch" ]] || exit 1
 ./create_new_tag.sh -v $release
