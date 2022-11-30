@@ -12,7 +12,8 @@ public class GeneralExceptionHandlerFilter implements RequestFilter {
 
     @Inject private GsonProvider gsonProvider;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GeneralExceptionHandlerFilter.class);
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(GeneralExceptionHandlerFilter.class);
 
     @Override
     public void registerFilter() {
