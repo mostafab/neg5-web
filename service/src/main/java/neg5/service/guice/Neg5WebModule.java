@@ -8,6 +8,7 @@ import neg5.db.migrations.guice.DatabaseMigrationGuiceModule;
 import neg5.domain.guice.ApiLayerGuiceModule;
 import neg5.exports.qbj.guice.QbjGuiceModule;
 import neg5.jwt.module.JwtSigningModule;
+import neg5.monitoring.guice.MonitoringGuiceModule;
 import neg5.stats.guice.TournamentStatsModule;
 
 public class Neg5WebModule extends AbstractModule {
@@ -15,6 +16,7 @@ public class Neg5WebModule extends AbstractModule {
     @Override
     protected void configure() {
         install(new ConfigurationModule());
+        install(new MonitoringGuiceModule());
         install(new DataAccessModule());
         install(new DatabaseMigrationGuiceModule());
         install(new ApiLayerGuiceModule());

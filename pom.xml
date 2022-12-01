@@ -14,6 +14,7 @@
         <module>neg5.core</module>
         <module>neg5.jwt</module>
         <module>neg5.db</module>
+        <module>monitoring</module>
     </modules>
 
     <build>
