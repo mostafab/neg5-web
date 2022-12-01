@@ -13,7 +13,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      NEG5_ENVIRONMENT: CI
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
