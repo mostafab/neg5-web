@@ -87,7 +87,6 @@ public class TournamentMatchApiImpl
     @Transactional
     public TournamentMatchDTO create(TournamentMatchDTO match) {
         Set<String> phases = match.getPhases();
-        match.setPhases(null);
         TournamentMatchDTO createdMatch = super.create(match);
         createdMatch.setTeams(
                 match.getTeams().stream()
