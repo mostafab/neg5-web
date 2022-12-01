@@ -1,6 +1,7 @@
 package neg5.domain.impl.matchValidators;
 
 import static neg5.validation.FieldValidation.requireCondition;
+import static neg5.validation.FieldValidation.requireNonEmpty;
 import static neg5.validation.FieldValidation.requireNotNull;
 
 import com.google.inject.Singleton;
@@ -20,6 +21,7 @@ public class BasicMatchValidator implements TournamentMatchValidator {
         requireNotNull(errors, subject.getRound(), "round");
         requireNotNull(errors, subject.getTossupsHeard(), "tossupsHeard");
         requireNotNull(errors, subject.getTeams(), "teams");
+        requireNonEmpty(errors, subject.getPhases(), "phases");
         requireCondition(
                 errors,
                 subject.getTeams() == null || subject.getTeams().size() == 2,
