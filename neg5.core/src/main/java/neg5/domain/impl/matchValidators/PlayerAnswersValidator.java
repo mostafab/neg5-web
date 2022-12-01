@@ -47,6 +47,11 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
             Map<String, TournamentPlayerDTO> playersById) {
         FieldValidationErrors errors = new FieldValidationErrors();
         requireNotNull(errors, matchPlayer.getPlayerId(), "players.playerId");
+        requireCondition(
+                errors,
+                playersById.containsKey(matchPlayer.getPlayerId()),
+                "players.playerId",
+                String.format("Invalid player id: %s", matchPlayer.getPlayerId()));
         requireNotNull(errors, matchPlayer.getTossupsHeard(), "players.tossupsHeard");
         requireNotNull(errors, matchPlayer.getAnswers(), "players.answers");
         if (!errors.isEmpty()) {
