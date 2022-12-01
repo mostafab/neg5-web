@@ -24,3 +24,7 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Spotless Check
       run: mvn spotless:check
+    - name: Start Server
+      run: |
+        cd service
+        java -Xmx128m -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.ja
