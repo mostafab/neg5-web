@@ -18,6 +18,7 @@ echo "Creating application user..."
 psql -h ${HOST} -p ${PORT} -U postgres -c "create user \"${USER_APP}\" WITH LOGIN;" >/dev/null
 psql -h ${HOST} -p ${PORT} -U postgres -c "grant create on database ${DB} to \"${USER_APP}\";" >/dev/null
 
-cd ../
-mvn compile
+cd ../../
+mvn clean install
+cd neg5.db/
 mvn flyway:migrate
