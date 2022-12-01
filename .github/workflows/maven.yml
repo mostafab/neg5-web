@@ -34,4 +34,4 @@ jobs:
         cd service
         java -Xmx128m -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
     - name: Service Health Check
-      run: curl http://localhost:1337
+      run: curl http://localhost:$PORT
