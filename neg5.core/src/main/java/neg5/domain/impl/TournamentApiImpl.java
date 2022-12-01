@@ -134,7 +134,7 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
                 tournamentDTO.getBonusPointValue() == null
                         || tournamentDTO.getBonusPointValue() > 0,
                 "bonusPointValue",
-                "bonusPointValue must positive.");
+                "bonusPointValue must be positive.");
         requireCondition(
                 errors,
                 tournamentDTO.getPartsPerBonus() == null || tournamentDTO.getPartsPerBonus() >= 0,
