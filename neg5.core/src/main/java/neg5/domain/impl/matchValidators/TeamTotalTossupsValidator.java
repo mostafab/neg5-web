@@ -6,7 +6,7 @@ import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentMatchDTO;
 
 @Singleton
-public class TotalTossupsValidator implements TournamentMatchValidator {
+public class TeamTotalTossupsValidator implements TournamentMatchValidator {
 
     @Override
     @Nonnull

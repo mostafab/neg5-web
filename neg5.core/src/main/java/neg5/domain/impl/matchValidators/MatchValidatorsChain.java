@@ -13,11 +13,15 @@ public class MatchValidatorsChain {
     @Inject
     public MatchValidatorsChain(
             BasicMatchValidator basicMatchValidator,
-            TotalTossupsValidator totalTossupsValidator,
-            SingleMatchPerRoundValidator singleMatchPerRoundValidator) {
+            TeamTotalTossupsValidator teamTotalTossupsValidator,
+            SingleMatchPerRoundValidator singleMatchPerRoundValidator,
+            PlayerAnswersValidator playerAnswersValidator) {
         validators =
                 ImmutableList.of(
-                        basicMatchValidator, totalTossupsValidator, singleMatchPerRoundValidator);
+                        basicMatchValidator,
+                        teamTotalTossupsValidator,
+                        singleMatchPerRoundValidator,
+                        playerAnswersValidator);
     }
 
     public FieldValidationErrors getErrorsInSequence(

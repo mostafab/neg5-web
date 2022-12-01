@@ -22,6 +22,11 @@ public class BasicMatchValidator implements TournamentMatchValidator {
         requireNotNull(errors, subject.getTeams(), "teams");
         requireCondition(
                 errors,
+                subject.getTeams() == null || subject.getTeams().size() == 2,
+                "teams",
+                "Exactly two teams must be included in this match.");
+        requireCondition(
+                errors,
                 subject.getRound() == null || subject.getRound() > 0,
                 "round",
                 "Round must be greater than 0");
