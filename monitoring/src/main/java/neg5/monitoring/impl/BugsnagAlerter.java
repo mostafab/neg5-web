@@ -1,11 +1,10 @@
 package neg5.monitoring.impl;
 
 import com.bugsnag.Bugsnag;
+import javax.annotation.Nullable;
 import neg5.monitoring.api.ExceptionAlerter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
 
 public class BugsnagAlerter implements ExceptionAlerter {
 

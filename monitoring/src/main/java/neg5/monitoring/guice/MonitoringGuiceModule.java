@@ -17,11 +17,13 @@ public class MonitoringGuiceModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public ExceptionAlerter provideExceptionAlerter(Environment environment, @Named("bugsnag.apiKey") String bugsnagApiKey) {
+    public ExceptionAlerter provideExceptionAlerter(
+            Environment environment, @Named("bugsnag.apiKey") String bugsnagApiKey) {
         if (environment == Environment.PRODUCTION && !bugsnagApiKey.isEmpty()) {
             return new BugsnagAlerter(bugsnagApiKey);
         }
-        LOGGER.info("bugsnag.apiKey property was empty or we're not in production. Defaulting to no-op exception alerter.");
+        LOGGER.info(
+                "bugsnag.apiKey property was empty or we're not in production. Defaulting to no-op exception alerter.");
         return new NoopAlerter();
     }
 }

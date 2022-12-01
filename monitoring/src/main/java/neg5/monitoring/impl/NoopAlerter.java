@@ -1,8 +1,7 @@
 package neg5.monitoring.impl;
 
-import neg5.monitoring.api.ExceptionAlerter;
-
 import javax.annotation.Nullable;
+import neg5.monitoring.api.ExceptionAlerter;
 
 public class NoopAlerter implements ExceptionAlerter {
 
