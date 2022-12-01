@@ -1,6 +1,7 @@
 package neg5.validation;
 
 import java.util.Collection;
+import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import neg5.domain.api.FieldValidationErrors;
@@ -31,6 +32,19 @@ public class FieldValidation {
             @Nonnull String field) {
         if (subject == null || subject.isEmpty()) {
             errors.add(field, String.format("%s must not be empty.", field));
+        }
+    }
+
+    @SafeVarargs
+    public static void requireConditionsInSequence(
+            @Nonnull FieldValidationErrors errors,
+            @Nonnull Consumer<FieldValidationErrors>... validations) {
+        int startingSize = errors.size();
+        for (Consumer<FieldValidationErrors> consumer : validations) {
+            consumer.accept(errors);
+            if (errors.size() != startingSize) {
+                return;
+            }
         }
     }
 

@@ -80,9 +80,33 @@ public class TournamentTossupValueApiImpl
         requireNotNull(errors, dto.getValue(), "value");
         requireNotNull(errors, dto.getTournamentId(), "tournamentId");
         requireNotNull(errors, dto.getAnswerType(), "answerType");
+        requireCustomValidation(errors, () -> validateNoTossupValueAnswerTypeMismatch(dto));
         requireCustomValidation(errors, () -> validateUniqueTossupValue(dto));
 
         return Optional.of(errors);
+    }
+
+    private void validateNoTossupValueAnswerTypeMismatch(TournamentTossupValueDTO dto) {
+        if (dto.getValue() == null || dto.getAnswerType() == null) {
+            return;
+        }
+        if (dto.getAnswerType() != TossupAnswerType.NEG && dto.getValue() <= 0) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add(
+                                    "value",
+                                    String.format(
+                                            "Answer types of type %s must be worth more than 0 points.",
+                                            dto.getAnswerType().getId())));
+        } else if (dto.getAnswerType() == TossupAnswerType.NEG && dto.getValue() > 0) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add(
+                                    "value",
+                                    String.format(
+                                            "Answer types of type %s must be worth less than 0 points.",
+                                            dto.getAnswerType().getId())));
+        }
     }
 
     private void validateUniqueTossupValue(TournamentTossupValueDTO tossupValue) {

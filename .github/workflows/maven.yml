@@ -11,7 +11,6 @@ on:
 
 jobs:
   build-and-deploy:
-
     runs-on: ubuntu-latest
     env:
       PORT: 1337
@@ -23,15 +22,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Build with Maven
+    - name: Build and Unit Test
       run: mvn -B package --file pom.xml
     - name: Spotless Check
       run: mvn spotless:check
-    - name: Create Database
+    - name: Create Postgres Database
       run: ./neg5.db/bin/bootstrap_local_db.sh
     - name: Start Service
       run: |
-        cd service
-        java -Xmx128m -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
+        java -Xmx128m -jar ./service/target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
     - name: Service Health Check
       run: curl http://localhost:$PORT

@@ -32,6 +32,9 @@ public class TournamentMatchMapper
                 tournamentMatch.getPhases() == null
                         ? new HashSet<>()
                         : tournamentMatch.getPhases().stream()
+                                // On initial creation of the entity, the composite ids aren't
+                                // initialized properly
+                                .filter(phase -> phase.getId() != null)
                                 .map(phase -> phase.getId().getPhase().getId())
                                 .collect(Collectors.toSet()));
     }

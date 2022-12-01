@@ -1,5 +1,7 @@
 package neg5.domain.impl;
 
+import static neg5.validation.FieldValidation.requireCondition;
+import static neg5.validation.FieldValidation.requireCustomValidation;
 import static neg5.validation.FieldValidation.requireNotNull;
 
 import com.google.common.collect.Sets;
@@ -7,6 +9,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -126,7 +129,44 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
         requireNotNull(errors, tournamentDTO.getBonusPointValue(), "bonusPointValue");
         requireNotNull(errors, tournamentDTO.getPartsPerBonus(), "partsPerBonus");
 
+        requireCondition(
+                errors,
+                tournamentDTO.getBonusPointValue() == null
+                        || tournamentDTO.getBonusPointValue() > 0,
+                "bonusPointValue",
+                "bonusPointValue must positive.");
+        requireCondition(
+                errors,
+                tournamentDTO.getPartsPerBonus() == null || tournamentDTO.getPartsPerBonus() >= 0,
+                "partsPerBonus",
+                "partsPerBonus must be non-negative");
+        requireCondition(
+                errors,
+                tournamentDTO.getMaxActivePlayersPerTeam() == null
+                        || tournamentDTO.getMaxActivePlayersPerTeam() > 0,
+                "maxActivePlayersPerTeam",
+                "maxActivePlayersPerTeam must be positive.");
+        requireCustomValidation(
+                errors, () -> ensureAllUniqueTossupValueTypes(tournamentDTO.getTossupValues()));
+
         return Optional.of(errors);
+    }
+
+    private void ensureAllUniqueTossupValueTypes(Set<TournamentTossupValueDTO> tossupValues) {
+        if (tossupValues == null) {
+            return;
+        }
+        int uniqueNumberOfTossupValues =
+                tossupValues.stream()
+                        .map(TournamentTossupValueDTO::getValue)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet())
+                        .size();
+        if (tossupValues.size() != uniqueNumberOfTossupValues) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add("tossupValues", "Each tossup value must be unique."));
+        }
     }
 
     private void validateAllUniqueValues(List<TournamentTossupValueDTO> tossupValues) {

@@ -11,6 +11,11 @@ public class FieldValidationErrors {
         errors = new ArrayList<>();
     }
 
+    public FieldValidationErrors add(FieldValidationErrors inner) {
+        errors.addAll(inner.getErrors());
+        return this;
+    }
+
     public FieldValidationErrors add(FieldValidationError error) {
         return add(error.getFieldName(), error.getMessage());
     }
@@ -26,6 +31,14 @@ public class FieldValidationErrors {
 
     public List<FieldValidationError> getErrors() {
         return errors;
+    }
+
+    public boolean isEmpty() {
+        return errors.isEmpty();
+    }
+
+    public int size() {
+        return errors.size();
     }
 
     @Override
