@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public enum Environment {
     DEV("dev"),
+    CI("ci"),
     STAGING("staging"),
     PRODUCTION("prod");
 
