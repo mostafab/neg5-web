@@ -13,12 +13,14 @@ public class MatchValidatorsChain {
     @Inject
     public MatchValidatorsChain(
             BasicMatchValidator basicMatchValidator,
+            MatchTeamsValidator matchTeamsValidator,
             TeamTotalTossupsValidator teamTotalTossupsValidator,
             SingleMatchPerRoundValidator singleMatchPerRoundValidator,
             PlayerAnswersValidator playerAnswersValidator) {
         validators =
                 ImmutableList.of(
                         basicMatchValidator,
+                        matchTeamsValidator,
                         teamTotalTossupsValidator,
                         singleMatchPerRoundValidator,
                         playerAnswersValidator);

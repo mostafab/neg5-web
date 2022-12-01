@@ -20,13 +20,7 @@ public class BasicMatchValidator implements TournamentMatchValidator {
         requireNotNull(errors, subject.getTournamentId(), "tournamentId");
         requireNotNull(errors, subject.getRound(), "round");
         requireNotNull(errors, subject.getTossupsHeard(), "tossupsHeard");
-        requireNotNull(errors, subject.getTeams(), "teams");
         requireNonEmpty(errors, subject.getPhases(), "phases");
-        requireCondition(
-                errors,
-                subject.getTeams() == null || subject.getTeams().size() == 2,
-                "teams",
-                "Exactly two teams must be included in this match.");
         requireCondition(
                 errors,
                 subject.getRound() == null || subject.getRound() > 0,

@@ -4,6 +4,7 @@ import static neg5.validation.FieldValidation.requireCondition;
 import static neg5.validation.FieldValidation.requireConditionsInSequence;
 import static neg5.validation.FieldValidation.requireNotNull;
 
+import com.google.inject.Singleton;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nonnull;
@@ -13,6 +14,7 @@ import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerDTO;
 
+@Singleton
 public class PlayerAnswersValidator implements TournamentMatchValidator {
 
     @Nonnull
