@@ -105,8 +105,9 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                 errors,
                 pointsFromBonuses >= 0,
                 "teams.score",
-                String.format("%s's points from bonuses (%d) cannot be negative", teamName, pointsFromBonuses)
-        );
+                String.format(
+                        "%s's points from bonuses (%d) cannot be negative.",
+                        teamName, pointsFromBonuses));
         requireCondition(
                 errors,
                 pointsFromBonuses % rules.getBonusPointValue() == 0,
