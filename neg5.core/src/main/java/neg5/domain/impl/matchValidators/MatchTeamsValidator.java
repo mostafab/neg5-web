@@ -5,6 +5,7 @@ import static neg5.validation.FieldValidation.requireNotNull;
 
 import com.google.inject.Singleton;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -46,12 +47,24 @@ public class MatchTeamsValidator implements TournamentMatchValidator {
 
         subject.getTeams()
                 .forEach(
-                        team ->
-                                ensureTeamHasAllCorrectPlayers(
-                                        errors,
-                                        team,
-                                        validationContext.getTeamNamesById(),
-                                        validationContext.getPlayerNamesById()));
+                        team -> {
+                            requireCondition(
+                                    errors,
+                                    team.getScore() != null,
+                                    "teams.score",
+                                    String.format(
+                                            "%s must have a recorded score.",
+                                            Optional.ofNullable(
+                                                            validationContext.getTeamNamesById())
+                                                    .map(kv -> kv.get(team.getTeamId()))
+                                                    .map(TournamentTeamDTO::getName)
+                                                    .orElse("Team")));
+                            ensureTeamHasAllCorrectPlayers(
+                                    errors,
+                                    team,
+                                    validationContext.getTeamNamesById(),
+                                    validationContext.getPlayerNamesById());
+                        });
         return errors;
     }
 

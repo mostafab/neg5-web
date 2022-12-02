@@ -19,7 +19,6 @@ public class BasicMatchValidator implements TournamentMatchValidator {
         TournamentMatchDTO subject = validationContext.getSubject();
         requireNotNull(errors, subject.getTournamentId(), "tournamentId");
         requireNotNull(errors, subject.getRound(), "round");
-        requireNotNull(errors, subject.getTossupsHeard(), "tossupsHeard");
         requireNonEmpty(errors, subject.getPhases(), "phases");
         requireCondition(
                 errors,
@@ -28,9 +27,9 @@ public class BasicMatchValidator implements TournamentMatchValidator {
                 "Round must be greater than 0");
         requireCondition(
                 errors,
-                subject.getTossupsHeard() == null || subject.getTossupsHeard() > 0,
+                subject.getTossupsHeard() == null || subject.getTossupsHeard() >= 0,
                 "tossupsHeard",
-                "Tossups Heard must be greater than 0");
+                "Tossups Heard must be empty or non-negative");
         return errors;
     }
 }

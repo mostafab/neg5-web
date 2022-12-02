@@ -59,24 +59,34 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
             return errors;
         }
         final String playerName = playersById.get(matchPlayer.getPlayerId()).getName();
+        if (subject.getTossupsHeard() == null || subject.getTossupsHeard() == 0) {
+            requireCondition(
+                    errors,
+                    matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() == 0,
+                    "players.tossupsHeard",
+                    String.format(
+                            "%s should have 0 tossups heard since this match didn't record tossups heard",
+                            playerName));
+        }
         requireCondition(
                 errors,
                 matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() >= 0,
                 "players.tossupsHeard",
                 String.format("%s has a negative number of tossups heard.", playerName));
 
-        Integer tossupsHeard = matchPlayer.getTossupsHeard();
-        if (tossupsHeard == null || tossupsHeard == 0) {
+        Integer playerTossupsHeard = matchPlayer.getTossupsHeard();
+        if (playerTossupsHeard == null || playerTossupsHeard == 0) {
             validateNoTossupsHeardCase(errors, matchPlayer, playerName);
             return errors;
         }
         requireCondition(
                 errors,
-                subject.getTossupsHeard() == null || subject.getTossupsHeard() >= tossupsHeard,
+                subject.getTossupsHeard() == null
+                        || subject.getTossupsHeard() >= playerTossupsHeard,
                 "players.tossupsHeard",
                 String.format(
                         "%s has a greater number of tossups heard (%d) than the match (%d)",
-                        playerName, tossupsHeard, subject.getTossupsHeard()));
+                        playerName, playerTossupsHeard, subject.getTossupsHeard()));
         int numberOfTossupsAnswered = 0;
         for (MatchPlayerAnswerDTO answer : matchPlayer.getAnswers()) {
             requireConditionsInSequence(
@@ -98,11 +108,11 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
         }
         requireCondition(
                 errors,
-                tossupsHeard >= numberOfTossupsAnswered,
+                playerTossupsHeard >= numberOfTossupsAnswered,
                 "players.answer.tossupsHeard",
                 String.format(
                         "%s's number of answered tossups (%d) exceeds their total tossups heard (%d)",
-                        playerName, numberOfTossupsAnswered, tossupsHeard));
+                        playerName, numberOfTossupsAnswered, playerTossupsHeard));
         return errors;
     }
 
