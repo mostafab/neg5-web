@@ -65,7 +65,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() == 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have 0 tossups heard since this match didn't record tossups heard",
+                            "%s should have 0 tossups heard since this match didn't record tossups heard.",
                             playerName));
         }
         requireCondition(
@@ -85,7 +85,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                         || subject.getTossupsHeard() >= playerTossupsHeard,
                 "players.tossupsHeard",
                 String.format(
-                        "%s has a greater number of tossups heard (%d) than the match (%d)",
+                        "%s has a greater number of tossups heard (%d) than the match (%d).",
                         playerName, playerTossupsHeard, subject.getTossupsHeard()));
         int numberOfTossupsAnswered = 0;
         for (MatchPlayerAnswerDTO answer : matchPlayer.getAnswers()) {
@@ -101,7 +101,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                             || answer.getNumberGotten() >= 0,
                                     "players.answer.numberGotten",
                                     String.format(
-                                            "%s must have a non-negative number of tossups worth %d",
+                                            "%s must have a non-negative number of tossups worth %d.",
                                             playerName, answer.getTossupValue())));
             numberOfTossupsAnswered +=
                     answer.getNumberGotten() == null ? 0 : answer.getNumberGotten();
@@ -111,7 +111,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                 playerTossupsHeard >= numberOfTossupsAnswered,
                 "players.answer.tossupsHeard",
                 String.format(
-                        "%s's number of answered tossups (%d) exceeds their total tossups heard (%d)",
+                        "%s's number of answered tossups (%d) exceeds their total tossups heard (%d).",
                         playerName, numberOfTossupsAnswered, playerTossupsHeard));
         return errors;
     }
