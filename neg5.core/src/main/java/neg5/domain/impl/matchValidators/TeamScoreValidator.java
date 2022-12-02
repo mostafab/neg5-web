@@ -65,7 +65,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                     team.getBouncebackPoints() == null || team.getBouncebackPoints() == 0,
                     "team.bouncebackPoints",
                     String.format(
-                            "%s should not have bounceback points since this tournament does not use them.",
+                            "%s should not have bounceback points since the rules don't allow them.",
                             teamName));
         }
         if (Boolean.TRUE.equals(rules.getUsesBouncebacks())) {
@@ -101,6 +101,12 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                         .sum();
 
         int pointsFromBonuses = score - pointsFromTossups;
+        requireCondition(
+                errors,
+                pointsFromBonuses >= 0,
+                "teams.score",
+                String.format("%s's points from bonuses (%d) cannot be negative", teamName, pointsFromBonuses)
+        );
         requireCondition(
                 errors,
                 pointsFromBonuses % rules.getBonusPointValue() == 0,
