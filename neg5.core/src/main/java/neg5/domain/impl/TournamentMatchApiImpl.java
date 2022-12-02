@@ -168,7 +168,7 @@ public class TournamentMatchApiImpl
     @Override
     protected Optional<FieldValidationErrors> validateObject(TournamentMatchDTO dto) {
         MatchValidationContext validationContext = getValidationContext(dto);
-        return Optional.of(matchValidatorsChain.getErrorsInSequence(validationContext));
+        return Optional.of(matchValidatorsChain.runValidations(validationContext));
     }
 
     private Set<String> associateMatchWithPhases(TournamentMatchDTO match, Set<String> phases) {

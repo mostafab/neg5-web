@@ -16,7 +16,7 @@ public class ConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        final Environment environment = Environment.getEnvironment();
+        final Environment environment = getEnvironment();
         Names.bindProperties(binder(), getComposedProperties(environment));
         bind(Environment.class).toInstance(environment);
     }
@@ -65,5 +65,12 @@ public class ConfigurationModule extends AbstractModule {
         return Objects.requireNonNull(
                 System.getenv(envVarKey),
                 "No environment variable with key: " + envVarKey + " found.");
+    }
+
+    private static Environment getEnvironment() {
+        String env =
+                Objects.requireNonNull(
+                        System.getenv("NEG5_ENVIRONMENT"), "NEG5_ENVIRONMENT variable is not set.");
+        return Environment.valueOf(env);
     }
 }

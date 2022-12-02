@@ -13,6 +13,7 @@ public class MatchValidatorsChain {
     @Inject
     public MatchValidatorsChain(
             BasicMatchValidator basicMatchValidator,
+            TeamScoreValidator teamScoreValidator,
             MatchTeamsValidator matchTeamsValidator,
             TeamTotalTossupsValidator teamTotalTossupsValidator,
             SingleMatchPerRoundValidator singleMatchPerRoundValidator,
@@ -20,14 +21,14 @@ public class MatchValidatorsChain {
         validators =
                 ImmutableList.of(
                         basicMatchValidator,
+                        teamScoreValidator,
                         matchTeamsValidator,
                         teamTotalTossupsValidator,
                         singleMatchPerRoundValidator,
                         playerAnswersValidator);
     }
 
-    public FieldValidationErrors getErrorsInSequence(
-            @Nonnull MatchValidationContext validationContext) {
+    public FieldValidationErrors runValidations(@Nonnull MatchValidationContext validationContext) {
         FieldValidationErrors errors = new FieldValidationErrors();
         for (TournamentMatchValidator validator : validators) {
             FieldValidationErrors localErrors = validator.getErrors(validationContext);
