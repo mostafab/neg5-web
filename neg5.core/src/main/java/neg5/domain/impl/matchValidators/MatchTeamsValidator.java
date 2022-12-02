@@ -60,6 +60,7 @@ public class MatchTeamsValidator implements TournamentMatchValidator {
             MatchTeamDTO matchTeam,
             Map<String, TournamentTeamDTO> teamsById,
             Map<String, TournamentPlayerDTO> playersById) {
+        // This violation should never happen on the front-end, but we'll check just in case.
         if (matchTeam.getPlayers() != null
                 && teamsById != null
                 && playersById != null
@@ -75,7 +76,7 @@ public class MatchTeamsValidator implements TournamentMatchValidator {
                                         matchTeam.getTeamId().equals(tournamentPlayer.getTeamId()),
                                         "matchTeam.players",
                                         String.format(
-                                                "%s appears as a player in this match, but does not belong to %s.",
+                                                "%s assigned to incorrect team (%s).",
                                                 tournamentPlayer.getName(),
                                                 teamsById.get(matchTeam.getTeamId()).getName()));
                             });
