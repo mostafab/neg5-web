@@ -1,11 +1,14 @@
 package neg5.domain.api;
 
+import java.util.List;
+
 public class TournamentRulesDTO {
 
     private Boolean usesBouncebacks;
     private Long bonusPointValue;
     private Long partsPerBonus;
     private Integer maxActivePlayersPerTeam;
+    private List<TournamentTossupValueDTO> tossupValues;
 
     public Boolean getUsesBouncebacks() {
         return usesBouncebacks;
@@ -37,5 +40,13 @@ public class TournamentRulesDTO {
 
     public void setMaxActivePlayersPerTeam(Integer maxActivePlayersPerTeam) {
         this.maxActivePlayersPerTeam = maxActivePlayersPerTeam;
+    }
+
+    public List<TournamentTossupValueDTO> getTossupValues() {
+        return tossupValues;
+    }
+
+    public void setTossupValues(List<TournamentTossupValueDTO> tossupValues) {
+        this.tossupValues = tossupValues;
     }
 }

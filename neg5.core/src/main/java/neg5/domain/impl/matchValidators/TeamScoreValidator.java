@@ -2,24 +2,15 @@ package neg5.domain.impl.matchValidators;
 
 import static neg5.validation.FieldValidation.requireCondition;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
-import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentRulesDTO;
 
 @Singleton
 public class TeamScoreValidator implements TournamentMatchValidator {
-
-    private final TournamentRulesApi rulesApi;
-
-    @Inject
-    public TeamScoreValidator(TournamentRulesApi rulesApi) {
-        this.rulesApi = rulesApi;
-    }
 
     @Nonnull
     @Override
@@ -29,10 +20,11 @@ public class TeamScoreValidator implements TournamentMatchValidator {
         String tournamentId = validationContext.getSubject().getTournamentId();
         if (tournamentId == null
                 || subject.getTeams() == null
-                || validationContext.getTeamNamesById() == null) {
+                || validationContext.getTeamNamesById() == null
+                || validationContext.getRules() == null) {
             return errors;
         }
-        TournamentRulesDTO rules = rulesApi.getForTournament(tournamentId);
+        TournamentRulesDTO rules = validationContext.getRules();
         subject.getTeams().stream()
                 .filter(
                         team ->
