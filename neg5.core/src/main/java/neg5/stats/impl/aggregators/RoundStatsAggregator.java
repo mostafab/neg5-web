@@ -47,7 +47,7 @@ public class RoundStatsAggregator implements StatAggregator<RoundStatDTO> {
                         });
 
         numResults += match.getTeams().size();
-        tossupsHeard += match.getTossupsHeard();
+        tossupsHeard += match.getTossupsHeard() == null ? 0 : match.getTossupsHeard();
         numMatches++;
 
         updateAnswers(match);
