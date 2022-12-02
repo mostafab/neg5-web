@@ -4,12 +4,15 @@ import static neg5.validation.FieldValidation.requireCondition;
 
 import com.google.inject.Inject;
 import javax.annotation.Nonnull;
+
+import com.google.inject.Singleton;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentRulesDTO;
 
+@Singleton
 public class TeamScoreValidator implements TournamentMatchValidator {
 
     private final TournamentRulesApi rulesApi;
