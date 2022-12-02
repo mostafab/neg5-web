@@ -1,0 +1,959 @@
+{
+	"info": {
+		"_postman_id": "e8be53c0-d078-44ab-a476-10c7f5283ad2",
+		"name": "Neg5-Core",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tournament",
+			"item": [
+				{
+					"name": "Get Tournament",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tournament",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = JSON.parse(responseBody)",
+									"",
+									"pm.environment.set('tournamentId', body.id);",
+									"pm.environment.set('phaseId', body.phases[0].id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "nfToken={{nfToken}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomBsAdjective}} {{$randomBsNoun}} - {{$randomCity}}\",\n    \"bonusPointValue\": -5,\n    \"partsPerBonus\": -1,\n    \"tournamentDate\": \"2020-05-03\",\n    \"location\": \"{{$randomCity}}\",\n    \"questionSet\": \"Norcross Bowl\",\n    \"comments\": \"This is a test comment\",\n    \"usesBouncebacks\": false,\n    \"maxActivePlayersPerTeam\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tournament Matches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/matches",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"matches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tossup Values",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"value\": 10,\n        \"answerType\": \"Base\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/tossupValues",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"tossupValues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collaborators",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/collaborators",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"collaborators"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tournament",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"PRISON\",\n    \"tournamentDate\": \"2020-06-25\",\n    \"location\": \"Pandora II\",\n    \"questionSet\": \"BDAT IV\",\n    \"comments\": \"This is a comment\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Teams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/teams",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Players",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/players",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get QBJ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/qbj",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"qbj"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rules",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/rules",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"rules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Tournaments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Matches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tournaments/{{tournamentId}}/matches",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tournaments",
+								"{{tournamentId}}",
+								"matches"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('nfToken', pm.response.cookies.get('nfToken'));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{userId}}\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/login",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"mostafa\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/accounts",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/accounts/me",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"accounts",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pools",
+			"item": [
+				{
+					"name": "Add Pool",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('poolId', JSON.parse(responseBody).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"name\": \"{{$randomJobArea}}\",\n    \"phaseId\": {{phaseId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/pools",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"pools"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Pool",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{poolId}},\n    \"tournamentId\": {{tournamentId}},\n    \"name\": \"Ernest\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/pools/{{poolId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"pools",
+								"{{poolId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Phases",
+			"item": [
+				{
+					"name": "Add Phase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('phaseId', JSON.parse(responseBody).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"name\": \"{{$randomJobTitle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/phases",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"phases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Phase",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": {{phaseId}},\n    \"tournamentId\": {{tournamentId}},\n    \"name\": \"Playoffs 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/phases/{{phaseId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"phases",
+								"{{phaseId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Matches",
+			"item": [
+				{
+					"name": "Add Match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('matchId', JSON.parse(responseBody).id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"round\": 3,\n    \"room\": \"Test Room\",\n    \"moderator\": \"{{$randomFullName}}\",\n    \"packet\": \"{{$randomCountry}}\",\n    \"tossupsHeard\": 21,\n    \"notes\": \"Some notes\",\n    \"phases\": [{{phaseId}}],\n    \"teams\": [\n        {\n            \"teamId\": \"{{team1Id}}\",\n            \"score\": 260,\n            \"players\": [\n                {\n                    \"playerId\": \"{{team_1_player1Id}}\",\n                    \"tossupsHeard\": 20,\n                    \"answers\": [\n                        {\n                            \"tossupValue\": 15,\n                            \"numberGotten\": 4\n                        },\n                        {\n                            \"tossupValue\": 10,\n                            \"numberGotten\": 1\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"teamId\": \"{{team2Id}}\",\n            \"score\": 100,\n            \"players\": [\n                {\n                    \"playerId\": \"{{team_2_player1Id}}\",\n                    \"tossupsHeard\": 20,\n                    \"answers\": [\n                        {\n                            \"tossupValue\": 15,\n                            \"numberGotten\": 4\n                        },\n                        {\n                            \"tossupValue\": 10,\n                            \"numberGotten\": 3\n                        },\n                        {\n                            \"tossupValue\": -5,\n                            \"numberGotten\": 0\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/matches",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"matches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Match",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/matches/{{matchId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"matches",
+								"{{matchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Match",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"round\": 1,\n    \"room\": \"Test Room\",\n    \"moderator\": \"Mostafa - TEST\",\n    \"packet\": \"TEST Packet\",\n    \"tossupsHeard\": 20,\n    \"notes\": \"Some notes\",\n    \"phases\": [{{phaseId}}],\n    \"teams\": [\n        {\n            \"teamId\": {{team1Id}},\n            \"score\": 200,\n            \"players\": [\n                {\n                    \"playerId\": {{player1Id}},\n                    \"tossupsHeard\": 20,\n                    \"answers\": [\n                        {\n                            \"tossupValue\": 15,\n                            \"numberGotten\": 4\n                        }\n                    ]\n                }\n            ]\n        },\n        {\n            \"teamId\": {{team2Id}},\n            \"score\": 150,\n            \"players\": [\n                {\n                    \"playerId\": {{player2Id}},\n                    \"tossupsHeard\": 20,\n                    \"answers\": [\n                        {\n                            \"tossupValue\": 15,\n                            \"numberGotten\": 4\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/matches/{{matchId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"matches",
+								"{{matchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Match",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/matches/{{matchId}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"matches",
+								"{{matchId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "Add Team",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"",
+									"var query = {};",
+									"pm.request.url.query.all().forEach((param) => { query[param.key] = param.value});",
+									"",
+									"var counter = Number(pm.environment.get('teamMod') || 0);",
+									"pm.environ{{player1Id}}",
+									"if (counter % 2 == 0) {",
+									"    pm.environment.set('team1Id', body.id);",
+									"    body.players.forEach((p, idx) => {",
+									"        var n = \"team_1_player\" + (idx + 1) + \"Id\";",
+									"        pm.environment.set(n, p.id);",
+									"    });",
+									"} else {",
+									"    pm.environment.set('team2Id', body.id);",
+									"    body.players.forEach((p, idx) => {",
+									"        var n = \"team_2_player\" + (idx + 1) + \"Id\";",
+									"        pm.environment.set(n, p.id);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomStreetName}} {{$randomProduct}}\",\n    \"tournamentId\": {{tournamentId}},\n    \"players\": [\n        {\n            \"name\": \"{{$randomFullName}}\"\n        },\n        {\n            \"name\": \"{{$randomFullName}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/teams",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Team",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": {{team1Id}},\n    \"name\": \"Norcross B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/teams/{{team1Id}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"teams",
+								"{{team1Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/teams/{{team1Id}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"teams",
+								"{{team1Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Team",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/teams/{{team1Id}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"teams",
+								"{{team1Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Players",
+			"item": [
+				{
+					"name": "Add Player",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"teamId\": {{team1Id}},\n    \"tournamentId\": {{tournamentId}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/players",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"players"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Player",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Player\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/players/{{player1Id}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"players",
+								"{{player1Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Player",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/players/{{player1Id}}",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"players",
+								"{{player1Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tossup Values",
+			"item": [
+				{
+					"name": "Add Tossup Value",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"value\": 15,\n    \"answerType\": \"Base\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/tossup-values",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"tossup-values"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Collaborators",
+			"item": [
+				{
+					"name": "Add Collaborator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"mostafa\",\n    \"tournamentId\": {{tournamentId}},\n    \"isAdmin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/collaborators",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"collaborators"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Collaborator",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournamentId\": {{tournamentId}},\n    \"userId\": \"mostafa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{neg5Host}}/neg5-api/collaborators",
+							"host": [
+								"{{neg5Host}}"
+							],
+							"path": [
+								"neg5-api",
+								"collaborators"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
