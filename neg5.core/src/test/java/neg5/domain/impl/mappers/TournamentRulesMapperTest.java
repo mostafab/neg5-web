@@ -3,14 +3,13 @@ package neg5.domain.impl.mappers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashSet;
 import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentRulesDTO;
 import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
 
 public class TournamentRulesMapperTest {
 
@@ -46,8 +45,12 @@ public class TournamentRulesMapperTest {
 
         assertNotNull(rules.getTossupValues());
         assertEquals(1, rules.getTossupValues().size());
-        assertEquals(tv.getTournamentId(), rules.getTossupValues().stream().findFirst().get().getTournamentId());
-        assertEquals(tv.getAnswerType(), rules.getTossupValues().stream().findFirst().get().getAnswerType());
+        assertEquals(
+                tv.getTournamentId(),
+                rules.getTossupValues().stream().findFirst().get().getTournamentId());
+        assertEquals(
+                tv.getAnswerType(),
+                rules.getTossupValues().stream().findFirst().get().getAnswerType());
         assertEquals(tv.getValue(), rules.getTossupValues().stream().findFirst().get().getValue());
     }
 }
