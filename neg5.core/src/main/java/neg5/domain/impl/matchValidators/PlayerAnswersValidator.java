@@ -54,7 +54,6 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                 playersById.containsKey(matchPlayer.getPlayerId()),
                 "players.playerId",
                 String.format("Invalid player id: %s", matchPlayer.getPlayerId()));
-        requireNotNull(errors, matchPlayer.getTossupsHeard(), "players.tossupsHeard");
         requireNotNull(errors, matchPlayer.getAnswers(), "players.answers");
         if (!errors.isEmpty()) {
             return errors;
@@ -62,18 +61,21 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
         final String playerName = playersById.get(matchPlayer.getPlayerId()).getName();
         requireCondition(
                 errors,
-                matchPlayer.getTossupsHeard() >= 0,
+                matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() >= 0,
                 "players.tossupsHeard",
                 String.format("%s has a negative number of tossups heard.", playerName));
 
-        int tossupsHeard = matchPlayer.getTossupsHeard();
+        Integer tossupsHeard = matchPlayer.getTossupsHeard();
+        if (tossupsHeard == null || tossupsHeard == 0) {
+            validateNoTossupsHeardCase(errors, matchPlayer, playerName);
+            return errors;
+        }
         requireCondition(
                 errors,
-                subject.getTossupsHeard() == null
-                        || subject.getTossupsHeard() >= matchPlayer.getTossupsHeard(),
+                subject.getTossupsHeard() == null || subject.getTossupsHeard() >= tossupsHeard,
                 "players.tossupsHeard",
                 String.format(
-                        "%s has a greater number of tossups heard (%d) than tbe match (%d)",
+                        "%s has a greater number of tossups heard (%d) than the match (%d)",
                         playerName, tossupsHeard, subject.getTossupsHeard()));
         int numberOfTossupsAnswered = 0;
         for (MatchPlayerAnswerDTO answer : matchPlayer.getAnswers()) {
@@ -89,7 +91,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                             || answer.getNumberGotten() >= 0,
                                     "players.answer.numberGotten",
                                     String.format(
-                                            "%s should have a non-negative number of tossups worth %d",
+                                            "%s must have a non-negative number of tossups worth %d",
                                             playerName, answer.getTossupValue())));
             numberOfTossupsAnswered +=
                     answer.getNumberGotten() == null ? 0 : answer.getNumberGotten();
@@ -102,5 +104,25 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                         "%s's number of answered tossups (%d) exceeds their total tossups heard (%d)",
                         playerName, numberOfTossupsAnswered, tossupsHeard));
         return errors;
+    }
+
+    private void validateNoTossupsHeardCase(
+            FieldValidationErrors errors, MatchPlayerDTO player, String playerName) {
+        Optional.ofNullable(player.getAnswers())
+                .ifPresent(
+                        answers -> {
+                            requireCondition(
+                                    errors,
+                                    answers.stream()
+                                            .allMatch(
+                                                    answer ->
+                                                            answer.getNumberGotten() == null
+                                                                    || answer.getNumberGotten()
+                                                                            == 0),
+                                    "answers",
+                                    String.format(
+                                            "%s has 0 tossups heard but a non-zero number of answers.",
+                                            playerName));
+                        });
     }
 }
