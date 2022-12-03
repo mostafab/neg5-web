@@ -6,4 +6,4 @@ FROM amazoncorretto:8u352-al2
 COPY --from=build ./service/target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar .
 
 EXPOSE 1337
-ENTRYPOINT java -Xmx128m -jar neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar
+ENTRYPOINT java -Xmx256m -jar neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar
