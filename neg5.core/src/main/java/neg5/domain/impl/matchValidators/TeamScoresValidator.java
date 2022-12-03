@@ -57,19 +57,21 @@ public class TeamScoresValidator implements TournamentMatchValidator {
         return errors;
     }
 
-    private void validateTieIfApplicable(FieldValidationErrors errors, Set<MatchTeamDTO> teams, TournamentRulesDTO rules) {
+    private void validateTieIfApplicable(
+            FieldValidationErrors errors, Set<MatchTeamDTO> teams, TournamentRulesDTO rules) {
         if (Boolean.TRUE.equals(rules.getAllowTies())) {
             return;
         }
-        Set<Integer> scores = teams.stream().map(MatchTeamDTO::getScore)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
+        Set<Integer> scores =
+                teams.stream()
+                        .map(MatchTeamDTO::getScore)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
         requireCondition(
                 errors,
                 scores.size() > 1,
                 "teams.score",
-                "This tournament's rules do not allow a tie."
-        );
+                "This tournament's rules do not allow a tie.");
     }
 
     private void ensureBouncebacksAreValid(
