@@ -52,6 +52,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                                             .getName();
                             ensureBouncebacksAreValid(errors, team, rules, teamName);
                             ensureScoreIsPossible(errors, team, rules, teamName);
+                            ensureValidPointsPerBonus(errors, team, rules, teamName);
                         });
         return errors;
     }
@@ -122,8 +123,6 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                 String.format(
                         "%s's points from bonuses (%d) is not a multiple of %d.",
                         teamName, pointsFromBonuses, rules.getBonusPointValue()));
-
-        ensureValidPointsPerBonus(errors, team, rules, teamName);
     }
 
     private void ensureValidPointsPerBonus(
