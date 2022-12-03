@@ -7,7 +7,8 @@ for your operating system and architecture.
 4. Install [Docker](https://www.docker.com/). You'll need it to run your database.
 5. Setup your development database with `./neg5.db/bin/bootstrap_local_db.sh`.
 This script will create a locally running Docker container with a Postgres database running on port 9999. The
-service is configured to connect to this database in the dev environment.
+service is configured to connect to this database in the dev environment. It will also run all the required
+flyway database migrations in `neg5.db/src/main/resources/migrations`.
 6. Set the required environment variables listed under the "Environment Variables For Local Development" section.
 7. Do a one-time install of all required libraries with `mvn clean install`.
 8. Start the Service! Read the "Running the Service" section for instructions on how to do so.
@@ -27,6 +28,12 @@ with your IDE of choice.
 2. Run through your IDE of choice. For example, open the `Main.java` file in Intellij and
 run the main method. This will create a new run configuration that you can use to restart
 the service.
+
+### Apply Database Migrations
+You can apply new database migrations after initial creation of your database by
+running `mvn compile && mvn flyway:migrate` in the `neg5.db` folder. You can also choose to completely
+wipe away and rebuild your local database using the `./neg5.db/bin/wipe_local_db.sh` and
+`./neg5.db/bin/wipe_local_db.sh` scripts, respectively. 
 
 ### Deploying
 

@@ -26,12 +26,12 @@ public class Neg5App implements SparkApplication {
     public synchronized void init() {
         persistenceInitializer.start();
 
+        // Migrate DB before server starts
+        databaseMigrator.migrateDatabase();
+
         Spark.port(port);
         initRoutes();
         initFilters();
-
-        // Migrate DB after server starts
-        databaseMigrator.migrateDatabase();
     }
 
     private void initRoutes() {

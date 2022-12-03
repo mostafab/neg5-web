@@ -11,15 +11,15 @@ import neg5.domain.api.enums.TossupAnswerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TournamentRulesMapperTest {
+public class TournamentToTournamentRulesMapperTest {
 
-    private TournamentRulesMapper rulesMapper;
+    private TournamentToTournamentRulesMapper rulesMapper;
 
     private TournamentDTO tournament;
 
     @BeforeEach
     public void setup() {
-        rulesMapper = new TournamentRulesMapper();
+        rulesMapper = new TournamentToTournamentRulesMapper();
     }
 
     @Test
@@ -27,6 +27,7 @@ public class TournamentRulesMapperTest {
         tournament = new TournamentDTO();
         tournament.setBonusPointValue(20L);
         tournament.setUsesBouncebacks(false);
+        tournament.setAllowTies(false);
         tournament.setPartsPerBonus(3L);
         tournament.setMaxActivePlayersPerTeam(5);
         tournament.setTossupValues(new HashSet<>());
@@ -40,6 +41,7 @@ public class TournamentRulesMapperTest {
         TournamentRulesDTO rules = rulesMapper.toDTO(tournament);
         assertEquals(tournament.getBonusPointValue(), rules.getBonusPointValue());
         assertEquals(tournament.getUsesBouncebacks(), rules.getUsesBouncebacks());
+        assertEquals(tournament.getAllowTies(), rules.getAllowTies());
         assertEquals(tournament.getPartsPerBonus(), rules.getPartsPerBonus());
         assertEquals(tournament.getMaxActivePlayersPerTeam(), rules.getMaxActivePlayersPerTeam());
 
