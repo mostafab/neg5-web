@@ -5,6 +5,7 @@ import static neg5.validation.FieldValidation.requireCondition;
 import com.google.inject.Singleton;
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ import neg5.domain.api.enums.TossupAnswerType;
 import neg5.stats.impl.StatsUtilities;
 
 @Singleton
-public class TeamScoreValidator implements TournamentMatchValidator {
+public class TeamScoresValidator implements TournamentMatchValidator {
 
     @Nonnull
     @Override
@@ -34,6 +35,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
             return errors;
         }
         TournamentRulesDTO rules = validationContext.getRules();
+        validateTieIfApplicable(errors, subject.getTeams(), rules);
         subject.getTeams().stream()
                 .filter(
                         team ->
@@ -55,6 +57,23 @@ public class TeamScoreValidator implements TournamentMatchValidator {
         return errors;
     }
 
+    private void validateTieIfApplicable(
+            FieldValidationErrors errors, Set<MatchTeamDTO> teams, TournamentRulesDTO rules) {
+        if (Boolean.TRUE.equals(rules.getAllowTies())) {
+            return;
+        }
+        Set<Integer> scores =
+                teams.stream()
+                        .map(MatchTeamDTO::getScore)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
+        requireCondition(
+                errors,
+                scores.size() > 1,
+                "teams.score",
+                "This tournament's rules do not allow a tie.");
+    }
+
     private void ensureBouncebacksAreValid(
             FieldValidationErrors errors,
             MatchTeamDTO team,
@@ -71,8 +90,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                     String.format(
                             "%s should not have bounceback points since the rules don't allow them.",
                             teamName));
-        }
-        if (Boolean.TRUE.equals(rules.getUsesBouncebacks())) {
+        } else {
             requireCondition(
                     errors,
                     team.getBouncebackPoints() == null || team.getBouncebackPoints() >= 0,

@@ -145,8 +145,8 @@ public class TournamentTeamApiImpl
                         match -> {
                             String message =
                                     String.format(
-                                            "A different team with this name (%s) has already been added to the tournament",
-                                            dto.getName());
+                                            "A different team with this name (%s) has already been added to the tournament.",
+                                            match.getName());
                             throw new ObjectValidationException(
                                     new FieldValidationErrors().add("name", message));
                         });

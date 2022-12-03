@@ -1,4 +1,4 @@
-package neg5.service.filters;
+package neg5.service.exceptionHandlers;
 
 import static spark.Spark.exception;
 
@@ -8,12 +8,12 @@ import neg5.domain.api.ClientExceptionDTO;
 import neg5.gson.GsonProvider;
 
 /** Web request exception handler for {@link TournamentAccessException} */
-public class TournamentAccessExceptionFilter implements RequestFilter {
+public class TournamentAccessExceptionHandler implements ExceptionHandler {
 
     @Inject private GsonProvider gsonProvider;
 
     @Override
-    public void registerFilter() {
+    public void registerHandler() {
         exception(
                 TournamentAccessException.class,
                 (ex, request, response) -> {
