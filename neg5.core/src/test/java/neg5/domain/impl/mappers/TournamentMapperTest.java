@@ -33,6 +33,7 @@ public class TournamentMapperTest {
         Assert.assertEquals(tournament.getId(), dto.getId());
         Assert.assertEquals(tournament.getName(), dto.getName());
         Assert.assertEquals(tournament.getBonusPointValue(), dto.getBonusPointValue());
+        Assert.assertEquals(tournament.getAllowTies(), dto.getAllowTies());
     }
 
     @Test
@@ -56,6 +57,7 @@ public class TournamentMapperTest {
         Assert.assertEquals(tournament.getId(), entity.getId());
         Assert.assertEquals(tournament.getName(), entity.getName());
         Assert.assertEquals(tournament.getBonusPointValue(), entity.getBonusPointValue());
+        Assert.assertEquals(tournament.getAllowTies(), entity.getAllowTies());
     }
 
     @Test
@@ -100,6 +102,7 @@ public class TournamentMapperTest {
         tournament.setId(TOURNAMENT_ID);
         tournament.setName("NAME");
         tournament.setBonusPointValue(10L);
+        tournament.setAllowTies(true);
 
         return tournament;
     }
@@ -109,6 +112,7 @@ public class TournamentMapperTest {
         tournament.setId(TOURNAMENT_ID);
         tournament.setName("NAME");
         tournament.setBonusPointValue(10L);
+        tournament.setAllowTies(true);
 
         return tournament;
     }

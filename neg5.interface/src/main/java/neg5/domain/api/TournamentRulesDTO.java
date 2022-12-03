@@ -8,6 +8,7 @@ public class TournamentRulesDTO {
     private Long bonusPointValue;
     private Long partsPerBonus;
     private Integer maxActivePlayersPerTeam;
+    private Boolean allowTies;
     private List<TournamentTossupValueDTO> tossupValues;
 
     public Boolean getUsesBouncebacks() {
@@ -40,6 +41,14 @@ public class TournamentRulesDTO {
 
     public void setMaxActivePlayersPerTeam(Integer maxActivePlayersPerTeam) {
         this.maxActivePlayersPerTeam = maxActivePlayersPerTeam;
+    }
+
+    public Boolean getAllowTies() {
+        return allowTies;
+    }
+
+    public void setAllowTies(Boolean allowTies) {
+        this.allowTies = allowTies;
     }
 
     public List<TournamentTossupValueDTO> getTossupValues() {

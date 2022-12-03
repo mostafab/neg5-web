@@ -41,6 +41,7 @@ public class Tournament extends AbstractDataObject<Tournament>
     private TournamentPhase currentPhase;
 
     private Boolean usesBouncebacks;
+    private Boolean allowTies;
     private Long bonusPointValue;
     private Long partsPerBonus;
 
@@ -164,6 +165,15 @@ public class Tournament extends AbstractDataObject<Tournament>
 
     public void setUsesBouncebacks(Boolean usesBouncebacks) {
         this.usesBouncebacks = usesBouncebacks;
+    }
+
+    @Column(name = "allow_ties")
+    public Boolean getAllowTies() {
+        return allowTies;
+    }
+
+    public void setAllowTies(Boolean allowTies) {
+        this.allowTies = allowTies;
     }
 
     @Column(name = "bonus_point_value")

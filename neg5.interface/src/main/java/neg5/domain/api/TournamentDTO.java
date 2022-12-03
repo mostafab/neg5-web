@@ -16,6 +16,7 @@ public class TournamentDTO {
     private String comments;
 
     private Boolean usesBouncebacks;
+    private Boolean allowTies;
     private Long bonusPointValue;
     private Long partsPerBonus;
 
@@ -105,6 +106,14 @@ public class TournamentDTO {
 
     public void setUsesBouncebacks(Boolean usesBouncebacks) {
         this.usesBouncebacks = usesBouncebacks;
+    }
+
+    public Boolean getAllowTies() {
+        return allowTies;
+    }
+
+    public void setAllowTies(Boolean allowTies) {
+        this.allowTies = allowTies;
     }
 
     public Long getBonusPointValue() {

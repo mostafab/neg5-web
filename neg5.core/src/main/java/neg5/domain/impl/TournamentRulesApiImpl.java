@@ -5,22 +5,23 @@ import com.google.inject.persist.Transactional;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentRulesDTO;
-import neg5.domain.impl.mappers.TournamentRulesMapper;
+import neg5.domain.impl.mappers.TournamentToTournamentRulesMapper;
 
 public class TournamentRulesApiImpl implements TournamentRulesApi {
 
     private final TournamentApi tournamentManager;
-    private final TournamentRulesMapper tournamentRulesMapper;
+    private final TournamentToTournamentRulesMapper tournamentToTournamentRulesMapper;
 
     @Inject
     public TournamentRulesApiImpl(
-            TournamentApi tournamentManager, TournamentRulesMapper tournamentRulesMapper) {
+            TournamentApi tournamentManager,
+            TournamentToTournamentRulesMapper tournamentToTournamentRulesMapper) {
         this.tournamentManager = tournamentManager;
-        this.tournamentRulesMapper = tournamentRulesMapper;
+        this.tournamentToTournamentRulesMapper = tournamentToTournamentRulesMapper;
     }
 
     @Transactional
     public TournamentRulesDTO getForTournament(String tournamentId) {
-        return tournamentRulesMapper.toDTO(tournamentManager.get(tournamentId));
+        return tournamentToTournamentRulesMapper.toDTO(tournamentManager.get(tournamentId));
     }
 }
