@@ -13,7 +13,7 @@ public class MatchValidatorsChain {
     @Inject
     public MatchValidatorsChain(
             BasicMatchValidator basicMatchValidator,
-            TeamScoreValidator teamScoreValidator,
+            TeamScoresValidator teamScoresValidator,
             MatchTeamsValidator matchTeamsValidator,
             TeamTotalTossupsValidator teamTotalTossupsValidator,
             SingleMatchPerRoundValidator singleMatchPerRoundValidator,
@@ -21,7 +21,7 @@ public class MatchValidatorsChain {
         validators =
                 ImmutableList.of(
                         basicMatchValidator,
-                        teamScoreValidator,
+                        teamScoresValidator,
                         matchTeamsValidator,
                         teamTotalTossupsValidator,
                         singleMatchPerRoundValidator,
