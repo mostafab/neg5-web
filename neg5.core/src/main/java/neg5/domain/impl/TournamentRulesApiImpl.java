@@ -14,7 +14,8 @@ public class TournamentRulesApiImpl implements TournamentRulesApi {
 
     @Inject
     public TournamentRulesApiImpl(
-            TournamentApi tournamentManager, TournamentToTournamentRulesMapper tournamentToTournamentRulesMapper) {
+            TournamentApi tournamentManager,
+            TournamentToTournamentRulesMapper tournamentToTournamentRulesMapper) {
         this.tournamentManager = tournamentManager;
         this.tournamentToTournamentRulesMapper = tournamentToTournamentRulesMapper;
     }
