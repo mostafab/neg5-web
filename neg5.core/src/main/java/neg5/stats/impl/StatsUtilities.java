@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import neg5.domain.api.AnswersDTO;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
@@ -190,18 +191,29 @@ public final class StatsUtilities {
                 .collect(Collectors.toSet());
     }
 
-    public static Set<AnswersDTO> getAnswers(MatchTeamDTO team) {
+    public static Set<AnswersDTO> getAnswers(
+            @Nonnull MatchTeamDTO team, @Nonnull Map<Integer, TossupAnswerType> valueTypes) {
         return team.getPlayers().stream()
+                .filter(player -> player.getAnswers() != null)
                 .flatMap(player -> player.getAnswers().stream())
+                .filter(
+                        answer ->
+                                answer.getNumberGotten() != null && answer.getTossupValue() != null)
                 .map(
                         answer -> {
                             AnswersDTO answers = new AnswersDTO();
-                            answers.setAnswerType(answer.getAnswerType());
+                            answers.setAnswerType(
+                                    valueTypes.getOrDefault(
+                                            answer.getTossupValue(), answer.getAnswerType()));
                             answers.setTotal(answer.getNumberGotten());
                             answers.setValue(answer.getTossupValue());
                             return answers;
                         })
                 .collect(Collectors.toSet());
+    }
+
+    public static Set<AnswersDTO> getAnswers(@Nonnull MatchTeamDTO team) {
+        return getAnswers(team, new HashMap<>());
     }
 
     public static Set<AnswersDTO> getAnswers(String teamId, TournamentMatchDTO match) {

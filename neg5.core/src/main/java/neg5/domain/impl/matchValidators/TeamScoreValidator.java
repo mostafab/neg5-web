@@ -3,11 +3,20 @@ package neg5.domain.impl.matchValidators;
 import static neg5.validation.FieldValidation.requireCondition;
 
 import com.google.inject.Singleton;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import neg5.domain.api.AnswersDTO;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentRulesDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.enums.TossupAnswerType;
+import neg5.stats.impl.StatsUtilities;
 
 @Singleton
 public class TeamScoreValidator implements TournamentMatchValidator {
@@ -41,6 +50,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                                             .getName();
                             ensureBouncebacksAreValid(errors, team, rules, teamName);
                             ensureScoreIsPossible(errors, team, rules, teamName);
+                            ensureValidPointsPerBonus(errors, team, rules, teamName);
                         });
         return errors;
     }
@@ -109,5 +119,42 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                 String.format(
                         "%s's points from bonuses (%d) is not a multiple of %d.",
                         teamName, pointsFromBonuses, rules.getBonusPointValue()));
+    }
+
+    private void ensureValidPointsPerBonus(
+            FieldValidationErrors errors,
+            MatchTeamDTO matchTeam,
+            TournamentRulesDTO rules,
+            String teamName) {
+        if (rules.getPartsPerBonus() == null
+                || rules.getBonusPointValue() == null
+                || rules.getTossupValues() == null) {
+            return;
+        }
+        Map<Integer, TossupAnswerType> tossupTypes =
+                rules.getTossupValues().stream()
+                        .collect(
+                                Collectors.toMap(
+                                        TournamentTossupValueDTO::getValue,
+                                        TournamentTossupValueDTO::getAnswerType));
+        Set<AnswersDTO> answers = StatsUtilities.getAnswers(matchTeam, tossupTypes);
+        BigDecimal pointsPerBonus =
+                StatsUtilities.calculatePointsPerBonus(
+                        answers,
+                        new BigDecimal(matchTeam.getScore()),
+                        Optional.ofNullable(matchTeam.getBouncebackPoints()).orElse(0),
+                        Optional.ofNullable(matchTeam.getOvertimeTossupsGotten()).orElse(0),
+                        1);
+
+        BigDecimal maxPointsPerBonus =
+                new BigDecimal(rules.getPartsPerBonus() * rules.getBonusPointValue());
+        requireCondition(
+                errors,
+                pointsPerBonus.compareTo(new BigDecimal(0)) >= 0
+                        && pointsPerBonus.compareTo(maxPointsPerBonus) <= 0,
+                "team.pointsPerBonus",
+                String.format(
+                        "%s has an invalid points-per-bonus value (%s). It should be between %s and %s.",
+                        teamName, pointsPerBonus, 0, maxPointsPerBonus));
     }
 }

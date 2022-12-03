@@ -2,15 +2,15 @@ package neg5.domain.api;
 
 public class FieldValidationError {
 
-    private String fieldName;
+    private String field;
     private String message;
 
-    public String getFieldName() {
-        return fieldName;
+    public String getField() {
+        return field;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
+    public void setField(String field) {
+        this.field = field;
     }
 
     public String getMessage() {
@@ -23,6 +23,6 @@ public class FieldValidationError {
 
     @Override
     public String toString() {
-        return String.format("{field=%s | error=%s}", fieldName, message);
+        return String.format("{field=%s | error=%s}", field, message);
     }
 }

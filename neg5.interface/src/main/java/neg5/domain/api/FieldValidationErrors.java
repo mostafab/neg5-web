@@ -17,12 +17,12 @@ public class FieldValidationErrors {
     }
 
     public FieldValidationErrors add(FieldValidationError error) {
-        return add(error.getFieldName(), error.getMessage());
+        return add(error.getField(), error.getMessage());
     }
 
     public FieldValidationErrors add(String field, String message) {
         FieldValidationError error = new FieldValidationError();
-        error.setFieldName(field);
+        error.setField(field);
         error.setMessage(message);
         errors.add(error);
 
