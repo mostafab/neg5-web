@@ -7,12 +7,15 @@ import static neg5.validation.FieldValidation.requireNotNull;
 import com.google.inject.Singleton;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerDTO;
+import neg5.domain.api.TournamentRulesDTO;
+import neg5.domain.api.TournamentTossupValueDTO;
 
 @Singleton
 public class PlayerAnswersValidator implements TournamentMatchValidator {
@@ -22,7 +25,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
     public FieldValidationErrors getErrors(@Nonnull MatchValidationContext validationContext) {
         FieldValidationErrors errors = new FieldValidationErrors();
         Map<String, TournamentPlayerDTO> playersById = validationContext.getPlayerNamesById();
-        if (playersById == null) {
+        if (playersById == null || validationContext.getRules() == null) {
             return errors;
         }
 
@@ -37,7 +40,10 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                             player ->
                                                     errors.add(
                                                             getPlayerAnswerErrors(
-                                                                    subject, player, playersById)));
+                                                                    subject,
+                                                                    player,
+                                                                    validationContext.getRules(),
+                                                                    playersById)));
                         });
 
         return errors;
@@ -46,6 +52,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
     private FieldValidationErrors getPlayerAnswerErrors(
             TournamentMatchDTO subject,
             MatchPlayerDTO matchPlayer,
+            TournamentRulesDTO rules,
             Map<String, TournamentPlayerDTO> playersById) {
         FieldValidationErrors errors = new FieldValidationErrors();
         requireNotNull(errors, matchPlayer.getPlayerId(), "players.playerId");
@@ -88,12 +95,32 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                         "%s has a greater number of tossups heard (%d) than the match (%d).",
                         playerName, playerTossupsHeard, subject.getTossupsHeard()));
         int numberOfTossupsAnswered = 0;
+        String validAnswerValues =
+                rules.getTossupValues().stream()
+                        .map(TournamentTossupValueDTO::getValue)
+                        .map(Object::toString)
+                        .sorted()
+                        .collect(Collectors.joining(","));
         for (MatchPlayerAnswerDTO answer : matchPlayer.getAnswers()) {
             requireConditionsInSequence(
                     errors,
                     err ->
                             requireNotNull(
                                     err, answer.getTossupValue(), "players.answer.tossupValue"),
+                    err ->
+                            requireCondition(
+                                    err,
+                                    rules.getTossupValues().stream()
+                                            .anyMatch(
+                                                    tv ->
+                                                            tv.getValue()
+                                                                    .equals(
+                                                                            answer
+                                                                                    .getTossupValue())),
+                                    "players.answer.tossupValue",
+                                    String.format(
+                                            "%s's tossup answer values must all be one of these values: %s",
+                                            playerName, validAnswerValues)),
                     err ->
                             requireCondition(
                                     err,
