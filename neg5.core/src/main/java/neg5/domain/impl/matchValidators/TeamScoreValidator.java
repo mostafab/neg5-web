@@ -159,6 +159,6 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                         && pointsPerBonus.compareTo(maxPointsPerBonus) <= 0,
                 "team.pointsPerBonus",
                 String.format(
-                        "%s has an invalid points-per-bonus value (%s)", teamName, pointsPerBonus));
+                        "%s has an invalid points-per-bonus value (%s).", teamName, pointsPerBonus));
     }
 }
