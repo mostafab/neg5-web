@@ -4,7 +4,6 @@ import static neg5.validation.FieldValidation.requireCondition;
 
 import com.google.inject.Singleton;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -12,7 +11,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.AnswersDTO;
 import neg5.domain.api.FieldValidationErrors;
-import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentRulesDTO;
@@ -95,7 +93,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
             return;
         }
         int score = team.getScore();
-        List<MatchPlayerAnswerDTO> playerAnswers =
+        int pointsFromTossups =
                 team.getPlayers().stream()
                         .filter(player -> player.getAnswers() != null)
                         .flatMap(player -> player.getAnswers().stream())
@@ -103,11 +101,9 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                                 answer ->
                                         answer.getNumberGotten() != null
                                                 && answer.getTossupValue() != null)
-                        .collect(Collectors.toList());
-        int pointsFromTossups =
-                playerAnswers.stream()
                         .mapToInt(answer -> answer.getTossupValue() * answer.getNumberGotten())
                         .sum();
+
         int pointsFromBonuses = score - pointsFromTossups;
         requireCondition(
                 errors,
@@ -158,6 +154,7 @@ public class TeamScoreValidator implements TournamentMatchValidator {
                         && pointsPerBonus.compareTo(maxPointsPerBonus) <= 0,
                 "team.pointsPerBonus",
                 String.format(
-                        "%s has an invalid points-per-bonus value (%s).", teamName, pointsPerBonus));
+                        "%s has an invalid points-per-bonus value (%s). It should be between %s and %s.",
+                        teamName, pointsPerBonus, 0, maxPointsPerBonus));
     }
 }

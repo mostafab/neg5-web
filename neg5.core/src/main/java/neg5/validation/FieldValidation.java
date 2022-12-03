@@ -63,9 +63,7 @@ public class FieldValidation {
         try {
             validator.run();
         } catch (ObjectValidationException e) {
-            e.getErrors()
-                    .getErrors()
-                    .forEach(err -> errors.add(err.getField(), err.getMessage()));
+            e.getErrors().getErrors().forEach(err -> errors.add(err.getField(), err.getMessage()));
         }
     }
 }
