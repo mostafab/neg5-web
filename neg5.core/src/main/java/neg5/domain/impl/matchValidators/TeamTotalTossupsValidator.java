@@ -31,9 +31,9 @@ public class TeamTotalTossupsValidator implements TournamentMatchValidator {
                         .sum();
         if (numberOfTossupsAnswered > tossupsHeard) {
             errors.add(
-                    "totalTossupsAnswered",
+                    "team.totalTossupsAnswered",
                     String.format(
-                            "The number of total tossups answered by all players (%d) is greater than the number of tossups heard (%d)",
+                            "The number of total tossups answered across teams (%d) is greater than the number of tossups heard (%d)",
                             tossupsHeard, numberOfTossupsAnswered));
         }
         return errors;

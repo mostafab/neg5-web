@@ -1,4 +1,4 @@
-package neg5.service.filters;
+package neg5.service.exceptionHandlers;
 
 import static spark.Spark.exception;
 
@@ -9,16 +9,15 @@ import neg5.monitoring.api.ExceptionAlerter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GeneralExceptionHandlerFilter implements RequestFilter {
+public class GeneralExceptionHandler implements ExceptionHandler {
 
     @Inject private GsonProvider gsonProvider;
     @Inject private ExceptionAlerter exceptionAlerter;
 
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(GeneralExceptionHandlerFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeneralExceptionHandler.class);
 
     @Override
-    public void registerFilter() {
+    public void registerHandler() {
         exception(
                 Exception.class,
                 (exception, request, response) -> {

@@ -1,4 +1,4 @@
-package neg5.service.filters;
+package neg5.service.exceptionHandlers;
 
 import static spark.Spark.exception;
 
@@ -6,17 +6,17 @@ import com.google.inject.Inject;
 import neg5.gson.GsonProvider;
 import neg5.validation.ObjectValidationException;
 
-public class ObjectValidationExceptionHandlerFilter implements RequestFilter {
+public class ObjectValidationExceptionHandler implements ExceptionHandler {
 
     private final GsonProvider gsonProvider;
 
     @Inject
-    public ObjectValidationExceptionHandlerFilter(GsonProvider gsonProvider) {
+    public ObjectValidationExceptionHandler(GsonProvider gsonProvider) {
         this.gsonProvider = gsonProvider;
     }
 
     @Override
-    public void registerFilter() {
+    public void registerHandler() {
         exception(
                 ObjectValidationException.class,
                 (exception, request, response) -> {

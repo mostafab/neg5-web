@@ -90,8 +90,7 @@ public class TeamScoresValidator implements TournamentMatchValidator {
                     String.format(
                             "%s should not have bounceback points since the rules don't allow them.",
                             teamName));
-        }
-        if (Boolean.TRUE.equals(rules.getUsesBouncebacks())) {
+        } else {
             requireCondition(
                     errors,
                     team.getBouncebackPoints() == null || team.getBouncebackPoints() >= 0,

@@ -23,8 +23,7 @@ public class Neg5WebModule extends AbstractModule {
         install(new TournamentStatsModule());
         install(new TournamentAccessGuiceModule());
         install(new QbjGuiceModule());
-        install(new ControllersModule());
-        install(new FilterModule());
+        install(new SparkResourcesModule());
         install(new JwtSigningModule());
     }
 }

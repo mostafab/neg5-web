@@ -8,7 +8,6 @@ public class TournamentDTO {
     private String id;
 
     private String directorId;
-
     private String name;
     private LocalDate tournamentDate;
     private String location;
