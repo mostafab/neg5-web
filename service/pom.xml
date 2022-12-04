@@ -44,7 +44,6 @@
             <groupId>com.newrelic.agent.java</groupId>
             <artifactId>newrelic-java</artifactId>
             <version>7.11.1</version>
-            <scope>provided</scope>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -109,12 +108,12 @@
             <plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
-                <version>2.0.6</version>
+                <version>3.0.6</version>
                 <configuration>
                     <jdkVersion>8</jdkVersion>
                     <appName>spark-neg5-api</appName>
                     <processTypes>
-                        <web>java -Xmx256m -javaagent:/app/newrelic/newrelic.jar -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
+                        <web>java -Xmx256m -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
             </plugin>
@@ -135,8 +134,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <outputDirectory>${project.basedir}</outputDirectory>
-                            <destFileName>newrelic</destFileName>
+                            <outputDirectory>${project.basedir}/target</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
