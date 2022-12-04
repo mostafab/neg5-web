@@ -4,12 +4,11 @@ set -e
 
 cd $(dirname "$0")
 cd ../..
-mvn clean
-mvn install
+mvn clean install
 # Get confirmation of deploy
 read -p "Proceed with deploy to Heroku? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 cd service/
-mvn heroku:deploy
+mvn clean heroku:deploy
 
 # Create a new Git tag to capture changes
 cd bin/

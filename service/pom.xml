@@ -41,6 +41,12 @@
             <version>2.0.4</version>
         </dependency>
         <dependency>
+            <groupId>com.newrelic.agent.java</groupId>
+            <artifactId>newrelic-java</artifactId>
+            <version>7.11.1</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
             <groupId>org.neg5</groupId>
             <artifactId>neg5.interface</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -102,14 +108,36 @@
             <plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
-                <version>2.0.6</version>
+                <version>3.0.6</version>
                 <configuration>
                     <jdkVersion>8</jdkVersion>
                     <appName>spark-neg5-api</appName>
                     <processTypes>
-                        <web>java -Xmx256m -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
+                        <web>java -Xmx256m -javaagent:./target/newrelic/newrelic.jar -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
                     </processTypes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>unpack-newrelic</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>com.newrelic.agent.java</includeGroupIds>
+                            <includeArtifactIds>newrelic-java</includeArtifactIds>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <outputDirectory>${project.basedir}/target</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
