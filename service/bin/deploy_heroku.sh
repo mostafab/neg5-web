@@ -2,13 +2,6 @@
 
 set -e
 
-while getopts r: flag
-do
-  case "${flag}" in
-    r) release=${OPTARG};;
-  esac
-done
-
 cd $(dirname "$0")
 cd ../..
 mvn clean
@@ -21,4 +14,4 @@ mvn heroku:deploy
 # Create a new Git tag to capture changes
 cd bin/
 echo "Deploy to Heroku succeeded. Creating a new Git tag:"
-./create_new_tag.sh -v $release
+./create_new_tag.sh -v major
