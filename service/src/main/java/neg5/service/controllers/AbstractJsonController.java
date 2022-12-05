@@ -15,7 +15,7 @@ public abstract class AbstractJsonController extends AbstractController {
     }
 
     @Override
-    protected Route enrichRoute(Route handler) {
+    protected Route getRequestHandler(Route handler) {
         return (request, response) -> {
             response.type("application/json");
             return handler.handle(request, response);

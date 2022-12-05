@@ -20,9 +20,9 @@ public abstract class AbstractController implements BaseController {
     protected void get(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.get(fullPath, internalEnrichRoute(route, fullPath));
+            Spark.get(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.get(fullPath, internalEnrichRoute(route, fullPath), responseTransformer);
+            Spark.get(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered GET route {}", fullPath);
     }
@@ -34,9 +34,9 @@ public abstract class AbstractController implements BaseController {
     protected void post(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.post(fullPath, internalEnrichRoute(route, fullPath));
+            Spark.post(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.post(fullPath, internalEnrichRoute(route, fullPath), responseTransformer);
+            Spark.post(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered POST route {}", fullPath);
     }
@@ -48,20 +48,20 @@ public abstract class AbstractController implements BaseController {
     protected void put(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.put(fullPath, internalEnrichRoute(route, fullPath));
+            Spark.put(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.put(fullPath, internalEnrichRoute(route, fullPath), responseTransformer);
+            Spark.put(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered PUT route {}", fullPath);
     }
 
     protected void delete(String path, Route route) {
         String fullPath = constructPath(path);
-        Spark.delete(fullPath, internalEnrichRoute(route, fullPath));
+        Spark.delete(fullPath, internalRequestHandler(route, fullPath));
         LOGGER.info("Registered DELETE route {}", fullPath);
     }
 
-    protected Route enrichRoute(Route route) {
+    protected Route getRequestHandler(Route route) {
         return route;
     }
 
@@ -69,10 +69,14 @@ public abstract class AbstractController implements BaseController {
         return null;
     }
 
-    private Route internalEnrichRoute(Route handler, String fullEndpointRoutePattern) {
+    private Route internalRequestHandler(Route handler, String fullEndpointRoutePattern) {
         return (request, response) -> {
-            NewRelic.setTransactionName(null, fullEndpointRoutePattern);
-            return handler.handle(request, response);
+            // New Relic by default uses the strict endpoint url as the transaction name, but we
+            // want to group transactions by their pattern and method
+            NewRelic.setTransactionName(
+                    null,
+                    String.format("%s - %s", request.requestMethod(), fullEndpointRoutePattern));
+            return getRequestHandler(handler).handle(request, response);
         };
     }
 
