@@ -1,5 +1,8 @@
 package neg5.service.controllers;
 
+import static spark.Spark.before;
+
+import com.newrelic.api.agent.NewRelic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.ResponseTransformer;
@@ -19,9 +22,9 @@ public abstract class AbstractController implements BaseController {
     protected void get(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.get(fullPath, enrichRoute(route));
+            Spark.get(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.get(fullPath, enrichRoute(route), responseTransformer);
+            Spark.get(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered GET route {}", fullPath);
     }
@@ -33,9 +36,9 @@ public abstract class AbstractController implements BaseController {
     protected void post(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.post(fullPath, enrichRoute(route));
+            Spark.post(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.post(fullPath, enrichRoute(route), responseTransformer);
+            Spark.post(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered POST route {}", fullPath);
     }
@@ -47,25 +50,41 @@ public abstract class AbstractController implements BaseController {
     protected void put(String path, Route route, ResponseTransformer responseTransformer) {
         String fullPath = constructPath(path);
         if (responseTransformer == null) {
-            Spark.put(fullPath, enrichRoute(route));
+            Spark.put(fullPath, internalRequestHandler(route, fullPath));
         } else {
-            Spark.put(fullPath, enrichRoute(route), responseTransformer);
+            Spark.put(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
         LOGGER.info("Registered PUT route {}", fullPath);
     }
 
     protected void delete(String path, Route route) {
         String fullPath = constructPath(path);
-        Spark.delete(fullPath, enrichRoute(route));
+        Spark.delete(fullPath, internalRequestHandler(route, fullPath));
         LOGGER.info("Registered DELETE route {}", fullPath);
     }
 
-    protected Route enrichRoute(Route route) {
+    protected Route getRequestHandler(Route route) {
         return route;
     }
 
     protected ResponseTransformer getResponseTransformer() {
         return null;
+    }
+
+    private Route internalRequestHandler(Route handler, String fullEndpointRoutePattern) {
+        before(
+                fullEndpointRoutePattern,
+                (request, response) -> {
+                    // New Relic by default uses the strict endpoint url as the transaction name,
+                    // but we
+                    // want to group transactions by their pattern and method. See
+                    // https://docs.newrelic.com/docs/apm/agents/java-agent/instrumentation/transaction-naming-protocol/
+                    NewRelic.setTransactionName(
+                            null,
+                            String.format(
+                                    "%s - %s", request.requestMethod(), fullEndpointRoutePattern));
+                });
+        return (request, response) -> getRequestHandler(handler).handle(request, response);
     }
 
     private String constructPath(String path) {
