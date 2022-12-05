@@ -10,5 +10,7 @@ public interface MonitoringContext {
 
     void put(@Nonnull String key, String value);
 
+    void setTransactionName(String name);
+
     void clear();
 }

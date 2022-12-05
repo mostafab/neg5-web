@@ -2,7 +2,8 @@ package neg5.service.controllers;
 
 import static spark.Spark.before;
 
-import com.newrelic.api.agent.NewRelic;
+import com.google.inject.Inject;
+import neg5.monitoring.api.MonitoringContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.ResponseTransformer;
@@ -11,6 +12,7 @@ import spark.Spark;
 
 public abstract class AbstractController implements BaseController {
 
+    @Inject private MonitoringContext monitoringContext;
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     protected abstract String getBasePath();
@@ -79,10 +81,10 @@ public abstract class AbstractController implements BaseController {
                     // but we
                     // want to group transactions by their pattern and method. See
                     // https://docs.newrelic.com/docs/apm/agents/java-agent/instrumentation/transaction-naming-protocol/
-                    NewRelic.setTransactionName(
-                            null,
+                    String transactionName =
                             String.format(
-                                    "%s - %s", request.requestMethod(), fullEndpointRoutePattern));
+                                    "%s - %s", request.requestMethod(), fullEndpointRoutePattern);
+                    monitoringContext.setTransactionName(transactionName);
                 });
         return (request, response) -> getRequestHandler(handler).handle(request, response);
     }
