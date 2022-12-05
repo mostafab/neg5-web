@@ -2,12 +2,11 @@ package neg5.monitoring.impl;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Singleton;
+import com.newrelic.api.agent.NewRelic;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-
-import com.newrelic.api.agent.NewRelic;
 import neg5.monitoring.api.MonitoringContext;
 
 @Singleton
@@ -30,9 +29,7 @@ public class ThreadLocalMonitoringContext implements MonitoringContext {
 
     @Override
     public void setTransactionName(String name) {
-        NewRelic.setTransactionName(
-                null,
-                name);
+        NewRelic.setTransactionName(null, name);
     }
 
     @Override
