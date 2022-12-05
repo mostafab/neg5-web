@@ -1,5 +1,7 @@
 package neg5.service.controllers;
 
+import static spark.Spark.before;
+
 import com.newrelic.api.agent.NewRelic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,14 +72,19 @@ public abstract class AbstractController implements BaseController {
     }
 
     private Route internalRequestHandler(Route handler, String fullEndpointRoutePattern) {
-        return (request, response) -> {
-            // New Relic by default uses the strict endpoint url as the transaction name, but we
-            // want to group transactions by their pattern and method
-            NewRelic.setTransactionName(
-                    null,
-                    String.format("%s - %s", request.requestMethod(), fullEndpointRoutePattern));
-            return getRequestHandler(handler).handle(request, response);
-        };
+        before(
+                fullEndpointRoutePattern,
+                (request, response) -> {
+                    // New Relic by default uses the strict endpoint url as the transaction name,
+                    // but we
+                    // want to group transactions by their pattern and method. See
+                    // https://docs.newrelic.com/docs/apm/agents/java-agent/instrumentation/transaction-naming-protocol/
+                    NewRelic.setTransactionName(
+                            null,
+                            String.format(
+                                    "%s - %s", request.requestMethod(), fullEndpointRoutePattern));
+                });
+        return (request, response) -> getRequestHandler(handler).handle(request, response);
     }
 
     private String constructPath(String path) {
