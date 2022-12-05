@@ -128,6 +128,8 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
         requireNotNull(errors, tournamentDTO.getName(), "name");
         requireNotNull(errors, tournamentDTO.getBonusPointValue(), "bonusPointValue");
         requireNotNull(errors, tournamentDTO.getPartsPerBonus(), "partsPerBonus");
+        requireNotNull(
+                errors, tournamentDTO.getMaxActivePlayersPerTeam(), "maxActivePlayersPerTeam");
 
         requireCondition(
                 errors,

@@ -15,6 +15,8 @@
         <module>neg5.jwt</module>
         <module>neg5.db</module>
         <module>monitoring</module>
+        <module>automation</module>
+        <module>gson</module>
     </modules>
 
     <build>
@@ -32,6 +34,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.21.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*ApiTest.java</exclude>
+                    </excludes>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>

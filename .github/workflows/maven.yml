@@ -32,5 +32,7 @@ jobs:
       run: |
         cd service
         java -Xmx256m -javaagent:./target/newrelic/newrelic.jar -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
-    - name: Service Health Check
+    - name: Verify Service is Running
       run: curl http://localhost:$PORT
+    - name: Run API Tests
+      run: mvn failsafe:integration-test
