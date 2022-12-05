@@ -35,8 +35,18 @@ running `mvn compile && mvn flyway:migrate` in the `neg5.db` folder. You can als
 wipe away and rebuild your local database using the `./neg5.db/bin/wipe_local_db.sh` and
 `./neg5.db/bin/wipe_local_db.sh` scripts, respectively. 
 
+### Get Familiar with the Tech
+
+### Code Style and Patterns
+
+### Submitting Changes
+
+### Postman Testing
+If you use Postman to test API endpoints, you can import this
+[collection of API requests](https://www.getpostman.com/collections/166591131f6f1edca8bd) to simplify your testing
+workflow.
+
 ### Deploying
 
 To build the `neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar`
-and deploy it to Heroku, run `./service/bin/deploy_heroku -r <type>`
-where `type` is one of `major`, `minor`, or `patch`.
+and deploy it to Heroku, run `./service/bin/deploy_heroku`
