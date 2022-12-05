@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+
+import com.newrelic.api.agent.NewRelic;
 import neg5.monitoring.api.MonitoringContext;
 
 @Singleton
@@ -24,6 +26,13 @@ public class ThreadLocalMonitoringContext implements MonitoringContext {
     public void put(@Nonnull String key, String value) {
         Objects.requireNonNull(key, "key cannot be null");
         CONTEXT_TL.get().put(key, value);
+    }
+
+    @Override
+    public void setTransactionName(String name) {
+        NewRelic.setTransactionName(
+                null,
+                name);
     }
 
     @Override
