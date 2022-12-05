@@ -193,6 +193,9 @@ public final class StatsUtilities {
 
     public static Set<AnswersDTO> getAnswers(
             @Nonnull MatchTeamDTO team, @Nonnull Map<Integer, TossupAnswerType> valueTypes) {
+        if (team.getPlayers() == null) {
+            return new HashSet<>();
+        }
         return team.getPlayers().stream()
                 .filter(player -> player.getAnswers() != null)
                 .flatMap(player -> player.getAnswers().stream())

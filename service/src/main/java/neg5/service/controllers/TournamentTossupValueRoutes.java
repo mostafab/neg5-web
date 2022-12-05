@@ -7,7 +7,7 @@ import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.service.util.RequestHelper;
 
-public class TournamentTossupValueController extends AbstractJsonController {
+public class TournamentTossupValueRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentTossupValueApi tournamentTossupValueManager;
     @Inject private TournamentAccessManager tournamentAccessManager;

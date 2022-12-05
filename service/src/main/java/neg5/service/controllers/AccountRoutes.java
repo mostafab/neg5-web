@@ -13,7 +13,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
-public class AccountController extends AbstractJsonController {
+public class AccountRoutes extends AbstractJsonRoutes {
 
     private final AccountApi accountManager;
     private final RequestHelper requestHelper;
@@ -21,7 +21,7 @@ public class AccountController extends AbstractJsonController {
     private final LoginAuthenticator loginAuthenticator;
 
     @Inject
-    public AccountController(
+    public AccountRoutes(
             AccountApi accountManager,
             RequestHelper requestHelper,
             CurrentUserContext currentUserContext,

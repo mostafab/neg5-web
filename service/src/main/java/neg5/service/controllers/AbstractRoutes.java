@@ -10,7 +10,7 @@ import spark.ResponseTransformer;
 import spark.Route;
 import spark.Spark;
 
-public abstract class AbstractController implements BaseController {
+public abstract class AbstractRoutes implements BaseRoutes {
 
     @Inject private MonitoringContext monitoringContext;
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());

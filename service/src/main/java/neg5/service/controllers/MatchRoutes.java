@@ -10,7 +10,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
-public class MatchController extends AbstractJsonController {
+public class MatchRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentMatchApi matchManager;
     @Inject private RequestHelper requestHelper;

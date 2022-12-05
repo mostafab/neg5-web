@@ -1,4 +1,4 @@
-package neg5.automation;
+package neg5.automation.utilities;
 
 public class User {
 

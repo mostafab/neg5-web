@@ -9,14 +9,14 @@ import neg5.service.util.RequestHelper;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 
-public class TournamentCollaboratorController extends AbstractJsonController {
+public class TournamentCollaboratorRoutes extends AbstractJsonRoutes {
 
     private final TournamentCollaboratorApi collaboratorManager;
     private final TournamentAccessManager accessManager;
     private final RequestHelper requestHelper;
 
     @Inject
-    public TournamentCollaboratorController(
+    public TournamentCollaboratorRoutes(
             TournamentCollaboratorApi collaboratorManager,
             TournamentAccessManager accessManager,
             RequestHelper requestHelper) {

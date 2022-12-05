@@ -5,18 +5,18 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import java.util.List;
-import neg5.service.controllers.AccountController;
-import neg5.service.controllers.BaseController;
-import neg5.service.controllers.LoginController;
-import neg5.service.controllers.MatchController;
-import neg5.service.controllers.PlayerController;
-import neg5.service.controllers.TeamController;
-import neg5.service.controllers.TournamentCollaboratorController;
-import neg5.service.controllers.TournamentController;
-import neg5.service.controllers.TournamentPhaseController;
-import neg5.service.controllers.TournamentPoolController;
-import neg5.service.controllers.TournamentStatsController;
-import neg5.service.controllers.TournamentTossupValueController;
+import neg5.service.controllers.AccountRoutes;
+import neg5.service.controllers.BaseRoutes;
+import neg5.service.controllers.LoginRoutes;
+import neg5.service.controllers.MatchRoutes;
+import neg5.service.controllers.PlayerRoutes;
+import neg5.service.controllers.TeamRoutes;
+import neg5.service.controllers.TournamentCollaboratorRoutes;
+import neg5.service.controllers.TournamentPhaseRoutes;
+import neg5.service.controllers.TournamentPoolRoutes;
+import neg5.service.controllers.TournamentRoutes;
+import neg5.service.controllers.TournamentStatsRoutes;
+import neg5.service.controllers.TournamentTossupValueRoutes;
 import neg5.service.exceptionHandlers.ExceptionHandler;
 import neg5.service.exceptionHandlers.GeneralExceptionHandler;
 import neg5.service.exceptionHandlers.NoResultHandler;
@@ -30,18 +30,18 @@ public class SparkResourcesModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public List<BaseController> provideControllers(
-            AccountController accountController,
-            LoginController loginController,
-            MatchController matchController,
-            PlayerController playerController,
-            TeamController teamController,
-            TournamentCollaboratorController tournamentCollaboratorController,
-            TournamentController tournamentController,
-            TournamentPhaseController phaseController,
-            TournamentPoolController poolController,
-            TournamentStatsController statsController,
-            TournamentTossupValueController tournamentTossupValueController) {
+    public List<BaseRoutes> provideRoutes(
+            AccountRoutes accountController,
+            LoginRoutes loginController,
+            MatchRoutes matchController,
+            PlayerRoutes playerController,
+            TeamRoutes teamController,
+            TournamentCollaboratorRoutes tournamentCollaboratorController,
+            TournamentRoutes tournamentController,
+            TournamentPhaseRoutes phaseController,
+            TournamentPoolRoutes poolController,
+            TournamentStatsRoutes statsController,
+            TournamentTossupValueRoutes tournamentTossupValueController) {
         return ImmutableList.of(
                 accountController,
                 loginController,

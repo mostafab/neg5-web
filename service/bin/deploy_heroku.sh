@@ -4,7 +4,7 @@ set -e
 
 cd $(dirname "$0")
 cd ../..
-mvn clean install
+mvn clean install -DskipITs
 # Get confirmation of deploy
 read -p "Proceed with deploy to Heroku? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
 cd service/

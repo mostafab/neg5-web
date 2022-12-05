@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import neg5.stats.api.TournamentStatsApi;
 import neg5.stats.impl.StatsCacheManager;
 
-public class TournamentStatsController extends AbstractJsonController {
+public class TournamentStatsRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentStatsApi tournamentStatsApi;
 

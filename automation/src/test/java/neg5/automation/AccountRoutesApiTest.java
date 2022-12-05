@@ -1,8 +1,8 @@
 package neg5.automation;
 
 import static io.restassured.RestAssured.given;
-import static neg5.automation.ApiParsingUtilities.doRequestAndParse;
-import static neg5.automation.ApiParsingUtilities.toJsonString;
+import static neg5.automation.utilities.ApiParsingUtilities.doRequestAndParse;
+import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
@@ -11,7 +11,7 @@ import neg5.domain.api.AccountDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccountApiTest extends BaseApiTest {
+public class AccountRoutesApiTest extends BaseRoutesApiTest {
 
     private AccountCreationDTO account;
     private AccountDTO result;
