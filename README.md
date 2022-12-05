@@ -31,9 +31,9 @@ the service.
 
 ### Apply Database Migrations
 You can apply new database migrations after initial creation of your database by
-running `mvn compile && mvn flyway:migrate` in the `neg5.db` folder. You can also choose to completely
+running `./neg5.db/bin/apply_migrations.sh`. You can also choose to completely
 wipe away and rebuild your local database using the `./neg5.db/bin/wipe_local_db.sh` and
-`./neg5.db/bin/wipe_local_db.sh` scripts, respectively. 
+`./neg5.db/bin/bootstrap_local_db.sh` scripts, respectively. 
 
 ### Get Familiar with the Tech
 
@@ -49,4 +49,4 @@ workflow.
 ### Deploying
 
 To build the `neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar`
-and deploy it to Heroku, run `./service/bin/deploy_heroku`
+and deploy it to Heroku, run `./service/bin/deploy_heroku.sh`
