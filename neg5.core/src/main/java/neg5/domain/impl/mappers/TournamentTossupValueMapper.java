@@ -13,6 +13,12 @@ public class TournamentTossupValueMapper
     }
 
     @Override
+    protected void enrichDTO(
+            TournamentTossupValueDTO dto, TournamentTossupValue tournamentTossupValue) {
+        dto.setValue(tournamentTossupValue.getId().getValue());
+    }
+
+    @Override
     public TournamentTossupValue mergeToEntity(TournamentTossupValueDTO tournamentTossupValueDTO) {
         TournamentTossupValue entity = super.mergeToEntity(tournamentTossupValueDTO);
         entity.getId().setValue(tournamentTossupValueDTO.getValue());

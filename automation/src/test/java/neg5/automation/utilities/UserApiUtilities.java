@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.given;
 import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import neg5.domain.api.AccountCreationDTO;
@@ -26,6 +27,6 @@ public class UserApiUtilities {
     }
 
     public static RequestSpecification givenAsUser(User user) {
-        return given().cookie("nfToken", user.getNfToken());
+        return given().contentType(ContentType.JSON).cookie("nfToken", user.getNfToken());
     }
 }
