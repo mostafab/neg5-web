@@ -35,4 +35,4 @@ jobs:
     - name: Verify Service is Running
       run: curl http://localhost:$PORT
     - name: Run API Tests
-      run: mvn failsafe:integration-test failsafe:verify
+      run: mvn failsafe:integration-test
