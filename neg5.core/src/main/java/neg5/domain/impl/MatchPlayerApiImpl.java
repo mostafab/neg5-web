@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.util.HashSet;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import neg5.domain.api.MatchPlayerAnswerApi;
 import neg5.domain.api.MatchPlayerApi;
 import neg5.domain.api.MatchPlayerDTO;
@@ -32,7 +33,7 @@ public class MatchPlayerApiImpl
 
     @Override
     @Transactional
-    public MatchPlayerDTO create(MatchPlayerDTO matchPlayerDTO) {
+    public MatchPlayerDTO create(@Nonnull MatchPlayerDTO matchPlayerDTO) {
         MatchPlayerDTO matchPlayer = super.create(matchPlayerDTO);
         matchPlayer.setAnswers(
                 matchPlayerDTO.getAnswers() == null

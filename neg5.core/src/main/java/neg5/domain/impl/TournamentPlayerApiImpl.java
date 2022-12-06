@@ -61,7 +61,7 @@ public class TournamentPlayerApiImpl
     }
 
     @Override
-    public TournamentPlayerDTO update(TournamentPlayerDTO tournamentPlayerDTO) {
+    public TournamentPlayerDTO update(@Nonnull TournamentPlayerDTO tournamentPlayerDTO) {
         TournamentPlayerDTO original = get(tournamentPlayerDTO.getId());
         tournamentPlayerDTO.setTournamentId(original.getTournamentId());
         tournamentPlayerDTO.setTeamId(original.getTeamId());
@@ -71,7 +71,7 @@ public class TournamentPlayerApiImpl
 
     @Override
     @Transactional
-    public void delete(String id) {
+    public void delete(@Nonnull String id) {
         TournamentPlayerDTO playerDTO = get(id);
         List<TournamentMatchDTO> playerMatches =
                 groupMatchesByPlayers(playerDTO.getTournamentId(), null)

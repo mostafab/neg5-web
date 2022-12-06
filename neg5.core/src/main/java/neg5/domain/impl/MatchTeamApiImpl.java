@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import neg5.domain.api.MatchPlayerApi;
 import neg5.domain.api.MatchTeamApi;
 import neg5.domain.api.MatchTeamDTO;
@@ -31,7 +32,7 @@ public class MatchTeamApiImpl extends AbstractApiLayerImpl<MatchTeam, MatchTeamD
 
     @Override
     @Transactional
-    public MatchTeamDTO create(MatchTeamDTO matchTeamDTO) {
+    public MatchTeamDTO create(@Nonnull MatchTeamDTO matchTeamDTO) {
         MatchTeamDTO createdMatchTeam = super.create(matchTeamDTO);
         createdMatchTeam.setPlayers(
                 matchTeamDTO.getPlayers() == null

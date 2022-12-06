@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPhaseDTO;
@@ -31,7 +32,7 @@ public class TournamentPhaseApiImpl
 
     @Override
     @Transactional
-    public TournamentPhaseDTO create(TournamentPhaseDTO tournamentPhaseDTO) {
+    public TournamentPhaseDTO create(@Nonnull TournamentPhaseDTO tournamentPhaseDTO) {
         return super.create(tournamentPhaseDTO);
     }
 
@@ -45,7 +46,7 @@ public class TournamentPhaseApiImpl
 
     @Override
     @Transactional
-    public TournamentPhaseDTO update(TournamentPhaseDTO tournamentPhaseDTO) {
+    public TournamentPhaseDTO update(@Nonnull TournamentPhaseDTO tournamentPhaseDTO) {
         TournamentPhaseDTO original = get(tournamentPhaseDTO.getId());
         tournamentPhaseDTO.setTournamentId(original.getTournamentId());
         return super.update(tournamentPhaseDTO);
