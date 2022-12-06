@@ -1,13 +1,17 @@
 package neg5.automation;
 
 import static io.restassured.RestAssured.given;
+import static neg5.automation.utilities.ApiParsingUtilities.doRequestAndParse;
 import static neg5.automation.utilities.ApiParsingUtilities.parseBody;
+import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
 import static neg5.automation.utilities.DataUtilities.faker;
 import static neg5.automation.utilities.TournamentApiUtilities.createMatch;
 import static neg5.automation.utilities.TournamentApiUtilities.createStubTournament;
 import static neg5.automation.utilities.TournamentApiUtilities.createTeam;
 import static neg5.automation.utilities.UserApiUtilities.createUser;
+import static neg5.automation.utilities.UserApiUtilities.givenAsUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -118,6 +122,23 @@ public class MatchRoutesApiTest extends BaseRoutesApiTest {
 
         assertEquals(1, matches.size());
         assertEquals(created.getId(), matches.get(0).getId());
+    }
+
+    @Test
+    public void testUpdateMatch() {
+        TournamentMatchDTO created = createMatch(user, match);
+        created.setRound(2L);
+
+        TournamentMatchDTO updated =
+                doRequestAndParse(
+                        TournamentMatchDTO.class,
+                        () -> givenAsUser(user)
+                                .body(toJsonString(created))
+                                .put("neg5-api/matches/" + created.getId()));
+        // "Updating" a match actually creates a new one
+        assertNotEquals(created.getId(), updated.getId());
+        assertNotNull(updated.getId());
+        assertEquals(created.getTournamentId(), updated.getTournamentId());
     }
 
     private MatchTeamDTO createMatchTeam(int score, int tossupsGotten) {

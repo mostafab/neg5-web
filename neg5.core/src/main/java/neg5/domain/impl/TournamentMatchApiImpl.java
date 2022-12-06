@@ -115,6 +115,7 @@ public class TournamentMatchApiImpl
         tournamentMatchDTO.setTournamentId(original.getTournamentId());
         delete(tournamentMatchDTO.getId());
         getDao().flush();
+        tournamentMatchDTO.setId(null);
         return create(tournamentMatchDTO);
     }
 
