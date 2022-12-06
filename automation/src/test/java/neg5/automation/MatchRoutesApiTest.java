@@ -132,9 +132,10 @@ public class MatchRoutesApiTest extends BaseRoutesApiTest {
         TournamentMatchDTO updated =
                 doRequestAndParse(
                         TournamentMatchDTO.class,
-                        () -> givenAsUser(user)
-                                .body(toJsonString(created))
-                                .put("neg5-api/matches/" + created.getId()));
+                        () ->
+                                givenAsUser(user)
+                                        .body(toJsonString(created))
+                                        .put("neg5-api/matches/" + created.getId()));
         // "Updating" a match actually creates a new one
         assertNotEquals(created.getId(), updated.getId());
         assertNotNull(updated.getId());
