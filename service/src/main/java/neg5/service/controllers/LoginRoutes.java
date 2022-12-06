@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import neg5.service.auth.LoginAuthenticator;
 import org.eclipse.jetty.http.HttpStatus;
 
-public class LoginController extends AbstractController {
+public class LoginRoutes extends AbstractRoutes {
 
     @Inject private LoginAuthenticator loginAuthenticator;
 

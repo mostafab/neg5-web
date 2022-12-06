@@ -5,7 +5,7 @@ import neg5.service.transformers.GsonResponseTransformer;
 import spark.Route;
 
 /** Controller that handles converting responses to JSON payloads */
-public abstract class AbstractJsonController extends AbstractController {
+public abstract class AbstractJsonRoutes extends AbstractRoutes {
 
     @Inject private GsonResponseTransformer gsonResponseTransformer;
 

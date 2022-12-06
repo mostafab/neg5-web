@@ -21,6 +21,7 @@
                     <includes>
                         <include>**/*ApiTest.java</include>
                     </includes>
+                    <useFile>false</useFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -52,20 +53,34 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.neg5</groupId>
             <artifactId>gson</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.aventrix.jnanoid</groupId>
             <artifactId>jnanoid</artifactId>
             <version>2.0.0</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.neg5</groupId>
             <artifactId>neg5.interface</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -87,6 +87,7 @@ public class TournamentTeamApiImpl
     }
 
     @Override
+    @Transactional
     public TournamentTeamDTO update(TournamentTeamDTO tournamentTeamDTO) {
         TournamentTeamDTO original = get(tournamentTeamDTO.getId());
         tournamentTeamDTO.setTournamentId(original.getTournamentId());

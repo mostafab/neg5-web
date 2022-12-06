@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import neg5.dataAccess.PersistenceInitializer;
 import neg5.db.migrations.api.DatabaseMigrator;
-import neg5.service.controllers.ControllerRegistry;
+import neg5.service.controllers.RouteRegistry;
 import neg5.service.exceptionHandlers.ExceptionHandlerRegistry;
 import neg5.service.filters.FilterRegistry;
 import spark.Spark;
@@ -12,7 +12,7 @@ import spark.servlet.SparkApplication;
 
 public class Neg5App implements SparkApplication {
 
-    @Inject private ControllerRegistry controllerRegistry;
+    @Inject private RouteRegistry routeRegistry;
     @Inject private FilterRegistry filterRegistry;
     @Inject private ExceptionHandlerRegistry exceptionHandlerRegistry;
 
@@ -38,7 +38,7 @@ public class Neg5App implements SparkApplication {
     }
 
     private void initRoutes() {
-        controllerRegistry.initControllers();
+        routeRegistry.initRoutes();
     }
 
     private void initFilters() {

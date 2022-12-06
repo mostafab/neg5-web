@@ -21,7 +21,7 @@ import neg5.exports.qbj.api.QbjApi;
 import neg5.service.util.RequestHelper;
 import neg5.userData.CurrentUserContext;
 
-public class TournamentController extends AbstractJsonController {
+public class TournamentRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentApi tournamentManager;
     @Inject private TournamentTeamApi tournamentTeamManager;

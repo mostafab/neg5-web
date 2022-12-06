@@ -7,14 +7,14 @@ import neg5.domain.api.TournamentPhaseDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.service.util.RequestHelper;
 
-public class TournamentPhaseController extends AbstractJsonController {
+public class TournamentPhaseRoutes extends AbstractJsonRoutes {
 
     private final TournamentPhaseApi phaseManager;
     private final RequestHelper requestHelper;
     private final TournamentAccessManager accessManager;
 
     @Inject
-    public TournamentPhaseController(
+    public TournamentPhaseRoutes(
             TournamentPhaseApi phaseManager,
             RequestHelper requestHelper,
             TournamentAccessManager accessManager) {

@@ -1,15 +1,16 @@
-package neg5.automation;
+package neg5.automation.utilities;
 
 import static io.restassured.RestAssured.given;
-import static neg5.automation.ApiParsingUtilities.toJsonString;
+import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import neg5.domain.api.AccountCreationDTO;
 
 public class UserApiUtilities {
 
-    public static User createUserAndLogin() {
+    public static User createUser() {
         AccountCreationDTO account = new AccountCreationDTO();
         String randomString = NanoIdUtils.randomNanoId();
         account.setEmail(String.format("first.last.%s@domain.com", randomString));
@@ -22,5 +23,9 @@ public class UserApiUtilities {
         response.then().statusCode(200).cookie("nfToken");
 
         return new User(response.cookie("nfToken"), account.getUsername());
+    }
+
+    public static RequestSpecification givenAsUser(User user) {
+        return given().cookie("nfToken", user.getNfToken());
     }
 }
