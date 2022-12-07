@@ -11,6 +11,7 @@ public class TeamInMatch {
     private Integer bouncebackPoints;
 
     private Integer overtimeTossups;
+    private Boolean forfeit;
 
     private Set<TeamMatchPlayer> players;
 
@@ -52,6 +53,14 @@ public class TeamInMatch {
 
     public void setOvertimeTossups(Integer overtimeTossups) {
         this.overtimeTossups = overtimeTossups;
+    }
+
+    public Boolean getForfeit() {
+        return forfeit;
+    }
+
+    public void setForfeit(Boolean forfeit) {
+        this.forfeit = forfeit;
     }
 
     public Set<TeamMatchPlayer> getPlayers() {
