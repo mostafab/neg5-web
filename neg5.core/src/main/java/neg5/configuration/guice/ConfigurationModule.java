@@ -2,6 +2,7 @@ package neg5.configuration.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,14 +25,17 @@ public class ConfigurationModule extends AbstractModule {
     private Properties getComposedProperties(Environment environment) {
         try {
             final Properties props = new Properties();
-            // Load generic configs first
-            props.load(getClass().getClassLoader().getResourceAsStream("config.properties"));
-            // Override with environment specific configs
-            props.load(
-                    Objects.requireNonNull(
+            try (InputStream globalConfig =
+                            getClass().getClassLoader().getResourceAsStream("config.properties");
+                    InputStream environmentConfig =
                             getClass()
                                     .getClassLoader()
-                                    .getResourceAsStream(getEnvConfigPath(environment))));
+                                    .getResourceAsStream(getEnvConfigPath(environment))) {
+                // Load generic configs first
+                props.load(globalConfig);
+                // Override with environment specific configs
+                props.load(environmentConfig);
+            }
             // Substitute environment vars
             props.putAll(substituteEnvironmentVariables(props));
             return props;
