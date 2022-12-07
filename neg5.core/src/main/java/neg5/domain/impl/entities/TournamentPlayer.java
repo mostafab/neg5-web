@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import neg5.domain.api.enums.PlayerYear;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,6 +26,7 @@ public class TournamentPlayer extends AbstractDataObject<TournamentPlayer>
 
     private Instant addedAt;
     private String addedBy;
+    private PlayerYear year;
 
     @Id
     @Override
@@ -91,5 +93,14 @@ public class TournamentPlayer extends AbstractDataObject<TournamentPlayer>
     @Override
     public void setAddedBy(String addedBy) {
         this.addedBy = addedBy;
+    }
+
+    @Column(name = "year")
+    public PlayerYear getYear() {
+        return year;
+    }
+
+    public void setYear(PlayerYear year) {
+        this.year = year;
     }
 }

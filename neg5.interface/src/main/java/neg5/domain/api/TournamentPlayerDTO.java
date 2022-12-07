@@ -1,11 +1,14 @@
 package neg5.domain.api;
 
+import neg5.domain.api.enums.PlayerYear;
+
 public class TournamentPlayerDTO {
 
     private String id;
     private String name;
     private String teamId;
     private String tournamentId;
+    private PlayerYear year;
 
     public String getId() {
         return id;
@@ -37,5 +40,13 @@ public class TournamentPlayerDTO {
 
     public void setTournamentId(String tournamentId) {
         this.tournamentId = tournamentId;
+    }
+
+    public PlayerYear getYear() {
+        return year;
+    }
+
+    public void setYear(PlayerYear year) {
+        this.year = year;
     }
 }
