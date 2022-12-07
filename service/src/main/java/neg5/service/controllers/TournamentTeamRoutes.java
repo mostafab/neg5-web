@@ -11,7 +11,7 @@ import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
-public class TeamRoutes extends AbstractJsonRoutes {
+public class TournamentTeamRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentTeamApi teamManager;
     @Inject private TournamentAccessManager tournamentAccessManager;
