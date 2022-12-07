@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.api.TournamentTossupValueDTO;
@@ -40,7 +41,8 @@ public class TournamentTossupValueApiImpl
 
     @Override
     @Transactional
-    public TournamentTossupValueDTO create(TournamentTossupValueDTO tournamentTossupValueDTO) {
+    public TournamentTossupValueDTO create(
+            @Nonnull TournamentTossupValueDTO tournamentTossupValueDTO) {
         return super.create(tournamentTossupValueDTO);
     }
 

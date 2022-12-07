@@ -57,7 +57,7 @@ public class TournamentTeamApiImpl
 
     @Override
     @Transactional
-    public TournamentTeamDTO create(TournamentTeamDTO tournamentTeamDTO) {
+    public TournamentTeamDTO create(@Nonnull TournamentTeamDTO tournamentTeamDTO) {
         TournamentTeamDTO created = super.create(tournamentTeamDTO);
         if (tournamentTeamDTO.getPlayers() != null) {
             created.setPlayers(
@@ -88,7 +88,7 @@ public class TournamentTeamApiImpl
 
     @Override
     @Transactional
-    public TournamentTeamDTO update(TournamentTeamDTO tournamentTeamDTO) {
+    public TournamentTeamDTO update(@Nonnull TournamentTeamDTO tournamentTeamDTO) {
         TournamentTeamDTO original = get(tournamentTeamDTO.getId());
         tournamentTeamDTO.setTournamentId(original.getTournamentId());
         return super.update(tournamentTeamDTO);
@@ -109,7 +109,7 @@ public class TournamentTeamApiImpl
 
     @Override
     @Transactional
-    public void delete(String id) {
+    public void delete(@Nonnull String id) {
         TournamentTeamDTO team = get(id);
         List<TournamentMatchDTO> teamMatches =
                 tournamentMatchApi

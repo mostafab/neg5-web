@@ -85,6 +85,7 @@ public class TournamentCollaboratorApiImpl
         return new HashSet<>(getDao().getTournamentIdsThatUserCollaboratesOn(userId));
     }
 
+    @Transactional
     public Optional<TournamentCollaboratorDTO> getByTournamentAndUsername(
             String tournamentId, String username) {
         try {

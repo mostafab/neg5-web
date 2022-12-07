@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchTeamApi;
 import neg5.domain.api.MatchTeamDTO;
@@ -89,7 +90,7 @@ public class TournamentMatchApiImpl
 
     @Override
     @Transactional
-    public TournamentMatchDTO create(TournamentMatchDTO match) {
+    public TournamentMatchDTO create(@Nonnull TournamentMatchDTO match) {
         Set<String> phases = match.getPhases();
         TournamentMatchDTO createdMatch = super.create(match);
         createdMatch.setTeams(
@@ -109,7 +110,7 @@ public class TournamentMatchApiImpl
 
     @Override
     @Transactional
-    public TournamentMatchDTO update(TournamentMatchDTO tournamentMatchDTO) {
+    public TournamentMatchDTO update(@Nonnull TournamentMatchDTO tournamentMatchDTO) {
         // TODO This creates a new match with a new ID. Come back and preserve the ID
         TournamentMatchDTO original = get(tournamentMatchDTO.getId());
         tournamentMatchDTO.setTournamentId(original.getTournamentId());
@@ -120,7 +121,7 @@ public class TournamentMatchApiImpl
     }
 
     @Override
-    public List<TournamentMatchDTO> findAllByTournamentId(String tournamentId) {
+    public List<TournamentMatchDTO> findAllByTournamentId(@Nonnull String tournamentId) {
         Map<Integer, TournamentTossupValueDTO> tossupValues = getTossupValueMap(tournamentId);
         return findByRawQuery(tournamentId).stream()
                 .map(match -> matchToMatchDTOMapper.toDTO(match, tossupValues))

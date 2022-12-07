@@ -5,9 +5,11 @@ import com.google.inject.persist.Transactional;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import javax.persistence.NoResultException;
 import neg5.domain.api.DomainObjectApiLayer;
 import neg5.domain.api.FieldValidationErrors;
@@ -35,7 +37,8 @@ public abstract class AbstractApiLayerImpl<
 
     @Transactional
     @Override
-    public ApiObjectType get(IdType id) {
+    public ApiObjectType get(@Nonnull IdType id) {
+        Objects.requireNonNull(id, "get called with a null id");
         EntityType entity = getDao().get(id);
         if (entity == null) {
             String clazzName = getDao().getPersistentClass().getSimpleName();
@@ -44,13 +47,13 @@ public abstract class AbstractApiLayerImpl<
         return getMapper().toDTO(entity.copyOf());
     }
 
-    public List<ApiObjectType> get(Set<IdType> ids) {
+    public List<ApiObjectType> get(@Nonnull Set<IdType> ids) {
         return ids.stream().map(id -> get(id)).collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public ApiObjectType create(ApiObjectType dto) {
+    public ApiObjectType create(@Nonnull ApiObjectType dto) {
         validateInternal(dto);
         EntityType entity = getMapper().mergeToEntity(dto);
 
@@ -72,27 +75,31 @@ public abstract class AbstractApiLayerImpl<
 
     @Transactional
     @Override
-    public ApiObjectType update(ApiObjectType dto) {
+    public ApiObjectType update(@Nonnull ApiObjectType dto) {
+        IdType id = getIdFromDTO(dto);
+        if (id == null) {
+            throw new IllegalArgumentException("update called with a valid id");
+        }
         validateInternal(dto);
         updateInternal(dto);
-        return get(getIdFromDTO(dto));
+        return get(id);
     }
 
     @Transactional
     @Override
-    public void delete(IdType id) {
+    public void delete(@Nonnull IdType id) {
         getDao().delete(id);
     }
 
     @Transactional
     @Override
-    public void delete(ApiObjectType collaborator) {
-        delete(getIdFromDTO(collaborator));
+    public void delete(@Nonnull ApiObjectType apiObject) {
+        delete(getIdFromDTO(apiObject));
     }
 
     @Transactional
     @Override
-    public List<ApiObjectType> findAllByTournamentId(String tournamentId) {
+    public List<ApiObjectType> findAllByTournamentId(@Nonnull String tournamentId) {
         return getDao().findAllByTournamentId(tournamentId).stream()
                 .map(entity -> getMapper().toDTO(entity))
                 .collect(Collectors.toList());

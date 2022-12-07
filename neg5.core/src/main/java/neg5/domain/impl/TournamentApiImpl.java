@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentDTO;
@@ -64,7 +65,7 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
 
     @Transactional
     @Override
-    public TournamentDTO create(TournamentDTO tournament) {
+    public TournamentDTO create(@Nonnull TournamentDTO tournament) {
         UserData currentUser = currentUserContext.getUserDataOrThrow();
         tournament.setDirectorId(currentUser.getUsername());
 
