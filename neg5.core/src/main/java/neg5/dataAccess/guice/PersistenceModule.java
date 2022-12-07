@@ -12,12 +12,12 @@ import java.util.Map;
 import javax.sql.DataSource;
 import org.hibernate.cfg.AvailableSettings;
 
-public class DataAccessModule extends AbstractModule {
+public class PersistenceModule extends AbstractModule {
 
     private static final String PERSISTENCE_UNIT_NAME = "org.neg5.data";
     private final Map<String, Object> properties;
 
-    public DataAccessModule() {
+    public PersistenceModule() {
         properties = new HashMap<>();
     }
 

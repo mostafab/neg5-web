@@ -1,5 +1,9 @@
 package neg5.domain.impl.mappers.data;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.HashSet;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.impl.entities.transformers.data.TeamInMatch;
@@ -22,12 +26,13 @@ public class TeamInMatchMapperTest {
 
         MatchTeamDTO dto = teamInMatchMapper.toDTO(teamInMatch);
 
-        Assert.assertEquals(teamInMatch.getTeamId(), dto.getTeamId());
-        Assert.assertEquals(teamInMatch.getMatchId(), dto.getMatchId());
-        Assert.assertEquals(teamInMatch.getScore(), dto.getScore());
-        Assert.assertEquals(teamInMatch.getBouncebackPoints(), dto.getBouncebackPoints());
-        Assert.assertNotNull(dto.getPlayers());
-        Assert.assertTrue(dto.getPlayers().isEmpty());
+        assertEquals(teamInMatch.getTeamId(), dto.getTeamId());
+        assertEquals(teamInMatch.getMatchId(), dto.getMatchId());
+        assertEquals(teamInMatch.getScore(), dto.getScore());
+        assertEquals(teamInMatch.getBouncebackPoints(), dto.getBouncebackPoints());
+        assertEquals(teamInMatch.getForfeit(), dto.getForfeit());
+        assertNotNull(dto.getPlayers());
+        assertTrue(dto.getPlayers().isEmpty());
     }
 
     @Test
@@ -49,6 +54,7 @@ public class TeamInMatchMapperTest {
         teamInMatch.setOvertimeTossups(0);
         teamInMatch.setTeamId("TEAM_ID");
         teamInMatch.setPlayers(new HashSet<>());
+        teamInMatch.setForfeit(true);
 
         return teamInMatch;
     }

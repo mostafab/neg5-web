@@ -1,8 +1,9 @@
 package neg5.domain.impl.mappers.data;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.impl.entities.transformers.data.TeamMatchPlayerAnswer;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,10 @@ public class TeamMatchPlayerAnswerMapperTest {
 
         MatchPlayerAnswerDTO dto = teamMatchPlayerAnswerMapper.toDTO(answer);
 
-        Assert.assertEquals(answer.getMatchId(), dto.getMatchId());
-        Assert.assertEquals(answer.getNumber(), dto.getNumberGotten());
-        Assert.assertEquals(answer.getPlayerId(), dto.getPlayerId());
-        Assert.assertEquals(answer.getValue(), dto.getTossupValue());
+        assertEquals(answer.getMatchId(), dto.getMatchId());
+        assertEquals(answer.getNumber(), dto.getNumberGotten());
+        assertEquals(answer.getPlayerId(), dto.getPlayerId());
+        assertEquals(answer.getValue(), dto.getTossupValue());
     }
 
     private TeamMatchPlayerAnswer buildTeamMatchPlayerAnswer() {

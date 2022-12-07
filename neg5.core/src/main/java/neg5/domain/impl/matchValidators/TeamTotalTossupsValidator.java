@@ -14,7 +14,7 @@ public class TeamTotalTossupsValidator implements TournamentMatchValidator {
         FieldValidationErrors errors = new FieldValidationErrors();
         TournamentMatchDTO subject = validationContext.getSubject();
         Integer tossupsHeard = subject.getTossupsHeard();
-        if (tossupsHeard == null || subject.getTeams() == null) {
+        if (tossupsHeard == null || subject.getTeams() == null || validationContext.isForfeit()) {
             return errors;
         }
         int numberOfTossupsAnswered =

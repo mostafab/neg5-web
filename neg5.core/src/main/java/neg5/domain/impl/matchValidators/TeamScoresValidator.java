@@ -31,7 +31,8 @@ public class TeamScoresValidator implements TournamentMatchValidator {
         if (tournamentId == null
                 || subject.getTeams() == null
                 || validationContext.getTeamNamesById() == null
-                || validationContext.getRules() == null) {
+                || validationContext.getRules() == null
+                || validationContext.isForfeit()) {
             return errors;
         }
         TournamentRulesDTO rules = validationContext.getRules();
@@ -172,7 +173,7 @@ public class TeamScoresValidator implements TournamentMatchValidator {
                         && pointsPerBonus.compareTo(maxPointsPerBonus) <= 0,
                 "team.pointsPerBonus",
                 String.format(
-                        "%s has an invalid points-per-bonus value (%s). It should be between %s and %s.",
+                        "%s has an invalid points-per-bonus (%s). It should be between %s and %s.",
                         teamName, pointsPerBonus, 0, maxPointsPerBonus));
     }
 }

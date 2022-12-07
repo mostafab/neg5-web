@@ -2,6 +2,7 @@ package neg5.domain.impl.matchValidators;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import neg5.domain.api.TournamentMatchDTO;
@@ -16,6 +17,7 @@ public class MatchValidationContext {
     private final Map<String, TournamentTeamDTO> teamNamesById;
     private final Map<String, TournamentPlayerDTO> playerNamesById;
     private final TournamentRulesDTO rules;
+    private final boolean isForfeit;
 
     public MatchValidationContext(
             @Nonnull List<TournamentMatchDTO> allMatches,
@@ -28,6 +30,16 @@ public class MatchValidationContext {
         this.rules = rules;
         this.teamNamesById = teamNamesById;
         this.playerNamesById = playerNamesById;
+        this.isForfeit =
+                Optional.ofNullable(subject.getTeams())
+                        .map(
+                                teams ->
+                                        teams.stream()
+                                                .anyMatch(
+                                                        team ->
+                                                                Boolean.TRUE.equals(
+                                                                        team.getForfeit())))
+                        .orElse(false);
     }
 
     @Nonnull
@@ -53,5 +65,9 @@ public class MatchValidationContext {
     @Nullable
     public Map<String, TournamentPlayerDTO> getPlayerNamesById() {
         return playerNamesById;
+    }
+
+    public boolean isForfeit() {
+        return isForfeit;
     }
 }
