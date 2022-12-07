@@ -31,7 +31,8 @@ public class TeamScoresValidator implements TournamentMatchValidator {
         if (tournamentId == null
                 || subject.getTeams() == null
                 || validationContext.getTeamNamesById() == null
-                || validationContext.getRules() == null) {
+                || validationContext.getRules() == null
+                || validationContext.isForfeit()) {
             return errors;
         }
         TournamentRulesDTO rules = validationContext.getRules();

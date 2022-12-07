@@ -27,7 +27,8 @@ public class BasicMatchValidator implements TournamentMatchValidator {
                 "Round must be greater than 0");
         requireCondition(
                 errors,
-                subject.getTossupsHeard() == null || subject.getTossupsHeard() >= 0,
+                validationContext.isForfeit()
+                        || (subject.getTossupsHeard() == null || subject.getTossupsHeard() >= 0),
                 "tossupsHeard",
                 "Tossups Heard must be empty or non-negative");
         return errors;

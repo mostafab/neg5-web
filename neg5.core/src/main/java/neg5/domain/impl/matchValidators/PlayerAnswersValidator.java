@@ -25,7 +25,9 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
     public FieldValidationErrors getErrors(@Nonnull MatchValidationContext validationContext) {
         FieldValidationErrors errors = new FieldValidationErrors();
         Map<String, TournamentPlayerDTO> playersById = validationContext.getPlayerNamesById();
-        if (playersById == null || validationContext.getRules() == null) {
+        if (playersById == null
+                || validationContext.getRules() == null
+                || validationContext.isForfeit()) {
             return errors;
         }
 

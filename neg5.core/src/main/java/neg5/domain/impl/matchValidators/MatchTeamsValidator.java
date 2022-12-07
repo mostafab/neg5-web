@@ -44,7 +44,10 @@ public class MatchTeamsValidator implements TournamentMatchValidator {
                         .collect(Collectors.toSet());
         requireCondition(
                 errors, teamIds.size() == 2, "teams", "A team cannot play against itself.");
-
+        // Skip rest of the validation if match is a forfeit
+        if (validationContext.isForfeit()) {
+            return errors;
+        }
         subject.getTeams()
                 .forEach(
                         team -> {
