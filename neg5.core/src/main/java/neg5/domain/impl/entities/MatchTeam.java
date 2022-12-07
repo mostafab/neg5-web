@@ -19,6 +19,7 @@ public class MatchTeam extends AbstractDataObject<MatchTeam>
     private Integer score;
     private Integer bouncebackPoints;
     private Integer overtimeTossupsGotten;
+    private Boolean forfeit;
 
     /*
     Since this table has a composite primary key, we need to use an {@link EmbeddedId} to represent it
@@ -59,6 +60,15 @@ public class MatchTeam extends AbstractDataObject<MatchTeam>
 
     public void setOvertimeTossupsGotten(Integer overtimeTossupsGotten) {
         this.overtimeTossupsGotten = overtimeTossupsGotten;
+    }
+
+    @Column(name = "forfeit")
+    public Boolean getForfeit() {
+        return forfeit;
+    }
+
+    public void setForfeit(Boolean forfeit) {
+        this.forfeit = forfeit;
     }
 
     @Transient
