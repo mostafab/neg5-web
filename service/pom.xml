@@ -71,8 +71,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -110,7 +110,7 @@
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>3.0.6</version>
                 <configuration>
-                    <jdkVersion>8</jdkVersion>
+                    <jdkVersion>11</jdkVersion>
                     <appName>spark-neg5-api</appName>
                     <processTypes>
                         <web>java -Xmx256m -javaagent:./target/newrelic/newrelic.jar -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
