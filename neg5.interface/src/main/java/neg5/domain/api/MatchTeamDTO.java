@@ -11,6 +11,7 @@ public class MatchTeamDTO {
     private Integer score;
     private Integer bouncebackPoints;
     private Integer overtimeTossupsGotten;
+    private Boolean forfeit;
 
     private List<MatchPlayerDTO> players;
 
@@ -60,6 +61,14 @@ public class MatchTeamDTO {
 
     public void setOvertimeTossupsGotten(Integer overtimeTossupsGotten) {
         this.overtimeTossupsGotten = overtimeTossupsGotten;
+    }
+
+    public Boolean getForfeit() {
+        return forfeit;
+    }
+
+    public void setForfeit(Boolean forfeit) {
+        this.forfeit = forfeit;
     }
 
     public List<MatchPlayerDTO> getPlayers() {
