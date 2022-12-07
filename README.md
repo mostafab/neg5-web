@@ -1,8 +1,8 @@
 ### Getting started
 1. Fork and clone the repository.
-2. Ensure you have the Java 8 JDK installed on your machine. If you don't, you can use
-the appropriate [Amazon Correto distribution.](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html)
-for your operating system and architecture.
+2. Ensure you have the Java 11 JDK installed on your machine. If you don't, you can use
+download the appropriate [Temurin distribution.](https://adoptium.net/temurin/releases/?version=11)
+for your operating system. Once installed, you'll need to update your $JAVA_HOME environment variable and update your IDE to compile and run with Java 11.
 3. Install [Maven](https://maven.apache.org/). You'll need it to build the code.
 4. Install [Docker](https://www.docker.com/). You'll need it to run your database.
 5. Setup your development database with `./neg5.db/bin/bootstrap_local_db.sh`.
@@ -14,7 +14,7 @@ flyway database migrations in `neg5.db/src/main/resources/migrations`.
 8. Start the Service! Read the "Running the Service" section for instructions on how to do so.
 
 ### Environment Variables For Local Development
-There are a handful of environment variables you need to set for the service to start correctly:
+There are a couple of environment variables you need to set for the service to start correctly:
 1. `NEG5_ENVIRONMENT`. This variable controls the configurations loaded into each environment Neg5 runs in and
 corresponds to `Environment.java`. Set this variable to `DEV`.
 2. `NEG5_JWT`. Secret used to generate tokens for user authentication. You can use
