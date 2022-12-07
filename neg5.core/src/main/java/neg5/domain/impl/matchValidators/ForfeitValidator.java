@@ -2,10 +2,9 @@ package neg5.domain.impl.matchValidators;
 
 import static neg5.validation.FieldValidation.requireCondition;
 
+import com.google.inject.Singleton;
 import java.util.Optional;
 import javax.annotation.Nonnull;
-
-import com.google.inject.Singleton;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
