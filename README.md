@@ -2,7 +2,7 @@
 1. Fork and clone the repository.
 2. Ensure you have the Java 8 JDK installed on your machine. If you don't, you can use
 download the appropriate [Temurin distribution.](https://adoptium.net/temurin/releases/?version=8)
-for your operating system. Once installed, you'll need to update your $JAVA_HOME environment variable and update your IDE to compile and run with Java 11.
+for your operating system. Once installed, you'll need to update your $JAVA_HOME environment variable and update your IDE to compile and run with Java 8.
 3. Install [Maven](https://maven.apache.org/). You'll need it to build the code.
 4. Install [Docker](https://www.docker.com/). You'll need it to run your database.
 5. Setup your development database with `./neg5.db/bin/bootstrap_local_db.sh`.
