@@ -1,6 +1,7 @@
 package neg5.domain.impl.mappers;
 
 import neg5.domain.api.TournamentPlayerDTO;
+import neg5.domain.api.enums.PlayerYear;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentPlayer;
 import neg5.domain.impl.entities.TournamentTeam;
@@ -28,6 +29,7 @@ public class TournamentPlayerMapperTest {
         Assert.assertNotNull(dto);
         Assert.assertEquals(entity.getId(), dto.getId());
         Assert.assertEquals(entity.getName(), dto.getName());
+        Assert.assertEquals(entity.getYear(), dto.getYear());
 
         Assert.assertNotNull(dto.getTeamId());
         Assert.assertEquals(entity.getTeam().getId(), dto.getTeamId());
@@ -45,6 +47,7 @@ public class TournamentPlayerMapperTest {
         Assert.assertNotNull(entity);
         Assert.assertEquals(dto.getId(), entity.getId());
         Assert.assertEquals(dto.getName(), entity.getName());
+        Assert.assertEquals(dto.getYear(), entity.getYear());
 
         Assert.assertNotNull(entity.getTournament());
         Assert.assertEquals(dto.getTournamentId(), entity.getTournament().getId());
@@ -67,6 +70,7 @@ public class TournamentPlayerMapperTest {
         tournament.setId(TOURNAMENT_ID);
 
         player.setTournament(tournament);
+        player.setYear(PlayerYear.COLLEGE_FRESHMAN);
 
         return player;
     }
@@ -77,6 +81,7 @@ public class TournamentPlayerMapperTest {
         dto.setTournamentId(TOURNAMENT_ID);
         dto.setTeamId(TEAM_ID);
         dto.setName("TEST_12345");
+        dto.setYear(PlayerYear.COLLEGE_JUNIOR);
 
         return dto;
     }
