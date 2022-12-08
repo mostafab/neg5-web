@@ -27,14 +27,14 @@ public class StatsCacheGuiceModule extends AbstractModule {
     @Singleton
     public Cache<String, BaseAggregateStatsDTO> provideCache(
             @Named("stats.cache.maxSize") int maxSize,
-            @Named("stats.cache.expireMinutes") int expireMinutes) {
+            @Named("stats.cache.expireSeconds") int expireSeconds) {
         LOGGER.info(
-                "Instantiating Guava cache with maxSize={} and expireMinutes={}",
+                "Instantiating Guava cache with maxSize={} and expireSeconds={}",
                 maxSize,
-                expireMinutes);
+                expireSeconds);
         return CacheBuilder.newBuilder()
                 .maximumSize(maxSize)
-                .expireAfterWrite(expireMinutes, TimeUnit.MINUTES)
+                .expireAfterWrite(expireSeconds, TimeUnit.SECONDS)
                 .removalListener(
                         removalNotification -> {
                             LOGGER.info(
