@@ -27,11 +27,11 @@ jobs:
     - name: Spotless Check
       run: mvn spotless:check
     - name: Create Postgres Database
-      run: ./neg5.db/bin/bootstrap_local_db.sh
+      run: ./db/bin/bootstrap_local_db.sh
     - name: Start Service
       run: |
-        cd service
-        java -Xmx256m -javaagent:./target/newrelic/newrelic.jar -jar ./target/neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
+        cd app
+        java -Xmx256m -javaagent:./target/newrelic/newrelic.jar -jar ./target/app-1.0-SNAPSHOT-jar-with-dependencies.jar & sleep 20
     - name: Verify Service is Running
       run: curl http://localhost:$PORT
     - name: Run API Tests

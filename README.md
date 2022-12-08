@@ -5,10 +5,10 @@ download the appropriate [Temurin distribution.](https://adoptium.net/temurin/re
 for your operating system. Once installed, you'll need to update your $JAVA_HOME environment variable and update your IDE to compile and run with Java 8.
 3. Install [Maven](https://maven.apache.org/). You'll need it to build the code.
 4. Install [Docker](https://www.docker.com/). You'll need it to run your database.
-5. Setup your development database with `./neg5.db/bin/bootstrap_local_db.sh`.
+5. Setup your development database with `./db/bin/bootstrap_local_db.sh`.
 This script will create a locally running Docker container with a Postgres database running on port 9999. The
 service is configured to connect to this database in the dev environment. It will also run all the required
-flyway database migrations in `neg5.db/src/main/resources/migrations`.
+flyway database migrations in `db/src/main/resources/migrations`.
 6. Set the required environment variables listed under the "Environment Variables For Local Development" section.
 7. Do a one-time install of all required libraries with `mvn clean install`.
 8. Start the Service! Read the "Running the Service" section for instructions on how to do so.
@@ -22,7 +22,7 @@ corresponds to `Environment.java`. Set this variable to `DEV`.
 
 ### Running the Service
 You have a couple of options on how to start the service depending on your workflow:
-1. Start the service with the provided script: `./service/bin/start_server.sh`. This
+1. Start the service with the provided script: `./app/bin/start_server.sh`. This
 script will start the service and open a debug port on port 1044. You can attach to the debug port
 with your IDE of choice.
 2. Run through your IDE of choice. For example, open the `Main.java` file in Intellij and
@@ -31,9 +31,9 @@ the service.
 
 ### Apply Database Migrations
 You can apply new database migrations after initial creation of your database by
-running `./neg5.db/bin/apply_migrations.sh`. You can also choose to completely
-wipe away and rebuild your local database using the `./neg5.db/bin/wipe_local_db.sh` and
-`./neg5.db/bin/bootstrap_local_db.sh` scripts, respectively. 
+running `./db/bin/apply_migrations.sh`. You can also choose to completely
+wipe away and rebuild your local database using the `./db/bin/wipe_local_db.sh` and
+`./db/bin/bootstrap_local_db.sh` scripts, respectively. 
 
 ### Get Familiar with the Tech
 
@@ -48,5 +48,4 @@ workflow.
 
 ### Deploying
 
-To build the `neg5.service-1.0-SNAPSHOT-jar-with-dependencies.jar`
-and deploy it to Heroku, run `./service/bin/deploy_heroku.sh`
+To build the application and deploy it to Heroku, run `./app/bin/deploy_heroku.sh`

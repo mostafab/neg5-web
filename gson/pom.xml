@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>org.neg5</groupId>
-            <artifactId>neg5.interface</artifactId>
+            <artifactId>interface</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

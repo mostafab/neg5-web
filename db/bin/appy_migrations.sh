@@ -7,5 +7,5 @@ set -e
 cd ../..
 mvn compile
 
-cd neg5.db/
+cd db/
 mvn flyway:migrate
