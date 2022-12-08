@@ -48,7 +48,7 @@ public class TournamentStatsCacheImpl implements TournamentStatsCache {
                             "Encountered exception retrieving stats from cache for tournament=%s, phase=%s, type=%s",
                             tournamentId, phaseId, reportType.getId());
             LOGGER.error(message, e);
-            return fallbackCacheSupplier.get();
+            throw new RuntimeException(e);
         }
     }
 
