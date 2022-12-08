@@ -10,7 +10,7 @@ import java.util.Base64;
 import neg5.jwt.api.JwtApi;
 import neg5.jwt.impl.SigningKeyBackedJwtManagerImpl;
 
-public class JwtSigningModule extends AbstractModule {
+public class JwtGuiceModule extends AbstractModule {
 
     public static final String BASE_64_ENCODED_STRING_KEY = "jwt.secret.base64";
 

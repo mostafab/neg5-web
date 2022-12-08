@@ -2,28 +2,28 @@ package neg5.service.guice;
 
 import com.google.inject.AbstractModule;
 import neg5.accessManager.guice.TournamentAccessGuiceModule;
-import neg5.configuration.guice.ConfigurationModule;
-import neg5.dataAccess.guice.PersistenceModule;
+import neg5.configuration.guice.ConfigurationGuiceModule;
+import neg5.dataAccess.guice.PersistenceGuiceModule;
 import neg5.db.migrations.guice.DatabaseMigrationGuiceModule;
 import neg5.domain.guice.ApiLayerGuiceModule;
 import neg5.exports.qbj.guice.QbjGuiceModule;
-import neg5.jwt.module.JwtSigningModule;
+import neg5.jwt.module.JwtGuiceModule;
 import neg5.monitoring.guice.MonitoringGuiceModule;
-import neg5.stats.guice.TournamentStatsModule;
+import neg5.stats.guice.TournamentStatsGuiceModule;
 
-public class Neg5WebModule extends AbstractModule {
+public class Neg5WebGuiceModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        install(new ConfigurationModule());
+        install(new ConfigurationGuiceModule());
         install(new MonitoringGuiceModule());
-        install(new PersistenceModule());
+        install(new PersistenceGuiceModule());
         install(new DatabaseMigrationGuiceModule());
         install(new ApiLayerGuiceModule());
-        install(new TournamentStatsModule());
+        install(new TournamentStatsGuiceModule());
         install(new TournamentAccessGuiceModule());
         install(new QbjGuiceModule());
-        install(new SparkResourcesModule());
-        install(new JwtSigningModule());
+        install(new SparkResourcesGuiceModule());
+        install(new JwtGuiceModule());
     }
 }

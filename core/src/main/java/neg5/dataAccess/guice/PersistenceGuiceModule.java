@@ -13,12 +13,12 @@ import javax.sql.DataSource;
 import neg5.lifecycle.ApplicationShutdownHandler;
 import org.hibernate.cfg.AvailableSettings;
 
-public class PersistenceModule extends AbstractModule {
+public class PersistenceGuiceModule extends AbstractModule {
 
     private static final String PERSISTENCE_UNIT_NAME = "org.neg5.data";
     private final Map<String, Object> properties;
 
-    public PersistenceModule() {
+    public PersistenceGuiceModule() {
         properties = new HashMap<>();
     }
 

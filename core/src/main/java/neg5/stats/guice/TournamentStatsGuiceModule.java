@@ -14,7 +14,7 @@ import neg5.stats.impl.TournamentStatsApiImpl;
 import neg5.stats.impl.cache.TournamentStatsCache;
 import neg5.stats.impl.cache.TournamentStatsCacheImpl;
 
-public class TournamentStatsModule extends AbstractModule {
+public class TournamentStatsGuiceModule extends AbstractModule {
 
     private static final int MAX_SIZE = 50;
     private static final int MINUTES_TO_KEEP = 5;

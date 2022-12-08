@@ -26,7 +26,7 @@ import neg5.service.filters.CurrentUserContextFilter;
 import neg5.service.filters.MonitoringContextFilter;
 import neg5.service.filters.RequestFilter;
 
-public class SparkResourcesModule extends AbstractModule {
+public class SparkResourcesGuiceModule extends AbstractModule {
 
     @Provides
     @Singleton

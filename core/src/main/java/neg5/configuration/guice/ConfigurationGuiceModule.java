@@ -10,7 +10,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 import neg5.domain.api.Environment;
 
-public class ConfigurationModule extends AbstractModule {
+public class ConfigurationGuiceModule extends AbstractModule {
 
     private static final Pattern ENV_VAR_REPLACE_PATTERN =
             Pattern.compile("\\$\\{(.*?)\\}", Pattern.CASE_INSENSITIVE);

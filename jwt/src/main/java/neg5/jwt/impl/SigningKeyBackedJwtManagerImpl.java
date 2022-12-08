@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import neg5.jwt.api.JwtApi;
 import neg5.jwt.api.JwtData;
-import neg5.jwt.module.JwtSigningModule;
+import neg5.jwt.module.JwtGuiceModule;
 
 @Singleton
 public class SigningKeyBackedJwtManagerImpl implements JwtApi {
@@ -24,7 +24,7 @@ public class SigningKeyBackedJwtManagerImpl implements JwtApi {
 
     @Inject
     protected SigningKeyBackedJwtManagerImpl(
-            @Named(JwtSigningModule.BASE_64_ENCODED_STRING_KEY) String signingKey,
+            @Named(JwtGuiceModule.BASE_64_ENCODED_STRING_KEY) String signingKey,
             @Named("appName") String appName,
             JwtParser jwtParser) {
         this.appName = appName;
