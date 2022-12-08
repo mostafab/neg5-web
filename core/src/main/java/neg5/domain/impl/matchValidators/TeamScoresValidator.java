@@ -98,6 +98,14 @@ public class TeamScoresValidator implements TournamentMatchValidator {
                     "team.bouncebackPoints",
                     String.format(
                             "%s must have a non-negative number of bounceback points", teamName));
+            requireCondition(
+                    errors,
+                    team.getBouncebackPoints() == null
+                            || team.getBouncebackPoints() % rules.getBonusPointValue() == 0,
+                    "team.bouncebackPoints",
+                    String.format(
+                            "%s's bounceback points must be divisible by %d",
+                            teamName, rules.getBonusPointValue()));
         }
     }
 
