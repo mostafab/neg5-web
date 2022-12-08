@@ -10,6 +10,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
+import neg5.lifecycle.ApplicationShutdownHandler;
 import org.hibernate.cfg.AvailableSettings;
 
 public class PersistenceModule extends AbstractModule {
@@ -34,7 +35,8 @@ public class PersistenceModule extends AbstractModule {
             @Named("database.jdbcUrl") String jdbcUrl,
             @Named("database.pool.size") Integer poolSize,
             @Named("database.pool.name") String poolName,
-            @Named("database.driver") String driverClass) {
+            @Named("database.driver") String driverClass,
+            ApplicationShutdownHandler shutdownHandler) {
         HikariConfig config = new HikariConfig();
         config.setUsername(username);
         config.setPassword(password);
@@ -44,11 +46,12 @@ public class PersistenceModule extends AbstractModule {
         config.setPoolName(poolName);
         config.setReadOnly(false);
 
-        DataSource dataSource = new HikariDataSource(config);
+        HikariDataSource dataSource = new HikariDataSource(config);
         // This is kind of ugly, but we need to set the data source on the properties attached to
         // the JpaPersistModule
         properties.put(AvailableSettings.DATASOURCE, dataSource);
 
+        shutdownHandler.registerCloseable(dataSource);
         return dataSource;
     }
 }
