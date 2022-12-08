@@ -8,6 +8,7 @@ import neg5.domain.api.RoundsReportStatsDTO;
 import neg5.stats.api.FullIndividualMatchesStatsDTO;
 import neg5.stats.api.FullTeamsMatchesStatsDTO;
 import neg5.stats.api.IndividualStandingsStatsDTO;
+import neg5.stats.api.StatsCacheInvalidationResultDTO;
 import neg5.stats.api.TeamStandingsStatsDTO;
 import neg5.stats.api.TournamentStatsApi;
 
@@ -17,15 +18,18 @@ public class TournamentStatsApiImpl implements TournamentStatsApi {
     private final IndividualStandingsStatsManager individualStandingsStatsManager;
     private final TeamStandingsStatsManager teamStandingsStatsManager;
     private final RoundReportStatsManager roundReportStatsManager;
+    private final StatsCacheBroker cacheBroker;
 
     @Inject
     public TournamentStatsApiImpl(
             IndividualStandingsStatsManager individualStandingsStatsManager,
             TeamStandingsStatsManager teamStandingsStatsManager,
-            RoundReportStatsManager roundReportStatsManager) {
+            RoundReportStatsManager roundReportStatsManager,
+            StatsCacheBroker cacheBroker) {
         this.individualStandingsStatsManager = individualStandingsStatsManager;
         this.teamStandingsStatsManager = teamStandingsStatsManager;
         this.roundReportStatsManager = roundReportStatsManager;
+        this.cacheBroker = cacheBroker;
     }
 
     @Override
@@ -56,5 +60,10 @@ public class TournamentStatsApiImpl implements TournamentStatsApi {
     public RoundsReportStatsDTO calculateRoundReportStats(
             @Nonnull String tournamentId, @Nullable String phaseId) {
         return roundReportStatsManager.getCachedStats(tournamentId, phaseId);
+    }
+
+    @Override
+    public StatsCacheInvalidationResultDTO invalidateStats(String tournamentId) {
+        return cacheBroker.invalidateStats(tournamentId);
     }
 }

@@ -8,31 +8,33 @@ import java.util.stream.Collectors;
 import neg5.domain.api.TeamMatchesStatsDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.enums.StatReportType;
 import neg5.stats.api.FullTeamsMatchesStatsDTO;
 import neg5.stats.api.TeamStandingStatsDTO;
 import neg5.stats.api.TeamStandingsStatsDTO;
 import neg5.stats.impl.aggregators.TeamMatchesStatsAggregator;
 import neg5.stats.impl.aggregators.TeamStandingStatAggregator;
+import neg5.stats.impl.cache.TournamentStatsCache;
 
 @Singleton
 class TeamStandingsStatsManager {
 
     private final TournamentMatchApi tournamentMatchApi;
-    private final StatsCacheManager statsCacheManager;
+    private final TournamentStatsCache cache;
 
     @Inject
     public TeamStandingsStatsManager(
-            TournamentMatchApi tournamentMatchApi, StatsCacheManager statsCacheManager) {
+            TournamentMatchApi tournamentMatchApi, TournamentStatsCache cache) {
         this.tournamentMatchApi = tournamentMatchApi;
-        this.statsCacheManager = statsCacheManager;
+        this.cache = cache;
     }
 
     public TeamStandingsStatsDTO getCachedTeamStandings(String tournamentId, String phaseId) {
-        return statsCacheManager
-                .getCache(TeamStandingsStatsDTO.class)
-                .getOrAdd(
-                        tournamentId, phaseId, () -> calculateTeamStandings(tournamentId, phaseId))
-                .orElseGet(() -> this.calculateTeamStandings(tournamentId, phaseId));
+        return cache.getOrAdd(
+                StatReportType.TEAM_STANDINGS,
+                tournamentId,
+                phaseId,
+                () -> calculateTeamStandings(tournamentId, phaseId));
     }
 
     public TeamStandingsStatsDTO calculateTeamStandings(String tournamentId, String phaseId) {
@@ -52,13 +54,11 @@ class TeamStandingsStatsManager {
 
     public FullTeamsMatchesStatsDTO getCachedFullTeamStandings(
             String tournamentId, String phaseId) {
-        return statsCacheManager
-                .getCache(FullTeamsMatchesStatsDTO.class)
-                .getOrAdd(
-                        tournamentId,
-                        phaseId,
-                        () -> calculateFullTeamStandings(tournamentId, phaseId))
-                .orElseGet(() -> this.calculateFullTeamStandings(tournamentId, phaseId));
+        return cache.getOrAdd(
+                StatReportType.TEAM_FULL,
+                tournamentId,
+                phaseId,
+                () -> calculateFullTeamStandings(tournamentId, phaseId));
     }
 
     public FullTeamsMatchesStatsDTO calculateFullTeamStandings(

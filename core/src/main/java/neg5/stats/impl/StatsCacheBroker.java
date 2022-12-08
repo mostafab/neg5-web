@@ -2,10 +2,10 @@ package neg5.stats.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import java.util.Set;
+import java.util.Arrays;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPhaseDTO;
-import neg5.stats.api.BaseAggregateStatsDTO;
+import neg5.domain.api.enums.StatReportType;
 import neg5.stats.api.StatsCacheInvalidationResultDTO;
 import neg5.stats.impl.cache.TournamentStatsCache;
 import org.slf4j.Logger;
@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 
 /** Stats cache manager */
 @Singleton
-public class StatsCacheManager {
+public class StatsCacheBroker {
 
-    @Inject private Set<TournamentStatsCache> statsCaches;
+    @Inject private TournamentStatsCache tournamentStatsCache;
     @Inject private TournamentPhaseApi phaseManager;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StatsCacheManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatsCacheBroker.class);
 
     /**
      * Invalidate cache entries for a tournament's stats. Loops through all phases of a tournament
@@ -36,26 +36,22 @@ public class StatsCacheManager {
                 .map(TournamentPhaseDTO::getId)
                 .forEach(
                         phaseId -> {
-                            statsCaches.forEach(cache -> cache.invalidate(tournamentId, phaseId));
+                            int keysInvalidated = invalidateTournamentCache(tournamentId, phaseId);
                             invalidationResult.setKeysInvalidated(
-                                    invalidationResult.getKeysInvalidated() + 1);
+                                    invalidationResult.getKeysInvalidated() + keysInvalidated);
                         });
-
-        statsCaches.forEach(cache -> cache.invalidate(tournamentId, null));
         invalidationResult.setKeysInvalidated(invalidationResult.getKeysInvalidated() + 1);
 
         return invalidationResult;
     }
 
-    <T extends BaseAggregateStatsDTO> TournamentStatsCache<T> getCache(Class<T> statsClazz) {
-        return (TournamentStatsCache<T>)
-                statsCaches.stream()
-                        .filter(cache -> statsClazz.equals(cache.getStatsClazz()))
-                        .findFirst()
-                        .orElseThrow(
-                                () ->
-                                        new IllegalArgumentException(
-                                                "Cannot find matching cache for class "
-                                                        + statsClazz));
+    private int invalidateTournamentCache(String tournamentId, String phaseId) {
+        return Arrays.stream(StatReportType.values())
+                .mapToInt(
+                        reportType -> {
+                            tournamentStatsCache.invalidate(reportType, tournamentId, phaseId);
+                            return 1;
+                        })
+                .sum();
     }
 }

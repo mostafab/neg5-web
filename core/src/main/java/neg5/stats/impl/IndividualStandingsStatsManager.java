@@ -7,29 +7,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
+import neg5.domain.api.enums.StatReportType;
 import neg5.stats.api.FullIndividualMatchesStatsDTO;
 import neg5.stats.api.IndividualMatchesStatsDTO;
 import neg5.stats.api.IndividualStandingStatDTO;
 import neg5.stats.api.IndividualStandingsStatsDTO;
 import neg5.stats.impl.aggregators.IndividualMatchesStatAggregator;
 import neg5.stats.impl.aggregators.IndividualStandingStatAggregator;
+import neg5.stats.impl.cache.TournamentStatsCache;
 
 @Singleton
 class IndividualStandingsStatsManager {
 
     @Inject private TournamentPlayerApi tournamentPlayerApi;
-
-    @Inject private StatsCacheManager statsCacheManager;
+    @Inject private TournamentStatsCache tournamentStatsCache;
 
     public IndividualStandingsStatsDTO getCachedIndividualStandings(
             String tournamentId, String phaseId) {
-        return statsCacheManager
-                .getCache(IndividualStandingsStatsDTO.class)
-                .getOrAdd(
-                        tournamentId,
-                        phaseId,
-                        () -> calculateIndividualStandings(tournamentId, phaseId))
-                .orElseGet(() -> calculateIndividualStandings(tournamentId, phaseId));
+        return tournamentStatsCache.getOrAdd(
+                StatReportType.INDIVIDUAL,
+                tournamentId,
+                phaseId,
+                () -> calculateIndividualStandings(tournamentId, phaseId));
     }
 
     public IndividualStandingsStatsDTO calculateIndividualStandings(
@@ -51,11 +50,11 @@ class IndividualStandingsStatsManager {
 
     public FullIndividualMatchesStatsDTO getCachedFullIndividualStats(
             String tournamentId, String phaseId) {
-        return statsCacheManager
-                .getCache(FullIndividualMatchesStatsDTO.class)
-                .getOrAdd(
-                        tournamentId, phaseId, () -> getFullIndividualStats(tournamentId, phaseId))
-                .orElseGet(() -> getFullIndividualStats(tournamentId, phaseId));
+        return tournamentStatsCache.getOrAdd(
+                StatReportType.INDIVIDUAL_FULL,
+                tournamentId,
+                phaseId,
+                () -> getFullIndividualStats(tournamentId, phaseId));
     }
 
     public FullIndividualMatchesStatsDTO getFullIndividualStats(

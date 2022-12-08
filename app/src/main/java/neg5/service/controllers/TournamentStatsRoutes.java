@@ -2,13 +2,10 @@ package neg5.service.controllers;
 
 import com.google.inject.Inject;
 import neg5.stats.api.TournamentStatsApi;
-import neg5.stats.impl.StatsCacheManager;
 
 public class TournamentStatsRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentStatsApi tournamentStatsApi;
-
-    @Inject private StatsCacheManager statsCacheManager;
 
     @Override
     protected String getBasePath() {
@@ -45,6 +42,6 @@ public class TournamentStatsRoutes extends AbstractJsonRoutes {
 
         post(
                 "/invalidate",
-                (request, response) -> statsCacheManager.invalidateStats(request.params("id")));
+                (request, response) -> tournamentStatsApi.invalidateStats(request.params("id")));
     }
 }
