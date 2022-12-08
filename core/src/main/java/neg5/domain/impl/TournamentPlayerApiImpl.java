@@ -1,6 +1,7 @@
 package neg5.domain.impl;
 
 import static neg5.validation.FieldValidation.requireCustomValidation;
+import static neg5.validation.FieldValidation.requireNonEmpty;
 import static neg5.validation.FieldValidation.requireNotNull;
 
 import com.google.common.collect.Lists;
@@ -94,7 +95,7 @@ public class TournamentPlayerApiImpl
     protected Optional<FieldValidationErrors> validateObject(TournamentPlayerDTO dto) {
         FieldValidationErrors errors = new FieldValidationErrors();
         requireNotNull(errors, dto.getTournamentId(), "tournamentId");
-        requireNotNull(errors, dto.getName(), "name");
+        requireNonEmpty(errors, dto.getName(), "name");
         requireNotNull(errors, dto.getTeamId(), "teamId");
         requireCustomValidation(errors, () -> ensureNameUniqueInTeam(dto));
         return Optional.of(errors);

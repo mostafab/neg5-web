@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import neg5.domain.api.FieldValidationErrors;
+import org.apache.commons.lang3.StringUtils;
 
 public class FieldValidation {
 
@@ -21,7 +22,7 @@ public class FieldValidation {
             @Nonnull FieldValidationErrors errors,
             @Nullable String subject,
             @Nonnull String field) {
-        if (subject == null || subject.isEmpty()) {
+        if (StringUtils.isBlank(subject)) {
             errors.add(field, String.format("%s must not be empty.", field));
         }
     }
