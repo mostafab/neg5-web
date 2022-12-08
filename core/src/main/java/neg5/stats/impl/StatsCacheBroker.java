@@ -27,11 +27,14 @@ public class StatsCacheBroker {
      * @param tournamentId the tournament id
      */
     public StatsCacheInvalidationResultDTO invalidateStats(String tournamentId) {
-        LOGGER.info("Received request to invalidate cache entries for tournament {}", tournamentId);
+        LOGGER.info(
+                "Processing request to invalidate cache entries for tournamentId={}", tournamentId);
 
         StatsCacheInvalidationResultDTO invalidationResult = new StatsCacheInvalidationResultDTO();
         invalidationResult.setTournamentId(tournamentId);
 
+        invalidateTournamentCache(tournamentId, null);
+        invalidationResult.setKeysInvalidated(1);
         phaseManager.findAllByTournamentId(tournamentId).stream()
                 .map(TournamentPhaseDTO::getId)
                 .forEach(
@@ -40,7 +43,6 @@ public class StatsCacheBroker {
                             invalidationResult.setKeysInvalidated(
                                     invalidationResult.getKeysInvalidated() + keysInvalidated);
                         });
-        invalidationResult.setKeysInvalidated(invalidationResult.getKeysInvalidated() + 1);
 
         return invalidationResult;
     }

@@ -23,17 +23,17 @@ public class ApplicationShutdownHandler {
     }
 
     public void registerCloseable(Closeable closeable) {
-        LOGGER.info("Registering closeable object {}", closeable.getClass());
+        LOGGER.info("Registering closeable object {}", closeable);
         this.closeables.add(closeable);
     }
 
     private void closeAll() {
         for (Closeable closeable : closeables) {
             try {
-                LOGGER.warn("Attempting to close {}", closeable.getClass());
+                LOGGER.warn("Attempting to close {}", closeable);
                 closeable.close();
-            } catch (Exception e) {
-                LOGGER.error("Encountered exception closing object " + closeable.getClass(), e);
+            } catch (Throwable e) {
+                LOGGER.error("Encountered exception closing object " + closeable, e);
             }
         }
     }
