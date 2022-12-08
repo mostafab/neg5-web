@@ -20,4 +20,6 @@ public interface TournamentStatsApi {
 
     RoundsReportStatsDTO calculateRoundReportStats(
             @Nonnull String tournamentId, @Nullable String phaseId);
+
+    StatsCacheInvalidationResultDTO invalidateStats(String tournamentId);
 }

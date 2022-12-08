@@ -9,23 +9,22 @@ import neg5.domain.api.RoundStatDTO;
 import neg5.domain.api.RoundsReportStatsDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.enums.StatReportType;
 import neg5.stats.impl.aggregators.RoundStatsAggregator;
+import neg5.stats.impl.cache.TournamentStatsCache;
 
 @Singleton
 class RoundReportStatsManager {
 
     @Inject private TournamentMatchApi tournamentMatchManager;
-
-    @Inject private StatsCacheManager statsCacheManager;
+    @Inject private TournamentStatsCache cache;
 
     RoundsReportStatsDTO getCachedStats(String tournamentId, String phaseId) {
-        return statsCacheManager
-                .getCache(RoundsReportStatsDTO.class)
-                .getOrAdd(
-                        tournamentId,
-                        phaseId,
-                        () -> calculateRoundReportStats(tournamentId, phaseId))
-                .orElseGet(() -> calculateRoundReportStats(tournamentId, phaseId));
+        return cache.getOrAdd(
+                StatReportType.ROUND_REPORT,
+                tournamentId,
+                phaseId,
+                () -> calculateRoundReportStats(tournamentId, phaseId));
     }
 
     RoundsReportStatsDTO calculateRoundReportStats(String tournamentId, String phaseId) {

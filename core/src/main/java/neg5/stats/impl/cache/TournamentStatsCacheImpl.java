@@ -1,83 +1,68 @@
 package neg5.stats.impl.cache;
 
 import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import java.util.Optional;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import neg5.domain.api.enums.StatReportType;
 import neg5.stats.api.BaseAggregateStatsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Guava-backed implementation of {@link TournamentStatsCache}
- *
- * @param <T> the stats type
- */
-public class TournamentStatsCacheImpl<T extends BaseAggregateStatsDTO>
-        implements TournamentStatsCache<T> {
+/** Guava-backed implementation of {@link TournamentStatsCache} */
+@Singleton
+public class TournamentStatsCacheImpl implements TournamentStatsCache {
 
-    private final Cache<String, T> cache;
-    private final Class<T> statsClazz;
+    private final Cache<String, BaseAggregateStatsDTO> cache;
 
     private final Logger LOGGER = LoggerFactory.getLogger(TournamentStatsCacheImpl.class);
 
-    public TournamentStatsCacheImpl(int maxSize, int maxMinutes, Class<T> statsClazz) {
-        this.statsClazz = statsClazz;
-        cache =
-                CacheBuilder.newBuilder()
-                        .maximumSize(maxSize)
-                        .expireAfterWrite(maxMinutes, TimeUnit.MINUTES)
-                        .removalListener(
-                                removalNotification -> {
-                                    LOGGER.info(
-                                            "Removed key {} from the {} cache",
-                                            removalNotification.getKey(),
-                                            statsClazz);
-                                })
-                        .build();
+    @Inject
+    public TournamentStatsCacheImpl(Cache<String, BaseAggregateStatsDTO> cache) {
+        this.cache = cache;
     }
 
     @Override
-    public Class<T> getStatsClazz() {
-        return statsClazz;
-    }
-
-    @Override
-    public Optional<T> getOrAdd(
-            String tournamentId, String phaseId, Supplier<T> fallbackCacheSupplier) {
+    public <T extends BaseAggregateStatsDTO> T getOrAdd(
+            StatReportType reportType,
+            String tournamentId,
+            String phaseId,
+            Supplier<T> fallbackCacheSupplier) {
         try {
-            return Optional.ofNullable(
+            BaseAggregateStatsDTO stats =
                     cache.get(
-                            buildKey(tournamentId, phaseId),
+                            buildKey(reportType, tournamentId, phaseId),
                             () -> {
                                 LOGGER.info(
-                                        "Running stats calculation for clazz {} and tournament {} and phase {}",
-                                        statsClazz,
+                                        "Running stats calculation for reportType={}, tournament={}, phase={}. cacheSize={}",
+                                        reportType.getId(),
                                         tournamentId,
-                                        phaseId);
+                                        phaseId,
+                                        cache.size());
                                 return fallbackCacheSupplier.get();
-                            }));
+                            });
+            return (T) stats;
         } catch (ExecutionException e) {
-            LOGGER.error(
-                    "Encountered exception attempting to get stats from cache for tournament "
-                            + tournamentId,
-                    e);
-            return Optional.empty();
+            String message =
+                    String.format(
+                            "Encountered exception retrieving stats from cache for tournament=%s, phase=%s, type=%s",
+                            tournamentId, phaseId, reportType.getId());
+            LOGGER.error(message, e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void invalidate(String tournamentId, String phaseId) {
-        String key = buildKey(tournamentId, phaseId);
+    public void invalidate(StatReportType reportType, String tournamentId, String phaseId) {
+        String key = buildKey(reportType, tournamentId, phaseId);
         cache.invalidate(key);
     }
 
-    private String buildKey(String tournamentId, String phaseId) {
+    private String buildKey(StatReportType reportType, String tournamentId, String phaseId) {
         if (phaseId == null) {
-            return tournamentId;
+            return String.format("%s_%s", reportType.getId(), tournamentId);
         }
-        return tournamentId + "_" + phaseId;
+        return String.format("%s_%s_%s", reportType.getId(), tournamentId, phaseId);
     }
 }
