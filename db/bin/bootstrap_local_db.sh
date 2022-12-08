@@ -20,5 +20,5 @@ psql -h ${HOST} -p ${PORT} -U postgres -c "grant create on database ${DB} to \"$
 
 cd ../../
 mvn -q clean install -DskipTests
-cd neg5.db/
+cd db/
 mvn flyway:migrate

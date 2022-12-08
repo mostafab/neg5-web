@@ -7,7 +7,7 @@ cd ../..
 mvn clean install -DskipITs
 # Get confirmation of deploy
 read -p "Proceed with deploy to Heroku? (Y/N): " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
-cd service/
+cd app/
 mvn clean heroku:deploy
 
 # Create a new Git tag to capture changes

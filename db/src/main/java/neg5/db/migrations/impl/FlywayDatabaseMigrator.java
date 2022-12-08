@@ -28,7 +28,7 @@ public class FlywayDatabaseMigrator implements DatabaseMigrator {
         } else {
             LOGGER.warn(
                     "Skipping automatic migrations since application is in the DEV environment. "
-                            + "Please run migrations manually by running 'mvn flyway:migrate' in the neg5.db module");
+                            + "Please run migrations manually by running 'mvn flyway:migrate' in the db module");
         }
     }
 }
