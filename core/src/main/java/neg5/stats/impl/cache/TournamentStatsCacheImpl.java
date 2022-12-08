@@ -35,10 +35,11 @@ public class TournamentStatsCacheImpl implements TournamentStatsCache {
                             buildKey(reportType, tournamentId, phaseId),
                             () -> {
                                 LOGGER.info(
-                                        "Running stats calculation for reportType={}, tournament={}, phase={}",
+                                        "Running stats calculation for reportType={}, tournament={}, phase={}. cacheSize={}",
                                         reportType.getId(),
                                         tournamentId,
-                                        phaseId);
+                                        phaseId,
+                                        cache.size());
                                 return fallbackCacheSupplier.get();
                             });
             return (T) stats;
