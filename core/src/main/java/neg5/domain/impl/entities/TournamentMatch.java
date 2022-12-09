@@ -22,6 +22,7 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
 
     private String packet;
     private Integer tossupsHeard;
+    private Boolean isTiebreaker;
 
     private String notes;
     private String serialId;
@@ -103,6 +104,15 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
 
     public void setTossupsHeard(Integer tossupsHeard) {
         this.tossupsHeard = tossupsHeard;
+    }
+
+    @Column(name = "is_tiebreaker")
+    public Boolean getIsTiebreaker() {
+        return isTiebreaker;
+    }
+
+    public void setIsTiebreaker(Boolean isTiebreaker) {
+        this.isTiebreaker = isTiebreaker;
     }
 
     @Column(name = "notes")

@@ -195,7 +195,7 @@ public class TournamentMatchDAO extends AbstractDAO<TournamentMatch, String> {
                         .addScalar("serialId", StandardBasicTypes.STRING)
                         .addScalar("players", StringArrayType.INSTANCE)
                         .addScalar("addedAt", StandardBasicTypes.TIMESTAMP)
-                        .setResultTransformer(new MatchTransformer())
+                        .setResultTransformer(MatchTransformer.INSTANCE)
                         .getResultList();
         return matches;
     }

@@ -19,7 +19,9 @@ public class MatchTransformer implements ResultTransformer {
 
     private final Gson gson;
 
-    public MatchTransformer() {
+    public static final MatchTransformer INSTANCE = new MatchTransformer();
+
+    private MatchTransformer() {
         gson = new GsonProvider().get();
     }
 
@@ -30,8 +32,8 @@ public class MatchTransformer implements ResultTransformer {
         match.setTournamentId((String) tuple[2]);
         match.setRound((Integer) tuple[3]);
         match.setTossupsHeard((Integer) tuple[4]);
-        match.setPhases(getPhases(tuple));
-        match.setTeams(getTeams(tuple));
+        match.setPhases(getPhases((Object[]) tuple[0]));
+        match.setTeams(getTeams((Object[]) tuple[5], (Object[]) tuple[10]));
         match.setModerator((String) tuple[6]);
         match.setPacket((String) tuple[7]);
         match.setNotes((String) tuple[8]);
@@ -45,8 +47,8 @@ public class MatchTransformer implements ResultTransformer {
         return new ArrayList<>(collection);
     }
 
-    private Set<Phase> getPhases(Object[] tuple) {
-        return Arrays.stream((Object[]) tuple[0])
+    private Set<Phase> getPhases(Object[] phasesArray) {
+        return Arrays.stream(phasesArray)
                 .map(
                         object -> {
                             String json =
@@ -58,9 +60,9 @@ public class MatchTransformer implements ResultTransformer {
                 .collect(Collectors.toSet());
     }
 
-    private Set<TeamInMatch> getTeams(Object[] tuple) {
-        Set<TeamMatchPlayer> players = getPlayers(tuple);
-        return Arrays.stream((Object[]) tuple[5])
+    private Set<TeamInMatch> getTeams(Object[] teamArray, Object[] playersArray) {
+        Set<TeamMatchPlayer> players = getPlayers(playersArray);
+        return Arrays.stream(teamArray)
                 .map(
                         object -> {
                             String json =
@@ -77,8 +79,8 @@ public class MatchTransformer implements ResultTransformer {
                 .collect(Collectors.toSet());
     }
 
-    private Set<TeamMatchPlayer> getPlayers(Object[] tuple) {
-        return Arrays.stream((Object[]) tuple[10])
+    private Set<TeamMatchPlayer> getPlayers(Object[] playersArray) {
+        return Arrays.stream(playersArray)
                 .map(
                         object -> {
                             String json =
