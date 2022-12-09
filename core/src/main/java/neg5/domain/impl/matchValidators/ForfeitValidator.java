@@ -21,6 +21,11 @@ public class ForfeitValidator implements TournamentMatchValidator {
             return errors;
         }
         TournamentMatchDTO match = validationContext.getSubject();
+        requireCondition(
+                errors,
+                match.getTossupsHeard() == null,
+                "match.tossupsHeard",
+                "A forfeited match should not have any tossups heard.");
         boolean noInfoIsAdded =
                 Optional.ofNullable(match.getTeams())
                         .map(teams -> teams.stream().allMatch(this::allTeamDataIsBlank))
