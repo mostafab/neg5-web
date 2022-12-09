@@ -1,5 +1,6 @@
 package neg5.domain.impl.dataAccess;
 
+import com.google.inject.Singleton;
 import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import java.util.List;
 import neg5.domain.impl.entities.TournamentMatch;
@@ -8,6 +9,7 @@ import neg5.domain.impl.entities.transformers.data.Match;
 import org.hibernate.query.NativeQuery;
 import org.hibernate.type.StandardBasicTypes;
 
+@Singleton
 public class TournamentMatchDAO extends AbstractDAO<TournamentMatch, String> {
 
     private static final String QUERY =

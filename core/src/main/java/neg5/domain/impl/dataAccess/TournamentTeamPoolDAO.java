@@ -1,9 +1,11 @@
 package neg5.domain.impl.dataAccess;
 
+import com.google.inject.Singleton;
 import java.util.List;
 import neg5.domain.impl.entities.TournamentTeamPool;
 import neg5.domain.impl.entities.compositeIds.TournamentTeamPoolId;
 
+@Singleton
 public class TournamentTeamPoolDAO extends AbstractDAO<TournamentTeamPool, TournamentTeamPoolId> {
 
     protected TournamentTeamPoolDAO() {

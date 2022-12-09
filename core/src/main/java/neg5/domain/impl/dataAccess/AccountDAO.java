@@ -1,7 +1,9 @@
 package neg5.domain.impl.dataAccess;
 
+import com.google.inject.Singleton;
 import neg5.domain.impl.entities.Account;
 
+@Singleton
 public class AccountDAO extends AbstractDAO<Account, String> {
 
     public AccountDAO() {

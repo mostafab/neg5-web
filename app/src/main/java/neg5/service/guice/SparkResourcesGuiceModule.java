@@ -14,6 +14,7 @@ import neg5.service.controllers.TournamentPhaseRoutes;
 import neg5.service.controllers.TournamentPlayerRoutes;
 import neg5.service.controllers.TournamentPoolRoutes;
 import neg5.service.controllers.TournamentRoutes;
+import neg5.service.controllers.TournamentSearchRoutes;
 import neg5.service.controllers.TournamentStatsRoutes;
 import neg5.service.controllers.TournamentTeamRoutes;
 import neg5.service.controllers.TournamentTossupValueRoutes;
@@ -41,13 +42,15 @@ public class SparkResourcesGuiceModule extends AbstractModule {
             TournamentPhaseRoutes phaseController,
             TournamentPoolRoutes poolController,
             TournamentStatsRoutes statsController,
-            TournamentTossupValueRoutes tournamentTossupValueController) {
+            TournamentTossupValueRoutes tournamentTossupValueController,
+            TournamentSearchRoutes tournamentSearchRoutes) {
         return ImmutableList.of(
                 accountController,
                 loginController,
                 matchController,
                 playerController,
                 teamController,
+                tournamentSearchRoutes,
                 tournamentCollaboratorController,
                 tournamentController,
                 phaseController,

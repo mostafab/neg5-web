@@ -1,8 +1,10 @@
 package neg5.domain.impl.dataAccess;
 
+import com.google.inject.Singleton;
 import java.util.List;
 import neg5.domain.impl.entities.TournamentPlayer;
 
+@Singleton
 public class TournamentPlayerDAO extends AbstractDAO<TournamentPlayer, String> {
 
     protected TournamentPlayerDAO() {
