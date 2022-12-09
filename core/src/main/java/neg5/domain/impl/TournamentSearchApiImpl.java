@@ -34,6 +34,18 @@ public class TournamentSearchApiImpl implements TournamentSearchApi {
 
     @Override
     @Nonnull
+    public List<TournamentSearchResultDTO> findTournamentsWithDateSinceDays(
+            int days, boolean includeHidden) {
+        if (days < 0) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors().add("days", "days must a non-negative integer."));
+        }
+        LocalDate start = LocalDate.now().atStartOfDay().minusDays(days).toLocalDate();
+        return findTournamentsWithDateInRange(start, null, includeHidden);
+    }
+
+    @Override
+    @Nonnull
     public List<TournamentSearchResultDTO> findTournamentsWithDateInRange(
             @Nonnull LocalDate start, @Nullable LocalDate end, boolean includeHidden) {
         Objects.requireNonNull(start, "start date cannot be null");

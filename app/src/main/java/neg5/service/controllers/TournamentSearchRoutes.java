@@ -28,6 +28,17 @@ public class TournamentSearchRoutes extends AbstractJsonRoutes {
                 (req, res) ->
                         tournamentSearchApi.findByMatchingPrefix(req.queryParams("name"), false));
         get(
+                "/days",
+                (req, res) -> {
+                    try {
+                        int days = Integer.parseInt(req.queryParams("days"));
+                        return tournamentSearchApi.findTournamentsWithDateSinceDays(days, false);
+                    } catch (NumberFormatException exception) {
+                        throw new ObjectValidationException(
+                                new FieldValidationErrors().add("days", "days must be an integer"));
+                    }
+                });
+        get(
                 "/dates",
                 (req, res) -> {
                     LocalDate start = parseDate(req.queryParams("start"), "start");

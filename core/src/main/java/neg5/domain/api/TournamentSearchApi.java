@@ -12,6 +12,10 @@ public interface TournamentSearchApi {
             @Nonnull String name, boolean includeHidden);
 
     @Nonnull
+    List<TournamentSearchResultDTO> findTournamentsWithDateSinceDays(
+            int days, boolean includeHidden);
+
+    @Nonnull
     List<TournamentSearchResultDTO> findTournamentsWithDateInRange(
             @Nonnull LocalDate start, @Nullable LocalDate end, boolean includeHidden);
 }

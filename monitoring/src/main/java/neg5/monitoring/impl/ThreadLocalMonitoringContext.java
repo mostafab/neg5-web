@@ -28,7 +28,7 @@ public class ThreadLocalMonitoringContext implements MonitoringContext {
     }
 
     @Override
-    public void setTransactionName(String name) {
+    public void setTransactionName(@Nonnull String name) {
         NewRelic.setTransactionName(null, name);
     }
 
