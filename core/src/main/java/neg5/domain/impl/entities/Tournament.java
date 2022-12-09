@@ -49,6 +49,7 @@ public class Tournament extends AbstractDataObject<Tournament>
 
     private Instant addedAt;
     private String addedBy;
+    private Boolean hidden;
 
     @Id
     @Override
@@ -223,5 +224,14 @@ public class Tournament extends AbstractDataObject<Tournament>
     @Override
     public void setAddedAt(Instant addedAt) {
         this.addedAt = addedAt;
+    }
+
+    @Column(name = "hidden")
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 }

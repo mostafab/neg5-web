@@ -1,9 +1,11 @@
 package neg5.domain.impl.dataAccess;
 
+import com.google.inject.Singleton;
 import java.util.List;
 import neg5.domain.impl.entities.TournamentMatchPhase;
 import neg5.domain.impl.entities.compositeIds.MatchPhaseId;
 
+@Singleton
 public class TournamentMatchPhaseDAO extends AbstractDAO<TournamentMatchPhase, MatchPhaseId> {
 
     TournamentMatchPhaseDAO() {
