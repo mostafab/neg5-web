@@ -25,7 +25,11 @@ public class ObjectValidationExceptionHandler implements ExceptionHandler {
         exception(
                 ObjectValidationException.class,
                 (exception, request, response) -> {
-                    LOGGER.warn("Validation failed for endpoint :" + request.uri(), exception);
+                    LOGGER.warn(
+                            String.format(
+                                    "Validation failed for in endpoint, method=%s uri=%s",
+                                    request.requestMethod(), request.uri()),
+                            exception);
                     response.status(400);
                     response.body(gsonProvider.get().toJson(exception.getErrors()));
                 });
