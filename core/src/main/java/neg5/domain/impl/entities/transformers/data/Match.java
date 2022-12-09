@@ -7,19 +7,16 @@ public class Match {
 
     private String id;
     private String tournamentId;
-
     private Integer round;
     private Integer tossupsHeard;
-
     private Set<Phase> phases;
     private Set<TeamInMatch> teams;
-
     private String moderator;
     private String notes;
     private String packet;
     private String serialId;
-
     private Timestamp addedAt;
+    private Boolean isTiebreaker;
 
     public String getId() {
         return id;
@@ -107,5 +104,13 @@ public class Match {
 
     public void setAddedAt(Timestamp addedAt) {
         this.addedAt = addedAt;
+    }
+
+    public Boolean getIsTiebreaker() {
+        return isTiebreaker;
+    }
+
+    public void setIsTiebreaker(Boolean isTiebreaker) {
+        this.isTiebreaker = isTiebreaker;
     }
 }

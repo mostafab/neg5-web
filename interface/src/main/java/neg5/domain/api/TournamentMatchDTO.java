@@ -14,6 +14,7 @@ public class TournamentMatchDTO {
 
     private String packet;
     private Integer tossupsHeard;
+    private Boolean isTiebreaker;
 
     private String notes;
     private String serialId;
@@ -78,6 +79,14 @@ public class TournamentMatchDTO {
 
     public void setTossupsHeard(Integer tossupsHeard) {
         this.tossupsHeard = tossupsHeard;
+    }
+
+    public Boolean getIsTiebreaker() {
+        return isTiebreaker;
+    }
+
+    public void setIsTiebreaker(Boolean isTiebreaker) {
+        this.isTiebreaker = isTiebreaker;
     }
 
     public String getNotes() {
