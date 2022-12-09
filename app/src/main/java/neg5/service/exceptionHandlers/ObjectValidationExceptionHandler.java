@@ -27,7 +27,7 @@ public class ObjectValidationExceptionHandler implements ExceptionHandler {
                 (exception, request, response) -> {
                     LOGGER.warn(
                             String.format(
-                                    "Validation failed for in endpoint, method=%s uri=%s",
+                                    "Validation failed in endpoint, method=%s uri=%s",
                                     request.requestMethod(), request.uri()),
                             exception);
                     response.status(400);
