@@ -18,7 +18,6 @@ public class Match {
     private Timestamp addedAt;
     private Boolean isTiebreaker;
 
-
     public String getId() {
         return id;
     }
