@@ -1,6 +1,7 @@
 package neg5.domain.impl.dataAccess;
 
 import com.google.inject.Singleton;
+import java.time.LocalDate;
 import java.util.List;
 import neg5.domain.impl.entities.Tournament;
 
@@ -27,6 +28,16 @@ public class TournamentDAO extends AbstractDAO<Tournament, String> {
                         "SELECT t from Tournament t WHERE lower(t.name) like :name",
                         Tournament.class)
                 .setParameter("name", queryParam)
+                .getResultList();
+    }
+
+    public List<Tournament> findTournamentsBetweenDates(LocalDate start, LocalDate end) {
+        return getEntityManager()
+                .createQuery(
+                        "SELECT t from Tournament t WHERE t.tournamentDate >= :start AND t.tournamentDate <= :end",
+                        Tournament.class)
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getResultList();
     }
 }

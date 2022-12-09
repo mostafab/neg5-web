@@ -3,6 +3,7 @@ package neg5.domain.api;
 import java.time.LocalDate;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface TournamentSearchApi {
 
@@ -16,5 +17,5 @@ public interface TournamentSearchApi {
 
     @Nonnull
     List<TournamentSearchResultDTO> findTournamentsWithDateInRange(
-            @Nonnull LocalDate start, @Nonnull LocalDate end, boolean includeHidden);
+            @Nonnull LocalDate start, @Nullable LocalDate end, boolean includeHidden);
 }

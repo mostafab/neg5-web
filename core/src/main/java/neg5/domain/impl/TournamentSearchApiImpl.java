@@ -5,13 +5,17 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentSearchApi;
 import neg5.domain.api.TournamentSearchResultDTO;
 import neg5.domain.impl.dataAccess.TournamentDAO;
+import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.mappers.TournamentSearchResultMapper;
 import neg5.validation.ObjectValidationException;
 import org.apache.commons.lang3.StringUtils;
@@ -39,8 +43,14 @@ public class TournamentSearchApiImpl implements TournamentSearchApi {
     @Override
     @Nonnull
     public List<TournamentSearchResultDTO> findTournamentsWithDateInRange(
-            @Nonnull LocalDate start, @Nonnull LocalDate end, boolean includeHidden) {
-        return new ArrayList<>();
+            @Nonnull LocalDate start, @Nullable LocalDate end, boolean includeHidden) {
+        Objects.requireNonNull(start, "start date cannot be null");
+        return tournamentDao.findTournamentsBetweenDates(start, end == null ? LocalDate.now() : end)
+                .stream()
+                .sorted(Comparator.comparing(Tournament::getTournamentDate).reversed())
+                .filter(t -> includeHidden || !Boolean.TRUE.equals(t.getHidden()))
+                .map(searchResultMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

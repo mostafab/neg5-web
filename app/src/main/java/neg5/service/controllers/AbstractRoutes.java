@@ -13,9 +13,13 @@ import spark.Spark;
 public abstract class AbstractRoutes implements BaseRoutes {
 
     @Inject private MonitoringContext monitoringContext;
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract String getBasePath();
+
+    protected Logger getLogger() {
+        return logger;
+    }
 
     protected void get(String path, Route route) {
         get(path, route, getResponseTransformer());
@@ -28,7 +32,7 @@ public abstract class AbstractRoutes implements BaseRoutes {
         } else {
             Spark.get(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
-        LOGGER.info("Registered GET route {}", fullPath);
+        logger.info("Registered GET route {}", fullPath);
     }
 
     protected void post(String path, Route route) {
@@ -42,7 +46,7 @@ public abstract class AbstractRoutes implements BaseRoutes {
         } else {
             Spark.post(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
-        LOGGER.info("Registered POST route {}", fullPath);
+        logger.info("Registered POST route {}", fullPath);
     }
 
     protected void put(String path, Route route) {
@@ -56,13 +60,13 @@ public abstract class AbstractRoutes implements BaseRoutes {
         } else {
             Spark.put(fullPath, internalRequestHandler(route, fullPath), responseTransformer);
         }
-        LOGGER.info("Registered PUT route {}", fullPath);
+        logger.info("Registered PUT route {}", fullPath);
     }
 
     protected void delete(String path, Route route) {
         String fullPath = constructPath(path);
         Spark.delete(fullPath, internalRequestHandler(route, fullPath));
-        LOGGER.info("Registered DELETE route {}", fullPath);
+        logger.info("Registered DELETE route {}", fullPath);
     }
 
     protected Route getRequestHandler(Route route) {
