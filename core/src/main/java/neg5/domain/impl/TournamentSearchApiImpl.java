@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -31,13 +30,6 @@ public class TournamentSearchApiImpl implements TournamentSearchApi {
             TournamentDAO tournamentDAO, TournamentSearchResultMapper searchResultMapper) {
         this.tournamentDao = tournamentDAO;
         this.searchResultMapper = searchResultMapper;
-    }
-
-    @Override
-    @Nonnull
-    public List<TournamentSearchResultDTO> findTournamentsWithDateSinceDays(
-            @Nonnull Integer days, boolean includeHidden) {
-        return new ArrayList<>();
     }
 
     @Override
