@@ -27,6 +27,7 @@ public class TournamentMatchDAO extends AbstractDAO<TournamentMatch, String> {
                     + "    M.serial_id as \"serialId\",\n"
                     + "    M.tossups_heard as \"tossupsHeard\",\n"
                     + "    M.added_at as \"addedAt\",\n"
+                    + "    M.is_tiebreaker as \"isTiebreaker\",\n"
                     + "    match_teams.teams\n"
                     + "\n"
                     + "    FROM\n"
@@ -195,6 +196,7 @@ public class TournamentMatchDAO extends AbstractDAO<TournamentMatch, String> {
                         .addScalar("serialId", StandardBasicTypes.STRING)
                         .addScalar("players", StringArrayType.INSTANCE)
                         .addScalar("addedAt", StandardBasicTypes.TIMESTAMP)
+                        .addScalar("isTiebreaker", StandardBasicTypes.BOOLEAN)
                         .setResultTransformer(MatchTransformer.INSTANCE)
                         .getResultList();
         return matches;

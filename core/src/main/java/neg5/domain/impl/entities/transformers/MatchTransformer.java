@@ -39,6 +39,7 @@ public class MatchTransformer implements ResultTransformer {
         match.setNotes((String) tuple[8]);
         match.setSerialId((String) tuple[9]);
         match.setAddedAt((Timestamp) tuple[11]);
+        match.setIsTiebreaker((Boolean) tuple[12]);
         return match;
     }
 
