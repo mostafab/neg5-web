@@ -46,6 +46,7 @@ public class TournamentSearchApiImpl implements TournamentSearchApi {
 
     @Override
     @Nonnull
+    @Transactional
     public List<TournamentSearchResultDTO> findTournamentsWithDateInRange(
             @Nonnull LocalDate start, @Nullable LocalDate end, boolean includeHidden) {
         Objects.requireNonNull(start, "start date cannot be null");
