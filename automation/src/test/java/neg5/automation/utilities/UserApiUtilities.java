@@ -2,6 +2,7 @@ package neg5.automation.utilities;
 
 import static io.restassured.RestAssured.given;
 import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
+import static org.hamcrest.Matchers.any;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import io.restassured.http.ContentType;
@@ -21,12 +22,12 @@ public class UserApiUtilities {
 
         Response response = given().body(toJsonString(account)).when().post("/neg5-api/accounts");
 
-        response.then().statusCode(200).cookie("nfToken");
+        response.then().statusCode(200).header("NEG5_TOKEN", any(String.class));
 
-        return new User(response.cookie("nfToken"), account.getUsername());
+        return new User(response.header("NEG5_TOKEN"), account.getUsername());
     }
 
     public static RequestSpecification givenAsUser(User user) {
-        return given().contentType(ContentType.JSON).cookie("nfToken", user.getNfToken());
+        return given().contentType(ContentType.JSON).header("NEG5_TOKEN", user.getNfToken());
     }
 }

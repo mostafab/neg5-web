@@ -3,6 +3,7 @@ package neg5.automation;
 import static io.restassured.RestAssured.given;
 import static neg5.automation.utilities.ApiParsingUtilities.doRequestAndParse;
 import static neg5.automation.utilities.ApiParsingUtilities.toJsonString;
+import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
@@ -47,7 +48,12 @@ public class AccountRoutesApiTest extends BaseRoutesApiTest {
                 String.format(
                         "{\"username\":\"%s\", \"password\":\"%s\"}",
                         account.getUsername(), account.getPassword());
-        given().body(body).when().post("/neg5-api/login").then().statusCode(200).cookie("nfToken");
+        given().body(body)
+                .when()
+                .post("/neg5-api/login")
+                .then()
+                .statusCode(200)
+                .header("NEG5_TOKEN", any(String.class));
     }
 
     @Test

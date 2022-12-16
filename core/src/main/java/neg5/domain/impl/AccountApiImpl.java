@@ -2,6 +2,7 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.util.List;
 import javax.persistence.NoResultException;
 import neg5.domain.api.AccountApi;
 import neg5.domain.api.AccountCreationDTO;
@@ -27,7 +28,7 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     public AccountDTO createAccount(AccountCreationDTO account) throws DuplicateLoginException {
-        boolean accountIsNew = verifyUsernameIsNew(account.getUsername());
+        boolean accountIsNew = verifyUniqueAccount(account.getUsername(), account.getEmail());
         if (!accountIsNew) {
             throw new DuplicateLoginException(
                     "There exists an account with username: " + account.getUsername());
@@ -46,13 +47,9 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     @Transactional
-    boolean verifyUsernameIsNew(String username) {
-        try {
-            AccountDTO account = get(username);
-            return account == null;
-        } catch (NoResultException e) {
-            return true;
-        }
+    boolean verifyUniqueAccount(String username, String email) {
+        List<Account> accounts = accountDAO.getByUsernameOrEmail(username, email);
+        return accounts.isEmpty();
     }
 
     @Transactional
