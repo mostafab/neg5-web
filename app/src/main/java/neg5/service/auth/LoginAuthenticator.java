@@ -2,6 +2,7 @@ package neg5.service.auth;
 
 import com.google.inject.Inject;
 import java.time.Instant;
+import java.util.Optional;
 import neg5.domain.api.AccountApi;
 import neg5.gson.GsonProvider;
 import neg5.jwt.api.JwtApi;
@@ -28,17 +29,20 @@ public class LoginAuthenticator {
     }
 
     public boolean loginByCredentials(LoginCreds credentials, Response response) {
-        if (accountManager.verifyPassword(credentials.getUsername(), credentials.getPassword())) {
-            String token = jwtApi.buildJwt(buildData(credentials));
+        Optional<String> username =
+                accountManager.verifyPassword(
+                        credentials.getUsernameOrEmail(), credentials.getPassword());
+        if (username.isPresent()) {
+            String token = jwtApi.buildJwt(buildData(username.get()));
             response.header("NEG5_TOKEN", token);
             return true;
         }
         return false;
     }
 
-    private JwtData buildData(LoginCreds loginCreds) {
+    private JwtData buildData(String username) {
         return JwtData.newData()
-                .put("username", loginCreds.getUsername())
+                .put("username", username)
                 .put("issuedAt", Instant.now().toEpochMilli());
     }
 }

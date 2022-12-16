@@ -3,6 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.NoResultException;
 import neg5.domain.api.AccountApi;
 import neg5.domain.api.AccountCreationDTO;
@@ -38,12 +39,13 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
         return createAccountInTransaction(account, hashedPassword);
     }
 
-    public boolean verifyPassword(String username, String password) {
-        String hashedPassword = getHashedPassword(username);
-        if (hashedPassword == null) {
-            return false;
+    public Optional<String> verifyPassword(String usernameOrEmail, String password) {
+        UsernameAndPassword usernameAndPassword = getHashedPassword(usernameOrEmail);
+        if (usernameAndPassword == null
+                || !BCrypt.checkpw(password, usernameAndPassword.hashedPassword)) {
+            return Optional.empty();
         }
-        return BCrypt.checkpw(password, hashedPassword);
+        return Optional.of(usernameAndPassword.username);
     }
 
     @Transactional
@@ -74,15 +76,23 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     @Transactional
-    String getHashedPassword(String username) {
+    UsernameAndPassword getHashedPassword(String usernameOrEmail) {
         try {
-            Account account = accountDAO.getByUsername(username);
+            Account account = accountDAO.getByUsernameOrEmail(usernameOrEmail);
             if (account == null) {
                 return null;
             }
-            return account.getHashedPassword();
+            UsernameAndPassword result = new UsernameAndPassword();
+            result.username = account.getId();
+            result.hashedPassword = account.getHashedPassword();
+            return result;
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    private static class UsernameAndPassword {
+        private String username;
+        private String hashedPassword;
     }
 }

@@ -11,10 +11,12 @@ public class AccountDAO extends AbstractDAO<Account, String> {
         super(Account.class);
     }
 
-    public Account getByUsername(String username) {
+    public Account getByUsernameOrEmail(String usernameOrEmail) {
         return getEntityManager()
-                .createQuery("SELECT a from Account a where a.id = :username", Account.class)
-                .setParameter("username", username)
+                .createQuery(
+                        "SELECT a from Account a where a.id = :query OR a.email = :query",
+                        Account.class)
+                .setParameter("query", usernameOrEmail)
                 .getSingleResult();
     }
 

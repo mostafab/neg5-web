@@ -59,7 +59,7 @@ public class AccountRoutes extends AbstractJsonRoutes {
     private LoginCreds buildLoginCreds(AccountCreationDTO accountCreationDTO) {
         LoginCreds loginCreds = new LoginCreds();
         loginCreds.setPassword(accountCreationDTO.getPassword());
-        loginCreds.setUsername(accountCreationDTO.getUsername());
+        loginCreds.setUsernameOrEmail(accountCreationDTO.getUsername());
 
         return loginCreds;
     }
