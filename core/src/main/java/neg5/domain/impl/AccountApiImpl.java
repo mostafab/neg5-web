@@ -2,6 +2,7 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.util.List;
 import javax.persistence.NoResultException;
 import neg5.domain.api.AccountApi;
 import neg5.domain.api.AccountCreationDTO;
@@ -11,8 +12,6 @@ import neg5.domain.impl.entities.Account;
 import neg5.domain.impl.mappers.AccountMapper;
 import neg5.userData.DuplicateLoginException;
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.util.List;
 
 public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, String>
         implements AccountApi {
