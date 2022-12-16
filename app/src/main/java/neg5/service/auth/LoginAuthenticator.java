@@ -14,18 +14,12 @@ public class LoginAuthenticator {
     private final AccountApi accountManager;
     private final GsonProvider gsonProvider;
     private final JwtApi jwtApi;
-    private final Neg5TokenCookieNameProvider cookieNameProvider;
 
     @Inject
-    public LoginAuthenticator(
-            AccountApi accountManager,
-            GsonProvider gsonProvider,
-            JwtApi jwtApi,
-            Neg5TokenCookieNameProvider cookieNameProvider) {
+    public LoginAuthenticator(AccountApi accountManager, GsonProvider gsonProvider, JwtApi jwtApi) {
         this.accountManager = accountManager;
         this.gsonProvider = gsonProvider;
         this.jwtApi = jwtApi;
-        this.cookieNameProvider = cookieNameProvider;
     }
 
     public boolean loginByRequest(Request request, Response response) {
@@ -35,7 +29,8 @@ public class LoginAuthenticator {
 
     public boolean loginByCredentials(LoginCreds credentials, Response response) {
         if (accountManager.verifyPassword(credentials.getUsername(), credentials.getPassword())) {
-            response.cookie(cookieNameProvider.get(), jwtApi.buildJwt(buildData(credentials)));
+            String token = jwtApi.buildJwt(buildData(credentials));
+            response.header("NEG5_TOKEN", token);
             return true;
         }
         return false;

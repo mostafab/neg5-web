@@ -39,6 +39,9 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
 
     public boolean verifyPassword(String username, String password) {
         String hashedPassword = getHashedPassword(username);
+        if (hashedPassword == null) {
+            return false;
+        }
         return BCrypt.checkpw(password, hashedPassword);
     }
 
@@ -75,10 +78,14 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
 
     @Transactional
     String getHashedPassword(String username) {
-        Account account = accountDAO.getByUsername(username);
-        if (account == null) {
+        try {
+            Account account = accountDAO.getByUsername(username);
+            if (account == null) {
+                return null;
+            }
+            return account.getHashedPassword();
+        } catch (NoResultException e) {
             return null;
         }
-        return account.getHashedPassword();
     }
 }
