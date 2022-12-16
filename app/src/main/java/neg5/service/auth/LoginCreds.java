@@ -2,15 +2,15 @@ package neg5.service.auth;
 
 public class LoginCreds {
 
-    private String username;
+    private String usernameOrEmail;
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getUsernameOrEmail() {
+        return usernameOrEmail;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsernameOrEmail(String usernameOrEmail) {
+        this.usernameOrEmail = usernameOrEmail;
     }
 
     public String getPassword() {
