@@ -52,7 +52,7 @@ public class AccountRoutes extends AbstractJsonRoutes {
             return createdAccount;
         } catch (DuplicateLoginException e) {
             response.status(HttpStatus.FORBIDDEN_403);
-            return "A login with this username already exists";
+            return "A login with this username or email already exists";
         }
     }
 
