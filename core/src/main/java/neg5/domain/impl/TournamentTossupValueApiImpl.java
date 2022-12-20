@@ -98,7 +98,7 @@ public class TournamentTossupValueApiImpl
                             .add(
                                     "value",
                                     String.format(
-                                            "Answer types of type %s must be worth more than 0 points.",
+                                            "%s answer types must be worth more than 0 points.",
                                             dto.getAnswerType().getId())));
         } else if (dto.getAnswerType() == TossupAnswerType.NEG && dto.getValue() > 0) {
             throw new ObjectValidationException(
@@ -106,7 +106,7 @@ public class TournamentTossupValueApiImpl
                             .add(
                                     "value",
                                     String.format(
-                                            "Answer types of type %s must be worth less than 0 points.",
+                                            "%s answer types must be worth less than 0 points.",
                                             dto.getAnswerType().getId())));
         }
     }
