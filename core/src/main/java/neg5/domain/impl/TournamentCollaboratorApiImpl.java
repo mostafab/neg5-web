@@ -92,7 +92,7 @@ public class TournamentCollaboratorApiImpl
             return Optional.of(
                     tournamentCollaboratorMapper.toDTO(
                             getDao().getCollaboratorByUsernameAndTournament(
-                                            tournamentId, username)));
+                                            username, tournamentId)));
         } catch (NoResultException e) {
             return Optional.empty();
         }
