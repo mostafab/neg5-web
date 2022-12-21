@@ -102,6 +102,12 @@ public class TournamentRoutes extends AbstractJsonRoutes {
                     return qbjManager.exportToQbjFormat(request.params("id"));
                 },
                 obj -> qbjGsonProvider.get().toJson(obj));
+        get(
+                "/:id/permissions",
+                (request, response) -> {
+                    String userId = currentUserContext.getUserDataOrThrow().getUsername();
+                    return accessManager.getUserPermissions(userId, request.params("id"));
+                });
 
         post(
                 "",

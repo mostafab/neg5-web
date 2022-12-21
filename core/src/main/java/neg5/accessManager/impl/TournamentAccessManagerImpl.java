@@ -8,6 +8,7 @@ import neg5.accessManager.api.TournamentAccessException;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
+import neg5.domain.api.TournamentPermissionsDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.userData.CurrentUserContext;
 import neg5.userData.UserData;
@@ -28,6 +29,14 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
         this.currentUserContext = currentUserContext;
         this.collaboratorManager = collaboratorManager;
         this.tournamentManager = tournamentManager;
+    }
+
+    @Override
+    public TournamentPermissionsDTO getUserPermissions(
+            @Nonnull String userId, @Nonnull String tournamentId) {
+        TournamentPermissionsDTO result = new TournamentPermissionsDTO();
+        result.setAccessLevel(getUserAccessLevelToTournament(tournamentId, userId));
+        return result;
     }
 
     @Override
