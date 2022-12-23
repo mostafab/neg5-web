@@ -9,7 +9,7 @@ source ./db.env
 ./start_local_db.sh
 
 echo "Waiting for postgres container to be ready..."
-sleep 5
+sleep 15
 
 echo "Creating database..."
 psql -h ${HOST} -p ${PORT} -U postgres -c "create database ${DB};" >/dev/null
