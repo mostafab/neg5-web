@@ -2,8 +2,11 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import javax.annotation.Nonnull;
 import javax.persistence.NoResultException;
 import neg5.domain.api.AccountApi;
 import neg5.domain.api.AccountCreationDTO;
@@ -28,6 +31,7 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
         this.accountMapper = accountMapper;
     }
 
+    @Override
     public AccountDTO createAccount(AccountCreationDTO account) throws DuplicateLoginException {
         boolean accountIsNew = verifyUniqueAccount(account.getUsername(), account.getEmail());
         if (!accountIsNew) {
@@ -39,6 +43,7 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
         return createAccountInTransaction(account, hashedPassword);
     }
 
+    @Override
     public Optional<String> verifyPassword(String usernameOrEmail, String password) {
         UsernameAndPassword usernameAndPassword = getHashedPassword(usernameOrEmail);
         if (usernameAndPassword == null
@@ -46,6 +51,12 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
             return Optional.empty();
         }
         return Optional.of(usernameAndPassword.username);
+    }
+
+    @Override
+    public List<AccountDTO> findByQuery(@Nonnull String query) {
+        Objects.requireNonNull(query, "query cannot be null.");
+        return new ArrayList<>();
     }
 
     @Transactional
