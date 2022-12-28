@@ -11,6 +11,16 @@ public class AccountDAO extends AbstractDAO<Account, String> {
         super(Account.class);
     }
 
+    public List<Account> findByQuery(String query) {
+        String param = String.format("%s%s", query, "%");
+        return getEntityManager()
+                .createQuery(
+                        "SELECT a from Account a where a.id like :query OR a.name like :query OR a.email like :query",
+                        Account.class)
+                .setParameter("query", param)
+                .getResultList();
+    }
+
     public Account getByUsernameOrEmail(String usernameOrEmail) {
         return getEntityManager()
                 .createQuery(
