@@ -2,10 +2,10 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.persistence.NoResultException;
 import neg5.domain.api.AccountApi;
@@ -54,9 +54,12 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     @Override
+    @Transactional
     public List<AccountDTO> findByQuery(@Nonnull String query) {
         Objects.requireNonNull(query, "query cannot be null.");
-        return new ArrayList<>();
+        return accountDAO.findByQuery(query.toLowerCase().trim()).stream()
+                .map(accountMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional
