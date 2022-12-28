@@ -41,6 +41,12 @@ public class AccountRoutes extends AbstractJsonRoutes {
     public void registerRoutes() {
         post("", this::createAccountAndLogin);
         get("/me", (request, response) -> currentUserContext.getUserData().orElse(null));
+        get(
+                "/search",
+                (request, response) -> {
+                    currentUserContext.getUserDataOrThrow();
+                    return accountManager.findByQuery(request.queryParams("query"));
+                });
     }
 
     private Object createAccountAndLogin(Request request, Response response) {
