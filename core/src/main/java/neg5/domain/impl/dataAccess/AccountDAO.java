@@ -15,7 +15,7 @@ public class AccountDAO extends AbstractDAO<Account, String> {
         String param = String.format("%s%s", query, "%");
         return getEntityManager()
                 .createQuery(
-                        "SELECT a from Account a where a.id like :query OR a.name like :query OR a.email like :query",
+                        "SELECT a from Account a where lower(a.id) like :query OR lower(a.name) like :query OR lower(a.email) like :query",
                         Account.class)
                 .setParameter("query", param)
                 .getResultList();
