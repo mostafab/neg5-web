@@ -44,13 +44,14 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     @Override
-    public Optional<String> verifyPassword(String usernameOrEmail, String password) {
-        UsernameAndPassword usernameAndPassword = getHashedPassword(usernameOrEmail);
-        if (usernameAndPassword == null
-                || !BCrypt.checkpw(password, usernameAndPassword.hashedPassword)) {
+    public Optional<AccountWithHashedPassword> verifyPassword(
+            String usernameOrEmail, String password) {
+        AccountWithHashedPassword accountWithHashedPassword = getHashedPassword(usernameOrEmail);
+        if (accountWithHashedPassword == null
+                || !BCrypt.checkpw(password, accountWithHashedPassword.getHashedPassword())) {
             return Optional.empty();
         }
-        return Optional.of(usernameAndPassword.username);
+        return Optional.of(accountWithHashedPassword);
     }
 
     @Override
@@ -90,23 +91,16 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
     }
 
     @Transactional
-    UsernameAndPassword getHashedPassword(String usernameOrEmail) {
+    AccountWithHashedPassword getHashedPassword(String usernameOrEmail) {
         try {
             Account account = accountDAO.getByUsernameOrEmail(usernameOrEmail);
             if (account == null) {
                 return null;
             }
-            UsernameAndPassword result = new UsernameAndPassword();
-            result.username = account.getId();
-            result.hashedPassword = account.getHashedPassword();
-            return result;
+            return new AccountWithHashedPassword(
+                    account.getId(), account.getName(), account.getHashedPassword());
         } catch (NoResultException e) {
             return null;
         }
-    }
-
-    private static class UsernameAndPassword {
-        private String username;
-        private String hashedPassword;
     }
 }
