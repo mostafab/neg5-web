@@ -14,10 +14,13 @@ public class UserTokenParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserTokenParser.class);
 
+    public static final String NAME_KEY = "name";
+    public static final String USERNAME_KEY = "username";
+
     public UserData parseToken(String token) {
         try {
             JwtData jwtData = jwtApi.readJwt(token);
-            return new UserData(jwtData.getClaim("username"));
+            return new UserData(jwtData.getClaim(USERNAME_KEY), jwtData.getClaim(NAME_KEY));
         } catch (Exception e) {
             LOGGER.error("Encountered exception attempting to get user data", e);
             throw e;

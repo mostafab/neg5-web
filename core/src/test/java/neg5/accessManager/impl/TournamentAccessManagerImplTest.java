@@ -44,7 +44,7 @@ public class TournamentAccessManagerImplTest {
 
     @Test
     public void testAccessExceptionIfUserNotCollaborator() {
-        Optional<UserData> userData = Optional.of(new UserData("TEST"));
+        Optional<UserData> userData = Optional.of(new UserData("TEST", "TestName"));
         when(currentUserContext.getUserData()).thenReturn(userData);
         when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
@@ -60,7 +60,7 @@ public class TournamentAccessManagerImplTest {
 
     @Test
     public void testAccessExceptionThrownIfUserCollaboratorButRequiresAdminAccess() {
-        Optional<UserData> userData = Optional.of(new UserData("TEST"));
+        Optional<UserData> userData = Optional.of(new UserData("TEST", "TestName"));
         when(currentUserContext.getUserData()).thenReturn(userData);
         when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
@@ -76,7 +76,7 @@ public class TournamentAccessManagerImplTest {
 
     @Test
     public void testAccessExceptionThrownIfUserAdmimButRequiresDirectorAccess() {
-        Optional<UserData> userData = Optional.of(new UserData("TEST"));
+        Optional<UserData> userData = Optional.of(new UserData("TEST", "TestName"));
         when(currentUserContext.getUserData()).thenReturn(userData);
         when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))
@@ -92,7 +92,7 @@ public class TournamentAccessManagerImplTest {
 
     @Test
     public void testCanAccessIfHigherAccessLevelThanRequired() {
-        Optional<UserData> userData = Optional.of(new UserData("TEST"));
+        Optional<UserData> userData = Optional.of(new UserData("TEST", "TestName"));
         when(currentUserContext.getUserData()).thenReturn(userData);
         when(tournamentManager.get(anyString())).thenReturn(buildTournament());
         when(collaboratorManager.getByTournamentAndUsername(any(), any()))

@@ -46,7 +46,7 @@ public class AccountRoutesApiTest extends BaseRoutesApiTest {
     public void testLoginValidCredentials() {
         String body =
                 String.format(
-                        "{\"username\":\"%s\", \"password\":\"%s\"}",
+                        "{\"usernameOrEmail\":\"%s\", \"password\":\"%s\"}",
                         account.getUsername(), account.getPassword());
         given().body(body)
                 .when()
@@ -60,7 +60,7 @@ public class AccountRoutesApiTest extends BaseRoutesApiTest {
     public void testLoginInValidCredentials() {
         String body =
                 String.format(
-                        "{\"username\":\"%s\", \"password\":\"%s\"}",
+                        "{\"usernameOrEmail\":\"%s\", \"password\":\"%s\"}",
                         account.getUsername(), account.getPassword() + "garbage");
         given().body(body).when().post("/neg5-api/login").then().statusCode(403);
     }
