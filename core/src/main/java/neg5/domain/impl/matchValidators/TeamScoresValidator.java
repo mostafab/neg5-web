@@ -144,7 +144,7 @@ public class TeamScoresValidator implements TournamentMatchValidator {
                 pointsFromBonuses % rules.getBonusPointValue() == 0,
                 "teams.score",
                 String.format(
-                        "%s's points from bonuses (%d) is not a multiple of %d.",
+                        "%s's points from bonuses (%d) should be a multiple of %d.",
                         teamName, pointsFromBonuses, rules.getBonusPointValue()));
     }
 

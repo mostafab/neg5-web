@@ -80,7 +80,11 @@ public class TournamentPlayerApiImpl
         if (!playerMatches.isEmpty()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                            .add("matches", "A player with existing matches cannot be removed."));
+                            .add(
+                                    "matches",
+                                    String.format(
+                                            "%s cannot be removed because they have existing matches.",
+                                            playerDTO.getName())));
         }
         super.delete(id);
     }
