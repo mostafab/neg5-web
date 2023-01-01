@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,6 +18,7 @@ import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
+import neg5.domain.api.TournamentPlayerDTO;
 import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
@@ -91,7 +93,21 @@ public class TournamentTeamApiImpl
     public TournamentTeamDTO update(@Nonnull TournamentTeamDTO tournamentTeamDTO) {
         TournamentTeamDTO original = get(tournamentTeamDTO.getId());
         tournamentTeamDTO.setTournamentId(original.getTournamentId());
-        return super.update(tournamentTeamDTO);
+        TournamentTeamDTO result = super.update(tournamentTeamDTO);
+        if (tournamentTeamDTO.getPlayers() != null) {
+            Set<String> deletedPlayerIds = deletePlayersNotInIntersection(original, tournamentTeamDTO);
+            result.setPlayers(
+                    tournamentTeamDTO.getPlayers().stream()
+                            .filter(player -> !deletedPlayerIds.contains(player.getId()))
+                            .map(
+                                    player -> {
+                                        player.setTeamId(result.getId());
+                                        player.setTournamentId(result.getTournamentId());
+                                        return tournamentPlayerApi.createOrUpdate(player);
+                                    })
+                            .collect(Collectors.toSet()));
+        }
+        return result;
     }
 
     @Transactional
@@ -130,6 +146,25 @@ public class TournamentTeamApiImpl
         requireNonEmpty(errors, dto.getName(), "name");
         requireCustomValidation(errors, () -> ensureUniqueTeamName(dto));
         return Optional.of(errors);
+    }
+
+    @Transactional
+    protected Set<String> deletePlayersNotInIntersection(
+            TournamentTeamDTO original, TournamentTeamDTO updated) {
+        Set<String> playerIdsToKeep =
+                updated.getPlayers().stream()
+                        .map(TournamentPlayerDTO::getId)
+                        .collect(Collectors.toSet());
+        Set<String> deleted = new HashSet<>();
+        original.getPlayers()
+                .forEach(
+                        player -> {
+                            if (!playerIdsToKeep.contains(player.getId())) {
+                                tournamentPlayerApi.delete(player.getId());
+                                deleted.add(player.getId());
+                            }
+                        });
+        return deleted;
     }
 
     private void ensureUniqueTeamName(TournamentTeamDTO dto) {

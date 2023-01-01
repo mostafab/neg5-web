@@ -92,6 +92,14 @@ public class TournamentPlayerApiImpl
     }
 
     @Override
+    public TournamentPlayerDTO createOrUpdate(@Nonnull TournamentPlayerDTO player) {
+        if (player.getId() == null) {
+            return create(player);
+        }
+        return update(player);
+    }
+
+    @Override
     protected Optional<FieldValidationErrors> validateObject(TournamentPlayerDTO dto) {
         FieldValidationErrors errors = new FieldValidationErrors();
         requireNotNull(errors, dto.getTournamentId(), "tournamentId");

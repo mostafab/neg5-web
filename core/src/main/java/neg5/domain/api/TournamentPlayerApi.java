@@ -8,6 +8,8 @@ public interface TournamentPlayerApi extends DomainObjectApiLayer<TournamentPlay
 
     List<TournamentPlayerDTO> findByTeamId(@Nonnull String teamId);
 
+    TournamentPlayerDTO createOrUpdate(@Nonnull TournamentPlayerDTO player);
+
     Map<String, List<TournamentMatchDTO>> groupMatchesByPlayers(
             String tournamentId, String phaseId);
 }
