@@ -34,7 +34,7 @@ public class ForfeitValidator implements TournamentMatchValidator {
                 errors,
                 noInfoIsAdded,
                 "teams.forfeit",
-                "A forfeited match should contain no team-specific information.");
+                "A forfeited match should contain no team-specific information. Please clear out the score and remove all players.");
         return errors;
     }
 
