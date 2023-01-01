@@ -90,8 +90,8 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() >= 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have zero or more tossups heard. If they did not play in this match, please remove them.",
-                            playerName));
+                            "%s should have between 0 and %d tossups heard. If they did not play in this match, please remove them.",
+                            playerName, subject.getTossupsHeard()));
         }
 
         Integer playerTossupsHeard = matchPlayer.getTossupsHeard();

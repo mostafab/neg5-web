@@ -70,7 +70,7 @@ public class TeamScoresValidator implements TournamentMatchValidator {
                         .collect(Collectors.toSet());
         requireCondition(
                 errors,
-                scores.size() > 1,
+                scores.size() != 1,
                 "teams.score",
                 "This tournament's rules do not allow a tie.");
     }
