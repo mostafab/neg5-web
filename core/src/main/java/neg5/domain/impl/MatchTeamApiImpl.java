@@ -40,10 +40,7 @@ public class MatchTeamApiImpl extends AbstractApiLayerImpl<MatchTeam, MatchTeamD
                         : matchTeamDTO.getPlayers().stream()
                                 // Filter out players that don't have any tossups heard so that they
                                 // don't show up in this match
-                                .filter(
-                                        player ->
-                                                player.getTossupsHeard() != null
-                                                        && player.getTossupsHeard() > 0)
+                                .filter(player -> player.getTossupsHeard() != null)
                                 .map(
                                         player -> {
                                             player.setMatchId(matchTeamDTO.getMatchId());

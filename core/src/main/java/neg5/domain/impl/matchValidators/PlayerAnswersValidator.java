@@ -68,22 +68,31 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
             return errors;
         }
         final String playerName = playersById.get(matchPlayer.getPlayerId()).getName();
-        if (subject.getTossupsHeard() == null || subject.getTossupsHeard() == 0) {
+        if (subject.getTossupsHeard() == null) {
+            requireCondition(
+                    errors,
+                    matchPlayer.getTossupsHeard() == null,
+                    "players.tossupsHeard",
+                    String.format(
+                            "%s shouldn't have any recorded tossups heard since this match didn't record tossups heard. If they did not play in this match, please remove them.",
+                            playerName));
+        } else if (subject.getTossupsHeard() == 0) {
             requireCondition(
                     errors,
                     matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() == 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have zero tossups heard since this match hasn't recorded tossups heard. If they did not play in this match, please remove them.",
+                            "%s should have zero tossups heard since this match has zero tossups heard. If they did not play in this match, please remove them.",
+                            playerName));
+        } else {
+            requireCondition(
+                    errors,
+                    matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() >= 0,
+                    "players.tossupsHeard",
+                    String.format(
+                            "%s should have zero or more tossups heard. If they did not play in this match, please remove them.",
                             playerName));
         }
-        requireCondition(
-                errors,
-                matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() >= 0,
-                "players.tossupsHeard",
-                String.format(
-                        "%s should have zero or more tossups heard. If they did not play in this match, please remove them.",
-                        playerName));
 
         Integer playerTossupsHeard = matchPlayer.getTossupsHeard();
         if (playerTossupsHeard == null || playerTossupsHeard == 0) {

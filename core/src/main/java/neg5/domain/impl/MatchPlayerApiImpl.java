@@ -43,6 +43,10 @@ public class MatchPlayerApiImpl
                                         answer -> {
                                             answer.setMatchId(matchPlayerDTO.getMatchId());
                                             answer.setPlayerId(matchPlayerDTO.getPlayerId());
+                                            answer.setNumberGotten(
+                                                    answer.getNumberGotten() == null
+                                                            ? 0
+                                                            : answer.getNumberGotten());
                                             answer.setTournamentId(
                                                     matchPlayerDTO.getTournamentId());
                                             return matchPlayerAnswerManager.create(answer);
