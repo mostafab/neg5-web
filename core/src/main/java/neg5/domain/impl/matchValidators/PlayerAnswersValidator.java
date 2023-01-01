@@ -74,7 +74,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() == 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have zero tossups heard since this match didn't record tossups heard. If they did not play in this match, please remove them.",
+                            "%s should have zero tossups heard since this match hasn't recorded tossups heard. If they did not play in this match, please remove them.",
                             playerName));
         }
         requireCondition(
@@ -128,11 +128,11 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     err ->
                             requireCondition(
                                     err,
-                                    answer.getNumberGotten() != null
+                                    answer.getNumberGotten() == null
                                             || answer.getNumberGotten() >= 0,
                                     "players.answer.numberGotten",
                                     String.format(
-                                            "%s should have a zero or more tossups worth %d.",
+                                            "%s should have zero or more tossups worth %d points.",
                                             playerName, answer.getTossupValue())));
             numberOfTossupsAnswered +=
                     answer.getNumberGotten() == null ? 0 : answer.getNumberGotten();
@@ -162,7 +162,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                                                             == 0),
                                     "answers",
                                     String.format(
-                                            "%s has 0 tossups heard but a non-zero number of answers.",
+                                            "%s has no tossups heard, but was given a non-zero number of answers.",
                                             playerName));
                         });
     }
