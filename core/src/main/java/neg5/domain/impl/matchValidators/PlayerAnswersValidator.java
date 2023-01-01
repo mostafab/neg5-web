@@ -71,17 +71,19 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
         if (subject.getTossupsHeard() == null || subject.getTossupsHeard() == 0) {
             requireCondition(
                     errors,
-                    matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() == 0,
+                    matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() == 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have 0 tossups heard since this match didn't record tossups heard.",
+                            "%s should have zero tossups heard since this match hasn't recorded tossups heard. If they did not play in this match, please remove them.",
                             playerName));
         }
         requireCondition(
                 errors,
-                matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() >= 0,
+                matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() >= 0,
                 "players.tossupsHeard",
-                String.format("%s has a negative number of tossups heard.", playerName));
+                String.format(
+                        "%s should have zero or more tossups heard. If they did not play in this match, please remove them.",
+                        playerName));
 
         Integer playerTossupsHeard = matchPlayer.getTossupsHeard();
         if (playerTossupsHeard == null || playerTossupsHeard == 0) {
@@ -130,7 +132,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                             || answer.getNumberGotten() >= 0,
                                     "players.answer.numberGotten",
                                     String.format(
-                                            "%s must have a non-negative number of tossups worth %d.",
+                                            "%s should have zero or more tossups worth %d points.",
                                             playerName, answer.getTossupValue())));
             numberOfTossupsAnswered +=
                     answer.getNumberGotten() == null ? 0 : answer.getNumberGotten();
@@ -160,7 +162,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                                                                             == 0),
                                     "answers",
                                     String.format(
-                                            "%s has 0 tossups heard but a non-zero number of answers.",
+                                            "%s has no tossups heard, but was given a non-zero number of answers.",
                                             playerName));
                         });
     }
