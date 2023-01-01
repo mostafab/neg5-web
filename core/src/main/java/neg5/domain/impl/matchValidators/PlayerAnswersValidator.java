@@ -71,17 +71,19 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
         if (subject.getTossupsHeard() == null || subject.getTossupsHeard() == 0) {
             requireCondition(
                     errors,
-                    matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() == 0,
+                    matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() == 0,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have 0 tossups heard since this match didn't record tossups heard.",
+                            "%s should have zero tossups heard since this match didn't record tossups heard. If they did not play in this match, please remove them.",
                             playerName));
         }
         requireCondition(
                 errors,
-                matchPlayer.getTossupsHeard() == null || matchPlayer.getTossupsHeard() >= 0,
+                matchPlayer.getTossupsHeard() != null && matchPlayer.getTossupsHeard() >= 0,
                 "players.tossupsHeard",
-                String.format("%s has a negative number of tossups heard.", playerName));
+                String.format(
+                        "%s should have zero or more tossups heard. If they did not play in this match, please remove them.",
+                        playerName));
 
         Integer playerTossupsHeard = matchPlayer.getTossupsHeard();
         if (playerTossupsHeard == null || playerTossupsHeard == 0) {
@@ -126,11 +128,11 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     err ->
                             requireCondition(
                                     err,
-                                    answer.getNumberGotten() == null
+                                    answer.getNumberGotten() != null
                                             || answer.getNumberGotten() >= 0,
                                     "players.answer.numberGotten",
                                     String.format(
-                                            "%s must have a non-negative number of tossups worth %d.",
+                                            "%s should have a zero or more tossups worth %d.",
                                             playerName, answer.getTossupValue())));
             numberOfTossupsAnswered +=
                     answer.getNumberGotten() == null ? 0 : answer.getNumberGotten();

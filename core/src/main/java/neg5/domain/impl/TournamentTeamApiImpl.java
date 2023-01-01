@@ -95,7 +95,8 @@ public class TournamentTeamApiImpl
         tournamentTeamDTO.setTournamentId(original.getTournamentId());
         TournamentTeamDTO result = super.update(tournamentTeamDTO);
         if (tournamentTeamDTO.getPlayers() != null) {
-            Set<String> deletedPlayerIds = deletePlayersNotInIntersection(original, tournamentTeamDTO);
+            Set<String> deletedPlayerIds =
+                    deletePlayersNotInIntersection(original, tournamentTeamDTO);
             result.setPlayers(
                     tournamentTeamDTO.getPlayers().stream()
                             .filter(player -> !deletedPlayerIds.contains(player.getId()))
