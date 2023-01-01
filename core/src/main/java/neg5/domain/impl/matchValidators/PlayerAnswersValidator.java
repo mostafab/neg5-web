@@ -74,7 +74,7 @@ public class PlayerAnswersValidator implements TournamentMatchValidator {
                     matchPlayer.getTossupsHeard() == null,
                     "players.tossupsHeard",
                     String.format(
-                            "%s should have blank tossups heard since this match didn't record tossups heard. If they did not play in this match, please remove them.",
+                            "%s shouldn't have any recorded tossups heard since this match didn't record tossups heard. If they did not play in this match, please remove them.",
                             playerName));
         } else if (subject.getTossupsHeard() == 0) {
             requireCondition(
