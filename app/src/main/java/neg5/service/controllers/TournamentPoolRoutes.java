@@ -2,6 +2,8 @@ package neg5.service.controllers;
 
 import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
+import neg5.domain.api.TournamentPhaseApi;
+import neg5.domain.api.TournamentPhaseDTO;
 import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
@@ -10,15 +12,18 @@ import neg5.service.util.RequestHelper;
 public class TournamentPoolRoutes extends AbstractJsonRoutes {
 
     private final TournamentPoolApi poolManager;
+    private final TournamentPhaseApi phaseApi;
     private final RequestHelper requestHelper;
     private final TournamentAccessManager accessManager;
 
     @Inject
     public TournamentPoolRoutes(
             TournamentPoolApi poolManager,
+            TournamentPhaseApi phaseApi,
             RequestHelper requestHelper,
             TournamentAccessManager accessManager) {
         this.poolManager = poolManager;
+        this.phaseApi = phaseApi;
         this.requestHelper = requestHelper;
         this.accessManager = accessManager;
     }
@@ -30,8 +35,9 @@ public class TournamentPoolRoutes extends AbstractJsonRoutes {
                 (request, response) -> {
                     TournamentPoolDTO pool =
                             requestHelper.readFromRequest(request, TournamentPoolDTO.class);
+                    TournamentPhaseDTO phase = phaseApi.get(pool.getPhaseId());
                     accessManager.requireAccessLevel(
-                            pool.getTournamentId(), TournamentAccessLevel.OWNER);
+                            phase.getTournamentId(), TournamentAccessLevel.OWNER);
                     return poolManager.create(pool);
                 });
 
