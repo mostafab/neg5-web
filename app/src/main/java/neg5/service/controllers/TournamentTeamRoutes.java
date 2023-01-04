@@ -1,7 +1,6 @@
 package neg5.service.controllers;
 
 import com.google.inject.Inject;
-import java.util.Set;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
@@ -34,13 +33,6 @@ public class TournamentTeamRoutes extends AbstractJsonRoutes {
                     team.setId(request.params("id"));
                     return teamManager.update(team);
                 });
-        put(
-                "/:id/pools",
-                (request, response) -> {
-                    validateHasAccessToEditTeam(request);
-                    TeamPools poolIds = requestHelper.readFromRequest(request, TeamPools.class);
-                    return teamManager.updateTeamPools(request.params("id"), poolIds.getPoolIds());
-                });
 
         delete(
                 "/:id",
@@ -65,17 +57,5 @@ public class TournamentTeamRoutes extends AbstractJsonRoutes {
         tournamentAccessManager.requireAccessLevel(
                 team.getTournamentId(), TournamentAccessLevel.ADMIN);
         return teamManager.create(team);
-    }
-
-    static class TeamPools {
-        private Set<String> poolIds;
-
-        Set<String> getPoolIds() {
-            return poolIds;
-        }
-
-        void setPoolIds(Set<String> poolIds) {
-            this.poolIds = poolIds;
-        }
     }
 }
