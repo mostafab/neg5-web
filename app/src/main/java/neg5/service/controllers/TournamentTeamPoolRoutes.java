@@ -2,6 +2,7 @@ package neg5.service.controllers;
 
 import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
+import neg5.domain.api.BatchTeamPoolUpdatesDTO;
 import neg5.domain.api.TeamPoolAssignmentsDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
@@ -23,13 +24,21 @@ public class TournamentTeamPoolRoutes extends AbstractJsonRoutes {
 
     @Override
     public void registerRoutes() {
-        put(
+        post(
                 "",
                 (request, response) -> {
                     TeamPoolAssignmentsDTO assignments =
                             requestHelper.readFromRequest(request, TeamPoolAssignmentsDTO.class);
                     validateHasAccessToEditTeam(assignments);
                     return teamPoolApi.associateTeamWithPools(assignments);
+                });
+        post(
+                "/batch",
+                (request, response) -> {
+                    BatchTeamPoolUpdatesDTO updates =
+                            requestHelper.readFromRequest(request, BatchTeamPoolUpdatesDTO.class);
+                    updates.getAssignments().forEach(this::validateHasAccessToEditTeam);
+                    return teamPoolApi.batchAssociateWithPools(updates);
                 });
     }
 
