@@ -22,8 +22,6 @@ import neg5.domain.api.TournamentPlayerDTO;
 import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
-import neg5.domain.api.TournamentTeamPoolApi;
-import neg5.domain.api.TournamentTeamPoolDTO;
 import neg5.domain.impl.dataAccess.TournamentTeamDAO;
 import neg5.domain.impl.entities.TournamentTeam;
 import neg5.domain.impl.mappers.TournamentTeamMapper;
@@ -37,24 +35,19 @@ public class TournamentTeamApiImpl
     private final TournamentTeamDAO rwTournamentTeamDAO;
     private final TournamentTeamMapper tournamentTeamMapper;
     private final TournamentPlayerApi tournamentPlayerApi;
-    private final TournamentTeamPoolApi teamDivisionManager;
     private final TournamentMatchApi tournamentMatchApi;
-    private final TournamentPoolApi poolManager;
 
     @Inject
     public TournamentTeamApiImpl(
             TournamentTeamDAO rwTournamentTeamDAO,
             TournamentTeamMapper tournamentTeamMapper,
             TournamentPlayerApi tournamentPlayerApi,
-            TournamentTeamPoolApi teamDivisionManager,
             TournamentMatchApi tournamentMatchApi,
             TournamentPoolApi poolManager) {
         this.rwTournamentTeamDAO = rwTournamentTeamDAO;
         this.tournamentTeamMapper = tournamentTeamMapper;
         this.tournamentPlayerApi = tournamentPlayerApi;
-        this.teamDivisionManager = teamDivisionManager;
         this.tournamentMatchApi = tournamentMatchApi;
-        this.poolManager = poolManager;
     }
 
     @Override
@@ -72,19 +65,7 @@ public class TournamentTeamApiImpl
                                     })
                             .collect(Collectors.toSet()));
         }
-        if (tournamentTeamDTO.getDivisions() != null) {
-            Set<String> divisionIds =
-                    tournamentTeamDTO.getDivisions().stream()
-                            .map(d -> d.getId())
-                            .collect(Collectors.toSet());
-            List<TournamentTeamPoolDTO> teamPools =
-                    teamDivisionManager.associateTeamWithPools(
-                            divisionIds, created.getId(), created.getTournamentId());
-            created.setDivisions(
-                    teamPools.stream()
-                            .map(pool -> poolManager.get(pool.getPoolId()))
-                            .collect(Collectors.toSet()));
-        }
+        created.setDivisions(new HashSet<>());
         return created;
     }
 
@@ -109,19 +90,6 @@ public class TournamentTeamApiImpl
                             .collect(Collectors.toSet()));
         }
         return result;
-    }
-
-    @Transactional
-    public TournamentTeamDTO updateTeamPools(@Nonnull String teamId, @Nonnull Set<String> poolIds) {
-        TournamentTeamDTO team = get(teamId);
-        List<TournamentTeamPoolDTO> teamPools =
-                teamDivisionManager.associateTeamWithPools(
-                        poolIds, team.getId(), team.getTournamentId());
-        team.setDivisions(
-                teamPools.stream()
-                        .map(pool -> poolManager.get(pool.getPoolId()))
-                        .collect(Collectors.toSet()));
-        return team;
     }
 
     @Override
