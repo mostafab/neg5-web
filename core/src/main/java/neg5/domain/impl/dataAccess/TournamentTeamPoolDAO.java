@@ -12,6 +12,17 @@ public class TournamentTeamPoolDAO extends AbstractDAO<TournamentTeamPool, Tourn
         super(TournamentTeamPool.class);
     }
 
+    public TournamentTeamPool findByTeamAndPhase(String teamId, String phaseId) {
+        return getEntityManager()
+                .createQuery(
+                        "SELECT ttm from TournamentTeamPool ttm where ttm.id.team.id = :teamId"
+                                + " AND ttm.id.pool.phase.id = :phaseId",
+                        TournamentTeamPool.class)
+                .setParameter("teamId", teamId)
+                .setParameter("phaseId", phaseId)
+                .getSingleResult();
+    }
+
     public List<TournamentTeamPool> findByTeamId(String teamId) {
         return getEntityManager()
                 .createQuery(

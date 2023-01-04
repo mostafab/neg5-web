@@ -4,15 +4,15 @@ import java.util.Set;
 
 public class TeamPoolAssignmentsDTO {
 
-    private Set<String> poolIds;
+    private Set<PoolAssignmentDTO> assignments;
     private String teamId;
 
-    public Set<String> getPoolIds() {
-        return poolIds;
+    public Set<PoolAssignmentDTO> getAssignments() {
+        return assignments;
     }
 
-    public void setPoolIds(Set<String> poolIds) {
-        this.poolIds = poolIds;
+    public void setAssignments(Set<PoolAssignmentDTO> assignments) {
+        this.assignments = assignments;
     }
 
     public String getTeamId() {
