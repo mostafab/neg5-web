@@ -93,21 +93,6 @@ public class TournamentApiImpl extends AbstractApiLayerImpl<Tournament, Tourname
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public List<TournamentTossupValueDTO> updateTournamentTossupValues(
-            String tournamentId, List<TournamentTossupValueDTO> tossupValues) {
-        throwIfAnyMatchesExist(tournamentId);
-        validateAllUniqueValues(tossupValues);
-        tossupValueManager.deleteAllFromTournament(tournamentId);
-        return tossupValues.stream()
-                .map(
-                        tv -> {
-                            tv.setTournamentId(tournamentId);
-                            return tossupValueManager.create(tv);
-                        })
-                .collect(Collectors.toList());
-    }
-
     @Override
     protected TournamentDAO getDao() {
         return rwTournamentDAO;

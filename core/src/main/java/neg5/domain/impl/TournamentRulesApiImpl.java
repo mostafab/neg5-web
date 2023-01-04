@@ -2,6 +2,7 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
+import javax.annotation.Nonnull;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentRulesDTO;
@@ -18,6 +19,12 @@ public class TournamentRulesApiImpl implements TournamentRulesApi {
             TournamentToTournamentRulesMapper tournamentToTournamentRulesMapper) {
         this.tournamentManager = tournamentManager;
         this.tournamentToTournamentRulesMapper = tournamentToTournamentRulesMapper;
+    }
+
+    @Override
+    public TournamentRulesDTO update(
+            @Nonnull String tournamentId, @Nonnull TournamentRulesDTO rules) {
+        return null;
     }
 
     @Transactional

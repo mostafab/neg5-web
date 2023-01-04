@@ -7,7 +7,4 @@ public interface TournamentApi extends DomainObjectApiLayer<TournamentDTO, Strin
     TournamentDTO update(String tournamentId, UpdateTournamentRequestDTO updateTournamentRequest);
 
     List<TournamentDTO> getTournamentsOwnedByUser(String userId);
-
-    List<TournamentTossupValueDTO> updateTournamentTossupValues(
-            String tournamentId, List<TournamentTossupValueDTO> tossupValues);
 }
