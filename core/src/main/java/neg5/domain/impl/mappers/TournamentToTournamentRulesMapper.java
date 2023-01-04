@@ -11,4 +11,15 @@ public class TournamentToTournamentRulesMapper
     protected TournamentToTournamentRulesMapper() {
         super(TournamentDTO.class, TournamentRulesDTO.class);
     }
+
+    @Override
+    protected void addMappings() {
+        // This mapping was causing an issue like: Cannot convert List to set:
+        // NoSuchElementException. We don't need it on the reverse mapping, so just ignore for now.
+        getDtoToEntityTypeMap()
+                .addMappings(
+                        mp -> {
+                            mp.skip(TournamentDTO::setTossupValues);
+                        });
+    }
 }
