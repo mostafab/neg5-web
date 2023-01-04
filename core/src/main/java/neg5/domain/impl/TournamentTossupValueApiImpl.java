@@ -164,7 +164,11 @@ public class TournamentTossupValueApiImpl
                 tossupValues.stream()
                         .map(TournamentTossupValueDTO::getValue)
                         .collect(Collectors.toSet());
-
+        if (values.isEmpty()) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add("value", "At least one tossup value is required."));
+        }
         if (values.size() < tossupValues.size()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
