@@ -74,6 +74,7 @@ public class TournamentTeamPoolApiImpl
                                     assignment.getTeamId(), phaseAssignment.getPhaseId());
                         });
         return assignment.getAssignments().stream()
+                .filter(phaseAssignment -> phaseAssignment.getPoolId() != null)
                 .map(
                         phaseAssignment -> {
                             TournamentTeamPoolDTO dto = new TournamentTeamPoolDTO();
