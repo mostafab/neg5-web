@@ -9,6 +9,7 @@ import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentRulesApi;
+import neg5.domain.api.TournamentRulesDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.api.UpdateTournamentRequestDTO;
@@ -104,6 +105,16 @@ public class TournamentRoutes extends AbstractJsonRoutes {
                 (request, response) -> {
                     String userId = currentUserContext.getUserDataOrThrow().getUsername();
                     return accessManager.getUserPermissions(userId, request.params("id"));
+                });
+
+        put(
+                "/:id/rules",
+                (request, response) -> {
+                    String tournamentId = request.params("id");
+                    accessManager.requireAccessLevel(tournamentId, TournamentAccessLevel.OWNER);
+                    TournamentRulesDTO rules =
+                            requestHelper.readFromRequest(request, TournamentRulesDTO.class);
+                    return tournamentRulesManager.update(tournamentId, rules);
                 });
 
         post(
