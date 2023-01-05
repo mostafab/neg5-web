@@ -103,7 +103,11 @@ public class TournamentTeamApiImpl
         if (!teamMatches.isEmpty()) {
             throw new ObjectValidationException(
                     new FieldValidationErrors()
-                            .add("matches", "A team with existing matches cannot be removed."));
+                            .add(
+                                    "matches",
+                                    String.format(
+                                            "%s cannot be deleted because it has existing matches.",
+                                            team.getName())));
         }
         super.delete(id);
     }
