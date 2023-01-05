@@ -1,8 +1,6 @@
 package neg5.service.controllers;
 
-import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
-import java.util.List;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentCollaboratorApi;
@@ -11,9 +9,9 @@ import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentRulesApi;
+import neg5.domain.api.TournamentRulesDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
-import neg5.domain.api.TournamentTossupValueDTO;
 import neg5.domain.api.UpdateTournamentRequestDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.exports.qbj.api.QBJGsonProvider;
@@ -109,25 +107,22 @@ public class TournamentRoutes extends AbstractJsonRoutes {
                     return accessManager.getUserPermissions(userId, request.params("id"));
                 });
 
+        put(
+                "/:id/rules",
+                (request, response) -> {
+                    String tournamentId = request.params("id");
+                    accessManager.requireAccessLevel(tournamentId, TournamentAccessLevel.OWNER);
+                    TournamentRulesDTO rules =
+                            requestHelper.readFromRequest(request, TournamentRulesDTO.class);
+                    return tournamentRulesManager.update(tournamentId, rules);
+                });
+
         post(
                 "",
                 (request, response) -> {
                     TournamentDTO tournament =
                             requestHelper.readFromRequest(request, TournamentDTO.class);
                     return tournamentManager.create(tournament);
-                });
-
-        post(
-                "/:id/tossupValues",
-                (request, response) -> {
-                    accessManager.requireAccessLevel(
-                            request.params("id"), TournamentAccessLevel.OWNER);
-                    List<TournamentTossupValueDTO> values =
-                            requestHelper.readFromRequest(
-                                    request,
-                                    new TypeToken<List<TournamentTossupValueDTO>>() {}.getType());
-                    return tournamentManager.updateTournamentTossupValues(
-                            request.params("id"), values);
                 });
     }
 }

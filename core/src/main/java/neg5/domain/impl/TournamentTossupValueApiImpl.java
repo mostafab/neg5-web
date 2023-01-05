@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.TournamentTossupValueApi;
@@ -20,6 +21,7 @@ import neg5.domain.impl.dataAccess.TournamentTossupValueDAO;
 import neg5.domain.impl.entities.TournamentTossupValue;
 import neg5.domain.impl.entities.compositeIds.TournamentTossupValueId;
 import neg5.domain.impl.mappers.TournamentTossupValueMapper;
+import neg5.domain.impl.validators.NoMatchesValidator;
 import neg5.validation.ObjectValidationException;
 
 @Singleton
@@ -30,13 +32,16 @@ public class TournamentTossupValueApiImpl
 
     private final TournamentTossupValueDAO rwTournamentTossupValueDAO;
     private final TournamentTossupValueMapper tournamentTossupValueMapper;
+    private final NoMatchesValidator noMatchesValidator;
 
     @Inject
     public TournamentTossupValueApiImpl(
             TournamentTossupValueDAO rwTournamentTossupValueDAO,
-            TournamentTossupValueMapper tournamentTossupValueMapper) {
+            TournamentTossupValueMapper tournamentTossupValueMapper,
+            NoMatchesValidator noMatchesValidator) {
         this.rwTournamentTossupValueDAO = rwTournamentTossupValueDAO;
         this.tournamentTossupValueMapper = tournamentTossupValueMapper;
+        this.noMatchesValidator = noMatchesValidator;
     }
 
     @Override
@@ -50,6 +55,24 @@ public class TournamentTossupValueApiImpl
     public void deleteAllFromTournament(String tournamentId) {
         List<TournamentTossupValueDTO> values = findAllByTournamentId(tournamentId);
         values.forEach(v -> delete(getIdFromDTO(v)));
+    }
+
+    @Override
+    @Transactional
+    public List<TournamentTossupValueDTO> updateTournamentTossupValues(
+            @Nonnull String tournamentId, @Nonnull List<TournamentTossupValueDTO> tossupValues) {
+        noMatchesValidator.throwIfAnyMatchesExist(
+                tournamentId,
+                "Cannot update tossup value scheme for a tournament with existing matches.");
+        validateAllUniqueValues(tossupValues);
+        deleteAllFromTournament(tournamentId);
+        return tossupValues.stream()
+                .map(
+                        tv -> {
+                            tv.setTournamentId(tournamentId);
+                            return create(tv);
+                        })
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -124,6 +147,23 @@ public class TournamentTossupValueApiImpl
                                         "There is already a tossup rule with value "
                                                 + tossupValue.getValue()));
             }
+        }
+    }
+
+    private void validateAllUniqueValues(List<TournamentTossupValueDTO> tossupValues) {
+        Set<Integer> values =
+                tossupValues.stream()
+                        .map(TournamentTossupValueDTO::getValue)
+                        .collect(Collectors.toSet());
+        if (values.isEmpty()) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add("value", "At least one tossup value is required."));
+        }
+        if (values.size() < tossupValues.size()) {
+            throw new ObjectValidationException(
+                    new FieldValidationErrors()
+                            .add("value", "All unique tossup values required. "));
         }
     }
 
