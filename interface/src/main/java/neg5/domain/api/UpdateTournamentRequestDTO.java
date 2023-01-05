@@ -9,6 +9,7 @@ public class UpdateTournamentRequestDTO {
     private String location;
     private String questionSet;
     private String comments;
+    private Boolean hidden;
 
     public String getName() {
         return name;
@@ -48,5 +49,13 @@ public class UpdateTournamentRequestDTO {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 }
