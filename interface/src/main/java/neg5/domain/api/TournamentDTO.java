@@ -26,6 +26,7 @@ public class TournamentDTO {
     private Set<TournamentTossupValueDTO> tossupValues;
 
     private Integer maxActivePlayersPerTeam;
+    private Boolean hidden;
 
     public String getId() {
         return id;
@@ -153,5 +154,13 @@ public class TournamentDTO {
 
     public void setMaxActivePlayersPerTeam(Integer maxActivePlayersPerTeam) {
         this.maxActivePlayersPerTeam = maxActivePlayersPerTeam;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
     }
 }
