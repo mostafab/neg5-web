@@ -32,8 +32,8 @@ public class TournamentCollaboratorRoutes extends AbstractJsonRoutes {
                 (request, response) ->
                         collaboratorManager.addOrUpdateCollaborator(
                                 verifyEditAccessAndParseBody(request)));
-        delete(
-                "",
+        post(
+                "/delete",
                 (request, response) -> {
                     TournamentCollaboratorDTO collaborator = verifyEditAccessAndParseBody(request);
                     collaboratorManager.delete(collaborator);
