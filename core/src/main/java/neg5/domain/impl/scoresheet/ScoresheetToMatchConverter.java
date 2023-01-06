@@ -124,6 +124,27 @@ public class ScoresheetToMatchConverter {
                                                     matchTeam.setScore(
                                                             matchTeam.getScore()
                                                                     + answer.getValue());
+
+                                                    MatchPlayerDTO matchPlayer =
+                                                            playerToMatchPlayers.get(
+                                                                    answer.getPlayerId());
+                                                    matchPlayer.getAnswers().stream()
+                                                            .filter(
+                                                                    playerAnswer ->
+                                                                            playerAnswer
+                                                                                    .getTossupValue()
+                                                                                    .equals(
+                                                                                            answer
+                                                                                                    .getValue()))
+                                                            .findFirst()
+                                                            .ifPresent(
+                                                                    playerAnswer -> {
+                                                                        playerAnswer
+                                                                                .setNumberGotten(
+                                                                                        playerAnswer
+                                                                                                        .getNumberGotten()
+                                                                                                + 1);
+                                                                    });
                                                 }
                                             });
                             cycle.getBonuses()
