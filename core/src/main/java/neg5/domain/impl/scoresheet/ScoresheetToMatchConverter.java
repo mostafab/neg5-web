@@ -99,7 +99,8 @@ public class ScoresheetToMatchConverter {
                                     cycle.getAnswers().stream()
                                             .filter(
                                                     answer ->
-                                                            answerValuesToType.get(answer.getValue())
+                                                            answerValuesToType.get(
+                                                                            answer.getValue())
                                                                     != TossupAnswerType.NEG)
                                             .findFirst()
                                             .map(ScoresheetCycleAnswersDTO::getPlayerId)
@@ -120,7 +121,8 @@ public class ScoresheetToMatchConverter {
                             cycle.getAnswers()
                                     .forEach(
                                             answer -> {
-                                                if (playersOnThisTeam.contains(answer.getPlayerId())) {
+                                                if (playersOnThisTeam.contains(
+                                                        answer.getPlayerId())) {
                                                     matchTeam.setScore(
                                                             matchTeam.getScore()
                                                                     + answer.getValue());
