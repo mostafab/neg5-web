@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.MatchTeamDTO;
+import neg5.domain.api.ScoresheetCycleAnswersDTO;
 import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
@@ -19,6 +20,7 @@ import neg5.domain.api.TournamentPlayerDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.api.TournamentTossupValueDTO;
+import neg5.domain.api.enums.TossupAnswerType;
 
 @Singleton
 public class ScoresheetToMatchConverter {
@@ -83,10 +85,26 @@ public class ScoresheetToMatchConverter {
                                         Function.identity(),
                                         playerId -> buildStubMatchPlayer(playerId, tossupValues)));
 
+        Map<Integer, TossupAnswerType> valueToType =
+                tossupValues.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        TournamentTossupValueDTO::getValue,
+                                        TournamentTossupValueDTO::getAnswerType));
         scoresheet
                 .getCycles()
                 .forEach(
                         cycle -> {
+                            boolean rewardedToThisTeam =
+                                    cycle.getAnswers().stream()
+                                            .filter(
+                                                    answer ->
+                                                            valueToType.get(answer.getValue())
+                                                                    != TossupAnswerType.NEG)
+                                            .findFirst()
+                                            .map(ScoresheetCycleAnswersDTO::getPlayerId)
+                                            .map(playersOnTeam::contains)
+                                            .orElse(false);
                             cycle.getActivePlayers()
                                     .forEach(
                                             activePlayerId -> {
@@ -98,6 +116,36 @@ public class ScoresheetToMatchConverter {
                                                 }
                                                 matchPlayer.setTossupsHeard(
                                                         matchPlayer.getTossupsHeard() + 1);
+                                            });
+                            cycle.getAnswers()
+                                    .forEach(
+                                            answer -> {
+                                                if (playersOnTeam.contains(answer.getPlayerId())) {
+                                                    matchTeam.setScore(
+                                                            matchTeam.getScore()
+                                                                    + answer.getValue());
+                                                }
+                                            });
+                            cycle.getBonuses()
+                                    .forEach(
+                                            bonus -> {
+                                                if (teamId.equals(bonus.getAnsweringTeamId())) {
+                                                    matchTeam.setScore(
+                                                            matchTeam.getScore()
+                                                                    + bonus.getValue());
+                                                    // If this team got the bonus but wasn't the
+                                                    // original recipient, award them bounceback
+                                                    // points
+                                                    if (!rewardedToThisTeam) {
+                                                        matchTeam.setBouncebackPoints(
+                                                                matchTeam.getBouncebackPoints()
+                                                                                == null
+                                                                        ? bonus.getValue()
+                                                                        : matchTeam
+                                                                                        .getBouncebackPoints()
+                                                                                + bonus.getValue());
+                                                    }
+                                                }
                                             });
                         });
 
