@@ -11,11 +11,12 @@ public class ScoresheetDTO {
     private List<ScoresheetCycleDTO> cycles;
     private ScoresheetCycleDTO currentCycle;
 
-    private Set<String> phaseIds;
+    private Set<String> phases;
     private Integer round;
     private String room;
     private String moderator;
     private String packet;
+    private String notes;
 
     public String getTeam1Id() {
         return team1Id;
@@ -49,12 +50,12 @@ public class ScoresheetDTO {
         this.currentCycle = currentCycle;
     }
 
-    public Set<String> getPhaseIds() {
-        return phaseIds;
+    public Set<String> getPhases() {
+        return phases;
     }
 
-    public void setPhaseIds(Set<String> phaseIds) {
-        this.phaseIds = phaseIds;
+    public void setPhases(Set<String> phases) {
+        this.phases = phases;
     }
 
     public Integer getRound() {
@@ -87,5 +88,13 @@ public class ScoresheetDTO {
 
     public void setPacket(String packet) {
         this.packet = packet;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
