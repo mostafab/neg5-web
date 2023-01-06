@@ -55,37 +55,37 @@ public class ScoresheetToMatchConverter {
 
         List<TournamentTossupValueDTO> tossupValues =
                 tossupValueApi.findAllByTournamentId(tournamentId);
-        match.setTeams(getMatchTeams(scoresheet, tossupValues));
+        match.setTeams(convertMatchTeams(scoresheet, tossupValues));
 
         return match;
     }
 
-    private Set<MatchTeamDTO> getMatchTeams(
+    private Set<MatchTeamDTO> convertMatchTeams(
             ScoresheetDTO scoresheet, List<TournamentTossupValueDTO> tossupValues) {
         return Lists.newArrayList(scoresheet.getTeam1Id(), scoresheet.getTeam2Id()).stream()
-                .map(teamId -> buildMatchTeam(teamId, scoresheet, tossupValues))
+                .map(teamId -> convertMatchTeam(teamId, scoresheet, tossupValues))
                 .collect(Collectors.toSet());
     }
 
-    private MatchTeamDTO buildMatchTeam(
+    private MatchTeamDTO convertMatchTeam(
             String teamId, ScoresheetDTO scoresheet, List<TournamentTossupValueDTO> tossupValues) {
         MatchTeamDTO matchTeam = new MatchTeamDTO();
         matchTeam.setScore(0);
         matchTeam.setTeamId(teamId);
         // TODO add tossups without bonuses
 
-        Set<String> playersOnTeam =
+        Set<String> playersOnThisTeam =
                 playerApi.findByTeamId(teamId).stream()
                         .map(TournamentPlayerDTO::getId)
                         .collect(Collectors.toSet());
         Map<String, MatchPlayerDTO> playerToMatchPlayers =
-                playersOnTeam.stream()
+                playersOnThisTeam.stream()
                         .collect(
                                 Collectors.toMap(
                                         Function.identity(),
                                         playerId -> buildStubMatchPlayer(playerId, tossupValues)));
 
-        Map<Integer, TossupAnswerType> valueToType =
+        Map<Integer, TossupAnswerType> answerValuesToType =
                 tossupValues.stream()
                         .collect(
                                 Collectors.toMap(
@@ -99,11 +99,11 @@ public class ScoresheetToMatchConverter {
                                     cycle.getAnswers().stream()
                                             .filter(
                                                     answer ->
-                                                            valueToType.get(answer.getValue())
+                                                            answerValuesToType.get(answer.getValue())
                                                                     != TossupAnswerType.NEG)
                                             .findFirst()
                                             .map(ScoresheetCycleAnswersDTO::getPlayerId)
-                                            .map(playersOnTeam::contains)
+                                            .map(playersOnThisTeam::contains)
                                             .orElse(false);
                             cycle.getActivePlayers()
                                     .forEach(
@@ -120,7 +120,7 @@ public class ScoresheetToMatchConverter {
                             cycle.getAnswers()
                                     .forEach(
                                             answer -> {
-                                                if (playersOnTeam.contains(answer.getPlayerId())) {
+                                                if (playersOnThisTeam.contains(answer.getPlayerId())) {
                                                     matchTeam.setScore(
                                                             matchTeam.getScore()
                                                                     + answer.getValue());
@@ -130,8 +130,8 @@ public class ScoresheetToMatchConverter {
                                                                     answer.getPlayerId());
                                                     matchPlayer.getAnswers().stream()
                                                             .filter(
-                                                                    playerAnswer ->
-                                                                            playerAnswer
+                                                                    playerAnswerCounts ->
+                                                                            playerAnswerCounts
                                                                                     .getTossupValue()
                                                                                     .equals(
                                                                                             answer
