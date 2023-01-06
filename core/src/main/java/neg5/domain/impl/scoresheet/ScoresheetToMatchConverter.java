@@ -48,6 +48,7 @@ public class ScoresheetToMatchConverter {
         match.setPacket(scoresheet.getPacket());
         match.setModerator(scoresheet.getModerator());
         match.setPhases(scoresheet.getPhases());
+        match.setIsTiebreaker(scoresheet.getIsTiebreaker());
         match.setTossupsHeard(scoresheet.getCycles().size());
 
         String tournamentId = teamApi.get(scoresheet.getTeam1Id()).getTournamentId();

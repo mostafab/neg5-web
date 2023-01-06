@@ -17,6 +17,7 @@ public class ScoresheetDTO {
     private String moderator;
     private String packet;
     private String notes;
+    private Boolean isTiebreaker;
 
     public String getTeam1Id() {
         return team1Id;
@@ -96,5 +97,13 @@ public class ScoresheetDTO {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean getIsTiebreaker() {
+        return isTiebreaker;
+    }
+
+    public void setIsTiebreaker(Boolean isTiebreaker) {
+        this.isTiebreaker = isTiebreaker;
     }
 }
