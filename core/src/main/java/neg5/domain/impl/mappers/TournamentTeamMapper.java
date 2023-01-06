@@ -35,6 +35,12 @@ public class TournamentTeamMapper extends AbstractObjectMapper<TournamentTeam, T
 
     @Override
     protected void addMappings() {
+        getEntityToDTOTypeMap()
+                .addMappings(
+                        mp -> {
+                            mp.skip(TournamentTeamDTO::setDivisions);
+                            mp.skip(TournamentTeamDTO::setPlayers);
+                        });
         getDtoToEntityTypeMap()
                 .addMappings(
                         mp -> {
