@@ -9,7 +9,6 @@ public class ScoresheetDTO {
     private String team2Id;
 
     private List<ScoresheetCycleDTO> cycles;
-    private ScoresheetCycleDTO currentCycle;
 
     private Set<String> phases;
     private Integer round;
@@ -41,14 +40,6 @@ public class ScoresheetDTO {
 
     public void setCycles(List<ScoresheetCycleDTO> cycles) {
         this.cycles = cycles;
-    }
-
-    public ScoresheetCycleDTO getCurrentCycle() {
-        return currentCycle;
-    }
-
-    public void setCurrentCycle(ScoresheetCycleDTO currentCycle) {
-        this.currentCycle = currentCycle;
     }
 
     public Set<String> getPhases() {
