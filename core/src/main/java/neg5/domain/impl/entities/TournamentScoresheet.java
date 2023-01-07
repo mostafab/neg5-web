@@ -22,7 +22,7 @@ import org.hibernate.annotations.DynamicUpdate;
         name = TournamentScoresheet.ID_SEQ,
         sequenceName = TournamentScoresheet.ID_SEQ,
         allocationSize = 1)
-public class TournamentScoresheet extends AbstractDataObject<TournamentMatch>
+public class TournamentScoresheet extends AbstractDataObject<TournamentScoresheet>
         implements SpecificTournamentEntity, IdDataObject<Long>, Auditable, Serializable {
 
     public static final String ID_SEQ = "tournament_scoresheet_id_seq";
