@@ -22,5 +22,10 @@ public class TournamentScoresheetRoutes extends AbstractJsonRoutes {
                 (request, response) ->
                         scoresheetApi.convertToMatch(
                                 requestHelper.readFromRequest(request, ScoresheetDTO.class)));
+        post(
+                "/submit",
+                (request, response) ->
+                        scoresheetApi.submitScoresheet(
+                                requestHelper.readFromRequest(request, ScoresheetDTO.class)));
     }
 }
