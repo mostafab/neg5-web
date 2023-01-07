@@ -57,6 +57,8 @@ CREATE TABLE IF NOT EXISTS tournament_scoresheet_cycle_bonus (
   UNIQUE(tournament_scoresheet_cycle_id, number)
 );
 
+CREATE INDEX IF NOT EXISTS tournament_scoresheet_cycle_bonus_cycle_id_idx ON tournament_scoresheet_cycle_bonus(tournament_scoresheet_cycle_id);
+
 
 
 
