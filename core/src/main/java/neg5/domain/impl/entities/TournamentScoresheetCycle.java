@@ -3,9 +3,12 @@ package neg5.domain.impl.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
@@ -23,10 +26,10 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
     public static final String ID_SEQ = "tournament_scoresheet_cycle_id_seq";
 
     private Long id;
-    private Long tournamentScoresheetId;
+    private TournamentScoresheet scoresheet;
     private Integer number;
     private String stage;
-    private String activePlayerIds;
+    private String activePlayers;
 
     @Override
     @Id
@@ -42,13 +45,14 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
         this.id = id;
     }
 
-    @Column(name = "tournament_scoresheet_id", nullable = false)
-    public Long getTournamentScoresheetId() {
-        return tournamentScoresheetId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tournament_scoresheet_id")
+    public TournamentScoresheet getScoresheet() {
+        return scoresheet;
     }
 
-    public void setTournamentScoresheetId(Long tournamentScoresheetId) {
-        this.tournamentScoresheetId = tournamentScoresheetId;
+    public void setScoresheet(TournamentScoresheet scoresheet) {
+        this.scoresheet = scoresheet;
     }
 
     @Column(name = "number")
@@ -70,11 +74,11 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
     }
 
     @Column(name = "active_player_ids")
-    public String getActivePlayerIds() {
-        return activePlayerIds;
+    public String getActivePlayers() {
+        return activePlayers;
     }
 
-    public void setActivePlayerIds(String activePlayerIds) {
-        this.activePlayerIds = activePlayerIds;
+    public void setActivePlayers(String activePlayers) {
+        this.activePlayers = activePlayers;
     }
 }

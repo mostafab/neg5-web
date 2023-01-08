@@ -198,8 +198,7 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
         this.addedBy = addedBy;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tournament_scoresheet_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "scoresheet")
     public List<TournamentScoresheetCycle> getCycles() {
         return cycles;
     }

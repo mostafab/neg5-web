@@ -2,6 +2,7 @@ package neg5.domain.impl.mappers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import neg5.domain.api.ScoresheetCycleDTO;
@@ -24,10 +25,12 @@ public class TournamentScoresheetMapper
     protected void enrichDTO(
             ScoresheetDTO scoresheetDTO, TournamentScoresheet tournamentScoresheet) {
         scoresheetDTO.setCycles(
-                tournamentScoresheet.getCycles().stream()
-                        .map(cycleMapper::toDTO)
-                        .sorted(Comparator.comparing(ScoresheetCycleDTO::getNumber))
-                        .collect(Collectors.toList()));
+                tournamentScoresheet.getCycles() == null
+                        ? new ArrayList<>()
+                        : tournamentScoresheet.getCycles().stream()
+                                .map(cycleMapper::toDTO)
+                                .sorted(Comparator.comparing(ScoresheetCycleDTO::getNumber))
+                                .collect(Collectors.toList()));
     }
 
     @Override
