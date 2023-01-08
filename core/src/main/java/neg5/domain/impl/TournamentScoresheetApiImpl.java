@@ -65,9 +65,9 @@ public class TournamentScoresheetApiImpl
     @Override
     @Transactional
     public TournamentMatchDTO submitScoresheet(ScoresheetDTO scoresheet) {
-        TournamentMatchDTO converted = convertToMatch(scoresheet);
         scoresheet.setStatus(ScoresheetStatus.SUBMITTED);
         ScoresheetDTO result = scoresheet.getId() == null ? create(scoresheet) : update(scoresheet);
+        TournamentMatchDTO converted = convertToMatch(scoresheet);
         converted.setScoresheetId(result.getId());
         return matchApi.create(converted);
     }
