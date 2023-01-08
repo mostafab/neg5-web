@@ -39,6 +39,7 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
     private String notes;
     private Boolean isTiebreaker;
     private String phases;
+    private String activePlayers;
 
     private Instant createdAt;
     private Instant lastUpdatedAt;
@@ -153,6 +154,15 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
 
     public void setPhases(String phases) {
         this.phases = phases;
+    }
+
+    @Column(name = "active_players")
+    public String getActivePlayers() {
+        return activePlayers;
+    }
+
+    public void setActivePlayers(String activePlayers) {
+        this.activePlayers = activePlayers;
     }
 
     @Column(name = "created_at")

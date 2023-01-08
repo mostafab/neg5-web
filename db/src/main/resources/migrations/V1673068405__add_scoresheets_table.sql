@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS tournament_scoresheet (
   notes text,
   tiebreaker boolean,
   phases text,
+  active_players text,
   created_at TIMESTAMP DEFAULT NOW(),
   added_by varchar(255) NOT NULL,
   last_updated_at TIMESTAMP DEFAULT NOW(),
@@ -59,6 +60,7 @@ CREATE TABLE IF NOT EXISTS tournament_scoresheet_cycle_bonus (
 
 CREATE INDEX IF NOT EXISTS tournament_scoresheet_cycle_bonus_cycle_id_idx ON tournament_scoresheet_cycle_bonus(tournament_scoresheet_cycle_id);
 
+ALTER TABLE tournament_match ADD COLUMN scoresheet_id bigint REFERENCES tournament_scoresheet(id) ON DELETE SET NULL;
 
 
 

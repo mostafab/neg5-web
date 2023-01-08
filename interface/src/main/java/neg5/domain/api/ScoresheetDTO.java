@@ -1,9 +1,8 @@
 package neg5.domain.api;
 
-import neg5.domain.api.enums.ScoresheetStatus;
-
 import java.util.List;
 import java.util.Set;
+import neg5.domain.api.enums.ScoresheetStatus;
 
 public class ScoresheetDTO {
 
@@ -16,6 +15,7 @@ public class ScoresheetDTO {
     private List<ScoresheetCycleDTO> cycles;
 
     private Set<String> phases;
+    private Set<String> activePlayers;
     private Integer round;
     private String room;
     private String moderator;
@@ -77,6 +77,14 @@ public class ScoresheetDTO {
 
     public void setPhases(Set<String> phases) {
         this.phases = phases;
+    }
+
+    public Set<String> getActivePlayers() {
+        return activePlayers;
+    }
+
+    public void setActivePlayers(Set<String> activePlayers) {
+        this.activePlayers = activePlayers;
     }
 
     public Integer getRound() {

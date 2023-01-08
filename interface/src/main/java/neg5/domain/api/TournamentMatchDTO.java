@@ -25,6 +25,8 @@ public class TournamentMatchDTO {
 
     private Instant addedAt;
 
+    private Long scoresheetId;
+
     public String getId() {
         return id;
     }
@@ -127,5 +129,13 @@ public class TournamentMatchDTO {
 
     public void setAddedAt(Instant addedAt) {
         this.addedAt = addedAt;
+    }
+
+    public Long getScoresheetId() {
+        return scoresheetId;
+    }
+
+    public void setScoresheetId(Long scoresheetId) {
+        this.scoresheetId = scoresheetId;
     }
 }

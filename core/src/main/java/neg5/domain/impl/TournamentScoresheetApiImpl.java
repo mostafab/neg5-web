@@ -46,6 +46,7 @@ public class TournamentScoresheetApiImpl
         TournamentMatchDTO converted = convertToMatch(scoresheet);
         scoresheet.setStatus(ScoresheetStatus.SUBMITTED);
         ScoresheetDTO result = scoresheet.getId() == null ? create(scoresheet) : update(scoresheet);
+        converted.setScoresheetId(result.getId());
         return matchApi.create(converted);
     }
 
