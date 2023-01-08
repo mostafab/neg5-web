@@ -9,6 +9,7 @@ import neg5.domain.api.MatchTeamDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.impl.entities.Tournament;
 import neg5.domain.impl.entities.TournamentMatch;
+import neg5.domain.impl.entities.TournamentScoresheet;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,8 @@ public class TournamentMatchMapperTest {
         Assert.assertNotNull(dto.getTeams());
         Assert.assertEquals(0, dto.getTeams().size());
 
+        Assert.assertEquals(entity.getScoresheet().getId(), dto.getScoresheetId());
+
         verify(matchTeamMapper, times(0)).toDTO(any());
     }
 
@@ -82,6 +85,7 @@ public class TournamentMatchMapperTest {
 
         Assert.assertNotNull(entity.getTournament());
         Assert.assertEquals(dto.getTournamentId(), entity.getTournament().getId());
+        Assert.assertEquals(dto.getScoresheetId(), entity.getScoresheet().getId());
     }
 
     @Test
@@ -105,6 +109,7 @@ public class TournamentMatchMapperTest {
         match.setSerialId("12345-LS");
         match.setTossupsHeard(20);
         match.setTournamentId(TOURNAMENT_ID);
+        match.setScoresheetId(5L);
 
         return match;
     }
@@ -122,6 +127,9 @@ public class TournamentMatchMapperTest {
 
         match.setTournament(new Tournament());
         match.getTournament().setId(TOURNAMENT_ID);
+
+        match.setScoresheet(new TournamentScoresheet());
+        match.getScoresheet().setId(5L);
 
         return match;
     }
