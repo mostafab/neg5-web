@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.MatchTeamDTO;
-import neg5.domain.api.ScoresheetCycleAnswersDTO;
+import neg5.domain.api.ScoresheetCycleAnswerDTO;
 import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
@@ -104,7 +104,7 @@ public class ScoresheetToMatchConverter {
                                                                             answer.getValue())
                                                                     != TossupAnswerType.NEG)
                                             .findFirst()
-                                            .map(ScoresheetCycleAnswersDTO::getPlayerId)
+                                            .map(ScoresheetCycleAnswerDTO::getPlayerId)
                                             .map(playersOnThisTeam::contains)
                                             .orElse(false);
                             cycle.getActivePlayers()

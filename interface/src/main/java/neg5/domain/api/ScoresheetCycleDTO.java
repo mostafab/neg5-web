@@ -9,7 +9,7 @@ public class ScoresheetCycleDTO {
     private Integer number;
     private String stage;
 
-    private List<ScoresheetCycleAnswersDTO> answers;
+    private List<ScoresheetCycleAnswerDTO> answers;
     private List<ScoresheetCycleBonusesDTO> bonuses;
     private List<String> activePlayers;
 
@@ -45,11 +45,11 @@ public class ScoresheetCycleDTO {
         this.stage = stage;
     }
 
-    public List<ScoresheetCycleAnswersDTO> getAnswers() {
+    public List<ScoresheetCycleAnswerDTO> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<ScoresheetCycleAnswersDTO> answers) {
+    public void setAnswers(List<ScoresheetCycleAnswerDTO> answers) {
         this.answers = answers;
     }
 

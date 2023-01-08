@@ -1,12 +1,12 @@
 package neg5.domain.api;
 
-public class ScoresheetCycleBonusesDTO {
+public class ScoresheetCycleAnswerDTO {
 
     private Long id;
     private Long cycleId;
-    private Integer number;
-    private String answeringTeamId;
+    private String playerId;
     private Integer value;
+    private Integer number;
 
     public Long getId() {
         return id;
@@ -24,20 +24,12 @@ public class ScoresheetCycleBonusesDTO {
         this.cycleId = cycleId;
     }
 
-    public Integer getNumber() {
-        return number;
+    public String getPlayerId() {
+        return playerId;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getAnsweringTeamId() {
-        return answeringTeamId;
-    }
-
-    public void setAnsweringTeamId(String answeringTeamId) {
-        this.answeringTeamId = answeringTeamId;
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
     }
 
     public Integer getValue() {
@@ -46,5 +38,13 @@ public class ScoresheetCycleBonusesDTO {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }
