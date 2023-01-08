@@ -3,6 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchApi;
@@ -43,7 +44,17 @@ public class TournamentScoresheetApiImpl
     @Override
     @Transactional
     public ScoresheetDTO create(@Nonnull ScoresheetDTO dto) {
-        return super.create(dto);
+        ScoresheetDTO result = super.create(dto);
+        result.setCycles(
+                dto.getCycles().stream()
+                        .map(
+                                cycle -> {
+                                    cycle.setScoresheetId(result.getId());
+                                    return scoresheetCycleApi.create(cycle);
+                                })
+                        .collect(Collectors.toList()));
+
+        return result;
     }
 
     @Override
