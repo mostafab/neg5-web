@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import neg5.domain.api.ScoresheetCycleDTO;
 import neg5.domain.api.TournamentScoresheetCycleAnswerApi;
 import neg5.domain.api.TournamentScoresheetCycleApi;
+import neg5.domain.api.TournamentScoresheetCycleBonusApi;
 import neg5.domain.impl.dataAccess.TournamentScoresheetCycleDAO;
 import neg5.domain.impl.entities.TournamentScoresheetCycle;
 import neg5.domain.impl.mappers.TournamentScoresheetCycleMapper;
@@ -21,15 +22,18 @@ public class TournamentScoresheetCycleApiImpl
     private final TournamentScoresheetCycleMapper mapper;
     private final TournamentScoresheetCycleDAO dao;
     private final TournamentScoresheetCycleAnswerApi answerApi;
+    private final TournamentScoresheetCycleBonusApi bonusApi;
 
     @Inject
     public TournamentScoresheetCycleApiImpl(
             TournamentScoresheetCycleMapper mapper,
             TournamentScoresheetCycleDAO dao,
-            TournamentScoresheetCycleAnswerApi answerApi) {
+            TournamentScoresheetCycleAnswerApi answerApi,
+            TournamentScoresheetCycleBonusApi bonusApi) {
         this.mapper = mapper;
         this.dao = dao;
         this.answerApi = answerApi;
+        this.bonusApi = bonusApi;
     }
 
     @Override
@@ -44,6 +48,16 @@ public class TournamentScoresheetCycleApiImpl
                                         answer -> {
                                             answer.setCycleId(result.getId());
                                             return answerApi.create(answer);
+                                        })
+                                .collect(Collectors.toList()));
+        result.setBonuses(
+                dto.getBonuses() == null
+                        ? new ArrayList<>()
+                        : dto.getBonuses().stream()
+                                .map(
+                                        bonus -> {
+                                            bonus.setCycleId(result.getId());
+                                            return bonusApi.create(bonus);
                                         })
                                 .collect(Collectors.toList()));
         return result;
