@@ -1,6 +1,7 @@
 package neg5.domain.impl.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
@@ -30,6 +32,7 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
     private Integer number;
     private String stage;
     private String activePlayers;
+    private List<TournamentScoresheetCycleAnswer> answers;
 
     @Override
     @Id
@@ -80,5 +83,14 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
 
     public void setActivePlayers(String activePlayers) {
         this.activePlayers = activePlayers;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cycle")
+    public List<TournamentScoresheetCycleAnswer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<TournamentScoresheetCycleAnswer> answers) {
+        this.answers = answers;
     }
 }
