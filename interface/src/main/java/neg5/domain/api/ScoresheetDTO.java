@@ -1,10 +1,15 @@
 package neg5.domain.api;
 
+import neg5.domain.api.enums.ScoresheetStatus;
+
 import java.util.List;
 import java.util.Set;
 
 public class ScoresheetDTO {
 
+    private Long id;
+    private ScoresheetStatus status;
+    private String tournamentId;
     private String team1Id;
     private String team2Id;
 
@@ -17,6 +22,30 @@ public class ScoresheetDTO {
     private String packet;
     private String notes;
     private Boolean isTiebreaker;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ScoresheetStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ScoresheetStatus status) {
+        this.status = status;
+    }
+
+    public String getTournamentId() {
+        return tournamentId;
+    }
+
+    public void setTournamentId(String tournamentId) {
+        this.tournamentId = tournamentId;
+    }
 
     public String getTeam1Id() {
         return team1Id;

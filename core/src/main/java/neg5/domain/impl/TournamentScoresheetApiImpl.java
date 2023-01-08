@@ -2,10 +2,12 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentScoresheetApi;
+import neg5.domain.api.enums.ScoresheetStatus;
 import neg5.domain.impl.dataAccess.TournamentScoresheetDAO;
 import neg5.domain.impl.entities.TournamentScoresheet;
 import neg5.domain.impl.mappers.TournamentScoresheetMapper;
@@ -39,8 +41,11 @@ public class TournamentScoresheetApiImpl
     }
 
     @Override
+    @Transactional
     public TournamentMatchDTO submitScoresheet(ScoresheetDTO scoresheet) {
         TournamentMatchDTO converted = convertToMatch(scoresheet);
+        scoresheet.setStatus(ScoresheetStatus.SUBMITTED);
+        ScoresheetDTO result = scoresheet.getId() == null ? create(scoresheet) : update(scoresheet);
         return matchApi.create(converted);
     }
 
