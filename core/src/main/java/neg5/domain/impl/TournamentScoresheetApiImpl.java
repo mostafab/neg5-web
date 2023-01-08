@@ -3,6 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import javax.annotation.Nonnull;
 import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
@@ -12,8 +13,6 @@ import neg5.domain.impl.dataAccess.TournamentScoresheetDAO;
 import neg5.domain.impl.entities.TournamentScoresheet;
 import neg5.domain.impl.mappers.TournamentScoresheetMapper;
 import neg5.domain.impl.scoresheet.ScoresheetToMatchConverter;
-
-import javax.annotation.Nonnull;
 
 @Singleton
 public class TournamentScoresheetApiImpl
