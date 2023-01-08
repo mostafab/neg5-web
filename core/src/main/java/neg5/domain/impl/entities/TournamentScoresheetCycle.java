@@ -33,6 +33,7 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
     private String stage;
     private String activePlayers;
     private List<TournamentScoresheetCycleAnswer> answers;
+    private List<TournamentScoresheetCycleBonus> bonuses;
 
     @Override
     @Id
@@ -92,5 +93,14 @@ public class TournamentScoresheetCycle extends AbstractDataObject<TournamentScor
 
     public void setAnswers(List<TournamentScoresheetCycleAnswer> answers) {
         this.answers = answers;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cycle")
+    public List<TournamentScoresheetCycleBonus> getBonuses() {
+        return bonuses;
+    }
+
+    public void setBonuses(List<TournamentScoresheetCycleBonus> bonuses) {
+        this.bonuses = bonuses;
     }
 }

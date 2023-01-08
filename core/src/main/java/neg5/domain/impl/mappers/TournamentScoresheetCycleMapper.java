@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import neg5.domain.api.ScoresheetCycleAnswerDTO;
+import neg5.domain.api.ScoresheetCycleBonusesDTO;
 import neg5.domain.api.ScoresheetCycleDTO;
 import neg5.domain.impl.entities.TournamentScoresheetCycle;
 
@@ -14,11 +15,15 @@ public class TournamentScoresheetCycleMapper
         extends AbstractObjectMapper<TournamentScoresheetCycle, ScoresheetCycleDTO> {
 
     private final TournamentScoresheetCycleAnswerMapper answerMapper;
+    private final TournamentScoresheetCycleBonusMapper bonusMapper;
 
     @Inject
-    protected TournamentScoresheetCycleMapper(TournamentScoresheetCycleAnswerMapper answerMapper) {
+    protected TournamentScoresheetCycleMapper(
+            TournamentScoresheetCycleAnswerMapper answerMapper,
+            TournamentScoresheetCycleBonusMapper bonusMapper) {
         super(TournamentScoresheetCycle.class, ScoresheetCycleDTO.class);
         this.answerMapper = answerMapper;
+        this.bonusMapper = bonusMapper;
     }
 
     @Override
@@ -32,6 +37,14 @@ public class TournamentScoresheetCycleMapper
                                 .map(answerMapper::toDTO)
                                 .sorted(Comparator.comparing(ScoresheetCycleAnswerDTO::getNumber))
                                 .collect(Collectors.toList()));
+
+        scoresheetCycleDTO.setBonuses(
+                tournamentScoresheetCycle.getBonuses() == null
+                        ? new ArrayList<>()
+                        : tournamentScoresheetCycle.getBonuses().stream()
+                                .map(bonusMapper::toDTO)
+                                .sorted(Comparator.comparing(ScoresheetCycleBonusesDTO::getNumber))
+                                .collect(Collectors.toList()));
     }
 
     @Override
@@ -40,11 +53,13 @@ public class TournamentScoresheetCycleMapper
                 .addMappings(
                         m -> {
                             m.skip(ScoresheetCycleDTO::setAnswers);
+                            m.skip(ScoresheetCycleDTO::setBonuses);
                         });
         getDtoToEntityTypeMap()
                 .addMappings(
                         m -> {
                             m.skip(TournamentScoresheetCycle::setAnswers);
+                            m.skip(TournamentScoresheetCycle::setBonuses);
                         });
     }
 }
