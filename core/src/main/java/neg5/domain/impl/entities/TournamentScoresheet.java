@@ -2,6 +2,7 @@ package neg5.domain.impl.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import neg5.domain.api.enums.ScoresheetStatus;
@@ -44,6 +46,8 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
     private Instant createdAt;
     private Instant lastUpdatedAt;
     private String addedBy;
+
+    private List<TournamentScoresheetCycle> cycles;
 
     @Override
     @Id
@@ -192,5 +196,15 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
     @Override
     public void setAddedBy(String addedBy) {
         this.addedBy = addedBy;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tournament_scoresheet_id")
+    public List<TournamentScoresheetCycle> getCycles() {
+        return cycles;
+    }
+
+    public void setCycles(List<TournamentScoresheetCycle> cycles) {
+        this.cycles = cycles;
     }
 }

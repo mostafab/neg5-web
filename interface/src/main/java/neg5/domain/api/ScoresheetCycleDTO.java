@@ -4,12 +4,30 @@ import java.util.List;
 
 public class ScoresheetCycleDTO {
 
+    private Long id;
+    private Long scoresheetId;
     private Integer number;
     private String stage;
 
     private List<ScoresheetCycleAnswersDTO> answers;
     private List<ScoresheetCycleBonusesDTO> bonuses;
     private List<String> activePlayers;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getScoresheetId() {
+        return scoresheetId;
+    }
+
+    public void setScoresheetId(Long scoresheetId) {
+        this.scoresheetId = scoresheetId;
+    }
 
     public Integer getNumber() {
         return number;

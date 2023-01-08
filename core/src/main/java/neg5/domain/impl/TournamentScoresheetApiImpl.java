@@ -8,6 +8,7 @@ import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentScoresheetApi;
+import neg5.domain.api.TournamentScoresheetCycleApi;
 import neg5.domain.api.enums.ScoresheetStatus;
 import neg5.domain.impl.dataAccess.TournamentScoresheetDAO;
 import neg5.domain.impl.entities.TournamentScoresheet;
@@ -23,17 +24,20 @@ public class TournamentScoresheetApiImpl
     private final TournamentMatchApi matchApi;
     private final TournamentScoresheetDAO scoresheetDAO;
     private final TournamentScoresheetMapper scoresheetMapper;
+    private final TournamentScoresheetCycleApi scoresheetCycleApi;
 
     @Inject
     public TournamentScoresheetApiImpl(
             ScoresheetToMatchConverter scoresheetConverter,
             TournamentMatchApi matchApi,
             TournamentScoresheetDAO scoresheetDAO,
-            TournamentScoresheetMapper scoresheetMapper) {
+            TournamentScoresheetMapper scoresheetMapper,
+            TournamentScoresheetCycleApi scoresheetCycleApi) {
         this.scoresheetConverter = scoresheetConverter;
         this.matchApi = matchApi;
         this.scoresheetDAO = scoresheetDAO;
         this.scoresheetMapper = scoresheetMapper;
+        this.scoresheetCycleApi = scoresheetCycleApi;
     }
 
     @Override
