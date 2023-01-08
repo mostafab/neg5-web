@@ -35,6 +35,8 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
     private String addedBy;
     private Instant addedAt;
 
+    private TournamentScoresheet scoresheet;
+
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
@@ -192,5 +194,15 @@ public class TournamentMatch extends AbstractDataObject<TournamentMatch>
     @Override
     public void setAddedAt(Instant addedAt) {
         this.addedAt = addedAt;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scoresheet_id", nullable = true)
+    public TournamentScoresheet getScoresheet() {
+        return scoresheet;
+    }
+
+    public void setScoresheet(TournamentScoresheet scoresheet) {
+        this.scoresheet = scoresheet;
     }
 }

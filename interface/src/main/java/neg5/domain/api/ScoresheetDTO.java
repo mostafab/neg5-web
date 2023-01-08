@@ -2,22 +2,50 @@ package neg5.domain.api;
 
 import java.util.List;
 import java.util.Set;
+import neg5.domain.api.enums.ScoresheetStatus;
 
 public class ScoresheetDTO {
 
+    private Long id;
+    private ScoresheetStatus status;
+    private String tournamentId;
     private String team1Id;
     private String team2Id;
 
     private List<ScoresheetCycleDTO> cycles;
-    private ScoresheetCycleDTO currentCycle;
 
     private Set<String> phases;
+    private Set<String> activePlayers;
     private Integer round;
     private String room;
     private String moderator;
     private String packet;
     private String notes;
     private Boolean isTiebreaker;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ScoresheetStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ScoresheetStatus status) {
+        this.status = status;
+    }
+
+    public String getTournamentId() {
+        return tournamentId;
+    }
+
+    public void setTournamentId(String tournamentId) {
+        this.tournamentId = tournamentId;
+    }
 
     public String getTeam1Id() {
         return team1Id;
@@ -43,20 +71,20 @@ public class ScoresheetDTO {
         this.cycles = cycles;
     }
 
-    public ScoresheetCycleDTO getCurrentCycle() {
-        return currentCycle;
-    }
-
-    public void setCurrentCycle(ScoresheetCycleDTO currentCycle) {
-        this.currentCycle = currentCycle;
-    }
-
     public Set<String> getPhases() {
         return phases;
     }
 
     public void setPhases(Set<String> phases) {
         this.phases = phases;
+    }
+
+    public Set<String> getActivePlayers() {
+        return activePlayers;
+    }
+
+    public void setActivePlayers(Set<String> activePlayers) {
+        this.activePlayers = activePlayers;
     }
 
     public Integer getRound() {
