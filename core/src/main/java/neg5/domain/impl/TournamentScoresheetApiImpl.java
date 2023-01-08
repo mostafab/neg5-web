@@ -13,6 +13,8 @@ import neg5.domain.impl.entities.TournamentScoresheet;
 import neg5.domain.impl.mappers.TournamentScoresheetMapper;
 import neg5.domain.impl.scoresheet.ScoresheetToMatchConverter;
 
+import javax.annotation.Nonnull;
+
 @Singleton
 public class TournamentScoresheetApiImpl
         extends AbstractApiLayerImpl<TournamentScoresheet, ScoresheetDTO, Long>
@@ -33,6 +35,12 @@ public class TournamentScoresheetApiImpl
         this.matchApi = matchApi;
         this.scoresheetDAO = scoresheetDAO;
         this.scoresheetMapper = scoresheetMapper;
+    }
+
+    @Override
+    @Transactional
+    public ScoresheetDTO create(@Nonnull ScoresheetDTO dto) {
+        return super.create(dto);
     }
 
     @Override
