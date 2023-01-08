@@ -40,6 +40,7 @@ public class MatchTransformer implements ResultTransformer {
         match.setSerialId((String) tuple[9]);
         match.setAddedAt((Timestamp) tuple[11]);
         match.setIsTiebreaker((Boolean) tuple[12]);
+        match.setScoresheetId((Long) tuple[13]);
         return match;
     }
 

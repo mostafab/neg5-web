@@ -17,6 +17,7 @@ public class Match {
     private String serialId;
     private Timestamp addedAt;
     private Boolean isTiebreaker;
+    private Long scoresheetId;
 
     public String getId() {
         return id;
@@ -112,5 +113,13 @@ public class Match {
 
     public void setIsTiebreaker(Boolean isTiebreaker) {
         this.isTiebreaker = isTiebreaker;
+    }
+
+    public Long getScoresheetId() {
+        return scoresheetId;
+    }
+
+    public void setScoresheetId(Long scoresheetId) {
+        this.scoresheetId = scoresheetId;
     }
 }
