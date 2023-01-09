@@ -3,13 +3,14 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
+import java.time.Instant;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
-import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentScoresheetApi;
 import neg5.domain.api.TournamentScoresheetCycleApi;
+import neg5.domain.api.TournamentScoresheetDTO;
 import neg5.domain.api.enums.ScoresheetStatus;
 import neg5.domain.impl.dataAccess.TournamentScoresheetDAO;
 import neg5.domain.impl.entities.TournamentScoresheet;
@@ -18,7 +19,7 @@ import neg5.domain.impl.scoresheet.ScoresheetToMatchConverter;
 
 @Singleton
 public class TournamentScoresheetApiImpl
-        extends AbstractApiLayerImpl<TournamentScoresheet, ScoresheetDTO, Long>
+        extends AbstractApiLayerImpl<TournamentScoresheet, TournamentScoresheetDTO, Long>
         implements TournamentScoresheetApi {
 
     private final ScoresheetToMatchConverter scoresheetConverter;
@@ -43,8 +44,9 @@ public class TournamentScoresheetApiImpl
 
     @Override
     @Transactional
-    public ScoresheetDTO create(@Nonnull ScoresheetDTO dto) {
-        ScoresheetDTO result = super.create(dto);
+    public TournamentScoresheetDTO create(@Nonnull TournamentScoresheetDTO dto) {
+        dto.setLastUpdatedAt(Instant.now());
+        TournamentScoresheetDTO result = super.create(dto);
         result.setCycles(
                 dto.getCycles().stream()
                         .map(
@@ -58,15 +60,44 @@ public class TournamentScoresheetApiImpl
     }
 
     @Override
-    public TournamentMatchDTO convertToMatch(ScoresheetDTO scoresheet) {
+    @Transactional
+    public TournamentScoresheetDTO update(@Nonnull TournamentScoresheetDTO dto) {
+        scoresheetCycleApi.deleteScoresheetCycles(dto.getId());
+        getDao().flush();
+        dto.setLastUpdatedAt(Instant.now());
+        TournamentScoresheetDTO result = super.update(dto);
+        result.setCycles(
+                dto.getCycles().stream()
+                        .map(
+                                cycle -> {
+                                    cycle.setScoresheetId(result.getId());
+                                    return scoresheetCycleApi.create(cycle);
+                                })
+                        .collect(Collectors.toList()));
+
+        return result;
+    }
+
+    @Override
+    public TournamentScoresheetDTO createOrUpdateDraft(TournamentScoresheetDTO scoresheet) {
+        scoresheet.setStatus(ScoresheetStatus.DRAFT);
+        if (scoresheet.getId() == null) {
+            return create(scoresheet);
+        }
+        return update(scoresheet);
+    }
+
+    @Override
+    public TournamentMatchDTO convertToMatch(TournamentScoresheetDTO scoresheet) {
         return scoresheetConverter.convert(scoresheet);
     }
 
     @Override
     @Transactional
-    public TournamentMatchDTO submitScoresheet(ScoresheetDTO scoresheet) {
+    public TournamentMatchDTO submitScoresheet(TournamentScoresheetDTO scoresheet) {
         scoresheet.setStatus(ScoresheetStatus.SUBMITTED);
-        ScoresheetDTO result = scoresheet.getId() == null ? create(scoresheet) : update(scoresheet);
+        TournamentScoresheetDTO result =
+                scoresheet.getId() == null ? create(scoresheet) : update(scoresheet);
         TournamentMatchDTO converted = convertToMatch(scoresheet);
         converted.setScoresheetId(result.getId());
         return matchApi.create(converted);

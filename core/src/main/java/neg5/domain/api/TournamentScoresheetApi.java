@@ -1,8 +1,11 @@
 package neg5.domain.api;
 
-public interface TournamentScoresheetApi extends DomainObjectApiLayer<ScoresheetDTO, Long> {
+public interface TournamentScoresheetApi
+        extends DomainObjectApiLayer<TournamentScoresheetDTO, Long> {
 
-    TournamentMatchDTO convertToMatch(ScoresheetDTO scoresheet);
+    TournamentScoresheetDTO createOrUpdateDraft(TournamentScoresheetDTO scoresheet);
 
-    TournamentMatchDTO submitScoresheet(ScoresheetDTO scoresheet);
+    TournamentMatchDTO convertToMatch(TournamentScoresheetDTO scoresheet);
+
+    TournamentMatchDTO submitScoresheet(TournamentScoresheetDTO scoresheet);
 }

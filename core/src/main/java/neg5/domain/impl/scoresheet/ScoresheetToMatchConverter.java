@@ -12,11 +12,11 @@ import java.util.stream.Collectors;
 import neg5.domain.api.MatchPlayerAnswerDTO;
 import neg5.domain.api.MatchPlayerDTO;
 import neg5.domain.api.MatchTeamDTO;
-import neg5.domain.api.ScoresheetCycleAnswerDTO;
-import neg5.domain.api.ScoresheetDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentPlayerDTO;
+import neg5.domain.api.TournamentScoresheetCycleAnswerDTO;
+import neg5.domain.api.TournamentScoresheetDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.api.TournamentTossupValueDTO;
@@ -39,7 +39,7 @@ public class ScoresheetToMatchConverter {
         this.tossupValueApi = tossupValueApi;
     }
 
-    public TournamentMatchDTO convert(ScoresheetDTO scoresheet) {
+    public TournamentMatchDTO convert(TournamentScoresheetDTO scoresheet) {
         TournamentMatchDTO match = new TournamentMatchDTO();
 
         match.setRound(scoresheet.getRound().longValue());
@@ -62,14 +62,16 @@ public class ScoresheetToMatchConverter {
     }
 
     private Set<MatchTeamDTO> convertMatchTeams(
-            ScoresheetDTO scoresheet, List<TournamentTossupValueDTO> tossupValues) {
+            TournamentScoresheetDTO scoresheet, List<TournamentTossupValueDTO> tossupValues) {
         return Lists.newArrayList(scoresheet.getTeam1Id(), scoresheet.getTeam2Id()).stream()
                 .map(teamId -> convertMatchTeam(teamId, scoresheet, tossupValues))
                 .collect(Collectors.toSet());
     }
 
     private MatchTeamDTO convertMatchTeam(
-            String teamId, ScoresheetDTO scoresheet, List<TournamentTossupValueDTO> tossupValues) {
+            String teamId,
+            TournamentScoresheetDTO scoresheet,
+            List<TournamentTossupValueDTO> tossupValues) {
         MatchTeamDTO matchTeam = new MatchTeamDTO();
         matchTeam.setScore(0);
         matchTeam.setTeamId(teamId);
@@ -104,7 +106,7 @@ public class ScoresheetToMatchConverter {
                                                                             answer.getValue())
                                                                     != TossupAnswerType.NEG)
                                             .findFirst()
-                                            .map(ScoresheetCycleAnswerDTO::getPlayerId)
+                                            .map(TournamentScoresheetCycleAnswerDTO::getPlayerId)
                                             .map(playersOnThisTeam::contains)
                                             .orElse(false);
                             cycle.getActivePlayers()

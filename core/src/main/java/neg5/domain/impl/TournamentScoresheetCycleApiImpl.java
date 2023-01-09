@@ -4,19 +4,20 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
-import neg5.domain.api.ScoresheetCycleDTO;
 import neg5.domain.api.TournamentScoresheetCycleAnswerApi;
 import neg5.domain.api.TournamentScoresheetCycleApi;
 import neg5.domain.api.TournamentScoresheetCycleBonusApi;
+import neg5.domain.api.TournamentScoresheetCycleDTO;
 import neg5.domain.impl.dataAccess.TournamentScoresheetCycleDAO;
 import neg5.domain.impl.entities.TournamentScoresheetCycle;
 import neg5.domain.impl.mappers.TournamentScoresheetCycleMapper;
 
 @Singleton
 public class TournamentScoresheetCycleApiImpl
-        extends AbstractApiLayerImpl<TournamentScoresheetCycle, ScoresheetCycleDTO, Long>
+        extends AbstractApiLayerImpl<TournamentScoresheetCycle, TournamentScoresheetCycleDTO, Long>
         implements TournamentScoresheetCycleApi {
 
     private final TournamentScoresheetCycleMapper mapper;
@@ -38,8 +39,8 @@ public class TournamentScoresheetCycleApiImpl
 
     @Override
     @Transactional
-    public ScoresheetCycleDTO create(@Nonnull ScoresheetCycleDTO dto) {
-        ScoresheetCycleDTO result = super.create(dto);
+    public TournamentScoresheetCycleDTO create(@Nonnull TournamentScoresheetCycleDTO dto) {
+        TournamentScoresheetCycleDTO result = super.create(dto);
         result.setAnswers(
                 dto.getAnswers() == null
                         ? new ArrayList<>()
@@ -61,6 +62,12 @@ public class TournamentScoresheetCycleApiImpl
                                         })
                                 .collect(Collectors.toList()));
         return result;
+    }
+
+    @Transactional
+    public void deleteScoresheetCycles(@Nonnull Long scoresheetId) {
+        List<Long> cycleIdsToDelete = getDao().getCycleIdsForScoresheet(scoresheetId);
+        cycleIdsToDelete.forEach(this::delete);
     }
 
     @Override

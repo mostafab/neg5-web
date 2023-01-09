@@ -5,31 +5,33 @@ import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
-import neg5.domain.api.ScoresheetCycleDTO;
-import neg5.domain.api.ScoresheetDTO;
+import neg5.domain.api.TournamentScoresheetCycleDTO;
+import neg5.domain.api.TournamentScoresheetDTO;
 import neg5.domain.impl.entities.TournamentScoresheet;
 
 @Singleton
 public class TournamentScoresheetMapper
-        extends AbstractObjectMapper<TournamentScoresheet, ScoresheetDTO> {
+        extends AbstractObjectMapper<TournamentScoresheet, TournamentScoresheetDTO> {
 
     private final TournamentScoresheetCycleMapper cycleMapper;
 
     @Inject
     protected TournamentScoresheetMapper(TournamentScoresheetCycleMapper cycleMapper) {
-        super(TournamentScoresheet.class, ScoresheetDTO.class);
+        super(TournamentScoresheet.class, TournamentScoresheetDTO.class);
         this.cycleMapper = cycleMapper;
     }
 
     @Override
     protected void enrichDTO(
-            ScoresheetDTO scoresheetDTO, TournamentScoresheet tournamentScoresheet) {
+            TournamentScoresheetDTO scoresheetDTO, TournamentScoresheet tournamentScoresheet) {
         scoresheetDTO.setCycles(
                 tournamentScoresheet.getCycles() == null
                         ? new ArrayList<>()
                         : tournamentScoresheet.getCycles().stream()
                                 .map(cycleMapper::toDTO)
-                                .sorted(Comparator.comparing(ScoresheetCycleDTO::getNumber))
+                                .sorted(
+                                        Comparator.comparing(
+                                                TournamentScoresheetCycleDTO::getNumber))
                                 .collect(Collectors.toList()));
     }
 
@@ -38,7 +40,7 @@ public class TournamentScoresheetMapper
         getEntityToDTOTypeMap()
                 .addMappings(
                         m -> {
-                            m.skip(ScoresheetDTO::setCycles);
+                            m.skip(TournamentScoresheetDTO::setCycles);
                         });
         getDtoToEntityTypeMap()
                 .addMappings(
