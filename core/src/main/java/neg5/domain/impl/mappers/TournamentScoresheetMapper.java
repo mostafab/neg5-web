@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentScoresheetCycleDTO;
 import neg5.domain.api.TournamentScoresheetDTO;
@@ -33,6 +34,13 @@ public class TournamentScoresheetMapper
                                         Comparator.comparing(
                                                 TournamentScoresheetCycleDTO::getNumber))
                                 .collect(Collectors.toList()));
+        scoresheetDTO.setActivePlayers(
+                new HashSet<>(
+                        Utilities.mapFromCommaSeparatedString(
+                                tournamentScoresheet.getActivePlayers())));
+        scoresheetDTO.setPhases(
+                new HashSet<>(
+                        Utilities.mapFromCommaSeparatedString(tournamentScoresheet.getPhases())));
     }
 
     @Override
