@@ -38,6 +38,9 @@ public class TournamentScoresheetMapper
                 new HashSet<>(
                         Utilities.mapFromCommaSeparatedString(
                                 tournamentScoresheet.getActivePlayers())));
+        scoresheetDTO.setPhases(
+                new HashSet<>(
+                        Utilities.mapFromCommaSeparatedString(tournamentScoresheet.getPhases())));
     }
 
     @Override
