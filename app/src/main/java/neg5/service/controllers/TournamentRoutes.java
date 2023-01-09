@@ -10,6 +10,7 @@ import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentRulesApi;
 import neg5.domain.api.TournamentRulesDTO;
+import neg5.domain.api.TournamentScoresheetApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.api.UpdateTournamentRequestDTO;
@@ -29,6 +30,7 @@ public class TournamentRoutes extends AbstractJsonRoutes {
     @Inject private TournamentTossupValueApi tournamentTossupValueManager;
     @Inject private TournamentCollaboratorApi tournamentCollaboratorManager;
     @Inject private TournamentRulesApi tournamentRulesManager;
+    @Inject private TournamentScoresheetApi scoresheetApi;
 
     @Inject private CurrentUserContext currentUserContext;
     @Inject private TournamentAccessManager accessManager;
@@ -77,6 +79,13 @@ public class TournamentRoutes extends AbstractJsonRoutes {
                 "/:id/matches",
                 (request, response) ->
                         tournamentMatchManager.findAllByTournamentId(request.params("id")));
+        get(
+                "/:id/scoresheets",
+                (request, response) -> {
+                    accessManager.requireAccessLevel(
+                            request.params("id"), TournamentAccessLevel.COLLABORATOR);
+                    return scoresheetApi.findAllByTournamentId(request.params("id"));
+                });
         get(
                 "/:id/phases",
                 (request, response) ->

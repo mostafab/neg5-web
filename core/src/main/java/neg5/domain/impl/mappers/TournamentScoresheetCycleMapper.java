@@ -49,6 +49,10 @@ public class TournamentScoresheetCycleMapper
                                         Comparator.comparing(
                                                 TournamentScoresheetCycleBonusesDTO::getNumber))
                                 .collect(Collectors.toList()));
+
+        scoresheetCycleDTO.setActivePlayers(
+                Utilities.mapFromCommaSeparatedString(
+                        tournamentScoresheetCycle.getActivePlayers()));
     }
 
     @Override
