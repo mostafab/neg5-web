@@ -2,15 +2,15 @@ package neg5.domain.api;
 
 import java.util.List;
 
-public class ScoresheetCycleDTO {
+public class TournamentScoresheetCycleDTO {
 
     private Long id;
     private Long scoresheetId;
     private Integer number;
     private String stage;
 
-    private List<ScoresheetCycleAnswerDTO> answers;
-    private List<ScoresheetCycleBonusesDTO> bonuses;
+    private List<TournamentScoresheetCycleAnswerDTO> answers;
+    private List<TournamentScoresheetCycleBonusesDTO> bonuses;
     private List<String> activePlayers;
 
     public Long getId() {
@@ -45,19 +45,19 @@ public class ScoresheetCycleDTO {
         this.stage = stage;
     }
 
-    public List<ScoresheetCycleAnswerDTO> getAnswers() {
+    public List<TournamentScoresheetCycleAnswerDTO> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<ScoresheetCycleAnswerDTO> answers) {
+    public void setAnswers(List<TournamentScoresheetCycleAnswerDTO> answers) {
         this.answers = answers;
     }
 
-    public List<ScoresheetCycleBonusesDTO> getBonuses() {
+    public List<TournamentScoresheetCycleBonusesDTO> getBonuses() {
         return bonuses;
     }
 
-    public void setBonuses(List<ScoresheetCycleBonusesDTO> bonuses) {
+    public void setBonuses(List<TournamentScoresheetCycleBonusesDTO> bonuses) {
         this.bonuses = bonuses;
     }
 

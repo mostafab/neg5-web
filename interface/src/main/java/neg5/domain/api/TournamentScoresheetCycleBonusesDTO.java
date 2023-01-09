@@ -1,6 +1,6 @@
 package neg5.domain.api;
 
-public class ScoresheetCycleBonusesDTO {
+public class TournamentScoresheetCycleBonusesDTO {
 
     private Long id;
     private Long cycleId;

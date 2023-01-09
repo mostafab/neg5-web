@@ -1,10 +1,11 @@
 package neg5.domain.api;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import neg5.domain.api.enums.ScoresheetStatus;
 
-public class ScoresheetDTO {
+public class TournamentScoresheetDTO {
 
     private Long id;
     private ScoresheetStatus status;
@@ -12,7 +13,7 @@ public class ScoresheetDTO {
     private String team1Id;
     private String team2Id;
 
-    private List<ScoresheetCycleDTO> cycles;
+    private List<TournamentScoresheetCycleDTO> cycles;
 
     private Set<String> phases;
     private Set<String> activePlayers;
@@ -22,6 +23,9 @@ public class ScoresheetDTO {
     private String packet;
     private String notes;
     private Boolean isTiebreaker;
+    private String addedBy;
+    private Instant addedAt;
+    private Instant lastUpdatedAt;
 
     public Long getId() {
         return id;
@@ -63,11 +67,11 @@ public class ScoresheetDTO {
         this.team2Id = team2Id;
     }
 
-    public List<ScoresheetCycleDTO> getCycles() {
+    public List<TournamentScoresheetCycleDTO> getCycles() {
         return cycles;
     }
 
-    public void setCycles(List<ScoresheetCycleDTO> cycles) {
+    public void setCycles(List<TournamentScoresheetCycleDTO> cycles) {
         this.cycles = cycles;
     }
 
@@ -133,5 +137,29 @@ public class ScoresheetDTO {
 
     public void setIsTiebreaker(Boolean isTiebreaker) {
         this.isTiebreaker = isTiebreaker;
+    }
+
+    public String getAddedBy() {
+        return addedBy;
+    }
+
+    public void setAddedBy(String addedBy) {
+        this.addedBy = addedBy;
+    }
+
+    public Instant getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
+    }
+
+    public Instant getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public void setLastUpdatedAt(Instant lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
     }
 }

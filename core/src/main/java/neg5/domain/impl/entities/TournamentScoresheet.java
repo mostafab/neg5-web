@@ -43,7 +43,7 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
     private String phases;
     private String activePlayers;
 
-    private Instant createdAt;
+    private Instant addedAt;
     private Instant lastUpdatedAt;
     private String addedBy;
 
@@ -171,11 +171,11 @@ public class TournamentScoresheet extends AbstractDataObject<TournamentScoreshee
 
     @Column(name = "created_at")
     public Instant getAddedAt() {
-        return createdAt;
+        return addedAt;
     }
 
-    public void setAddedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setAddedAt(Instant addedAt) {
+        this.addedAt = addedAt;
     }
 
     @Column(name = "last_updated_at")
