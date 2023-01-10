@@ -28,6 +28,7 @@ public class RoundRobinScheduler {
                 match.setTeam1Id(team1Id);
                 match.setTeam2Id(team2Id);
                 match.setBye(BYE.equals(team1Id) || BYE.equals(team2Id));
+                match.setRound(i + 1);
                 matches.add(match);
             }
             Collections.rotate(entries.subList(1, entries.size()), 1);
