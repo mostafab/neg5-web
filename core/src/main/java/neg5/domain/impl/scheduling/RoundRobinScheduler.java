@@ -12,14 +12,16 @@ public class RoundRobinScheduler {
 
     private static final String BYE = "Bye";
 
-    public List<TournamentScheduledMatchDTO> generateRoundRobinMatches(Set<String> teamIds) {
+    public List<TournamentScheduledMatchDTO> generateRoundRobinMatches(
+            Set<String> teamIds, Integer firstRound) {
         List<String> entries = new ArrayList<>(teamIds);
         if (entries.size() % 2 == 1) {
             entries.add(BYE);
         }
+        int startRound = firstRound == null ? 1 : firstRound;
         Collections.shuffle(entries);
         List<TournamentScheduledMatchDTO> matches = new ArrayList<>();
-        for (int i = 0; i < entries.size() - 1; i++) {
+        for (int round = 0; round < entries.size() - 1; round++) {
             for (int j = 0; j < entries.size() / 2; j++) {
                 String team1Id = entries.get(j);
                 String team2Id = entries.get(entries.size() - j - 1);
@@ -28,7 +30,7 @@ public class RoundRobinScheduler {
                 match.setTeam1Id(team1Id);
                 match.setTeam2Id(team2Id);
                 match.setBye(BYE.equals(team1Id) || BYE.equals(team2Id));
-                match.setRound(i + 1);
+                match.setRound(round + startRound);
                 matches.add(match);
             }
             Collections.rotate(entries.subList(1, entries.size()), 1);

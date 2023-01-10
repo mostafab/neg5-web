@@ -50,7 +50,8 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
                 .forEach(
                         teams -> {
                             List<TournamentScheduledMatchDTO> matches =
-                                    roundRobinScheduler.generateRoundRobinMatches(teams);
+                                    roundRobinScheduler.generateRoundRobinMatches(
+                                            teams, request.getFirstRound());
                             schedule.getMatches().addAll(matches);
                         });
         return schedule;
