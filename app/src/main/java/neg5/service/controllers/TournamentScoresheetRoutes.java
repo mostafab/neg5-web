@@ -6,6 +6,7 @@ import neg5.domain.api.TournamentScoresheetApi;
 import neg5.domain.api.TournamentScoresheetDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.service.util.RequestHelper;
+import org.eclipse.jetty.http.HttpStatus;
 
 public class TournamentScoresheetRoutes extends AbstractJsonRoutes {
 
@@ -26,6 +27,15 @@ public class TournamentScoresheetRoutes extends AbstractJsonRoutes {
                     Long id = Long.parseLong(request.params("id"));
                     ensureHasPermissions(id);
                     return scoresheetApi.get(id);
+                });
+        delete(
+                "/:id",
+                (request, response) -> {
+                    Long scoresheetId = Long.parseLong(request.params("id"));
+                    ensureHasPermissions(scoresheetId);
+                    scoresheetApi.delete(scoresheetId);
+                    response.status(HttpStatus.NO_CONTENT_204);
+                    return "";
                 });
         post(
                 "",
