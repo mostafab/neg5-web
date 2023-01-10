@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
@@ -33,10 +34,16 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
     @Override
     @Nonnull
     public TournamentScheduleDTO generateSchedule(@Nonnull ScheduleGenerationRequestDTO request) {
+        Objects.requireNonNull(request, "request cannot be null");
+        Objects.requireNonNull(request.getTournamentId(), "tournamentId cannot be null");
+        Objects.requireNonNull(request.getPhaseId(), "phaseId cannot be null");
+
         Map<String, Set<String>> teamsByPools =
                 splitTeamsByPools(request.getTournamentId(), request.getPhaseId());
 
         TournamentScheduleDTO schedule = new TournamentScheduleDTO();
+        schedule.setTournamentId(request.getTournamentId());
+        schedule.setPhaseId(request.getPhaseId());
         schedule.setMatches(new ArrayList<>());
         teamsByPools
                 .values()
