@@ -3,6 +3,7 @@ package neg5.domain.impl;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,6 +55,7 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
                                             teams, request.getFirstRound());
                             schedule.getMatches().addAll(matches);
                         });
+        schedule.getMatches().sort(Comparator.comparing(TournamentScheduledMatchDTO::getRound));
         return schedule;
     }
 
