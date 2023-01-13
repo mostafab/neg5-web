@@ -21,11 +21,18 @@ import neg5.domain.api.TournamentScheduledMatchDTO;
 import neg5.domain.api.TournamentSchedulingApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.impl.dataAccess.TournamentScheduleDAO;
+import neg5.domain.impl.entities.TournamentSchedule;
+import neg5.domain.impl.mappers.TournamentScheduleMapper;
 import neg5.domain.impl.scheduling.RoundRobinScheduler;
 
 @Singleton
-public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
+public class TournamentSchedulingApiImpl
+        extends AbstractApiLayerImpl<TournamentSchedule, TournamentScheduleDTO, Long>
+        implements TournamentSchedulingApi {
 
+    private final TournamentScheduleDAO dao;
+    private final TournamentScheduleMapper mapper;
     private final TournamentTeamApi teamApi;
     private final TournamentPhaseApi phaseApi;
     private final TournamentMatchApi matchApi;
@@ -33,10 +40,14 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
 
     @Inject
     public TournamentSchedulingApiImpl(
+            TournamentScheduleDAO dao,
+            TournamentScheduleMapper mapper,
             TournamentTeamApi teamApi,
             TournamentPhaseApi phaseApi,
             TournamentMatchApi matchApi,
             RoundRobinScheduler roundRobinScheduler) {
+        this.dao = dao;
+        this.mapper = mapper;
         this.teamApi = teamApi;
         this.phaseApi = phaseApi;
         this.matchApi = matchApi;
@@ -68,6 +79,16 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
                         });
         schedule.getMatches().sort(Comparator.comparing(TournamentScheduledMatchDTO::getRound));
         return schedule;
+    }
+
+    @Override
+    protected TournamentScheduleMapper getMapper() {
+        return mapper;
+    }
+
+    @Override
+    protected TournamentScheduleDAO getDao() {
+        return dao;
     }
 
     private Map<String, Set<String>> splitTeamsByPools(String tournamentId, String phaseId) {
