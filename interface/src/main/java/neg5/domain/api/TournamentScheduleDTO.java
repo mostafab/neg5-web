@@ -5,26 +5,17 @@ import neg5.domain.api.enums.ScheduleStatus;
 
 public class TournamentScheduleDTO {
 
-    private String tournamentId;
-    private String phaseId;
+    private String tournamentPhaseId;
     private ScheduleStatus status;
 
     private List<TournamentScheduledMatchDTO> matches;
 
-    public String getTournamentId() {
-        return tournamentId;
+    public String getTournamentPhaseId() {
+        return tournamentPhaseId;
     }
 
-    public void setTournamentId(String tournamentId) {
-        this.tournamentId = tournamentId;
-    }
-
-    public String getPhaseId() {
-        return phaseId;
-    }
-
-    public void setPhaseId(String phaseId) {
-        this.phaseId = phaseId;
+    public void setTournamentPhaseId(String tournamentPhaseId) {
+        this.tournamentPhaseId = tournamentPhaseId;
     }
 
     public ScheduleStatus getStatus() {
