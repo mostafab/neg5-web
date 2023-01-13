@@ -8,6 +8,8 @@ public interface TournamentMatchApi extends DomainObjectApiLayer<TournamentMatch
 
     Set<String> getMatchIdsByTournament(String tournamentId);
 
+    Set<Long> getRoundsPlayed(String tournamentId);
+
     List<TournamentMatchDTO> findAllByTournamentAndPhase(String tournamentId, String phaseId);
 
     Map<String, List<TournamentMatchDTO>> groupMatchesByTeams(String tournamentId, String phaseId);

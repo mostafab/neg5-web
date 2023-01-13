@@ -62,6 +62,7 @@ public class TournamentPlayerApiImpl
     }
 
     @Override
+    @Transactional
     public TournamentPlayerDTO update(@Nonnull TournamentPlayerDTO tournamentPlayerDTO) {
         TournamentPlayerDTO original = get(tournamentPlayerDTO.getId());
         tournamentPlayerDTO.setTournamentId(original.getTournamentId());
@@ -89,6 +90,7 @@ public class TournamentPlayerApiImpl
         super.delete(id);
     }
 
+    @Transactional
     public List<TournamentPlayerDTO> findByTeamId(@Nonnull String teamId) {
         return getDao().findByTeamId(teamId).stream()
                 .map(tournamentPlayerMapper::toDTO)
@@ -96,6 +98,7 @@ public class TournamentPlayerApiImpl
     }
 
     @Override
+    @Transactional
     public TournamentPlayerDTO createOrUpdate(@Nonnull TournamentPlayerDTO player) {
         if (player.getId() == null) {
             return create(player);

@@ -27,9 +27,8 @@ public class RoundRobinScheduler {
                 String team2Id = entries.get(entries.size() - j - 1);
 
                 TournamentScheduledMatchDTO match = new TournamentScheduledMatchDTO();
-                match.setTeam1Id(team1Id);
-                match.setTeam2Id(team2Id);
-                match.setBye(BYE.equals(team1Id) || BYE.equals(team2Id));
+                match.setTeam1Id(BYE.equals(team1Id) ? null : team1Id);
+                match.setTeam2Id(BYE.equals(team2Id) ? null : team2Id);
                 match.setRound(round + startRound);
                 matches.add(match);
             }

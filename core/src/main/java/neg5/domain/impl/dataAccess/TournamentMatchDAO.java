@@ -206,6 +206,15 @@ public class TournamentMatchDAO extends AbstractDAO<TournamentMatch, String> {
         return matches;
     }
 
+    public List<Long> getRoundsPlayed(String tournamentId) {
+        return getEntityManager()
+                .createQuery(
+                        "SELECT DISTINCT(m.round) FROM TournamentMatch m WHERE m.tournament.id = :tournamentId AND m.round IS NOT NULL",
+                        Long.class)
+                .setParameter("tournamentId", tournamentId)
+                .getResultList();
+    }
+
     public List<String> findMatchIdsByTournament(String tournamentId) {
         return getEntityManager()
                 .createQuery(

@@ -121,6 +121,7 @@ public class TournamentMatchApiImpl
     }
 
     @Override
+    @Transactional
     public List<TournamentMatchDTO> findAllByTournamentId(@Nonnull String tournamentId) {
         Map<Integer, TournamentTossupValueDTO> tossupValues = getTossupValueMap(tournamentId);
         return findByRawQuery(tournamentId).stream()
@@ -131,6 +132,12 @@ public class TournamentMatchApiImpl
     @Transactional
     public Set<String> getMatchIdsByTournament(String tournamentId) {
         return new HashSet<>(rwTournamentMatchDAO.findMatchIdsByTournament(tournamentId));
+    }
+
+    @Override
+    @Transactional
+    public Set<Long> getRoundsPlayed(String tournamentId) {
+        return new HashSet<>(rwTournamentMatchDAO.getRoundsPlayed(tournamentId));
     }
 
     @Transactional
