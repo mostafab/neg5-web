@@ -89,6 +89,7 @@ public abstract class AbstractApiLayerImpl<
     @Override
     public void delete(@Nonnull IdType id) {
         getDao().delete(id);
+        getDao().flush();
     }
 
     @Transactional
