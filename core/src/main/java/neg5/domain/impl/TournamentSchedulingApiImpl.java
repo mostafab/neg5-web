@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.ScheduleGenerationRequestDTO;
+import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.api.TournamentScheduleDTO;
 import neg5.domain.api.TournamentScheduledMatchDTO;
@@ -23,12 +24,16 @@ import neg5.domain.impl.scheduling.RoundRobinScheduler;
 public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
 
     private final TournamentTeamApi teamApi;
+    private final TournamentPhaseApi phaseApi;
     private final RoundRobinScheduler roundRobinScheduler;
 
     @Inject
     public TournamentSchedulingApiImpl(
-            TournamentTeamApi teamApi, RoundRobinScheduler roundRobinScheduler) {
+            TournamentTeamApi teamApi,
+            TournamentPhaseApi phaseApi,
+            RoundRobinScheduler roundRobinScheduler) {
         this.teamApi = teamApi;
+        this.phaseApi = phaseApi;
         this.roundRobinScheduler = roundRobinScheduler;
     }
 
@@ -36,15 +41,14 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
     @Nonnull
     public TournamentScheduleDTO generateSchedule(@Nonnull ScheduleGenerationRequestDTO request) {
         Objects.requireNonNull(request, "request cannot be null");
-        Objects.requireNonNull(request.getTournamentId(), "tournamentId cannot be null");
-        Objects.requireNonNull(request.getPhaseId(), "phaseId cannot be null");
+        Objects.requireNonNull(request.getTournamentPhaseId(), "phaseId cannot be null");
 
+        String tournamentId = phaseApi.get(request.getTournamentPhaseId()).getTournamentId();
         Map<String, Set<String>> teamsByPools =
-                splitTeamsByPools(request.getTournamentId(), request.getPhaseId());
+                splitTeamsByPools(tournamentId, request.getTournamentPhaseId());
 
         TournamentScheduleDTO schedule = new TournamentScheduleDTO();
-        schedule.setTournamentId(request.getTournamentId());
-        schedule.setPhaseId(request.getPhaseId());
+        schedule.setTournamentPhaseId(request.getTournamentPhaseId());
         schedule.setMatches(new ArrayList<>());
         teamsByPools
                 .values()
