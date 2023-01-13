@@ -7,10 +7,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import neg5.domain.api.ScheduleGenerationRequestDTO;
+import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.api.TournamentScheduleDTO;
@@ -25,15 +28,18 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
 
     private final TournamentTeamApi teamApi;
     private final TournamentPhaseApi phaseApi;
+    private final TournamentMatchApi matchApi;
     private final RoundRobinScheduler roundRobinScheduler;
 
     @Inject
     public TournamentSchedulingApiImpl(
             TournamentTeamApi teamApi,
             TournamentPhaseApi phaseApi,
+            TournamentMatchApi matchApi,
             RoundRobinScheduler roundRobinScheduler) {
         this.teamApi = teamApi;
         this.phaseApi = phaseApi;
+        this.matchApi = matchApi;
         this.roundRobinScheduler = roundRobinScheduler;
     }
 
@@ -50,13 +56,14 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
         TournamentScheduleDTO schedule = new TournamentScheduleDTO();
         schedule.setTournamentPhaseId(request.getTournamentPhaseId());
         schedule.setMatches(new ArrayList<>());
+        Long firstRound = getFirstRound(tournamentId, request);
         teamsByPools
                 .values()
                 .forEach(
                         teams -> {
                             List<TournamentScheduledMatchDTO> matches =
                                     roundRobinScheduler.generateRoundRobinMatches(
-                                            teams, request.getFirstRound());
+                                            teams, firstRound.intValue());
                             schedule.getMatches().addAll(matches);
                         });
         schedule.getMatches().sort(Comparator.comparing(TournamentScheduledMatchDTO::getRound));
@@ -90,6 +97,18 @@ public class TournamentSchedulingApiImpl implements TournamentSchedulingApi {
                                         entry.getValue().stream()
                                                 .map(tp -> tp.teamId)
                                                 .collect(Collectors.toSet())));
+    }
+
+    private Long getFirstRound(String tournamentId, ScheduleGenerationRequestDTO request) {
+        return Optional.ofNullable(request.getFirstRound())
+                .map(Long::new)
+                .orElseGet(
+                        () -> {
+                            Optional<Long> maxRoundSoFar =
+                                    matchApi.getRoundsPlayed(tournamentId).stream()
+                                            .max(Comparator.comparing(Function.identity()));
+                            return maxRoundSoFar.map(round -> round + 1L).orElse(1L);
+                        });
     }
 
     private static class TeamPool {

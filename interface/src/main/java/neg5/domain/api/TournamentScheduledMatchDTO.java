@@ -1,14 +1,11 @@
 package neg5.domain.api;
 
-import neg5.domain.api.enums.ScheduledMatchStatus;
-
 public class TournamentScheduledMatchDTO {
 
     private Integer round;
     private String team1Id;
     private String team2Id;
     private boolean bye;
-    private ScheduledMatchStatus status;
     private String room;
 
     public Integer getRound() {
@@ -41,14 +38,6 @@ public class TournamentScheduledMatchDTO {
 
     public void setBye(boolean bye) {
         this.bye = bye;
-    }
-
-    public ScheduledMatchStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(ScheduledMatchStatus status) {
-        this.status = status;
     }
 
     public String getRoom() {
