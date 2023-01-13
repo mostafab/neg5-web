@@ -5,7 +5,6 @@ public class TournamentScheduledMatchDTO {
     private Integer round;
     private String team1Id;
     private String team2Id;
-    private boolean bye;
     private String room;
 
     public Integer getRound() {
@@ -30,14 +29,6 @@ public class TournamentScheduledMatchDTO {
 
     public void setTeam2Id(String team2Id) {
         this.team2Id = team2Id;
-    }
-
-    public boolean getBye() {
-        return bye;
-    }
-
-    public void setBye(boolean bye) {
-        this.bye = bye;
     }
 
     public String getRoom() {
