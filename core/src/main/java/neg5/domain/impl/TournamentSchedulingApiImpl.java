@@ -66,6 +66,7 @@ public class TournamentSchedulingApiImpl
 
         TournamentScheduleDTO schedule = new TournamentScheduleDTO();
         schedule.setTournamentPhaseId(request.getTournamentPhaseId());
+        schedule.setTournamentId(tournamentId);
         schedule.setMatches(new ArrayList<>());
         Long firstRound = getFirstRound(tournamentId, request);
         teamsByPools

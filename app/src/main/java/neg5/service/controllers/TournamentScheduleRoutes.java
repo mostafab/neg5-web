@@ -1,13 +1,16 @@
 package neg5.service.controllers;
 
 import com.google.inject.Inject;
+import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.ScheduleGenerationRequestDTO;
+import neg5.domain.api.TournamentScheduleDTO;
 import neg5.domain.api.TournamentSchedulingApi;
 import neg5.service.util.RequestHelper;
 
 public class TournamentScheduleRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentSchedulingApi schedulingApi;
+    @Inject private TournamentAccessManager accessManager;
     @Inject private RequestHelper requestHelper;
 
     @Override
@@ -17,6 +20,13 @@ public class TournamentScheduleRoutes extends AbstractJsonRoutes {
 
     @Override
     public void registerRoutes() {
+        post(
+                "",
+                (request, response) -> {
+                    TournamentScheduleDTO schedule =
+                            requestHelper.readFromRequest(request, TournamentScheduleDTO.class);
+                    return schedulingApi.create(schedule);
+                });
         post(
                 "/generate",
                 (request, response) -> {
