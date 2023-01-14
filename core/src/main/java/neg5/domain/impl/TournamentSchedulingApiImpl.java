@@ -2,6 +2,7 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +18,7 @@ import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
 import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.api.TournamentScheduleDTO;
+import neg5.domain.api.TournamentScheduleMatchApi;
 import neg5.domain.api.TournamentScheduledMatchDTO;
 import neg5.domain.api.TournamentSchedulingApi;
 import neg5.domain.api.TournamentTeamApi;
@@ -36,6 +38,7 @@ public class TournamentSchedulingApiImpl
     private final TournamentTeamApi teamApi;
     private final TournamentPhaseApi phaseApi;
     private final TournamentMatchApi matchApi;
+    private final TournamentScheduleMatchApi scheduleMatchApi;
     private final RoundRobinScheduler roundRobinScheduler;
 
     @Inject
@@ -45,13 +48,51 @@ public class TournamentSchedulingApiImpl
             TournamentTeamApi teamApi,
             TournamentPhaseApi phaseApi,
             TournamentMatchApi matchApi,
+            TournamentScheduleMatchApi scheduleMatchApi,
             RoundRobinScheduler roundRobinScheduler) {
         this.dao = dao;
         this.mapper = mapper;
         this.teamApi = teamApi;
         this.phaseApi = phaseApi;
         this.matchApi = matchApi;
+        this.scheduleMatchApi = scheduleMatchApi;
         this.roundRobinScheduler = roundRobinScheduler;
+    }
+
+    @Override
+    @Transactional
+    public TournamentScheduleDTO create(@Nonnull TournamentScheduleDTO dto) {
+        dto.setTournamentId(phaseApi.get(dto.getTournamentPhaseId()).getTournamentId());
+        TournamentScheduleDTO result = super.create(dto);
+        result.setMatches(
+                dto.getMatches() == null
+                        ? new ArrayList<>()
+                        : dto.getMatches().stream()
+                                .map(
+                                        m -> {
+                                            m.setScheduleId(result.getId());
+                                            return scheduleMatchApi.create(m);
+                                        })
+                                .collect(Collectors.toList()));
+
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public TournamentScheduleDTO update(@Nonnull TournamentScheduleDTO dto) {
+        TournamentScheduleDTO result = super.update(dto);
+        scheduleMatchApi.deleteAllMatchesForSchedule(result.getId());
+        dto.setMatches(
+                dto.getMatches().stream()
+                        .map(
+                                m -> {
+                                    m.setScheduleId(result.getId());
+                                    return scheduleMatchApi.create(m);
+                                })
+                        .collect(Collectors.toList()));
+
+        return result;
     }
 
     @Override

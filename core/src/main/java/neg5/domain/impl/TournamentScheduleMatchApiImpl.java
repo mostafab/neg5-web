@@ -2,6 +2,8 @@ package neg5.domain.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
+import java.util.List;
 import neg5.domain.api.TournamentScheduleMatchApi;
 import neg5.domain.api.TournamentScheduledMatchDTO;
 import neg5.domain.impl.dataAccess.TournamentScheduleMatchDAO;
@@ -21,6 +23,13 @@ public class TournamentScheduleMatchApiImpl
             TournamentScheduleMatchDAO dao, TournamentScheduledMatchMapper mapper) {
         this.dao = dao;
         this.mapper = mapper;
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllMatchesForSchedule(Long scheduleId) {
+        List<Long> idsToDelete = getDao().getIdsForSchedule(scheduleId);
+        idsToDelete.forEach(this::delete);
     }
 
     @Override
