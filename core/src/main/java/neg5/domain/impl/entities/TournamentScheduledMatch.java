@@ -29,6 +29,7 @@ public class TournamentScheduledMatch extends AbstractDataObject<TournamentSched
     private String team1Id;
     private String team2Id;
     private Integer round;
+    private String room;
 
     @Override
     @Id
@@ -77,5 +78,14 @@ public class TournamentScheduledMatch extends AbstractDataObject<TournamentSched
 
     public void setRound(Integer round) {
         this.round = round;
+    }
+
+    @Column(name = "room")
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }

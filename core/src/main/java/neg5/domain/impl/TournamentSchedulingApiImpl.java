@@ -84,7 +84,7 @@ public class TournamentSchedulingApiImpl
         dto.setTournamentId(phaseApi.get(dto.getTournamentPhaseId()).getTournamentId());
         TournamentScheduleDTO result = super.update(dto);
         scheduleMatchApi.deleteAllMatchesForSchedule(result.getId());
-        dto.setMatches(
+        result.setMatches(
                 dto.getMatches().stream()
                         .map(
                                 m -> {
