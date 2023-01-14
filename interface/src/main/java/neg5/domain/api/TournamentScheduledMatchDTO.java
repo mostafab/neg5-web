@@ -2,10 +2,28 @@ package neg5.domain.api;
 
 public class TournamentScheduledMatchDTO {
 
+    private Long id;
+    private Long scheduleId;
     private Integer round;
     private String team1Id;
     private String team2Id;
     private String room;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(Long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
 
     public Integer getRound() {
         return round;
