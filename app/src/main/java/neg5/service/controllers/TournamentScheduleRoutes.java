@@ -27,6 +27,14 @@ public class TournamentScheduleRoutes extends AbstractJsonRoutes {
                             requestHelper.readFromRequest(request, TournamentScheduleDTO.class);
                     return schedulingApi.create(schedule);
                 });
+        put(
+                "/:id",
+                (request, response) -> {
+                    TournamentScheduleDTO schedule =
+                            requestHelper.readFromRequest(request, TournamentScheduleDTO.class);
+                    schedule.setId(Long.parseLong(request.params("id")));
+                    return schedulingApi.update(schedule);
+                });
         post(
                 "/generate",
                 (request, response) -> {

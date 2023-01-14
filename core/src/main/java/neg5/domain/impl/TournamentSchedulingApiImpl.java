@@ -81,6 +81,7 @@ public class TournamentSchedulingApiImpl
     @Override
     @Transactional
     public TournamentScheduleDTO update(@Nonnull TournamentScheduleDTO dto) {
+        dto.setTournamentId(phaseApi.get(dto.getTournamentPhaseId()).getTournamentId());
         TournamentScheduleDTO result = super.update(dto);
         scheduleMatchApi.deleteAllMatchesForSchedule(result.getId());
         dto.setMatches(
