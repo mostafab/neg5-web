@@ -15,12 +15,12 @@ import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 
 @Singleton
-public class ScheduleValidator {
+public class TournamentScheduleValidator {
 
     private final TournamentTeamApi teamApi;
 
     @Inject
-    public ScheduleValidator(TournamentTeamApi teamApi) {
+    public TournamentScheduleValidator(TournamentTeamApi teamApi) {
         this.teamApi = teamApi;
     }
 

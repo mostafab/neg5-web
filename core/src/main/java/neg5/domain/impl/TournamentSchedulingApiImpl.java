@@ -28,7 +28,7 @@ import neg5.domain.impl.dataAccess.TournamentScheduleDAO;
 import neg5.domain.impl.entities.TournamentSchedule;
 import neg5.domain.impl.mappers.TournamentScheduleMapper;
 import neg5.domain.impl.scheduling.RoundRobinScheduler;
-import neg5.domain.impl.validators.ScheduleValidator;
+import neg5.domain.impl.validators.TournamentScheduleValidator;
 
 @Singleton
 public class TournamentSchedulingApiImpl
@@ -42,7 +42,7 @@ public class TournamentSchedulingApiImpl
     private final TournamentMatchApi matchApi;
     private final TournamentScheduleMatchApi scheduleMatchApi;
     private final RoundRobinScheduler roundRobinScheduler;
-    private final ScheduleValidator scheduleValidator;
+    private final TournamentScheduleValidator scheduleValidator;
 
     @Inject
     public TournamentSchedulingApiImpl(
@@ -53,7 +53,7 @@ public class TournamentSchedulingApiImpl
             TournamentMatchApi matchApi,
             TournamentScheduleMatchApi scheduleMatchApi,
             RoundRobinScheduler roundRobinScheduler,
-            ScheduleValidator scheduleValidator) {
+            TournamentScheduleValidator scheduleValidator) {
         this.dao = dao;
         this.mapper = mapper;
         this.teamApi = teamApi;
