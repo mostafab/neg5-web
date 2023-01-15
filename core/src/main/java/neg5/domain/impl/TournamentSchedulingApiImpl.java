@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import neg5.domain.api.FieldValidationErrors;
 import neg5.domain.api.ScheduleGenerationRequestDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentPhaseApi;
@@ -27,6 +28,7 @@ import neg5.domain.impl.dataAccess.TournamentScheduleDAO;
 import neg5.domain.impl.entities.TournamentSchedule;
 import neg5.domain.impl.mappers.TournamentScheduleMapper;
 import neg5.domain.impl.scheduling.RoundRobinScheduler;
+import neg5.domain.impl.validators.ScheduleValidator;
 
 @Singleton
 public class TournamentSchedulingApiImpl
@@ -40,6 +42,7 @@ public class TournamentSchedulingApiImpl
     private final TournamentMatchApi matchApi;
     private final TournamentScheduleMatchApi scheduleMatchApi;
     private final RoundRobinScheduler roundRobinScheduler;
+    private final ScheduleValidator scheduleValidator;
 
     @Inject
     public TournamentSchedulingApiImpl(
@@ -49,7 +52,8 @@ public class TournamentSchedulingApiImpl
             TournamentPhaseApi phaseApi,
             TournamentMatchApi matchApi,
             TournamentScheduleMatchApi scheduleMatchApi,
-            RoundRobinScheduler roundRobinScheduler) {
+            RoundRobinScheduler roundRobinScheduler,
+            ScheduleValidator scheduleValidator) {
         this.dao = dao;
         this.mapper = mapper;
         this.teamApi = teamApi;
@@ -57,6 +61,7 @@ public class TournamentSchedulingApiImpl
         this.matchApi = matchApi;
         this.scheduleMatchApi = scheduleMatchApi;
         this.roundRobinScheduler = roundRobinScheduler;
+        this.scheduleValidator = scheduleValidator;
     }
 
     @Override
@@ -122,6 +127,11 @@ public class TournamentSchedulingApiImpl
                         });
         schedule.getMatches().sort(Comparator.comparing(TournamentScheduledMatchDTO::getRound));
         return schedule;
+    }
+
+    @Override
+    protected Optional<FieldValidationErrors> validateObject(TournamentScheduleDTO dto) {
+        return Optional.of(scheduleValidator.validate(dto));
     }
 
     @Override
