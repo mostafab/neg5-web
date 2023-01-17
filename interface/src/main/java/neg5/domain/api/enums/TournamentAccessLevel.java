@@ -16,4 +16,8 @@ public enum TournamentAccessLevel {
     public int getLevel() {
         return level;
     }
+
+    public boolean isAtLeast(TournamentAccessLevel other) {
+        return this.level >= other.level;
+    }
 }
