@@ -35,7 +35,16 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
     public TournamentPermissionsDTO getUserPermissions(
             @Nonnull String userId, @Nonnull String tournamentId) {
         TournamentPermissionsDTO result = new TournamentPermissionsDTO();
-        result.setAccessLevel(getUserAccessLevelToTournament(tournamentId, userId));
+        result.setTournamentId(tournamentId);
+        TournamentAccessLevel accessLevel = getUserAccessLevelToTournament(tournamentId, userId);
+        result.setAccessLevel(accessLevel);
+        result.setCanEditInfo(accessLevel.isAtLeast(TournamentAccessLevel.OWNER));
+        result.setCanEditCollaborators(accessLevel.isAtLeast(TournamentAccessLevel.OWNER));
+        result.setCanEditMatches(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
+        result.setCanEditTeams(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
+        result.setCanEditPools(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
+        result.setCanEditRules(accessLevel.isAtLeast(TournamentAccessLevel.OWNER));
+        result.setCanEditSchedule(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
         return result;
     }
 
@@ -44,7 +53,7 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
             @Nonnull String tournamentId, @Nonnull TournamentAccessLevel requiredAccessLevel)
             throws TournamentAccessException {
         TournamentAccessLevel currentLevel = getCurrentUserAccessLevel(tournamentId);
-        if (currentLevel.getLevel() < requiredAccessLevel.getLevel()) {
+        if (!currentLevel.isAtLeast(requiredAccessLevel)) {
             throw new TournamentAccessException(
                     tournamentId,
                     "User must have at least "
