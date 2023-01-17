@@ -35,7 +35,15 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
     public TournamentPermissionsDTO getUserPermissions(
             @Nonnull String userId, @Nonnull String tournamentId) {
         TournamentPermissionsDTO result = new TournamentPermissionsDTO();
-        result.setAccessLevel(getUserAccessLevelToTournament(tournamentId, userId));
+        result.setTournamentId(tournamentId);
+        TournamentAccessLevel accessLevel = getUserAccessLevelToTournament(tournamentId, userId);
+        result.setAccessLevel(accessLevel);
+        result.setCanEditInfo(accessLevel == TournamentAccessLevel.OWNER);
+        result.setCanEditCollaborators(accessLevel == TournamentAccessLevel.OWNER);
+        result.setCanEditMatches(accessLevel == TournamentAccessLevel.ADMIN);
+        result.setCanEditTeams(accessLevel == TournamentAccessLevel.ADMIN);
+        result.setCanEditPools(accessLevel == TournamentAccessLevel.ADMIN);
+        result.setCanEditRules(accessLevel == TournamentAccessLevel.OWNER);
         return result;
     }
 
