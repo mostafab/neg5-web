@@ -2,6 +2,7 @@ package neg5.domain.api;
 
 import java.time.LocalDate;
 import java.util.Set;
+import neg5.domain.api.enums.State;
 
 public class TournamentDTO {
 
@@ -11,6 +12,7 @@ public class TournamentDTO {
     private String name;
     private LocalDate tournamentDate;
     private String location;
+    private State state;
     private String questionSet;
     private String comments;
 
@@ -66,6 +68,14 @@ public class TournamentDTO {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public String getQuestionSet() {
