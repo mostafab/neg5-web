@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import neg5.domain.api.enums.State;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
@@ -31,6 +32,7 @@ public class Tournament extends AbstractDataObject<Tournament>
     private String name;
     private LocalDate tournamentDate;
     private String location;
+    private State state;
     private String questionSet;
     private String comments;
 
@@ -101,6 +103,15 @@ public class Tournament extends AbstractDataObject<Tournament>
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Column(name = "state_code")
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Column(name = "question_set")
