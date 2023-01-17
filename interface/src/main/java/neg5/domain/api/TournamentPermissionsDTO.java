@@ -12,6 +12,7 @@ public class TournamentPermissionsDTO {
     private boolean canEditCollaborators;
     private boolean canEditPools;
     private boolean canEditMatches;
+    private boolean canEditSchedule;
 
     public boolean getCanEditTeams() {
         return canEditTeams;
@@ -75,5 +76,13 @@ public class TournamentPermissionsDTO {
 
     public void setCanEditRules(boolean canEditRules) {
         this.canEditRules = canEditRules;
+    }
+
+    public boolean getCanEditSchedule() {
+        return canEditSchedule;
+    }
+
+    public void setCanEditSchedule(boolean canEditSchedule) {
+        this.canEditSchedule = canEditSchedule;
     }
 }

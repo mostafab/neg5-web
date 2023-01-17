@@ -44,6 +44,7 @@ public class TournamentAccessManagerImpl implements TournamentAccessManager {
         result.setCanEditTeams(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
         result.setCanEditPools(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
         result.setCanEditRules(accessLevel.isAtLeast(TournamentAccessLevel.OWNER));
+        result.setCanEditSchedule(accessLevel.isAtLeast(TournamentAccessLevel.ADMIN));
         return result;
     }
 
