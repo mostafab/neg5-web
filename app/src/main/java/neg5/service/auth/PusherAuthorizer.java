@@ -44,7 +44,6 @@ public class PusherAuthorizer {
             return Optional.empty();
         }
         UserData userData = currentUserContext.getUserDataOrThrow();
-        String userDataJson = gson.toJson(userData);
         Map<String, Object> channelData = new HashMap<>();
         channelData.put("user_id", userData.getUsername());
         String channelDataJson = gson.toJson(channelData);
