@@ -16,6 +16,8 @@ jobs:
       PORT: 1337
       NEG5_ENVIRONMENT: CI
       NEG5_JWT: ${{ secrets.NEG5JWT }}
+      PUSHER_SECRET_KEY: Test
+      PUSHER_APP_KEY: Test
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
