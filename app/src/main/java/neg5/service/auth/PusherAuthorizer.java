@@ -34,10 +34,11 @@ public class PusherAuthorizer {
     }
 
     /**
-     * Authorize a
+     * Authorize a Pusher channel connection:
+     * https://pusher.com/docs/channels/library_auth_reference/auth-signatures/#user-authentication
      *
-     * @param request
-     * @return
+     * @param request the Spark request
+     * @return populated optional if successful, empty otherwise
      */
     public Optional<PusherAuthResult> authenticate(Request request) {
         if (!currentUserContext.getUserData().isPresent()) {
