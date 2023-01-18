@@ -8,6 +8,7 @@ import java.util.List;
 import neg5.service.controllers.AccountRoutes;
 import neg5.service.controllers.BaseRoutes;
 import neg5.service.controllers.LoginRoutes;
+import neg5.service.controllers.PusherAuthRoutes;
 import neg5.service.controllers.TournamentCollaboratorRoutes;
 import neg5.service.controllers.TournamentMatchRoutes;
 import neg5.service.controllers.TournamentPhaseRoutes;
@@ -35,6 +36,7 @@ public class SparkResourcesGuiceModule extends AbstractModule {
     @Provides
     @Singleton
     public List<BaseRoutes> provideRoutes(
+            PusherAuthRoutes pusherAuthRoutes,
             AccountRoutes accountController,
             LoginRoutes loginController,
             TournamentMatchRoutes matchController,
@@ -51,6 +53,7 @@ public class SparkResourcesGuiceModule extends AbstractModule {
             TournamentScoresheetRoutes scoresheetRoutes,
             TournamentScheduleRoutes scheduleRoutes) {
         return ImmutableList.of(
+                pusherAuthRoutes,
                 accountController,
                 loginController,
                 matchController,
