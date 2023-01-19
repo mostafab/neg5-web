@@ -55,6 +55,10 @@ public class TeamStandingStatAggregator implements StatAggregator<TeamStandingSt
         }
 
         MatchUtil.TeamsWrapper teams = getTeams(match);
+        if (Boolean.TRUE.equals(teams.getThisTeam().getForfeit())
+                || Boolean.TRUE.equals(teams.getOtherTeam().getForfeit())) {
+            return;
+        }
         pointsPerGameBuilder.accept(teams.getThisTeam().getScore());
         pointsAgainstPerGameBuilder.accept(teams.getOtherTeam().getScore());
 
