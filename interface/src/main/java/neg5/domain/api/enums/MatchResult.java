@@ -3,7 +3,8 @@ package neg5.domain.api.enums;
 public enum MatchResult implements StringIdentifiable {
     WIN("W"),
     LOSS("L"),
-    TIE("T");
+    TIE("T"),
+    FORFEIT("F");
 
     private String id;
 

@@ -35,7 +35,7 @@ public class RoundStatsAggregator implements StatAggregator<RoundStatDTO> {
         match.getTeams()
                 .forEach(
                         team -> {
-                            totalPoints += team.getScore();
+                            totalPoints += team.getScore() == null ? 0 : team.getScore();
                             totalBouncebackPoints +=
                                     team.getBouncebackPoints() == null
                                             ? 0

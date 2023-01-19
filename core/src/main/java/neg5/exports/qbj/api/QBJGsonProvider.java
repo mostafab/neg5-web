@@ -14,6 +14,7 @@ public class QBJGsonProvider implements Supplier<Gson> {
             new GsonBuilder()
                     .registerTypeAdapterFactory(new IdentifiableTypeAdapterFactory())
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .setPrettyPrinting()
                     .create();
 
     @Override

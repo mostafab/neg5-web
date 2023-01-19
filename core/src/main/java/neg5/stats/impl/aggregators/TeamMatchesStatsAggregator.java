@@ -3,6 +3,7 @@ package neg5.stats.impl.aggregators;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import neg5.domain.api.AnswersDTO;
 import neg5.domain.api.MatchTeamDTO;
@@ -40,11 +41,15 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
         TeamMatchStatsDTO stats = new TeamMatchStatsDTO();
         stats.setRound(match.getRound() == null ? null : match.getRound().intValue());
         stats.setOpponentTeamId(teams.getOtherTeam().getTeamId());
-        stats.setOpponentPoints(teams.getOtherTeam().getScore().doubleValue());
+        stats.setOpponentPoints(
+                Optional.ofNullable(teams.getOtherTeam().getScore())
+                        .map(Integer::doubleValue)
+                        .orElse(null));
         stats.setResult(getResult(teams));
 
         MatchTeamDTO thisTeam = teams.getThisTeam();
-        stats.setPoints(thisTeam.getScore().doubleValue());
+        stats.setPoints(
+                Optional.ofNullable(thisTeam.getScore()).map(Integer::doubleValue).orElse(null));
 
         Set<AnswersDTO> answers =
                 StatsUtilities.aggregateAnswers(StatsUtilities.getAnswers(thisTeam));
@@ -54,17 +59,23 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
 
         stats.setTossupsHeard(
                 match.getTossupsHeard() == null ? 0 : match.getTossupsHeard().doubleValue());
-        stats.setPointsPerTossupHeard(
-                StatsUtilities.calculatePointsPerTossupsHeard(
-                        stats.getTossupsHeard().intValue(), 1, new BigDecimal(stats.getPoints())));
+        if (stats.getTossupsHeard() != null && stats.getPoints() != null) {
+            stats.setPointsPerTossupHeard(
+                    StatsUtilities.calculatePointsPerTossupsHeard(
+                            stats.getTossupsHeard().intValue(),
+                            1,
+                            new BigDecimal(stats.getPoints())));
+        }
 
         stats.setBouncebackPoints(
                 thisTeam.getBouncebackPoints() == null
                         ? null
                         : thisTeam.getBouncebackPoints().doubleValue());
-        stats.setBonusPoints(
-                StatsUtilities.getBonusPoints(
-                        stats.getPoints(), stats.getBouncebackPoints(), answers));
+        if (stats.getPoints() != null) {
+            stats.setBonusPoints(
+                    StatsUtilities.getBonusPoints(
+                            stats.getPoints(), stats.getBouncebackPoints(), answers));
+        }
         stats.setBonusesHeard(getBonusesHeard(answers, thisTeam.getOvertimeTossupsGotten()));
         stats.setPointsPerBonus(getPointsPerBonus(thisTeam, stats.getPoints(), answers));
 
@@ -81,6 +92,9 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
 
     private BigDecimal getPointsPerBonus(
             MatchTeamDTO thisTeam, Double points, Set<AnswersDTO> answers) {
+        if (points == null) {
+            return null;
+        }
         return StatsUtilities.calculatePointsPerBonus(
                 answers,
                 new BigDecimal(points),
@@ -94,6 +108,11 @@ public class TeamMatchesStatsAggregator implements StatAggregator<List<TeamMatch
     private MatchResult getResult(MatchUtil.TeamsWrapper teams) {
         MatchTeamDTO thisTeam = teams.getThisTeam();
         MatchTeamDTO otherTeam = teams.getOtherTeam();
+        if (Boolean.TRUE.equals(thisTeam.getForfeit())) {
+            return MatchResult.FORFEIT;
+        } else if (Boolean.TRUE.equals(otherTeam.getForfeit())) {
+            return MatchResult.WIN;
+        }
 
         if (thisTeam.getScore() == null || otherTeam.getScore() == null) {
             return null;
