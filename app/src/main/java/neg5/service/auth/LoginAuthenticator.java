@@ -4,7 +4,6 @@ import static neg5.userData.UserTokenParser.NAME_KEY;
 import static neg5.userData.UserTokenParser.USERNAME_KEY;
 
 import com.google.inject.Inject;
-import java.time.Instant;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
 import neg5.google.oauth.api.GoogleOauthCredentials;
@@ -57,7 +56,8 @@ public class LoginAuthenticator {
         if (oauthPayload.getCredential() == null) {
             return false;
         }
-        Optional<String> decodedPayload = googleOauthValidator.validateOauthCredentials(oauthPayload);
+        Optional<String> decodedPayload =
+                googleOauthValidator.validateOauthCredentials(oauthPayload);
         if (!decodedPayload.isPresent()) {
             return false;
         }
@@ -67,7 +67,6 @@ public class LoginAuthenticator {
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {
         return JwtData.newData()
                 .put(USERNAME_KEY, account.getUsername())
-                .put(NAME_KEY, account.getName())
-                .put("issuedAt", Instant.now().toEpochMilli());
+                .put(NAME_KEY, account.getName());
     }
 }

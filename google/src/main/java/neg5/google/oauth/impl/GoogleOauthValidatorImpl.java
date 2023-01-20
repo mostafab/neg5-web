@@ -10,7 +10,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
@@ -33,16 +32,14 @@ import retrofit2.Call;
 @Singleton
 public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
     private final GoogleOpenIdClient openIdClient;
-    private final Gson gson;
     private final Supplier<DiscoveryDocument> discoveryDocumentCache;
     private static final Set<String> VALID_ISSUERS =
             Sets.newHashSet("https://accounts.google.com", "accounts.google.com");
     private static final Logger LOGGER = LoggerFactory.getLogger(GoogleOauthValidatorImpl.class);
 
     @Inject
-    public GoogleOauthValidatorImpl(GoogleOpenIdClient openIdClient, Gson gson) {
+    public GoogleOauthValidatorImpl(GoogleOpenIdClient openIdClient) {
         this.openIdClient = openIdClient;
-        this.gson = gson;
         this.discoveryDocumentCache =
                 Suppliers.memoizeWithExpiration(this::getDiscoveryDocument, 24, TimeUnit.HOURS);
     }
