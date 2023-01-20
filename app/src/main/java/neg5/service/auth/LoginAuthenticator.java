@@ -57,7 +57,11 @@ public class LoginAuthenticator {
         if (oauthPayload.getCredential() == null) {
             return false;
         }
-        return googleOauthValidator.validateOauthCredentials(oauthPayload);
+        Optional<String> decodedPayload = googleOauthValidator.validateOauthCredentials(oauthPayload);
+        if (!decodedPayload.isPresent()) {
+            return false;
+        }
+        return true;
     }
 
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {

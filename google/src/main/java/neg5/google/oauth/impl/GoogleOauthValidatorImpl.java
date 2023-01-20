@@ -18,12 +18,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import neg5.google.oauth.api.DiscoveryDocument;
 import neg5.google.oauth.api.GoogleOauthCredentials;
 import neg5.google.oauth.api.GoogleOauthValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 
 @Singleton
@@ -33,6 +37,7 @@ public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
     private final Supplier<DiscoveryDocument> discoveryDocumentCache;
     private static final Set<String> VALID_ISSUERS =
             Sets.newHashSet("https://accounts.google.com", "accounts.google.com");
+    private static final Logger LOGGER = LoggerFactory.getLogger(GoogleOauthValidatorImpl.class);
 
     @Inject
     public GoogleOauthValidatorImpl(GoogleOpenIdClient openIdClient, Gson gson) {
@@ -43,15 +48,17 @@ public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
     }
 
     @Override
-    public boolean validateOauthCredentials(GoogleOauthCredentials oauthResponse) {
+    public Optional<String> validateOauthCredentials(GoogleOauthCredentials oauthResponse) {
         final DecodedJWT decodedJWT = JWT.decode(oauthResponse.getCredential());
+        if (!VALID_ISSUERS.contains(decodedJWT.getIssuer())
+                || Instant.now().isAfter(decodedJWT.getExpiresAtAsInstant())) {
+            return Optional.empty();
+        }
         if (!verifySignature(decodedJWT)) {
-            return false;
+            return Optional.empty();
         }
-        if (!VALID_ISSUERS.contains(decodedJWT.getIssuer())) {
-            return false;
-        }
-        return !Instant.now().isAfter(decodedJWT.getExpiresAtAsInstant());
+        byte[] decodedPayload = Base64.getDecoder().decode(decodedJWT.getPayload());
+        return Optional.of(new String(decodedPayload));
     }
 
     private boolean verifySignature(DecodedJWT decodedJWT) {
@@ -63,7 +70,10 @@ public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
             final Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) webKey.getPublicKey());
             algorithm.verify(decodedJWT);
             return true;
-        } catch (JwkException | MalformedURLException e) {
+        } catch (JwkException e) {
+            LOGGER.error("Encountered exception validating signature", e);
+            return false;
+        } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
     }

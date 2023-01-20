@@ -1,6 +1,8 @@
 package neg5.google.oauth.api;
 
+import java.util.Optional;
+
 public interface GoogleOauthValidator {
 
-    boolean validateOauthCredentials(GoogleOauthCredentials oauthResponse);
+    Optional<String> validateOauthCredentials(GoogleOauthCredentials oauthResponse);
 }
