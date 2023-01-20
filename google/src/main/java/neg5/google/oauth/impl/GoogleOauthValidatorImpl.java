@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import neg5.google.oauth.api.DiscoveryDocument;
 import neg5.google.oauth.api.GoogleJwtTokenFields;
@@ -54,6 +55,8 @@ public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
 
     private Map<String, Object> getCerts() {
         DiscoveryDocument discoveryDocument = discoveryDocumentCache.get();
+        Objects.requireNonNull(
+                discoveryDocument.getJwksUri(), "Discovery document does not have jwks_uri");
         Call<Map<String, Object>> call = openIdClient.getJWKS(discoveryDocument.getJwksUri());
         try {
             return call.execute().body();
