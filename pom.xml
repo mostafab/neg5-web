@@ -17,6 +17,7 @@
         <module>monitoring</module>
         <module>automation</module>
         <module>gson</module>
+        <module>google</module>
     </modules>
 
     <build>

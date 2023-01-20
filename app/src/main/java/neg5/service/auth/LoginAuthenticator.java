@@ -7,6 +7,8 @@ import com.google.inject.Inject;
 import java.time.Instant;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
+import neg5.google.oauth.api.GoogleJwtTokenFields;
+import neg5.google.oauth.api.GoogleOauthCredentials;
 import neg5.gson.GsonProvider;
 import neg5.jwt.api.DecodedToken;
 import neg5.jwt.api.JwtApi;
@@ -45,8 +47,8 @@ public class LoginAuthenticator {
     }
 
     public boolean loginByGoogleCredentials(Request request, Response response) {
-        GoogleOauthResponse oauthPayload =
-                gsonProvider.get().fromJson(request.body(), GoogleOauthResponse.class);
+        GoogleOauthCredentials oauthPayload =
+                gsonProvider.get().fromJson(request.body(), GoogleOauthCredentials.class);
         if (oauthPayload.getCredential() == null) {
             return false;
         }

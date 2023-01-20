@@ -1,6 +1,6 @@
-package neg5.service.auth;
+package neg5.google.oauth.api;
 
-public class GoogleOauthResponse {
+public class GoogleOauthCredentials {
 
     private String credential;
 
