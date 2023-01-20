@@ -9,8 +9,10 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import neg5.jwt.api.DecodedToken;
 import neg5.jwt.api.JwtApi;
 import neg5.jwt.api.JwtData;
 import neg5.jwt.module.JwtGuiceModule;
@@ -47,5 +49,20 @@ public class SigningKeyBackedJwtManagerImpl implements JwtApi {
     public JwtData readJwt(String token) {
         Jws<Claims> data = jwtParser.parseClaimsJws(token);
         return new JwtData(new HashMap<>(data.getBody()));
+    }
+
+    @Override
+    public DecodedToken decodeToken(String token) {
+        String[] parts = token.split("\\.");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Token does not have three parts.");
+        }
+        Base64.Decoder decoder = Base64.getDecoder();
+        String base64EncodedHeader = parts[0];
+        String base64EncodedBody = parts[1];
+        String base64EncodedSignature = parts[2];
+        String header = new String(decoder.decode(base64EncodedHeader));
+        String body = new String(decoder.decode(base64EncodedBody));
+        return new DecodedToken(header, body, base64EncodedSignature);
     }
 }

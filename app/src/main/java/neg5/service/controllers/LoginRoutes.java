@@ -24,5 +24,15 @@ public class LoginRoutes extends AbstractRoutes {
                     res.status(HttpStatus.FORBIDDEN_403);
                     return "Invalid";
                 });
+
+        post(
+                "/google",
+                (req, res) -> {
+                    if (loginAuthenticator.loginByGoogleCredentials(req, res)) {
+                        return "OK";
+                    }
+                    res.status(HttpStatus.FORBIDDEN_403);
+                    return "Invalid";
+                });
     }
 }

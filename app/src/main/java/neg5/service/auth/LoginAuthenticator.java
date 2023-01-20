@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
 import neg5.gson.GsonProvider;
+import neg5.jwt.api.DecodedToken;
 import neg5.jwt.api.JwtApi;
 import neg5.jwt.api.JwtData;
 import spark.Request;
@@ -41,6 +42,18 @@ public class LoginAuthenticator {
             return true;
         }
         return false;
+    }
+
+    public boolean loginByGoogleCredentials(Request request, Response response) {
+        GoogleOauthResponse oauthPayload =
+                gsonProvider.get().fromJson(request.body(), GoogleOauthResponse.class);
+        if (oauthPayload.getCredential() == null) {
+            return false;
+        }
+        DecodedToken tokenData = jwtApi.decodeToken(oauthPayload.getCredential());
+        GoogleJwtTokenFields token =
+                gsonProvider.get().fromJson(tokenData.getBody(), GoogleJwtTokenFields.class);
+        return true;
     }
 
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {
