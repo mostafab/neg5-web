@@ -24,19 +24,19 @@ public class AccountDAO extends AbstractDAO<Account, String> {
     public Account getByUsernameOrEmail(String usernameOrEmail) {
         return getEntityManager()
                 .createQuery(
-                        "SELECT a from Account a where a.id = :query OR a.email = :query",
+                        "SELECT a from Account a where lower(a.id) = :query OR lower(a.email) = :query",
                         Account.class)
-                .setParameter("query", usernameOrEmail)
+                .setParameter("query", usernameOrEmail.trim().toLowerCase())
                 .getSingleResult();
     }
 
     public List<Account> getByUsernameOrEmail(String username, String email) {
         return getEntityManager()
                 .createQuery(
-                        "SELECT a from Account a where a.id = :username OR a.email = :email",
+                        "SELECT a from Account a where lower(a.id) = :username OR lower(a.email) = :email",
                         Account.class)
-                .setParameter("username", username)
-                .setParameter("email", email)
+                .setParameter("username", username.trim().toLowerCase())
+                .setParameter("email", email.trim().toLowerCase())
                 .getResultList();
     }
 }

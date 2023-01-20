@@ -9,6 +9,8 @@ public interface AccountApi extends DomainObjectApiLayer<AccountDTO, String> {
 
     AccountDTO createAccount(AccountCreationDTO account) throws DuplicateLoginException;
 
+    Optional<AccountDTO> findByUsernameOrEmail(String usernameOrEmail);
+
     Optional<AccountWithHashedPassword> verifyPassword(String usernameOrEmail, String password);
 
     List<AccountDTO> findByQuery(@Nonnull String query);

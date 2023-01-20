@@ -3,9 +3,13 @@ package neg5.service.auth;
 import static neg5.userData.UserTokenParser.NAME_KEY;
 import static neg5.userData.UserTokenParser.USERNAME_KEY;
 
+import com.google.gson.reflect.TypeToken;
 import com.google.inject.Inject;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
+import neg5.domain.api.AccountDTO;
 import neg5.google.oauth.api.GoogleOauthCredentials;
 import neg5.google.oauth.api.GoogleOauthValidator;
 import neg5.gson.GsonProvider;
@@ -61,12 +65,33 @@ public class LoginAuthenticator {
         if (!decodedPayload.isPresent()) {
             return false;
         }
-        return true;
+        Map<String, String> claims =
+                gsonProvider
+                        .get()
+                        .fromJson(
+                                decodedPayload.get(),
+                                new TypeToken<Map<String, String>>() {}.getType());
+        String emailAddress = Objects.requireNonNull(claims.get("email"));
+        Optional<AccountDTO> existingAccountOpt =
+                accountManager.findByUsernameOrEmail(emailAddress);
+        if (existingAccountOpt.isPresent()) {
+            AccountDTO existingAccount = existingAccountOpt.get();
+            String token = jwtApi.buildJwt(buildData(existingAccount));
+            response.header("NEG5_TOKEN", token);
+            return true;
+        }
+        return false;
     }
 
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {
         return JwtData.newData()
                 .put(USERNAME_KEY, account.getUsername())
+                .put(NAME_KEY, account.getName());
+    }
+
+    private JwtData buildData(AccountDTO account) {
+        return JwtData.newData()
+                .put(USERNAME_KEY, account.getId())
                 .put(NAME_KEY, account.getName());
     }
 }

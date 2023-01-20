@@ -33,6 +33,8 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
 
     @Override
     public AccountDTO createAccount(AccountCreationDTO account) throws DuplicateLoginException {
+        account.setPassword(account.getPassword().trim());
+        account.setUsername(account.getUsername().trim().toLowerCase());
         boolean accountIsNew = verifyUniqueAccount(account.getUsername(), account.getEmail());
         if (!accountIsNew) {
             throw new DuplicateLoginException(
@@ -41,6 +43,17 @@ public class AccountApiImpl extends AbstractApiLayerImpl<Account, AccountDTO, St
         String salt = BCrypt.gensalt(SALT_ROUNDS);
         String hashedPassword = BCrypt.hashpw(account.getPassword(), salt);
         return createAccountInTransaction(account, hashedPassword);
+    }
+
+    @Override
+    @Transactional
+    public Optional<AccountDTO> findByUsernameOrEmail(String usernameOrEmail) {
+        try {
+            return Optional.ofNullable(accountDAO.getByUsernameOrEmail(usernameOrEmail))
+                    .map(accountMapper::toDTO);
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
