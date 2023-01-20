@@ -7,10 +7,9 @@ import com.google.inject.Inject;
 import java.time.Instant;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
-import neg5.google.oauth.api.GoogleJwtTokenFields;
 import neg5.google.oauth.api.GoogleOauthCredentials;
+import neg5.google.oauth.api.GoogleOauthValidator;
 import neg5.gson.GsonProvider;
-import neg5.jwt.api.DecodedToken;
 import neg5.jwt.api.JwtApi;
 import neg5.jwt.api.JwtData;
 import spark.Request;
@@ -21,12 +20,18 @@ public class LoginAuthenticator {
     private final AccountApi accountManager;
     private final GsonProvider gsonProvider;
     private final JwtApi jwtApi;
+    private final GoogleOauthValidator googleOauthValidator;
 
     @Inject
-    public LoginAuthenticator(AccountApi accountManager, GsonProvider gsonProvider, JwtApi jwtApi) {
+    public LoginAuthenticator(
+            AccountApi accountManager,
+            GsonProvider gsonProvider,
+            JwtApi jwtApi,
+            GoogleOauthValidator googleOauthValidator) {
         this.accountManager = accountManager;
         this.gsonProvider = gsonProvider;
         this.jwtApi = jwtApi;
+        this.googleOauthValidator = googleOauthValidator;
     }
 
     public boolean loginByRequest(Request request, Response response) {
@@ -52,10 +57,7 @@ public class LoginAuthenticator {
         if (oauthPayload.getCredential() == null) {
             return false;
         }
-        DecodedToken tokenData = jwtApi.decodeToken(oauthPayload.getCredential());
-        GoogleJwtTokenFields token =
-                gsonProvider.get().fromJson(tokenData.getBody(), GoogleJwtTokenFields.class);
-        return true;
+        return googleOauthValidator.validateOauthCredentials(oauthPayload);
     }
 
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {
