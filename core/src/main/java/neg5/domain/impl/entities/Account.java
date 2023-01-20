@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import neg5.domain.api.enums.AccountSource;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
@@ -16,6 +17,7 @@ public class Account extends AbstractDataObject<Account> implements IdDataObject
     private String email;
 
     private String hashedPassword;
+    private AccountSource source;
 
     @Override
     @Id
@@ -47,12 +49,21 @@ public class Account extends AbstractDataObject<Account> implements IdDataObject
         this.email = email;
     }
 
-    @Column(name = "hash", nullable = false)
+    @Column(name = "hash")
     public String getHashedPassword() {
         return hashedPassword;
     }
 
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    @Column(name = "source")
+    public AccountSource getSource() {
+        return source;
+    }
+
+    public void setSource(AccountSource source) {
+        this.source = source;
     }
 }

@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import neg5.domain.api.AccountApi;
+import neg5.domain.api.AccountCreationDTO;
 import neg5.domain.api.AccountDTO;
+import neg5.domain.api.enums.AccountSource;
 import neg5.google.oauth.api.GoogleOauthCredentials;
 import neg5.google.oauth.api.GoogleOauthValidator;
 import neg5.gson.GsonProvider;
@@ -78,9 +80,18 @@ public class LoginAuthenticator {
             AccountDTO existingAccount = existingAccountOpt.get();
             String token = jwtApi.buildJwt(buildData(existingAccount));
             response.header("NEG5_TOKEN", token);
-            return true;
+        } else {
+            String name = claims.get("name");
+            AccountCreationDTO newAccount = new AccountCreationDTO();
+            newAccount.setUsername(emailAddress);
+            newAccount.setEmail(emailAddress);
+            newAccount.setName(name);
+            newAccount.setSource(AccountSource.GOOGLE);
+            AccountDTO created = accountManager.createAccount(newAccount);
+            String token = jwtApi.buildJwt(buildData(created));
+            response.header("NEG5_TOKEN", token);
         }
-        return false;
+        return true;
     }
 
     private JwtData buildData(AccountApi.AccountWithHashedPassword account) {

@@ -1,11 +1,14 @@
 package neg5.domain.api;
 
+import neg5.domain.api.enums.AccountSource;
+
 public class AccountCreationDTO {
 
     private String username;
     private String name;
     private String email;
     private String password;
+    private AccountSource source;
 
     public String getUsername() {
         return username;
@@ -37,5 +40,13 @@ public class AccountCreationDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public AccountSource getSource() {
+        return source;
+    }
+
+    public void setSource(AccountSource source) {
+        this.source = source;
     }
 }

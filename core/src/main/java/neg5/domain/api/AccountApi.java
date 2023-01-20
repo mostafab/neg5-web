@@ -3,6 +3,7 @@ package neg5.domain.api;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.Nonnull;
+import neg5.domain.api.enums.AccountSource;
 import neg5.userData.DuplicateLoginException;
 
 public interface AccountApi extends DomainObjectApiLayer<AccountDTO, String> {
@@ -19,11 +20,14 @@ public interface AccountApi extends DomainObjectApiLayer<AccountDTO, String> {
         private String username;
         private String name;
         private String hashedPassword;
+        private AccountSource source;
 
-        public AccountWithHashedPassword(String username, String name, String hashedPassword) {
+        public AccountWithHashedPassword(
+                String username, String name, String hashedPassword, AccountSource source) {
             this.username = username;
             this.name = name;
             this.hashedPassword = hashedPassword;
+            this.source = source;
         }
 
         public String getName() {
@@ -36,6 +40,10 @@ public interface AccountApi extends DomainObjectApiLayer<AccountDTO, String> {
 
         public String getHashedPassword() {
             return hashedPassword;
+        }
+
+        public AccountSource getSource() {
+            return source;
         }
     }
 }
