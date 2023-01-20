@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import neg5.google.oauth.api.DiscoveryDocument;
 import neg5.google.oauth.api.GoogleJwtTokenFields;
@@ -19,19 +20,20 @@ import retrofit2.Call;
 public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
 
     private final JwtApi jwtApi;
-    private final GoogleDiscoveryDocumentClient discoveryDocumentClient;
+    private final GoogleOpenIdClient openIdClient;
     private final Gson gson;
     private final Supplier<DiscoveryDocument> discoveryDocumentCache;
+    private final Supplier<Map<String, Object>> certificatesCache;
 
     @Inject
-    public GoogleOauthValidatorImpl(
-            JwtApi jwtApi, GoogleDiscoveryDocumentClient discoveryDocumentClient, Gson gson) {
+    public GoogleOauthValidatorImpl(JwtApi jwtApi, GoogleOpenIdClient openIdClient, Gson gson) {
         this.jwtApi = jwtApi;
-        this.discoveryDocumentClient = discoveryDocumentClient;
+        this.openIdClient = openIdClient;
         this.gson = gson;
 
         this.discoveryDocumentCache =
                 Suppliers.memoizeWithExpiration(this::getDiscoveryDocument, 24, TimeUnit.HOURS);
+        this.certificatesCache = Suppliers.memoizeWithExpiration(this::getCerts, 2, TimeUnit.HOURS);
     }
 
     @Override
@@ -46,13 +48,23 @@ public class GoogleOauthValidatorImpl implements GoogleOauthValidator {
 
     private boolean verifySignature(DecodedToken token) {
         String signature = token.getSignature();
-        DiscoveryDocument discoveryDocument = discoveryDocumentCache.get();
+        Map<String, Object> certificates = certificatesCache.get();
         return true;
+    }
+
+    private Map<String, Object> getCerts() {
+        DiscoveryDocument discoveryDocument = discoveryDocumentCache.get();
+        Call<Map<String, Object>> call = openIdClient.getJWKS(discoveryDocument.getJwksUri());
+        try {
+            return call.execute().body();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private DiscoveryDocument getDiscoveryDocument() {
         try {
-            Call<DiscoveryDocument> call = discoveryDocumentClient.getDiscoveryDocument();
+            Call<DiscoveryDocument> call = openIdClient.getDiscoveryDocument();
             return call.execute().body();
         } catch (IOException e) {
             throw new RuntimeException(e);

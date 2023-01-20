@@ -6,8 +6,8 @@ import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import neg5.google.oauth.api.GoogleOauthValidator;
-import neg5.google.oauth.impl.GoogleDiscoveryDocumentClient;
 import neg5.google.oauth.impl.GoogleOauthValidatorImpl;
+import neg5.google.oauth.impl.GoogleOpenIdClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,12 +20,12 @@ public class GoogleOauthGuiceModule extends AbstractModule {
 
     @Provides
     @Singleton
-    public GoogleDiscoveryDocumentClient provideDiscoveryClient(
+    public GoogleOpenIdClient provideDiscoveryClient(
             @Named("google.discoveryDocument.baseUrl") String baseUrl) {
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(GoogleDiscoveryDocumentClient.class);
+                .create(GoogleOpenIdClient.class);
     }
 }
