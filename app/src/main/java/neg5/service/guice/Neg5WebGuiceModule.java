@@ -7,6 +7,7 @@ import neg5.dataAccess.guice.PersistenceGuiceModule;
 import neg5.db.migrations.guice.DatabaseMigrationGuiceModule;
 import neg5.domain.guice.ApiLayerGuiceModule;
 import neg5.exports.qbj.guice.QbjGuiceModule;
+import neg5.google.oauth.guice.GoogleOauthGuiceModule;
 import neg5.jwt.module.JwtGuiceModule;
 import neg5.monitoring.guice.MonitoringGuiceModule;
 import neg5.stats.guice.TournamentStatsGuiceModule;
@@ -25,5 +26,6 @@ public class Neg5WebGuiceModule extends AbstractModule {
         install(new QbjGuiceModule());
         install(new SparkResourcesGuiceModule());
         install(new JwtGuiceModule());
+        install(new GoogleOauthGuiceModule());
     }
 }
