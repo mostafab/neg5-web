@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS tournament_team_group (
 );
 
 ALTER TABLE tournament_team
-    ADD COLUMN team_group_id bigint;
+    ADD COLUMN team_group_id bigint REFERENCES tournament_team_group(id);
 
 CREATE INDEX IF NOT EXISTS tournament_team_group_tournament_id_idx ON tournament_team_group(tournament_id);
 
