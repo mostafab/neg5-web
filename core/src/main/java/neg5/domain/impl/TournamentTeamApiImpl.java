@@ -74,6 +74,7 @@ public class TournamentTeamApiImpl
     public TournamentTeamDTO update(@Nonnull TournamentTeamDTO tournamentTeamDTO) {
         TournamentTeamDTO original = get(tournamentTeamDTO.getId());
         tournamentTeamDTO.setTournamentId(original.getTournamentId());
+        tournamentTeamDTO.setTeamGroupId(original.getTeamGroupId());
         TournamentTeamDTO result = super.update(tournamentTeamDTO);
         if (tournamentTeamDTO.getPlayers() != null) {
             Set<String> deletedPlayerIds =
