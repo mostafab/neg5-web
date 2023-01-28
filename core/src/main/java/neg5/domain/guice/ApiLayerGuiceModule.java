@@ -22,6 +22,7 @@ import neg5.domain.api.TournamentScoresheetCycleApi;
 import neg5.domain.api.TournamentScoresheetCycleBonusApi;
 import neg5.domain.api.TournamentSearchApi;
 import neg5.domain.api.TournamentTeamApi;
+import neg5.domain.api.TournamentTeamGroupApi;
 import neg5.domain.api.TournamentTeamPoolApi;
 import neg5.domain.api.TournamentTossupValueApi;
 import neg5.domain.impl.AccountApiImpl;
@@ -44,6 +45,7 @@ import neg5.domain.impl.TournamentScoresheetCycleApiImpl;
 import neg5.domain.impl.TournamentScoresheetCycleBonusApiImpl;
 import neg5.domain.impl.TournamentSearchApiImpl;
 import neg5.domain.impl.TournamentTeamApiImpl;
+import neg5.domain.impl.TournamentTeamGroupApiImpl;
 import neg5.domain.impl.TournamentTeamPoolApiImpl;
 import neg5.domain.impl.TournamentTossupValueApiImpl;
 
@@ -75,6 +77,7 @@ public class ApiLayerGuiceModule extends AbstractModule {
         bind(TournamentScoresheetCycleBonusApi.class, TournamentScoresheetCycleBonusApiImpl.class);
         bind(TournamentSchedulingApi.class, TournamentSchedulingApiImpl.class);
         bind(TournamentScheduleMatchApi.class, TournamentScheduleMatchApiImpl.class);
+        bind(TournamentTeamGroupApi.class, TournamentTeamGroupApiImpl.class);
     }
 
     private <T, X extends T> void bind(Class<T> api, Class<X> impl) {

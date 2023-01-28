@@ -32,6 +32,8 @@ public class TournamentTeam extends AbstractDataObject<TournamentTeam>
     private String addedBy;
     private Instant addedAt;
 
+    private Long teamGroupId;
+
     @Id
     @Override
     @GeneratedValue(generator = "uuid_generator")
@@ -109,5 +111,14 @@ public class TournamentTeam extends AbstractDataObject<TournamentTeam>
     @Override
     public void setAddedAt(Instant addedAt) {
         this.addedAt = addedAt;
+    }
+
+    @Column(name = "team_group_id")
+    public Long getTeamGroupId() {
+        return teamGroupId;
+    }
+
+    public void setTeamGroupId(Long teamGroupId) {
+        this.teamGroupId = teamGroupId;
     }
 }

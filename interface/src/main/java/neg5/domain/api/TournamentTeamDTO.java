@@ -11,6 +11,8 @@ public class TournamentTeamDTO {
     private Set<TournamentPoolDTO> divisions;
     private Set<TournamentPlayerDTO> players;
 
+    private Long teamGroupId;
+
     public String getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class TournamentTeamDTO {
 
     public void setPlayers(Set<TournamentPlayerDTO> players) {
         this.players = players;
+    }
+
+    public Long getTeamGroupId() {
+        return teamGroupId;
+    }
+
+    public void setTeamGroupId(Long teamGroupId) {
+        this.teamGroupId = teamGroupId;
     }
 }
