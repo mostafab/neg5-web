@@ -2,11 +2,12 @@ package neg5.exports.qbj.api;
 
 import java.util.List;
 
-public class QbjTeamDTO {
+public class QbjPhaseDTO {
 
     private String id;
+    private final QbjObjectType type = QbjObjectType.PHASE;
     private String name;
-    private List<QbjPlayerDTO> players;
+    private List<QbjRoundDTO> rounds;
 
     public String getId() {
         return id;
@@ -24,11 +25,15 @@ public class QbjTeamDTO {
         this.name = name;
     }
 
-    public List<QbjPlayerDTO> getPlayers() {
-        return players;
+    public QbjObjectType getType() {
+        return type;
     }
 
-    public void setPlayers(List<QbjPlayerDTO> players) {
-        this.players = players;
+    public List<QbjRoundDTO> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(List<QbjRoundDTO> rounds) {
+        this.rounds = rounds;
     }
 }

@@ -2,9 +2,8 @@ package neg5.exports.qbj.api;
 
 import java.util.List;
 
-public class ScoringRulesDTO {
+public class QbjScoringRulesDTO {
 
-    private Integer teamsPerMatch;
     private Integer maximumPlayersPerTeam;
 
     private Long regulationTossupCount;
@@ -12,19 +11,9 @@ public class ScoringRulesDTO {
     private Long pointsPerBonusPart;
     private Long maximumBonusScore;
     private Long minimumPartsPerBonus;
-    private Long totalDivisor;
-
     private Boolean bonusesBounceBack;
 
     private List<AnswerTypeDTO> answerTypes;
-
-    public Integer getTeamsPerMatch() {
-        return teamsPerMatch;
-    }
-
-    public void setTeamsPerMatch(Integer teamsPerMatch) {
-        this.teamsPerMatch = teamsPerMatch;
-    }
 
     public Integer getMaximumPlayersPerTeam() {
         return maximumPlayersPerTeam;
@@ -64,14 +53,6 @@ public class ScoringRulesDTO {
 
     public void setMinimumPartsPerBonus(Long minimumPartsPerBonus) {
         this.minimumPartsPerBonus = minimumPartsPerBonus;
-    }
-
-    public Long getTotalDivisor() {
-        return totalDivisor;
-    }
-
-    public void setTotalDivisor(Long totalDivisor) {
-        this.totalDivisor = totalDivisor;
     }
 
     public Boolean getBonusesBounceBack() {
