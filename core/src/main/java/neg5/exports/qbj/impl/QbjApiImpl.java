@@ -6,10 +6,12 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentMatchApi;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupApi;
@@ -17,11 +19,12 @@ import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
-import neg5.exports.qbj.api.QbjMatchDTO;
 import neg5.exports.qbj.api.QbjObjectType;
+import neg5.exports.qbj.api.QbjPhaseDTO;
 import neg5.exports.qbj.api.QbjReferenceDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjRootDTO;
+import neg5.exports.qbj.api.QbjRoundDTO;
 import neg5.exports.qbj.api.QbjScoringRulesDTO;
 import neg5.exports.qbj.api.QbjTournamentDTO;
 import neg5.exports.qbj.api.QbjTournamentSiteDTO;
@@ -66,9 +69,18 @@ public class QbjApiImpl implements QbjApi {
                         .map(r -> QbjReferenceDTO.fromRef(r.getId()))
                         .collect(Collectors.toList()));
 
+        List<TournamentMatchDTO> matches = matchApi.findAllByTournamentId(tournamentId);
+        List<QbjPhaseDTO> phases = getPhases(tournament, matches);
+
+        tournamentQbjObject.setPhases(
+                phases.stream()
+                        .map(r -> QbjReferenceDTO.fromRef(r.getId()))
+                        .collect(Collectors.toList()));
+
         root.getObjects().add(tournamentQbjObject);
         root.getObjects().addAll(registrations);
-        root.getObjects().addAll(getMatches(tournamentId));
+        root.getObjects().addAll(QBJUtil.toMatches(matches));
+        root.getObjects().addAll(phases);
 
         return root;
     }
@@ -118,7 +130,51 @@ public class QbjApiImpl implements QbjApi {
         return QBJUtil.toRegistrations(teams, groups);
     }
 
-    private List<QbjMatchDTO> getMatches(String tournamentId) {
-        return QBJUtil.toMatches(matchApi.findAllByTournamentId(tournamentId));
+    private List<QbjPhaseDTO> getPhases(
+            TournamentDTO tournament, List<TournamentMatchDTO> matches) {
+        Map<String, List<TournamentMatchDTO>> matchesByPhase =
+                matches.stream()
+                        .filter(match -> match.getPhases() != null && !match.getPhases().isEmpty())
+                        .collect(
+                                Collectors.groupingBy(
+                                        match -> match.getPhases().stream().findFirst().get()));
+        return tournament.getPhases().stream()
+                .map(
+                        phase -> {
+                            QbjPhaseDTO qbjPhase = new QbjPhaseDTO();
+                            qbjPhase.setId(getReferenceId(QbjObjectType.PHASE, phase.getId()));
+                            List<TournamentMatchDTO> phaseMatches =
+                                    matchesByPhase.get(phase.getId());
+                            if (phaseMatches == null) {
+                                return qbjPhase;
+                            }
+                            qbjPhase.setRounds(new ArrayList<>());
+                            Map<Long, List<TournamentMatchDTO>> matchesByRound =
+                                    phaseMatches.stream()
+                                            .filter(m -> m.getRound() != null)
+                                            .collect(
+                                                    Collectors.groupingBy(
+                                                            TournamentMatchDTO::getRound));
+                            matchesByRound.forEach(
+                                    (round, roundMatches) -> {
+                                        QbjRoundDTO qbjRound = new QbjRoundDTO();
+                                        qbjRound.setName(String.format("Round %d", round));
+                                        qbjRound.setMatches(
+                                                roundMatches.stream()
+                                                        .map(
+                                                                rm ->
+                                                                        QbjReferenceDTO.fromRef(
+                                                                                getReferenceId(
+                                                                                        QbjObjectType
+                                                                                                .MATCH,
+                                                                                        rm
+                                                                                                .getId())))
+                                                        .collect(Collectors.toList()));
+
+                                        qbjPhase.getRounds().add(qbjRound);
+                                    });
+                            return qbjPhase;
+                        })
+                .collect(Collectors.toList());
     }
 }

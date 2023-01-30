@@ -8,6 +8,7 @@ public enum QbjObjectType implements StringIdentifiable {
     TEAM("Team"),
     PLAYER("Player"),
     MATCH("Match"),
+    PHASE("Phase"),
     ANSWER_TYPE("AnswerType");
 
     private final String id;

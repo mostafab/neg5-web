@@ -13,6 +13,7 @@ public class QbjTournamentDTO {
     private QbjTournamentSiteDTO tournamentSite;
     private QbjScoringRulesDTO scoringRules;
     private List<QbjReferenceDTO> registrations;
+    private List<QbjReferenceDTO> phases;
 
     public String getName() {
         return name;
@@ -60,6 +61,14 @@ public class QbjTournamentDTO {
 
     public void setRegistrations(List<QbjReferenceDTO> registrations) {
         this.registrations = registrations;
+    }
+
+    public List<QbjReferenceDTO> getPhases() {
+        return phases;
+    }
+
+    public void setPhases(List<QbjReferenceDTO> phases) {
+        this.phases = phases;
     }
 
     public QbjObjectType getType() {
