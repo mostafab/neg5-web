@@ -1,5 +1,7 @@
 package neg5.exports.qbj.api;
 
+import java.util.List;
+
 public class QbjMatchDTO {
 
     private String id;
@@ -12,6 +14,8 @@ public class QbjMatchDTO {
     private String moderator;
     private String serial;
     private String notes;
+
+    private List<QbjMatchTeamDTO> matchTeams;
 
     public String getId() {
         return id;
@@ -79,5 +83,13 @@ public class QbjMatchDTO {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public List<QbjMatchTeamDTO> getMatchTeams() {
+        return matchTeams;
+    }
+
+    public void setMatchTeams(List<QbjMatchTeamDTO> matchTeams) {
+        this.matchTeams = matchTeams;
     }
 }

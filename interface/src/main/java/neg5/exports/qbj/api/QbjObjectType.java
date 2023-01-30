@@ -5,6 +5,8 @@ import neg5.domain.api.enums.StringIdentifiable;
 public enum QbjObjectType implements StringIdentifiable {
     TOURNAMENT("Tournament"),
     REGISTRATION("Registration"),
+    TEAM("Team"),
+    PLAYER("Player"),
     MATCH("Match");
 
     private final String id;

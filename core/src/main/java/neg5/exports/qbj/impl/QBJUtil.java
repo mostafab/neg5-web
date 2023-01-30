@@ -12,7 +12,10 @@ import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.PlayerYear;
 import neg5.exports.qbj.api.QbjMatchDTO;
+import neg5.exports.qbj.api.QbjMatchTeamDTO;
+import neg5.exports.qbj.api.QbjObjectType;
 import neg5.exports.qbj.api.QbjPlayerDTO;
+import neg5.exports.qbj.api.QbjReferenceDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjTeamDTO;
 
@@ -25,13 +28,30 @@ public class QBJUtil {
                 .map(
                         match -> {
                             QbjMatchDTO qbjMatch = new QbjMatchDTO();
-                            qbjMatch.setId(String.format("match_%s", match.getId()));
+                            qbjMatch.setId(getReferenceId(QbjObjectType.MATCH, match.getId()));
                             qbjMatch.setLocation(match.getRoom());
                             qbjMatch.setModerator(match.getModerator());
                             qbjMatch.setTiebreaker(match.getIsTiebreaker());
                             qbjMatch.setTossupsRead(match.getTossupsHeard());
                             qbjMatch.setNotes(match.getNotes());
                             qbjMatch.setSerial(match.getSerialId());
+
+                            qbjMatch.setMatchTeams(
+                                    match.getTeams().stream()
+                                            .map(
+                                                    team -> {
+                                                        QbjMatchTeamDTO qbjTeam =
+                                                                new QbjMatchTeamDTO();
+                                                        String reference =
+                                                                getReferenceId(
+                                                                        QbjObjectType.TEAM,
+                                                                        team.getTeamId());
+                                                        qbjTeam.setTeam(
+                                                                QbjReferenceDTO.fromRef(reference));
+
+                                                        return qbjTeam;
+                                                    })
+                                            .collect(Collectors.toList()));
 
                             return qbjMatch;
                         })
@@ -76,14 +96,14 @@ public class QBJUtil {
 
     private static QbjRegistrationDTO toRegistration(String name, List<TournamentTeamDTO> teams) {
         QbjRegistrationDTO registration = new QbjRegistrationDTO();
-        registration.setId(String.format("registration_%s", name));
+        registration.setId(getReferenceId(QbjObjectType.REGISTRATION, name));
         registration.setName(name);
         registration.setTeams(
                 teams.stream()
                         .map(
                                 team -> {
                                     QbjTeamDTO qbjTeam = new QbjTeamDTO();
-                                    qbjTeam.setId(String.format("team_%s", team.getId()));
+                                    qbjTeam.setId(getReferenceId(QbjObjectType.TEAM, team.getId()));
                                     qbjTeam.setName(team.getName());
                                     qbjTeam.setPlayers(
                                             team.getPlayers().stream()
@@ -92,8 +112,9 @@ public class QBJUtil {
                                                                 QbjPlayerDTO qbjPlayer =
                                                                         new QbjPlayerDTO();
                                                                 qbjPlayer.setId(
-                                                                        String.format(
-                                                                                "player_%s",
+                                                                        getReferenceId(
+                                                                                QbjObjectType
+                                                                                        .PLAYER,
                                                                                 player.getId()));
                                                                 qbjPlayer.setName(player.getName());
                                                                 if (player.getYear() != null
@@ -113,5 +134,9 @@ public class QBJUtil {
                         .collect(Collectors.toList()));
 
         return registration;
+    }
+
+    public static String getReferenceId(QbjObjectType objectType, String id) {
+        return String.format("%s_%s", objectType.getId(), id);
     }
 }
