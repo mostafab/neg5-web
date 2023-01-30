@@ -1,5 +1,7 @@
 package neg5.exports.qbj.impl;
 
+import static neg5.exports.qbj.impl.QBJUtil.getReferenceId;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
 import neg5.exports.qbj.api.QbjMatchDTO;
+import neg5.exports.qbj.api.QbjObjectType;
+import neg5.exports.qbj.api.QbjReferenceDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjRootDTO;
 import neg5.exports.qbj.api.QbjScoringRulesDTO;
@@ -55,8 +59,15 @@ public class QbjApiImpl implements QbjApi {
         tournamentQbjObject.setTournamentSite(getSite(tournament));
         tournamentQbjObject.setScoringRules(getScoringRules(tournament));
 
+        List<QbjRegistrationDTO> registrations = getRegistrations(tournamentId);
+
+        tournamentQbjObject.setRegistrations(
+                registrations.stream()
+                        .map(r -> QbjReferenceDTO.fromRef(r.getId()))
+                        .collect(Collectors.toList()));
+
         root.getObjects().add(tournamentQbjObject);
-        root.getObjects().addAll(getRegistrations(tournamentId));
+        root.getObjects().addAll(registrations);
         root.getObjects().addAll(getMatches(tournamentId));
 
         return root;
@@ -74,6 +85,7 @@ public class QbjApiImpl implements QbjApi {
         rules.setBonusesBounceBack(tournament.getUsesBouncebacks());
         rules.setMinimumPartsPerBonus(tournament.getPartsPerBonus());
         rules.setPointsPerBonusPart(tournament.getBonusPointValue());
+        rules.setMaximumPlayersPerTeam(tournament.getMaxActivePlayersPerTeam());
 
         if (tournament.getPartsPerBonus() != null && tournament.getBonusPointValue() != null) {
             rules.setMaximumBonusScore(
@@ -85,6 +97,10 @@ public class QbjApiImpl implements QbjApi {
                         .map(
                                 tv -> {
                                     AnswerTypeDTO answerType = new AnswerTypeDTO();
+                                    answerType.setId(
+                                            getReferenceId(
+                                                    QbjObjectType.ANSWER_TYPE,
+                                                    tv.getValue().toString()));
                                     answerType.setValue(tv.getValue());
                                     answerType.setAwardsBonus(
                                             TossupAnswerType.NEG != tv.getAnswerType()

@@ -7,17 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import neg5.domain.api.TeamMatchStatsDTO;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.PlayerYear;
 import neg5.exports.qbj.api.QbjMatchDTO;
+import neg5.exports.qbj.api.QbjMatchPlayerDTO;
 import neg5.exports.qbj.api.QbjMatchTeamDTO;
 import neg5.exports.qbj.api.QbjObjectType;
+import neg5.exports.qbj.api.QbjPlayerAnswerCountDTO;
 import neg5.exports.qbj.api.QbjPlayerDTO;
 import neg5.exports.qbj.api.QbjReferenceDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjTeamDTO;
+import neg5.stats.impl.aggregators.TeamMatchesStatsAggregator;
 
 public class QBJUtil {
 
@@ -48,6 +52,87 @@ public class QBJUtil {
                                                                         team.getTeamId());
                                                         qbjTeam.setTeam(
                                                                 QbjReferenceDTO.fromRef(reference));
+                                                        qbjTeam.setForfeitLoss(team.getForfeit());
+                                                        if (Boolean.TRUE.equals(
+                                                                team.getForfeit())) {
+                                                            return qbjTeam;
+                                                        }
+                                                        TeamMatchesStatsAggregator statCalculator =
+                                                                new TeamMatchesStatsAggregator(
+                                                                        team.getTeamId());
+                                                        statCalculator.accept(match);
+
+                                                        TeamMatchStatsDTO stats =
+                                                                statCalculator.collect().get(0);
+                                                        if (stats.getBonusPoints() != null) {
+                                                            qbjTeam.setBonusPoints(
+                                                                    stats.getBonusPoints()
+                                                                            .intValue());
+                                                        }
+                                                        if (stats.getBouncebackPoints() != null) {
+                                                            qbjTeam.setBonusBouncebackPoints(
+                                                                    stats.getBouncebackPoints()
+                                                                            .intValue());
+                                                        }
+                                                        qbjTeam.setCorrectTossupsWithoutBonuses(
+                                                                team.getOvertimeTossupsGotten());
+
+                                                        if (team.getPlayers() != null) {
+                                                            qbjTeam.setMatchPlayers(
+                                                                    team.getPlayers().stream()
+                                                                            .map(
+                                                                                    player -> {
+                                                                                        QbjMatchPlayerDTO
+                                                                                                qbjPlayer =
+                                                                                                        new QbjMatchPlayerDTO();
+                                                                                        qbjPlayer
+                                                                                                .setPlayer(
+                                                                                                        QbjReferenceDTO
+                                                                                                                .fromRef(
+                                                                                                                        getReferenceId(
+                                                                                                                                QbjObjectType
+                                                                                                                                        .PLAYER,
+                                                                                                                                player
+                                                                                                                                        .getPlayerId())));
+                                                                                        qbjPlayer
+                                                                                                .setTossupsHeard(
+                                                                                                        player
+                                                                                                                .getTossupsHeard());
+                                                                                        qbjPlayer
+                                                                                                .setAnswerCounts(
+                                                                                                        player
+                                                                                                                .getAnswers()
+                                                                                                                .stream()
+                                                                                                                .map(
+                                                                                                                        answer -> {
+                                                                                                                            QbjPlayerAnswerCountDTO
+                                                                                                                                    count =
+                                                                                                                                            new QbjPlayerAnswerCountDTO();
+                                                                                                                            count
+                                                                                                                                    .setNumber(
+                                                                                                                                            answer
+                                                                                                                                                    .getNumberGotten());
+                                                                                                                            count
+                                                                                                                                    .setAnswerType(
+                                                                                                                                            QbjReferenceDTO
+                                                                                                                                                    .fromRef(
+                                                                                                                                                            getReferenceId(
+                                                                                                                                                                    QbjObjectType
+                                                                                                                                                                            .ANSWER_TYPE,
+                                                                                                                                                                    answer.getTossupValue()
+                                                                                                                                                                            .toString())));
+                                                                                                                            return count;
+                                                                                                                        })
+                                                                                                                .collect(
+                                                                                                                        Collectors
+                                                                                                                                .toList()));
+
+                                                                                        return qbjPlayer;
+                                                                                    })
+                                                                            .collect(
+                                                                                    Collectors
+                                                                                            .toList()));
+                                                        }
 
                                                         return qbjTeam;
                                                     })
@@ -137,6 +222,6 @@ public class QBJUtil {
     }
 
     public static String getReferenceId(QbjObjectType objectType, String id) {
-        return String.format("%s_%s", objectType.getId(), id);
+        return String.format("%s_%s", objectType.getId(), id.replaceAll(" ", "_"));
     }
 }

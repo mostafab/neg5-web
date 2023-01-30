@@ -1,5 +1,7 @@
 package neg5.exports.qbj.api;
 
+import java.util.List;
+
 public class QbjTournamentDTO {
 
     private final QbjObjectType type = QbjObjectType.TOURNAMENT;
@@ -10,6 +12,7 @@ public class QbjTournamentDTO {
 
     private QbjTournamentSiteDTO tournamentSite;
     private QbjScoringRulesDTO scoringRules;
+    private List<QbjReferenceDTO> registrations;
 
     public String getName() {
         return name;
@@ -49,6 +52,14 @@ public class QbjTournamentDTO {
 
     public void setScoringRules(QbjScoringRulesDTO scoringRules) {
         this.scoringRules = scoringRules;
+    }
+
+    public List<QbjReferenceDTO> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(List<QbjReferenceDTO> registrations) {
+        this.registrations = registrations;
     }
 
     public QbjObjectType getType() {
