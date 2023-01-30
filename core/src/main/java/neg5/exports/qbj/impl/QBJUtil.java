@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.PlayerYear;
+import neg5.exports.qbj.api.QbjMatchDTO;
 import neg5.exports.qbj.api.QbjPlayerDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjTeamDTO;
@@ -17,6 +19,24 @@ import neg5.exports.qbj.api.QbjTeamDTO;
 public class QBJUtil {
 
     private QBJUtil() {}
+
+    public static List<QbjMatchDTO> toMatches(List<TournamentMatchDTO> matches) {
+        return matches.stream()
+                .map(
+                        match -> {
+                            QbjMatchDTO qbjMatch = new QbjMatchDTO();
+                            qbjMatch.setId(String.format("match_%s", match.getId()));
+                            qbjMatch.setLocation(match.getRoom());
+                            qbjMatch.setModerator(match.getModerator());
+                            qbjMatch.setTiebreaker(match.getIsTiebreaker());
+                            qbjMatch.setTossupsRead(match.getTossupsHeard());
+                            qbjMatch.setNotes(match.getNotes());
+                            qbjMatch.setSerial(match.getSerialId());
+
+                            return qbjMatch;
+                        })
+                .collect(Collectors.toList());
+    }
 
     public static List<QbjRegistrationDTO> toRegistrations(
             List<TournamentTeamDTO> teams, List<TournamentTeamGroupDTO> teamGroups) {

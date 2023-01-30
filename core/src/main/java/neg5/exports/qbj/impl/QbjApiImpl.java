@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentDTO;
+import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupApi;
@@ -14,6 +15,7 @@ import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
+import neg5.exports.qbj.api.QbjMatchDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjRootDTO;
 import neg5.exports.qbj.api.QbjScoringRulesDTO;
@@ -26,15 +28,18 @@ public class QbjApiImpl implements QbjApi {
     private final TournamentApi tournamentManager;
     private final TournamentTeamApi teamApi;
     private final TournamentTeamGroupApi teamGroupApi;
+    private final TournamentMatchApi matchApi;
 
     @Inject
     public QbjApiImpl(
             TournamentApi tournamentManager,
             TournamentTeamApi teamApi,
-            TournamentTeamGroupApi teamGroupApi) {
+            TournamentTeamGroupApi teamGroupApi,
+            TournamentMatchApi matchApi) {
         this.tournamentManager = tournamentManager;
         this.teamApi = teamApi;
         this.teamGroupApi = teamGroupApi;
+        this.matchApi = matchApi;
     }
 
     public QbjRootDTO exportToQbjFormat(String tournamentId) {
@@ -52,6 +57,7 @@ public class QbjApiImpl implements QbjApi {
 
         root.getObjects().add(tournamentQbjObject);
         root.getObjects().addAll(getRegistrations(tournamentId));
+        root.getObjects().addAll(getMatches(tournamentId));
 
         return root;
     }
@@ -94,5 +100,9 @@ public class QbjApiImpl implements QbjApi {
         List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
         List<TournamentTeamGroupDTO> groups = teamGroupApi.findAllByTournamentId(tournamentId);
         return QBJUtil.toRegistrations(teams, groups);
+    }
+
+    private List<QbjMatchDTO> getMatches(String tournamentId) {
+        return QBJUtil.toMatches(matchApi.findAllByTournamentId(tournamentId));
     }
 }
