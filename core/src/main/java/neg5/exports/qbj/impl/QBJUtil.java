@@ -2,6 +2,7 @@ package neg5.exports.qbj.impl;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -47,7 +48,9 @@ public class QBJUtil {
                             result.add(toRegistration(groupName, groupTeams));
                         });
 
-        return result;
+        return result.stream()
+                .sorted(Comparator.comparing(RegistrationDTO::getName))
+                .collect(Collectors.toList());
     }
 
     private static RegistrationDTO toRegistration(String name, List<TournamentTeamDTO> teams) {
@@ -72,6 +75,7 @@ public class QBJUtil {
 
                                     return qbjTeam;
                                 })
+                        .sorted(Comparator.comparing(QbjTeamDTO::getName))
                         .collect(Collectors.toList()));
 
         return registration;
