@@ -143,6 +143,7 @@ public class QbjApiImpl implements QbjApi {
                         phase -> {
                             QbjPhaseDTO qbjPhase = new QbjPhaseDTO();
                             qbjPhase.setId(getReferenceId(QbjObjectType.PHASE, phase.getId()));
+                            qbjPhase.setName(phase.getName());
                             List<TournamentMatchDTO> phaseMatches =
                                     matchesByPhase.get(phase.getId());
                             if (phaseMatches == null) {
