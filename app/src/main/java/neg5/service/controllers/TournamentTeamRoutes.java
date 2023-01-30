@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import neg5.accessManager.api.TournamentAccessManager;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTeamGroupApi;
+import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.service.util.RequestHelper;
 import org.eclipse.jetty.http.HttpStatus;
@@ -13,6 +15,7 @@ import spark.Response;
 public class TournamentTeamRoutes extends AbstractJsonRoutes {
 
     @Inject private TournamentTeamApi teamManager;
+    @Inject private TournamentTeamGroupApi teamGroupApi;
     @Inject private TournamentAccessManager tournamentAccessManager;
     @Inject private RequestHelper requestHelper;
 
@@ -44,6 +47,16 @@ public class TournamentTeamRoutes extends AbstractJsonRoutes {
                 });
 
         post("", this::createTeam);
+
+        post(
+                "/group",
+                (request, response) -> {
+                    TournamentTeamGroupDTO group =
+                            requestHelper.readFromRequest(request, TournamentTeamGroupDTO.class);
+                    tournamentAccessManager.requireAccessLevel(
+                            group.getTournamentId(), TournamentAccessLevel.ADMIN);
+                    return teamGroupApi.create(group);
+                });
     }
 
     private void validateHasAccessToEditTeam(Request request) {

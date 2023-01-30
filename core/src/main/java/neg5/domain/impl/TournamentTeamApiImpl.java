@@ -19,9 +19,9 @@ import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
 import neg5.domain.api.TournamentPlayerApi;
 import neg5.domain.api.TournamentPlayerDTO;
-import neg5.domain.api.TournamentPoolApi;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTeamGroupApi;
 import neg5.domain.impl.dataAccess.TournamentTeamDAO;
 import neg5.domain.impl.entities.TournamentTeam;
 import neg5.domain.impl.mappers.TournamentTeamMapper;
@@ -36,6 +36,7 @@ public class TournamentTeamApiImpl
     private final TournamentTeamMapper tournamentTeamMapper;
     private final TournamentPlayerApi tournamentPlayerApi;
     private final TournamentMatchApi tournamentMatchApi;
+    private final TournamentTeamGroupApi teamGroupApi;
 
     @Inject
     public TournamentTeamApiImpl(
@@ -43,11 +44,12 @@ public class TournamentTeamApiImpl
             TournamentTeamMapper tournamentTeamMapper,
             TournamentPlayerApi tournamentPlayerApi,
             TournamentMatchApi tournamentMatchApi,
-            TournamentPoolApi poolManager) {
+            TournamentTeamGroupApi teamGroupApi) {
         this.rwTournamentTeamDAO = rwTournamentTeamDAO;
         this.tournamentTeamMapper = tournamentTeamMapper;
         this.tournamentPlayerApi = tournamentPlayerApi;
         this.tournamentMatchApi = tournamentMatchApi;
+        this.teamGroupApi = teamGroupApi;
     }
 
     @Override
@@ -109,7 +111,20 @@ public class TournamentTeamApiImpl
                                             "%s cannot be deleted because it has existing matches.",
                                             team.getName())));
         }
+        boolean shouldDeleteGroup = false;
+        if (team.getTeamGroupId() != null) {
+            shouldDeleteGroup =
+                    findAllByTournamentId(team.getTournamentId()).stream()
+                            .noneMatch(
+                                    t ->
+                                            !t.getId().equals(team.getId())
+                                                    && team.getTeamGroupId()
+                                                            .equals(t.getTeamGroupId()));
+        }
         super.delete(id);
+        if (shouldDeleteGroup) {
+            teamGroupApi.delete(team.getTeamGroupId());
+        }
     }
 
     @Override
