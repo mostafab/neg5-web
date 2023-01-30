@@ -8,6 +8,8 @@ import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTeamGroupApi;
+import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
@@ -21,11 +23,16 @@ public class QbjApiImpl implements QbjApi {
 
     private final TournamentApi tournamentManager;
     private final TournamentTeamApi teamApi;
+    private final TournamentTeamGroupApi teamGroupApi;
 
     @Inject
-    public QbjApiImpl(TournamentApi tournamentManager, TournamentTeamApi teamApi) {
+    public QbjApiImpl(
+            TournamentApi tournamentManager,
+            TournamentTeamApi teamApi,
+            TournamentTeamGroupApi teamGroupApi) {
         this.tournamentManager = tournamentManager;
         this.teamApi = teamApi;
+        this.teamGroupApi = teamGroupApi;
     }
 
     public TournamentQbjDTO exportToQbjFormat(String tournamentId) {
@@ -78,6 +85,7 @@ public class QbjApiImpl implements QbjApi {
 
     private List<RegistrationDTO> getRegistrations(String tournamentId) {
         List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
-        return QBJUtil.toRegistrations(teams);
+        List<TournamentTeamGroupDTO> groups = teamGroupApi.findAllByTournamentId(tournamentId);
+        return QBJUtil.toRegistrations(teams, groups);
     }
 }

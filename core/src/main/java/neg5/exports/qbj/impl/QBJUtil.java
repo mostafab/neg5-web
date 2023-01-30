@@ -1,67 +1,53 @@
 package neg5.exports.qbj.impl;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentTeamDTO;
+import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.exports.qbj.api.QbjPlayerDTO;
 import neg5.exports.qbj.api.QbjTeamDTO;
 import neg5.exports.qbj.api.RegistrationDTO;
-import org.apache.commons.text.similarity.LevenshteinDistance;
-import org.apache.commons.text.similarity.LongestCommonSubsequence;
 
 public class QBJUtil {
 
     private QBJUtil() {}
 
-    public static List<RegistrationDTO> toRegistrations(List<TournamentTeamDTO> teams) {
+    public static List<RegistrationDTO> toRegistrations(
+            List<TournamentTeamDTO> teams, List<TournamentTeamGroupDTO> teamGroups) {
+        List<RegistrationDTO> result = new ArrayList<>();
 
-        Set<String> seenTeams = new HashSet<>();
+        Map<Long, TournamentTeamGroupDTO> teamGroupsById =
+                teamGroups.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        TournamentTeamGroupDTO::getId, Function.identity()));
+        List<TournamentTeamDTO> teamsWithNoGroup =
+                teams.stream()
+                        .filter(
+                                t ->
+                                        t.getTeamGroupId() == null
+                                                || !teamGroupsById.containsKey(t.getTeamGroupId()))
+                        .collect(Collectors.toList());
+        teamsWithNoGroup.forEach(
+                team -> result.add(toRegistration(team.getName(), Lists.newArrayList(team))));
 
-        LevenshteinDistance distanceCalculator = new LevenshteinDistance();
-        LongestCommonSubsequence nameCalculator = new LongestCommonSubsequence();
+        teams.stream()
+                .filter(
+                        t ->
+                                t.getTeamGroupId() != null
+                                        && teamGroupsById.containsKey(t.getTeamGroupId()))
+                .collect(Collectors.groupingBy(TournamentTeamDTO::getTeamGroupId))
+                .forEach(
+                        (key, groupTeams) -> {
+                            String groupName = teamGroupsById.get(key).getName();
+                            result.add(toRegistration(groupName, groupTeams));
+                        });
 
-        Map<String, List<TournamentTeamDTO>> teamsByCommonName = new HashMap<>();
-
-        teams.forEach(
-                team -> {
-                    if (!seenTeams.contains(team.getId())) {
-                        List<TournamentTeamDTO> matchingTeams =
-                                teams.stream()
-                                        .filter(
-                                                otherTeam ->
-                                                        distanceCalculator.apply(
-                                                                        team.getName(),
-                                                                        otherTeam.getName())
-                                                                < 2)
-                                        .collect(Collectors.toList());
-
-                        matchingTeams.forEach(t -> seenTeams.add(t.getId()));
-
-                        String commonName = null;
-                        if (matchingTeams.size() == 1) {
-                            commonName = matchingTeams.get(0).getName();
-                        } else if (matchingTeams.size() > 1) {
-                            commonName =
-                                    nameCalculator
-                                            .longestCommonSubsequence(
-                                                    matchingTeams.get(0).getName(),
-                                                    matchingTeams.get(1).getName())
-                                            .toString();
-                        }
-
-                        if (commonName != null) {
-                            teamsByCommonName.put(commonName.trim(), matchingTeams);
-                        }
-                    }
-                });
-
-        return teamsByCommonName.entrySet().stream()
-                .map(entry -> toRegistration(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
+        return result;
     }
 
     private static RegistrationDTO toRegistration(String name, List<TournamentTeamDTO> teams) {
