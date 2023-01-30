@@ -1,6 +1,6 @@
 package neg5.exports.qbj.api;
 
-public class TournamentSiteDTO {
+public class QbjTournamentSiteDTO {
 
     private String name;
 

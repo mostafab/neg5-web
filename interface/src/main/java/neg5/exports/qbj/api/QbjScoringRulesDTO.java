@@ -2,7 +2,7 @@ package neg5.exports.qbj.api;
 
 import java.util.List;
 
-public class ScoringRulesDTO {
+public class QbjScoringRulesDTO {
 
     private Integer teamsPerMatch;
     private Integer maximumPlayersPerTeam;

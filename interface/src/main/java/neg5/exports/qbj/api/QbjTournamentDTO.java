@@ -1,17 +1,15 @@
 package neg5.exports.qbj.api;
 
-import java.util.List;
+public class QbjTournamentDTO {
 
-public class TournamentQbjDTO {
+    private final QbjObjectType type = QbjObjectType.TOURNAMENT;
 
     private String name;
     private String questionSet;
     private String startDate;
 
-    private TournamentSiteDTO tournamentSite;
-    private ScoringRulesDTO scoringRules;
-
-    private List<RegistrationDTO> registrations;
+    private QbjTournamentSiteDTO tournamentSite;
+    private QbjScoringRulesDTO scoringRules;
 
     public String getName() {
         return name;
@@ -37,27 +35,23 @@ public class TournamentQbjDTO {
         this.startDate = startDate;
     }
 
-    public TournamentSiteDTO getTournamentSite() {
+    public QbjTournamentSiteDTO getTournamentSite() {
         return tournamentSite;
     }
 
-    public void setTournamentSite(TournamentSiteDTO tournamentSite) {
+    public void setTournamentSite(QbjTournamentSiteDTO tournamentSite) {
         this.tournamentSite = tournamentSite;
     }
 
-    public ScoringRulesDTO getScoringRules() {
+    public QbjScoringRulesDTO getScoringRules() {
         return scoringRules;
     }
 
-    public void setScoringRules(ScoringRulesDTO scoringRules) {
+    public void setScoringRules(QbjScoringRulesDTO scoringRules) {
         this.scoringRules = scoringRules;
     }
 
-    public List<RegistrationDTO> getRegistrations() {
-        return registrations;
-    }
-
-    public void setRegistrations(List<RegistrationDTO> registrations) {
-        this.registrations = registrations;
+    public QbjObjectType getType() {
+        return type;
     }
 }

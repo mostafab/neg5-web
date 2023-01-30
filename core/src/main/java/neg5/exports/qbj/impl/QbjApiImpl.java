@@ -2,6 +2,7 @@ package neg5.exports.qbj.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import neg5.domain.api.TournamentApi;
@@ -13,10 +14,11 @@ import neg5.domain.api.TournamentTeamGroupDTO;
 import neg5.domain.api.enums.TossupAnswerType;
 import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
-import neg5.exports.qbj.api.RegistrationDTO;
-import neg5.exports.qbj.api.ScoringRulesDTO;
-import neg5.exports.qbj.api.TournamentQbjDTO;
-import neg5.exports.qbj.api.TournamentSiteDTO;
+import neg5.exports.qbj.api.QbjRegistrationDTO;
+import neg5.exports.qbj.api.QbjRootDTO;
+import neg5.exports.qbj.api.QbjScoringRulesDTO;
+import neg5.exports.qbj.api.QbjTournamentDTO;
+import neg5.exports.qbj.api.QbjTournamentSiteDTO;
 
 @Singleton
 public class QbjApiImpl implements QbjApi {
@@ -35,29 +37,34 @@ public class QbjApiImpl implements QbjApi {
         this.teamGroupApi = teamGroupApi;
     }
 
-    public TournamentQbjDTO exportToQbjFormat(String tournamentId) {
+    public QbjRootDTO exportToQbjFormat(String tournamentId) {
+        QbjRootDTO root = new QbjRootDTO();
+        root.setVersion("2.1");
+        root.setObjects(new ArrayList<>());
+
         TournamentDTO tournament = tournamentManager.get(tournamentId);
 
-        TournamentQbjDTO qbj = new TournamentQbjDTO();
-        qbj.setName(tournament.getName());
-        qbj.setQuestionSet(tournament.getQuestionSet());
-        qbj.setTournamentSite(getSite(tournament));
-        qbj.setScoringRules(getScoringRules(tournament));
+        QbjTournamentDTO tournamentQbjObject = new QbjTournamentDTO();
+        tournamentQbjObject.setName(tournament.getName());
+        tournamentQbjObject.setQuestionSet(tournament.getQuestionSet());
+        tournamentQbjObject.setTournamentSite(getSite(tournament));
+        tournamentQbjObject.setScoringRules(getScoringRules(tournament));
 
-        qbj.setRegistrations(getRegistrations(tournamentId));
+        root.getObjects().add(tournamentQbjObject);
+        root.getObjects().addAll(getRegistrations(tournamentId));
 
-        return qbj;
+        return root;
     }
 
-    private TournamentSiteDTO getSite(TournamentDTO tournament) {
-        TournamentSiteDTO site = new TournamentSiteDTO();
+    private QbjTournamentSiteDTO getSite(TournamentDTO tournament) {
+        QbjTournamentSiteDTO site = new QbjTournamentSiteDTO();
         site.setName(tournament.getLocation());
 
         return site;
     }
 
-    private ScoringRulesDTO getScoringRules(TournamentDTO tournament) {
-        ScoringRulesDTO rules = new ScoringRulesDTO();
+    private QbjScoringRulesDTO getScoringRules(TournamentDTO tournament) {
+        QbjScoringRulesDTO rules = new QbjScoringRulesDTO();
         rules.setBonusesBounceBack(tournament.getUsesBouncebacks());
         rules.setMinimumPartsPerBonus(tournament.getPartsPerBonus());
         rules.setPointsPerBonusPart(tournament.getBonusPointValue());
@@ -83,7 +90,7 @@ public class QbjApiImpl implements QbjApi {
         return rules;
     }
 
-    private List<RegistrationDTO> getRegistrations(String tournamentId) {
+    private List<QbjRegistrationDTO> getRegistrations(String tournamentId) {
         List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
         List<TournamentTeamGroupDTO> groups = teamGroupApi.findAllByTournamentId(tournamentId);
         return QBJUtil.toRegistrations(teams, groups);

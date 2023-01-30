@@ -19,7 +19,7 @@ import neg5.domain.api.UpdateTournamentRequestDTO;
 import neg5.domain.api.enums.TournamentAccessLevel;
 import neg5.exports.qbj.api.QBJGsonProvider;
 import neg5.exports.qbj.api.QbjApi;
-import neg5.exports.qbj.api.TournamentQbjDTO;
+import neg5.exports.qbj.api.QbjRootDTO;
 import neg5.service.util.RequestHelper;
 import neg5.userData.CurrentUserContext;
 
@@ -118,13 +118,13 @@ public class TournamentRoutes extends AbstractJsonRoutes {
         get(
                 "/:id/qbj",
                 (request, response) -> {
-                    TournamentQbjDTO result = qbjManager.exportToQbjFormat(request.params("id"));
+                    QbjRootDTO result = qbjManager.exportToQbjFormat(request.params("id"));
+                    String name = tournamentManager.get(request.params("id")).getName();
                     response.type(QBJ_CONTENT_TYPE);
                     response.header(
                             "Content-Disposition",
                             String.format(
-                                    "attachment; filename=%s.qbj",
-                                    result.getName().replaceAll(" ", "_")));
+                                    "attachment; filename=%s.qbj", name.replaceAll(" ", "_")));
 
                     return result;
                 },
