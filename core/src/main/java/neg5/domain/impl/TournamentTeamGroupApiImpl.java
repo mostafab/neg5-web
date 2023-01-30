@@ -84,7 +84,7 @@ public class TournamentTeamGroupApiImpl
         List<TournamentTeamGroupDTO> groups = findAllByTournamentId(dto.getTournamentId());
         String normalizedName = dto.getName().trim().toLowerCase();
         return groups.stream()
-                .filter(g -> !(dto.getId() == null || g.getId().equals(dto.getId())))
+                .filter(g -> dto.getId() == null || !g.getId().equals(dto.getId()))
                 .filter(g -> namesAreTheSame(normalizedName, g.getName()))
                 .findAny()
                 .map(

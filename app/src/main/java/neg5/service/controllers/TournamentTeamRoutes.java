@@ -49,7 +49,7 @@ public class TournamentTeamRoutes extends AbstractJsonRoutes {
         post("", this::createTeam);
 
         post(
-                "/groups",
+                "/group",
                 (request, response) -> {
                     TournamentTeamGroupDTO group =
                             requestHelper.readFromRequest(request, TournamentTeamGroupDTO.class);
