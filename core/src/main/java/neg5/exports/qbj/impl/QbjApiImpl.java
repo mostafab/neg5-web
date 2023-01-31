@@ -12,6 +12,8 @@ import neg5.domain.api.TournamentApi;
 import neg5.domain.api.TournamentDTO;
 import neg5.domain.api.TournamentMatchApi;
 import neg5.domain.api.TournamentMatchDTO;
+import neg5.domain.api.TournamentPoolApi;
+import neg5.domain.api.TournamentPoolDTO;
 import neg5.domain.api.TournamentTeamApi;
 import neg5.domain.api.TournamentTeamDTO;
 import neg5.domain.api.TournamentTeamGroupApi;
@@ -21,6 +23,8 @@ import neg5.exports.qbj.api.AnswerTypeDTO;
 import neg5.exports.qbj.api.QbjApi;
 import neg5.exports.qbj.api.QbjObjectType;
 import neg5.exports.qbj.api.QbjPhaseDTO;
+import neg5.exports.qbj.api.QbjPoolDTO;
+import neg5.exports.qbj.api.QbjPoolTeamDTO;
 import neg5.exports.qbj.api.QbjReferenceDTO;
 import neg5.exports.qbj.api.QbjRegistrationDTO;
 import neg5.exports.qbj.api.QbjRootDTO;
@@ -36,17 +40,20 @@ public class QbjApiImpl implements QbjApi {
     private final TournamentTeamApi teamApi;
     private final TournamentTeamGroupApi teamGroupApi;
     private final TournamentMatchApi matchApi;
+    private final TournamentPoolApi poolApi;
 
     @Inject
     public QbjApiImpl(
             TournamentApi tournamentManager,
             TournamentTeamApi teamApi,
             TournamentTeamGroupApi teamGroupApi,
-            TournamentMatchApi matchApi) {
+            TournamentMatchApi matchApi,
+            TournamentPoolApi poolApi) {
         this.tournamentManager = tournamentManager;
         this.teamApi = teamApi;
         this.teamGroupApi = teamGroupApi;
         this.matchApi = matchApi;
+        this.poolApi = poolApi;
     }
 
     public QbjRootDTO exportToQbjFormat(String tournamentId) {
@@ -62,7 +69,8 @@ public class QbjApiImpl implements QbjApi {
         tournamentQbjObject.setTournamentSite(getSite(tournament));
         tournamentQbjObject.setScoringRules(getScoringRules(tournament));
 
-        List<QbjRegistrationDTO> registrations = getRegistrations(tournamentId);
+        List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
+        List<QbjRegistrationDTO> registrations = getRegistrations(tournamentId, teams);
 
         tournamentQbjObject.setRegistrations(
                 registrations.stream()
@@ -70,7 +78,7 @@ public class QbjApiImpl implements QbjApi {
                         .collect(Collectors.toList()));
 
         List<TournamentMatchDTO> matches = matchApi.findAllByTournamentId(tournamentId);
-        List<QbjPhaseDTO> phases = getPhases(tournament, matches);
+        List<QbjPhaseDTO> phases = getPhases(tournament, matches, teams);
 
         tournamentQbjObject.setPhases(
                 phases.stream()
@@ -124,20 +132,24 @@ public class QbjApiImpl implements QbjApi {
         return rules;
     }
 
-    private List<QbjRegistrationDTO> getRegistrations(String tournamentId) {
-        List<TournamentTeamDTO> teams = teamApi.findAllByTournamentId(tournamentId);
+    private List<QbjRegistrationDTO> getRegistrations(
+            String tournamentId, List<TournamentTeamDTO> teams) {
         List<TournamentTeamGroupDTO> groups = teamGroupApi.findAllByTournamentId(tournamentId);
         return QBJUtil.toRegistrations(teams, groups);
     }
 
     private List<QbjPhaseDTO> getPhases(
-            TournamentDTO tournament, List<TournamentMatchDTO> matches) {
+            TournamentDTO tournament,
+            List<TournamentMatchDTO> matches,
+            List<TournamentTeamDTO> teams) {
         Map<String, List<TournamentMatchDTO>> matchesByPhase =
                 matches.stream()
                         .filter(match -> match.getPhases() != null && !match.getPhases().isEmpty())
                         .collect(
                                 Collectors.groupingBy(
                                         match -> match.getPhases().stream().findFirst().get()));
+
+        List<TournamentPoolDTO> pools = poolApi.findAllByTournamentId(tournament.getId());
         return tournament.getPhases().stream()
                 .map(
                         phase -> {
@@ -174,6 +186,67 @@ public class QbjApiImpl implements QbjApi {
 
                                         qbjPhase.getRounds().add(qbjRound);
                                     });
+
+                            List<QbjPoolDTO> qbjPools =
+                                    pools.stream()
+                                            .filter(pool -> phase.getId().equals(pool.getPhaseId()))
+                                            .map(
+                                                    pool -> {
+                                                        List<QbjPoolTeamDTO> poolTeams =
+                                                                teams.stream()
+                                                                        .filter(
+                                                                                team ->
+                                                                                        team
+                                                                                                        .getDivisions()
+                                                                                                != null)
+                                                                        .filter(
+                                                                                team ->
+                                                                                        team
+                                                                                                .getDivisions()
+                                                                                                .stream()
+                                                                                                .anyMatch(
+                                                                                                        div ->
+                                                                                                                pool.getId()
+                                                                                                                                .equals(
+                                                                                                                                        div
+                                                                                                                                                .getId())
+                                                                                                                        && phase.getId()
+                                                                                                                                .equals(
+                                                                                                                                        div
+                                                                                                                                                .getPhaseId())))
+                                                                        .map(
+                                                                                team -> {
+                                                                                    QbjPoolTeamDTO
+                                                                                            poolTeam =
+                                                                                                    new QbjPoolTeamDTO();
+
+                                                                                    String
+                                                                                            qbjReferenceId =
+                                                                                                    getReferenceId(
+                                                                                                            QbjObjectType
+                                                                                                                    .TEAM,
+                                                                                                            team
+                                                                                                                    .getId());
+                                                                                    poolTeam
+                                                                                            .setTeam(
+                                                                                                    QbjReferenceDTO
+                                                                                                            .fromRef(
+                                                                                                                    qbjReferenceId));
+                                                                                    return poolTeam;
+                                                                                })
+                                                                        .collect(
+                                                                                Collectors
+                                                                                        .toList());
+
+                                                        QbjPoolDTO qbjPool = new QbjPoolDTO();
+                                                        qbjPool.setName(pool.getName());
+                                                        qbjPool.setPoolTeams(poolTeams);
+
+                                                        return qbjPool;
+                                                    })
+                                            .collect(Collectors.toList());
+
+                            qbjPhase.setPools(qbjPools);
                             return qbjPhase;
                         })
                 .collect(Collectors.toList());
