@@ -40,7 +40,7 @@ public class TournamentPhaseApiImpl
     public TournamentPhaseDTO createDefaultPhase(String tournamentId) {
         TournamentPhaseDTO phaseDTO = new TournamentPhaseDTO();
         phaseDTO.setTournamentId(tournamentId);
-        phaseDTO.setName("Pool Play");
+        phaseDTO.setName("Preliminary Rounds");
         return create(phaseDTO);
     }
 
