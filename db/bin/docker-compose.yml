@@ -1,7 +1,6 @@
-version: "3"
 services:
   neg5_db:
-    image: "postgres:12"
+    image: "postgres:13"
     container_name: "${CONTAINER_NAME}"
     ports:
       - "${PORT}:5432"
